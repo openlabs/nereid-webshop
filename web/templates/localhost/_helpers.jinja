@@ -1,0 +1,32 @@
+{% macro render_field(field, class_="", show_label=True, input_prepend=None) %}
+<div class="control-group {% if field.errors %}error{% endif %}">
+  {% if show_label %}
+  <label class="control-label" for="{{ field.name }}">{{ field.label.text }}
+    {% if field.flags.required %}<span>*</span>{% endif %}:
+  </label>
+  {% endif %}
+  <div class="controls">
+    {% if input_prepend %}
+    <div class="input-prepend">
+    <span class="add-on"><i class="{{ input_prepend }}"></i></span>
+    {% endif %}
+    {% if field.flags.required %}
+      {% set class_ = class_ + " required" %}
+    {% endif %}
+    {% if field.flags.email %}
+      {% set class_ = class_ + " email" %}
+    {% endif %}
+    {{ field(class_=class_, **kwargs) }}
+    {% if input_prepend %}
+    {# close the input-prepend div if one exists #}
+    </div>
+    {% endif %}
+    {% if field.description %}
+    <br/><span class="help-inline"><small>{{ field.description }}</small></span>
+    {% endif %}
+    {% for error in field.errors %}
+    <br/><span class="help-inline"><small>{{ error|string }}</small></span>
+    {% endfor %}
+  </div>
+</div>
+{% endmacro %}

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GNACODE Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body>
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div  class="top-meta">
+              <!-- Choose Language -->
+              <div class="btn-group" style="margin-top:3px;">
+                <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
+                  <img class="flag flag-us"> English &nbsp;<span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href><img class="flag flag-br">&nbsp;Brazil</a></li>
+                  <li><a href><img class="flag flag-in">&nbsp;India</a></li>
+                </ul>
+              </div>
+              <ul class="list-inline pull-right links">
+                <li><a href="tel:+91 120 6455161">&nbsp;<i class="icon-phone"></i> &nbsp; +91 120 6455161</a></li>
+                <li><a class="register-buttons" data-toggle="modal" href="#login-modal">Login</a></li>
+                <li><a href="" class="register-buttons login-button">Sign Up</a></li>
+              </ul>
+              <!--Login Modal-->
+              <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog account-auth">
+                  <div class="modal-content">
+                    <div class="modal-header center">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <h5 class="modal-title">New to shop ? <a href="">Register here </a></h5>
+                    </div>
+                    <div class="modal-body">
+                      <h4 class="center"><span>Log in to your account</span></h4>
+                      <div class="row">
+                        <div class="col-md-5">
+                          <form>
+                            <input type="email" class="form-control input-lg" placeholder="enter you e-mail address">
+                            <input type="password" class="form-control input-lg" placeholder="your password">
+                            <button type="button" class="btn btn-lg btn-block">Login</button>
+                            <a href="" class="text-muted"><strong>Forgot Password ?</strong></a>
+                          </form>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="dotted-line"></div>
+                          <div class="or-circle center">or</div>
+                          <div class="dotted-line"></div>
+                        </div>
+                        <div class="col-md-5">
+                          <h5>Sign in with</h5>
+                          <ul class="list-inline social-login">
+                            <li class="facebook">
+                              <a href="">
+                                <i class="fa fa-facebook"></i>&nbsp;&nbsp; facebook
+                              </a>
+                            </li>
+                            <li class="twitter">
+                              <a href="">
+                                <i class="fa fa-twitter"></i>&nbsp;&nbsp; twitter
+                              </a>
+                            </li>
+                            <li class="google-plus">
+                              <a href="">
+                                <i class="fa fa-google-plus"></i>&nbsp;&nbsp; google+
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+              </div><!-- /.modal -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="header-main">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="main-logo">
+              <img src="images/gnacode-logo.png">
+            </div>
+          </div>
+          <div class="col-md-5 top-search">
+            <div class="input-group">
+              <input type="text" class="form-control">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Search</button>
+              </span>
+            </div><!-- /input-group -->
+          </div>
+          <div class="col-md-4 my-account">
+            <ul class="list-inline pull-right">
+              <li>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    My Account <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Link 1</a></li>
+                    <li><a href="#">Link 2</a></li>
+                    <li><a href="#">Something else here</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    Wish list <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Link 1</a></li>
+                    <li><a href="#">Link 2</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <i class="icon-shopping-cart"></i> <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Link 1</a></li>
+                    <li><a href="#">Link 2</a></li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--Main Navigation -->
+    <section>
+      <div class="container main-navigation">
+        <div class="row">
+          <ul class="list-inline col-md-12" id="nav-list">
+            <li>
+              <a class="main-link" href="">Men</a>
+              <!-- Dropdown Menu Starts-->
+              <div class="container menbg">
+                <div class="row">
+                  <div class="col-md-2">
+                    <ul class="list-unstyled">
+                      <li><a href=""><strong>Men's Footwear</strong></a></li>
+                      <li><a href="">Casual Shoes</a></li>
+                      <li><a href="">Sports Shoes</a></li>
+                      <li><a href="">Formal Shoes</a></li>
+                      <li><a href="">Slipper's & Flip Flops</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-md-2">
+                    <ul class="list-unstyled">
+                      <li><a href=""><strong>Men's Clothing</strong></a></li>
+                      <li><a href="">T-Shirts</a></li>
+                      <li><a href="">Casual Shirts </a></li>
+                      <li><a href="">Formal Shirts </a></li>
+                      <li><a href="">Sports Shirts</a></li>
+                      <li><a href="">T-Shirts</a></li>
+                      <li><a href="">Polos</a></li>
+                      <li><a href="">Jeans</a></li>
+                      <li><a href="">Trousers</a></li>
+                      <li><a href="">Capri</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-md-2">
+                    <ul class="list-unstyled">
+                      <li><a href=""><strong>Men's Accessories</strong></a></li>
+                      <li><a href="">Bags & Backpacks</a></li>
+                      <li><a href="">Belt</a></li>
+                      <li><a href="">Caps & Hats</a></li>
+                      <li><a href="">Fragrances & Deos</a></li>
+                      <li><a href="">Jewellery</a></li>
+                      <li><a href="">Sunglasses</a></li>
+                      <li><a href="">Scarves & Mufflers</a></li>
+                      <li><a href="">Wallets</a></li>
+                      <li><a href="">Watches</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a class="main-link" href="">Women</a>
+              <!-- Dropdown Menu Starts-->
+              <div class="container womenbg">
+                <div class="row">
+                  <div class="col-md-2">
+                    <ul class="list-unstyled">
+                      <li><a href=""><strong>Women's Footwear</strong></a></li>
+                      <li><a href="">Casual Shoes</a></li>
+                      <li><a href="">Sports Shoes</a></li>
+                      <li><a href="">Formal Shoes</a></li>
+                      <li><a href="">Slipper's & Flip Flops</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-md-2">
+                    <ul class="list-unstyled">
+                      <li><a href=""><strong>Women's Clothing</strong></a></li>
+                      <li><a href="">T-Shirts</a></li>
+                      <li><a href="">Casual Shirts </a></li>
+                      <li><a href="">Formal Shirts </a></li>
+                      <li><a href="">Sports Shirts</a></li>
+                      <li><a href="">T-Shirts</a></li>
+                      <li><a href="">Polos</a></li>
+                      <li><a href="">Jeans</a></li>
+                      <li><a href="">Trousers</a></li>
+                      <li><a href="">Capri</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-md-2">
+                    <ul class="list-unstyled">
+                      <li><a href=""><strong>Women's Accessories</strong></a></li>
+                      <li><a href="">Bags & Backpacks</a></li>
+                      <li><a href="">Belt</a></li>
+                      <li><a href="">Caps & Hats</a></li>
+                      <li><a href="">Fragrances & Deos</a></li>
+                      <li><a href="">Jewellery</a></li>
+                      <li><a href="">Sunglasses</a></li>
+                      <li><a href="">Scarves & Mufflers</a></li>
+                      <li><a href="">Wallets</a></li>
+                      <li><a href="">Watches</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a class="main-link" href="">Accessories</a>
+              <!-- Dropdown Menu Starts-->
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-2">
+                    <ul class="list-unstyled">
+                      <li><a href=""><strong>Women's Footwear</strong></a></li>
+                      <li><a href="">Casual Shoes</a></li>
+                      <li><a href="">Sports Shoes</a></li>
+                      <li><a href="">Formal Shoes</a></li>
+                      <li><a href="">Slipper's & Flip Flops</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-md-2">
+                    <ul class="list-unstyled">
+                      <li><a href=""><strong>Women's Clothing</strong></a></li>
+                      <li><a href="">T-Shirts</a></li>
+                      <li><a href="">Casual Shirts </a></li>
+                      <li><a href="">Formal Shirts </a></li>
+                      <li><a href="">Sports Shirts</a></li>
+                      <li><a href="">T-Shirts</a></li>
+                      <li><a href="">Polos</a></li>
+                      <li><a href="">Jeans</a></li>
+                      <li><a href="">Trousers</a></li>
+                      <li><a href="">Capri</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-md-2">
+                    <ul class="list-unstyled">
+                      <li><a href=""><strong>Women's Accessories</strong></a></li>
+                      <li><a href="">Bags & Backpacks</a></li>
+                      <li><a href="">Belt</a></li>
+                      <li><a href="">Caps & Hats</a></li>
+                      <li><a href="">Fragrances & Deos</a></li>
+                      <li><a href="">Jewellery</a></li>
+                      <li><a href="">Sunglasses</a></li>
+                      <li><a href="">Scarves & Mufflers</a></li>
+                      <li><a href="">Wallets</a></li>
+                      <li><a href="">Watches</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a class="main-link" href="">Kids</a>
+            </li>
+            <li>
+              <a class="main-link" href="">Brands</a>
+            </li>
+            <li>
+              <a class="main-link" href="">Trends</a>
+            </li>
+            <li>
+              <a class="main-link" href="">Sale</a>
+            </li>
+            <li>
+              <a class="main-link" href="">Style Videos</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section class="main-banner">
+      <div class="container">
+        <div class="col-md-12">
+          <div id="carousel-example-generic" class="carousel slide">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+              <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+              <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+              <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            </ol>
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+              <div class="item active">
+                <img src="holder.js/100%x400" alt="...">
+                <div class="carousel-caption">
+                </div>
+              </div>
+              <div class="item">
+                <img src="holder.js/100%x400" alt="...">
+                <div class="carousel-caption">
+                </div>
+              </div>
+              <div class="item">
+                <img src="holder.js/100%x400" alt="...">
+                <div class="carousel-caption">
+                </div>
+              </div>
+            </div>
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+              <span class="icon-prev"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+              <span class="icon-next"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="products latest">
+      <div class="container">
+        <div class="row">
+          <h3>Latest Products</h3>
+          <div class="col-md-4 thumb">
+            <img src="holder.js/100%x280" alt="...">
+            <div class="fig-caption">
+              <h4>Product Name</h4>
+              <p>Description </p>
+            </div>
+          </div>
+          <div class="col-md-4 thumb">
+            <img src="holder.js/100%x280" alt="...">
+            <div class="fig-caption">
+              <h4>Product Name</h4>
+              <p>Description </p>
+            </div>
+          </div>
+          <div class="col-md-4 thumb">
+            <img src="holder.js/100%x280" alt="...">
+            <div class="fig-caption">
+              <h4>Product Name</h4>
+              <p>Description </p>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-6 thumb">
+            <img src="holder.js/100%x320" alt="...">
+            <div class="fig-caption" style="width:95%">
+              <h4>Product Name</h4>
+              <p>Description </p>
+            </div>
+          </div>
+          <div class="col-md-6 thumb">
+            <img src="holder.js/100%x320" alt="...">
+            <div class="fig-caption" style="width:95%">
+              <h4>Product Name</h4>
+              <p>Description </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Shop Assurance block -->
+    <section class="shop-assurance">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <ul class="list-inline center">
+              <li>
+                <div class="feature-assurance">
+                  <img src="images/assurance/lock.png">
+                  <h5>SECURE PAYMENT</h5>
+                  <p>Payment via credit card or Paypal</p>
+                </div>
+              </li>
+              <li>
+                <div class="feature-assurance">
+                  <img src="images/assurance/warranty-services.png">
+                  <h5>WARRANTY & SERVICE</h5>
+                  <p>Our customer service is simple and effective.</p>
+                </div>
+              </li>
+              <li>
+                <div class="feature-assurance">
+                  <img src="images/assurance/heart.png">
+                  <h5>QUALITY</h5>
+                  <p>We are Certified Quality and Environment. And Living Heritage Company.</p>
+                </div>
+              </li>
+              <li>
+                <div class="feature-assurance">
+                  <img src="images/assurance/customer-service.png">
+                  <h5>CUSTOMER SERVICE</h5>
+                  <p>A doubt, a question? reach us at 0000-000-0000.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--Footer Links blocks Starts-->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <div class="row">
+              <div class="col-md-4">
+                <h4>Shop</h4>
+                <ul class="list-unstyled">
+                  <li><a href="">Mens</a></li>
+                  <li><a href="">Womens</a></li>
+                  <li><a href="">Accessories</a></li>
+                  <li><a href="">Sale</a></li>
+                  <li><a href="">Accessories & Jewelries</a></li>
+                  <li><a href="">Trends</a></li>
+                  <li><a href="">Sale</a></li>
+                  <li><a href="">Gift Cards</a></li>
+                </ul>
+              </div>
+              <div class="col-md-4">
+                <h4>Customer Service</h4>
+                <ul class="list-unstyled">
+                  <li><a href="">Contact Us</a></li>
+                  <li><a href="">Shipping & Delivery</a></li>
+                  <li><a href="">Returns</a></li>
+                  <li><a href="">Order Status</a></li>
+                </ul>
+              </div>
+              <div class="col-md-4">
+                <h4>About Company</h4>
+                <ul class="list-unstyled">
+                  <li><a href="">Our Stories</a></li>
+                  <li><a href="">Origin Story </a></li>
+                  <li><a href="">Careers</a></li>
+                  <li><a href="">Partners</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="row">
+              <h4>Social</h4><br>
+              <a href="" class="social-links facebook"><i></i></a>
+              <a href="" class="social-links twitter"><i></i></a>
+              <a href="" class="social-links googleplus"><i></i></a>
+              <a href="" class="social-links pinterest"><i></i></a>
+              <a href="" class="social-links youtube"><i></i></a>
+            </div>
+            <div class="row subscribe-block">
+              <h5>Sign Up for the Newsletter</h5>
+              <!--Subscribe form-->
+              <form>
+                <div class="input-group">
+                  <input type="text" class="form-control input-lg" placeholder="you@mail.com">
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary btn-lg" type="button"><i class="fa fa-plus"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8 payment-gateway">
+            <h4>Payment Gateway</h4><br>
+            <ul class="list-inline">
+              <li>
+                <img src="images/payment-gateway/visa.png">
+              </li>
+              <li>
+                <img src="images/payment-gateway/paypal.png">
+              </li>
+              <li>
+                <img src="images/payment-gateway/mastercard.png">
+              </li>
+              <li>
+                <img src="images/payment-gateway/solo.png">
+              </li>
+              <li>
+                <img src="images/payment-gateway/cirrus.png">
+              </li>
+              <li>
+                <img src="images/payment-gateway/western-union.png">
+              </li>
+              <li>
+                <img src="images/payment-gateway/american-express.png">
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="row copyright-footer">
+          <ul class="list-inline center">
+            <li>
+              &copy; GNACODE&nbsp;&nbsp;&nbsp;/
+            </li>
+            <li><a href=""> All Rights Reserved</a>&nbsp;&nbsp;&nbsp;/</li>
+            <li><a href=""> Privacy Policy</a>&nbsp;&nbsp;&nbsp;/</li>
+            <li><a href=""> Terms of Use</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+    <!--Footer Links blocks Ends-->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/holder.js"></script>
+  </body>
+</html>
