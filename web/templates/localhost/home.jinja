@@ -1,5 +1,12 @@
 {% extends 'localhost/base.jinja' %}
 
+{% block title %}Home{% endblock %}
+
+{% block breadcrumb %}
+{{ super() }}
+<li><a href="{{ url_for('nereid.website.home') }}">Home</a></li>
+{% endblock %}
+
 {% block main %}
     <section class="main-banner">
       <div class="container">
