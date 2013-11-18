@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="{{ request.nereid_language.code }}">
+  <head>
+    {% set STATIC = url_for('static', filename='').split('?')[0] %}
+    <title>{% trans %}Nereid Webshop{% endtrans %}-{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block link_tags %}
+    {# This block adds <link> tags to the head section of the template. #}
+    <link href="{{ STATIC }}css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC }}css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC }}css/style.css">
+    {% endblock %}
+    {% block extra_head %}
+      {# This block is empty by default and can be used to add extra 
+        contents into the <head> tag of the generated HTML file. This is 
+        the right place to add references to extra CSS files. 
+      
+        Though it is possible to add Javascript files to this section, It
+        is not recommended. 
+        See why: http://developer.yahoo.com/performance/rules.html#js_bottom
+        #}
+    {% endblock %}
+  </head>
+  <body>
+
+    {% block header %}
+    <section class="header-main">
+      <div class="flat-header">
+
+        {% block header_row_1 %}
+        <!-- Top Meta Details -->
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div  class="top-meta">
+                {% block locales %}
+                <!-- Choose Language -->
+                <div class="btn-group" style="margin-top:3px;">
+                  <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
+                    <img class="flag flag-us"> English &nbsp;<span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href><img class="flag flag-br">&nbsp;Brazil</a></li>
+                    <li><a href><img class="flag flag-in">&nbsp;India</a></li>
+                  </ul>
+                </div>
+                {% endblock %}
+
+                <ul class="list-inline pull-right links">
+                  {% block header_links %}
+                  <li><a href="tel:+91 120 6455161">&nbsp;<i class="fa fa-phone"></i> &nbsp; +91 120 6455161</a></li>
+                  <li><a class="register-buttons" data-toggle="modal" href="#login-modal">Login / SignUp</a></li>
+                  {% endblock %}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endblock %}
+
+        {% block header_row_2 %}
+        <div class="container">
+          <div class="row">
+            <div class="col-md-3">
+              {% block logo %}
+              <div class="main-logo">
+                <img src="{{ STATIC }}images/gnacode-logo.png">
+              </div>
+              {% endblock %}
+            </div>
+            <div class="col-md-5 top-search">
+              {% block search %}
+              <div class="input-group">
+                <input type="text" class="form-control">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button">Search</button>
+                </span>
+              </div><!-- /input-group -->
+              {% endblock %}
+            </div>
+            <div class="col-md-4 my-account">
+              {% block header_user %}
+              <ul class="list-inline pull-right">
+                <li>
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                      My Account <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">Link 1</a></li>
+                      <li><a href="#">Link 2</a></li>
+                      <li><a href="#">Something else here</a></li>
+                    </ul>
+                  </div>
+                </li>
+                <li>
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                      Wish list <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">Link 1</a></li>
+                      <li><a href="#">Link 2</a></li>
+                    </ul>
+                  </div>
+                </li>
+                <li>
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                      <i class="icon-shopping-cart"></i> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">Link 1</a></li>
+                      <li><a href="#">Link 2</a></li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+              {% endblock %}
+            </div>
+          </div>
+        </div>
+        {% endblock %}
+      </div>
+
+      <!--Main Navigation -->
+      <div class="main-navbar">
+        {% block main_navigation %}
+        <div class="container main-navigation">
+          <div class="row">
+            <ul class="list-inline col-md-12" id="nav-list">
+              <li>
+                <a class="main-link" href="">Men</a>
+                <!-- Dropdown Menu Starts-->
+                <div class="container menbg">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <ul class="list-unstyled">
+                        <li><a href=""><strong>Men's Footwear</strong></a></li>
+                        <li><a href="">Casual Shoes</a></li>
+                        <li><a href="">Sports Shoes</a></li>
+                        <li><a href="">Formal Shoes</a></li>
+                        <li><a href="">Slipper's &amp; Flip Flops</a></li>
+                      </ul>
+                    </div>
+                    <div class="col-md-2">
+                      <ul class="list-unstyled">
+                        <li><a href=""><strong>Men's Clothing</strong></a></li>
+                        <li><a href="">T-Shirts</a></li>
+                        <li><a href="">Casual Shirts </a></li>
+                        <li><a href="">Formal Shirts </a></li>
+                        <li><a href="">Sports Shirts</a></li>
+                        <li><a href="">T-Shirts</a></li>
+                        <li><a href="">Polos</a></li>
+                        <li><a href="">Jeans</a></li>
+                        <li><a href="">Trousers</a></li>
+                        <li><a href="">Capri</a></li>
+                      </ul>
+                    </div>
+                    <div class="col-md-2">
+                      <ul class="list-unstyled">
+                        <li><a href=""><strong>Men's Accessories</strong></a></li>
+                        <li><a href="">Bags &amp; Backpacks</a></li>
+                        <li><a href="">Belt</a></li>
+                        <li><a href="">Caps &amp; Hats</a></li>
+                        <li><a href="">Fragrances &amp; Deos</a></li>
+                        <li><a href="">Jewellery</a></li>
+                        <li><a href="">Sunglasses</a></li>
+                        <li><a href="">Scarves &amp; Mufflers</a></li>
+                        <li><a href="">Wallets</a></li>
+                        <li><a href="">Watches</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <a class="main-link" href="">Women</a>
+                <!-- Dropdown Menu Starts-->
+                <div class="container womenbg">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <ul class="list-unstyled">
+                        <li><a href=""><strong>Women's Footwear</strong></a></li>
+                        <li><a href="">Casual Shoes</a></li>
+                        <li><a href="">Sports Shoes</a></li>
+                        <li><a href="">Formal Shoes</a></li>
+                        <li><a href="">Slipper's &amp; Flip Flops</a></li>
+                      </ul>
+                    </div>
+                    <div class="col-md-2">
+                      <ul class="list-unstyled">
+                        <li><a href=""><strong>Women's Clothing</strong></a></li>
+                        <li><a href="">T-Shirts</a></li>
+                        <li><a href="">Casual Shirts </a></li>
+                        <li><a href="">Formal Shirts </a></li>
+                        <li><a href="">Sports Shirts</a></li>
+                        <li><a href="">T-Shirts</a></li>
+                        <li><a href="">Polos</a></li>
+                        <li><a href="">Jeans</a></li>
+                        <li><a href="">Trousers</a></li>
+                        <li><a href="">Capri</a></li>
+                      </ul>
+                    </div>
+                    <div class="col-md-2">
+                      <ul class="list-unstyled">
+                        <li><a href=""><strong>Women's Accessories</strong></a></li>
+                        <li><a href="">Bags &amp; Backpacks</a></li>
+                        <li><a href="">Belt</a></li>
+                        <li><a href="">Caps &amp; Hats</a></li>
+                        <li><a href="">Fragrances &amp; Deos</a></li>
+                        <li><a href="">Jewellery</a></li>
+                        <li><a href="">Sunglasses</a></li>
+                        <li><a href="">Scarves &amp; Mufflers</a></li>
+                        <li><a href="">Wallets</a></li>
+                        <li><a href="">Watches</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <a class="main-link" href="">Accessories</a>
+                <!-- Dropdown Menu Starts-->
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <ul class="list-unstyled">
+                        <li><a href=""><strong>Women's Footwear</strong></a></li>
+                        <li><a href="">Casual Shoes</a></li>
+                        <li><a href="">Sports Shoes</a></li>
+                        <li><a href="">Formal Shoes</a></li>
+                        <li><a href="">Slipper's &amp; Flip Flops</a></li>
+                      </ul>
+                    </div>
+                    <div class="col-md-2">
+                      <ul class="list-unstyled">
+                        <li><a href=""><strong>Women's Clothing</strong></a></li>
+                        <li><a href="">T-Shirts</a></li>
+                        <li><a href="">Casual Shirts </a></li>
+                        <li><a href="">Formal Shirts </a></li>
+                        <li><a href="">Sports Shirts</a></li>
+                        <li><a href="">T-Shirts</a></li>
+                        <li><a href="">Polos</a></li>
+                        <li><a href="">Jeans</a></li>
+                        <li><a href="">Trousers</a></li>
+                        <li><a href="">Capri</a></li>
+                      </ul>
+                    </div>
+                    <div class="col-md-2">
+                      <ul class="list-unstyled">
+                        <li><a href=""><strong>Women's Accessories</strong></a></li>
+                        <li><a href="">Bags &amp; Backpacks</a></li>
+                        <li><a href="">Belt</a></li>
+                        <li><a href="">Caps &amp; Hats</a></li>
+                        <li><a href="">Fragrances &amp; Deos</a></li>
+                        <li><a href="">Jewellery</a></li>
+                        <li><a href="">Sunglasses</a></li>
+                        <li><a href="">Scarves &amp; Mufflers</a></li>
+                        <li><a href="">Wallets</a></li>
+                        <li><a href="">Watches</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <a class="main-link" href="">Kids</a>
+              </li>
+              <li>
+                <a class="main-link" href="">Brands</a>
+              </li>
+              <li>
+                <a class="main-link" href="">Trends</a>
+              </li>
+              <li>
+                <a class="main-link" href="">Sale</a>
+              </li>
+              <li>
+                <a class="main-link" href="">Style Videos</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      {% endblock %}
+      </div>
+    </section>
+
+    {% block main %}
+    {% endblock %}
+
+    {% endblock %}
+
+    {% block footer %}
+    <!--Footer Links blocks Starts-->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <div class="row">
+              <div class="col-md-4">
+                <h4>Shop</h4>
+                <ul class="list-unstyled">
+                  <li><a href="">Mens</a></li>
+                  <li><a href="">Womens</a></li>
+                  <li><a href="">Accessories</a></li>
+                  <li><a href="">Sale</a></li>
+                  <li><a href="">Accessories &amp; Jewelries</a></li>
+                  <li><a href="">Trends</a></li>
+                  <li><a href="">Sale</a></li>
+                  <li><a href="">Gift Cards</a></li>
+                </ul>
+              </div>
+              <div class="col-md-4">
+                <h4>Customer Service</h4>
+                <ul class="list-unstyled">
+                  <li><a href="">Contact Us</a></li>
+                  <li><a href="">Shipping &amp; Delivery</a></li>
+                  <li><a href="">Returns</a></li>
+                  <li><a href="">Order Status</a></li>
+                </ul>
+              </div>
+              <div class="col-md-4">
+                <h4>About Company</h4>
+                <ul class="list-unstyled">
+                  <li><a href="">Our Stories</a></li>
+                  <li><a href="">Origin Story </a></li>
+                  <li><a href="">Careers</a></li>
+                  <li><a href="">Partners</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="row">
+              <h4>Social</h4><br>
+              <a href="" class="social-links facebook"><i></i></a>
+              <a href="" class="social-links twitter"><i></i></a>
+              <a href="" class="social-links googleplus"><i></i></a>
+              <a href="" class="social-links pinterest"><i></i></a>
+              <a href="" class="social-links youtube"><i></i></a>
+            </div>
+            <div class="row subscribe-block">
+              <h5>Sign Up for the Newsletter</h5>
+              <!--Subscribe form-->
+              <form>
+                <div class="input-group">
+                  <input type="text" class="form-control input-lg" placeholder="you@mail.com">
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary btn-lg" type="button"><i class="fa fa-plus"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8 payment-gateway">
+            <h4>Payment Gateway</h4><br>
+            <ul class="list-inline">
+              <li>
+                <img src="{{ STATIC }}images/payment-gateway/visa.png">
+              </li>
+              <li>
+                <img src="{{ STATIC }}images/payment-gateway/paypal.png">
+              </li>
+              <li>
+                <img src="{{ STATIC }}images/payment-gateway/mastercard.png">
+              </li>
+              <li>
+                <img src="{{ STATIC }}images/payment-gateway/solo.png">
+              </li>
+              <li>
+                <img src="{{ STATIC }}images/payment-gateway/cirrus.png">
+              </li>
+              <li>
+                <img src="{{ STATIC }}images/payment-gateway/western-union.png">
+              </li>
+              <li>
+                <img src="{{ STATIC }}images/payment-gateway/american-express.png">
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="row copyright-footer">
+          <ul class="list-inline center">
+            <li>
+              &copy; GNACODE&nbsp;&nbsp;&nbsp;/
+            </li>
+            <li><a href=""> All Rights Reserved</a>&nbsp;&nbsp;&nbsp;/</li>
+            <li><a href=""> Privacy Policy</a>&nbsp;&nbsp;&nbsp;/</li>
+            <li><a href=""> Terms of Use</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>    
+    {% endblock %}
+    
+    <!-- javascript section -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{{ STATIC }}js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{{ STATIC }}js/bootstrap.min.js"></script>
+
+    {% block script_tags %}
+    <script src="{{ STATIC }}js/holder.js"></script>          
+    {% endblock %}
+
+  </body>
+</html>
