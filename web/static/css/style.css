@@ -19,6 +19,27 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .center{
   text-align: center;
 }
+.new-offers{
+  min-height: 30px;
+  border-bottom: 1px solid rgb(219, 219, 219);
+  padding: 3px 5px;
+  background: #eee;
+  font-size: 14px;
+}
+.new-offers a{
+  text-decoration: none;
+}
+.new-offers span{
+  margin-left: 8em;
+}
+.text-rounded-border{
+  margin:0 1em 0 .5em;
+  padding: 0 7px;
+  font-size: 13px;
+  color: #e74c3c;
+  border: 1px solid #e74c3c;
+  text-transform: uppercase;
+}
 /*** Flag Styles starts ***/
 body .flag {
   width: 16px;
@@ -284,15 +305,20 @@ a{
 a:hover{
   color: #373435;
 }
-.flat-header{
-  background: #161e27;
-  color: #fff;
+.top-meta {
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #eee
 }
-.top-meta{
-  height: 30px;
+.top-meta  ul{
+  margin-bottom: 0;
+}
+.top-meta .btn-group{
+  margin-top: 5px;
 }
 .top-meta .links a{
-  color: #fff;
+  text-decoration: none;
+  color: #373435;
   font-size: 12px;
   padding: 6px 15px;
 }
@@ -302,22 +328,22 @@ a:hover{
 }
 .top-meta li a.register-buttons{
   height: 30px;
-  color: #fff;
+  color: #373435;
   line-height: 25px;
   text-shadow: 0px 0px .5px #fff;
   padding: 2px 10px;
-  border: 1px solid #eee;
+  border: 1px solid #D3D3D3;
   border-radius: 2px;
   font-size: 13px;
   font-weight: 400;
 }
 .top-meta a.register-buttons:hover{
   background: #2980b9;
+  color: #FFF;
   text-decoration: none;
 }
 .main-logo img{
-  max-width: 160px;
-  padding: 10px 0;
+  max-width: 170px;
 }
 .top-search .btn{
   min-height: 35px;
@@ -363,10 +389,6 @@ section.products{
   margin: 0 0 5px 0;
 }
 /**** Styles for mega menu ****/
-.main-navbar{
-  background: #6c7a89;
-  color: #fff;
-}
 .main-navbar ul{
   margin-bottom: 0
 }
@@ -386,7 +408,6 @@ section.products{
 .main-navigation li a.main-link{
   font-weight: 600;
   font-size: 17px;
-  color: #fff;
   line-height: 39px;
   padding: 8px 10px;
 }
@@ -550,11 +571,9 @@ li.google-plus a:hover, li.google a:active{
   font-size: 13px;
 }
 
-
 /**** Footer styles *****/
 .shop-assurance {
-  margin-top: 30px;
-  background-color: #bdc3c7;
+  background-color: #eee;
   padding: 2em 0;
 }
 .shop-assurance ul{
@@ -584,24 +603,43 @@ li.google-plus a:hover, li.google a:active{
   width: auto;
 }
 footer{
-  padding: 3em 0;
-  background: #161e27;
-  color: #fff;
+  padding: 1em 0;
+  color: #373435;
   font-size: 14px;
 }
+footer hr{
+  margin: 10px 0;
+  border-top: 1px dashed #aaa;
+}
 footer a{
-  color: #fff;
+  color: #646464;
 }
 footer a:hover{
   text-decoration: none;
-  color: #1799dd
+  color: #b94a48;
+}
+footer ul, .copyright-footer ul{
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+.payment-gateway h4{
+  margin-bottom: 10px;
 }
 footer h4{
   font-size: 16px;
-  color: #eee;
+  color: #000;
+  margin-bottom: 5px;
+}
+footer h5 {
+  color: #000;
+  margin: 0 0 10px 0;
   display: inline-block;
-  padding-bottom: 5px;
-  border-bottom: 2px solid #2980b9;
+}
+.social-block{
+  display: inline-block;
+}
+.subscribe-block{
+  margin-bottom: 10px;
 }
 .subscribe-block small{
   display: block;
@@ -621,7 +659,7 @@ a.social-links i {
   border: 1px solid  #B4B4B4;
   border-radius: 3px;
   margin: 0 auto 20px auto;
-  background: url(../images/social.png) no-repeat 0 0;
+  background:#373435 url(../images/social.png) no-repeat 0 0;
   -webkit-transition: all ease 0.3s;
   -moz-transition: all ease 0.3s;
   transition: all ease 0.3s;
@@ -675,13 +713,6 @@ a.social-links.youtube i:hover{
   -moz-box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
   -webkit-box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
-}
-.copyright-footer {
-  margin-bottom: -2em;
-}
-.copyright-footer ul{
-  margin: 1em 0 0 0;
-  font-size: 13px;
 }
 /***** Product Page Styles *****/
 div.thumbs-image .addthis-social{
@@ -995,7 +1026,7 @@ form label{
   width: 100%;
 }
 .address-container .well-small.active{
-  background: #eee url(../images/ok.png) no-repeat 97% 5%;;
+  background: #eee url(../images/ok.png) no-repeat 97% 5%;
 }
 span.circle{
   padding: 5px 8px;
@@ -1176,5 +1207,5 @@ h4.account-heading{
   font-weight: 700;
 }
 span.text-success, span.text-warning, span.text-danger, span.text-info{
-  font-weight: 700
+  font-weight: 600
 }

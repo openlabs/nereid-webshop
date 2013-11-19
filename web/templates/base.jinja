@@ -31,103 +31,115 @@
 
     {% block header %}
     <section class="header-main">
-      <div class="flat-header">
-
-        {% block header_row_1 %}
-        <!-- Top Meta Details -->
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <div  class="top-meta">
+      {% block header_row_1 %}
+      <!-- Top Meta Details -->
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div  class="top-meta">
+              <!-- New Offers row -->
+              <div class="new-offers">
+                <a href="">
+                  <small class="btn-danger btn-xs">&nbsp;&nbsp;&nbsp;Offer <i class="fa fa-caret-right"></i>&nbsp;&nbsp;&nbsp;</small>
+                  <span class="text-danger">Additional 30% off </span>on orders above $1199
+                  <span class="pull-right">Use Coupon Code: <small class="text-rounded-border">Shop30</small>
+                    <i class="fa fa-times-circle" title="close"></i>
+                  </span>
+                </a>
+              </div>
+              <div class="row">
                 {% block locales %}
-                <!-- Choose Language -->
-                <div class="btn-group" style="margin-top:3px;">
-                  <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
-                    <img class="flag flag-us"> English &nbsp;<span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href><img class="flag flag-br">&nbsp;Brazil</a></li>
-                    <li><a href><img class="flag flag-in">&nbsp;India</a></li>
-                  </ul>
+                <div class="col-xs-3">
+                  <!-- Choose Language -->
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
+                      <img class="flag flag-us"> English &nbsp;<span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href><img class="flag flag-br">&nbsp;Brazil</a></li>
+                      <li><a href><img class="flag flag-in">&nbsp;India</a></li>
+                    </ul>
+                  </div>
                 </div>
                 {% endblock %}
-
-                <ul class="list-inline pull-right links">
-                  {% block header_links %}
-                  <li><a href="tel:+91 120 6455161">&nbsp;<i class="fa fa-phone"></i> &nbsp; +91 120 6455161</a></li>
-                  <li><a class="register-buttons" data-toggle="modal" href="#login-modal">Login / SignUp</a></li>
-                  {% endblock %}
-                </ul>
+                <div class="col-xs-9">
+                  <ul class="list-inline pull-right links">
+                    {% block header_links %}
+                    <li><a href="tel:+91 120 6455161">&nbsp;<i class="fa fa-phone"></i> &nbsp; +91 120 6455161</a></li>
+                    <li><a class="register-buttons" data-toggle="modal" href="#login-modal">Login / SignUp</a></li>
+                    {% endblock %}
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        {% endblock %}
-
-        {% block header_row_2 %}
-        <div class="container">
-          <div class="row">
-            <div class="col-md-3">
-              {% block logo %}
-              <div class="main-logo">
-                <img src="{{ STATIC }}images/gnacode-logo.png">
-              </div>
-              {% endblock %}
-            </div>
-            <div class="col-md-5 top-search">
-              {% block search %}
-              <div class="input-group">
-                <input type="text" class="form-control">
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="button">Search</button>
-                </span>
-              </div><!-- /input-group -->
-              {% endblock %}
-            </div>
-            <div class="col-md-4 my-account">
-              {% block header_user %}
-              <ul class="list-inline pull-right">
-                <li>
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                      My Account <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">Link 1</a></li>
-                      <li><a href="#">Link 2</a></li>
-                      <li><a href="#">Something else here</a></li>
-                    </ul>
-                  </div>
-                </li>
-                <li>
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                      Wish list <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">Link 1</a></li>
-                      <li><a href="#">Link 2</a></li>
-                    </ul>
-                  </div>
-                </li>
-                <li>
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                      <i class="icon-shopping-cart"></i> <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">Link 1</a></li>
-                      <li><a href="#">Link 2</a></li>
-                    </ul>
-                  </div>
-                </li>
-              </ul>
-              {% endblock %}
-            </div>
-          </div>
-        </div>
-        {% endblock %}
       </div>
+      {% endblock %}
+
+      {% block header_row_2 %}
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            {% block logo %}
+            <div class="main-logo">
+              <img src="{{ STATIC }}images/nereid_cart_logo.png">
+            </div>
+            {% endblock %}
+          </div>
+          <div class="col-md-5 top-search">
+            {% block search %}
+            <div class="input-group">
+              <input type="text" class="form-control">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Search</button>
+              </span>
+            </div><!-- /input-group -->
+            {% endblock %}
+          </div>
+          <div class="col-md-4 my-account">
+            {% block header_user %}
+            <ul class="list-inline pull-right">
+              <li>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    My Account <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Link 1</a></li>
+                    <li><a href="#">Link 2</a></li>
+                    <li><a href="#">Something else here</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    Wish list <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Link 1</a></li>
+                    <li><a href="#">Link 2</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <i class="icon-shopping-cart"></i> <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Link 1</a></li>
+                    <li><a href="#">Link 2</a></li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+            {% endblock %}
+          </div>
+        </div>
+      </div>
+      {% endblock %}
 
       <!--Main Navigation -->
       <div class="main-navbar">
@@ -301,32 +313,46 @@
     <!--Footer Links blocks Starts-->
     <footer>
       <div class="container">
+        <hr>
+        <!--First Row-->
         <div class="row">
+          <!-- Site Navigation and root links -->
           <div class="col-md-7">
             <div class="row">
-              <div class="col-md-4">
-                <h4>Shop</h4>
+              <div class="col-md-3">
+                <h4>Shop By</h4>
                 <ul class="list-unstyled">
                   <li><a href="">Mens</a></li>
                   <li><a href="">Womens</a></li>
                   <li><a href="">Accessories</a></li>
                   <li><a href="">Sale</a></li>
-                  <li><a href="">Accessories &amp; Jewelries</a></li>
                   <li><a href="">Trends</a></li>
-                  <li><a href="">Sale</a></li>
+                  <li><a href="">Style Videos</a></li>
                   <li><a href="">Gift Cards</a></li>
                 </ul>
               </div>
-              <div class="col-md-4">
-                <h4>Customer Service</h4>
+              <div class="col-md-3">
+                <h4>Top Brands</h4>
                 <ul class="list-unstyled">
-                  <li><a href="">Contact Us</a></li>
-                  <li><a href="">Shipping &amp; Delivery</a></li>
-                  <li><a href="">Returns</a></li>
-                  <li><a href="">Order Status</a></li>
+                  <li><a href="">Adidas</a></li>
+                  <li><a href="">Fila </a></li>
+                  <li><a href="">Reebok</a></li>
+                  <li><a href="">Nike</a></li>
+                  <li><a href="">Roadster</a></li>
                 </ul>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
+                <h4>Customer Service</h4>
+                <ul class="list-unstyled">
+                  <li><a href="">FAQ</a></li>
+                  <li><a href="">Shipping </a></li>
+                  <li><a href="">Cancellation</a></li>
+                  <li><a href="">Returns</a></li>
+                  <li><a href="">Bulk Orders</a></li>
+                  <li><a href="">Customer Stories</a></li>
+                </ul>
+              </div>
+              <div class="col-md-3">
                 <h4>About Company</h4>
                 <ul class="list-unstyled">
                   <li><a href="">Our Stories</a></li>
@@ -337,32 +363,35 @@
               </div>
             </div>
           </div>
-          <div class="col-md-5">
-            <div class="row">
-              <h4>Social</h4><br>
+          <!-- Social Links and Subscribe -->
+          <div class="col-md-4 col-md-offset-1">
+            <div class="col-md-12 social-block">
+              <h4>Social</h4>
               <a href="" class="social-links facebook"><i></i></a>
               <a href="" class="social-links twitter"><i></i></a>
               <a href="" class="social-links googleplus"><i></i></a>
               <a href="" class="social-links pinterest"><i></i></a>
               <a href="" class="social-links youtube"><i></i></a>
             </div>
-            <div class="row subscribe-block">
+            <div class="col-md-9 subscribe-block">
               <h5>Sign Up for the Newsletter</h5>
               <!--Subscribe form-->
               <form>
                 <div class="input-group">
                   <input type="text" class="form-control input-lg" placeholder="you@mail.com">
                   <span class="input-group-btn">
-                    <button class="btn btn-primary btn-lg" type="button"><i class="fa fa-plus"></i></button>
+                    <button class="btn btn-danger btn-lg" type="button"><i class="fa fa-plus"></i></button>
                   </span>
                 </div>
               </form>
             </div>
           </div>
         </div>
+        <hr>
+        <!-- Second Row -->
         <div class="row">
           <div class="col-md-8 payment-gateway">
-            <h4>Payment Gateway</h4><br>
+            <h4>Payment Gateway</h4>
             <ul class="list-inline">
               <li>
                 <img src="{{ STATIC }}images/payment-gateway/visa.png">
@@ -388,10 +417,12 @@
             </ul>
           </div>
         </div>
+        <hr>
+        <!-- third row -->
         <div class="row copyright-footer">
           <ul class="list-inline center">
             <li>
-              &copy; GNACODE&nbsp;&nbsp;&nbsp;/
+              &copy; Openlabs&nbsp;&nbsp;&nbsp;/
             </li>
             <li><a href=""> All Rights Reserved</a>&nbsp;&nbsp;&nbsp;/</li>
             <li><a href=""> Privacy Policy</a>&nbsp;&nbsp;&nbsp;/</li>
@@ -410,8 +441,8 @@
     <script src="{{ STATIC }}js/bootstrap.min.js"></script>
 
     {% block script_tags %}
-    <script src="{{ STATIC }}js/holder.js"></script>          
+    <script src="{{ STATIC }}js/holder.js"></script>    
+    <script src="{{ STATIC }}js/app.js"></script>    
     {% endblock %}
-
   </body>
 </html>
