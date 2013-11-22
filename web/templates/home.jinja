@@ -1,5 +1,11 @@
 {% extends 'base.jinja' %}
 
+{% block breadcrumb %}
+{{ super() }}
+<li>
+  <a href="{{ url_for('nereid.website.home') }}">Home</a>
+</li>
+{% endblock %}
 {% block main %}
 <section class="main-banner">
   <div class="container">
@@ -14,8 +20,8 @@
           </ol>
           <!-- Wrapper for slides -->
           <div class="carousel-inner">
-            <div class="item active">
-              <img src="{{ STATIC }}images/sample-img/banner3.jpg" alt="...">
+            <div class="item">
+              <img src="{{ STATIC }}images/sample-img/banner1.jpg" alt="...">
               <div class="carousel-caption">
               </div>
             </div>
@@ -24,8 +30,8 @@
               <div class="carousel-caption">
               </div>
             </div>
-            <div class="item">
-              <img src="{{ STATIC }}images/sample-img/banner1.jpg" alt="...">
+            <div class="item active">
+              <img src="{{ STATIC }}images/sample-img/banner3.jpg" alt="...">
               <div class="carousel-caption">
               </div>
             </div>
@@ -123,4 +129,12 @@
     </div>
   </div>
 </section>
+{% endblock %}
+
+
+{% block script_tags %}
+{{ super() }}
+<script type="text/javascript">
+  $('.container-breadcrumb').hide();
+</script>
 {% endblock %}
