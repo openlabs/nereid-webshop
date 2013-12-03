@@ -1,5 +1,7 @@
 {% extends 'base.jinja' %}
+
 {% from '_helpers.jinja' import render_field %}
+
 {% macro render_delivery_address(address, identifier) %}
   <div class="well well-small" data-address-id="{{ address.id }}">
     <address >
@@ -181,6 +183,7 @@
   </div>
 </section>
 {% endblock %}
+
 {% block script_tags %}
 {{ super() }}
 <script type="text/javascript">
