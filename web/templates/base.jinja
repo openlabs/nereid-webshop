@@ -496,11 +496,10 @@
     <script src="{{ STATIC }}js/holder.js"></script>
     <script src="{{ STATIC }}js/underscore-min.js"></script>
     <script type="text/javascript">
-    $.getJSON("{{ url_for('nereid.website.user_status') }}", function(data){
-      var template = $("#cart-html-append").html();
-      console.log(data.status);
-      $("li.my-cart").html(_.template(template, {'user_status': data.status}));
-    });
+      $.getJSON("{{ url_for('nereid.website.user_status') }}", function(data){
+        var template = $("#cart-html-append").html();
+        $("li.my-cart").html(_.template(template, {'user_status': data.status}));
+      });
     </script>
     {% endblock %}
   </body>

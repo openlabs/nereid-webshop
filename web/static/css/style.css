@@ -507,12 +507,6 @@ section.products{
 .main-navigation li:hover .container{
   display: block;
 }
-.main-navigation li .container.menbg{
-  background: #F7F7F7  url(../images/backgrounds/menbg.png) no-repeat 100% 100%;
-}
-.main-navigation li .container.womenbg{
-  background: #F7F7F7  url(../images/backgrounds/womenbg.png) no-repeat 100% 100%;
-}
 .sticky{
   left: 0;
   right: 0;

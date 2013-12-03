@@ -1,6 +1,9 @@
 {% extends 'base.jinja' %}
+
 {% from '_helpers.jinja' import render_product %}
+
 {% block title %}{{ product.name }}{% endblock %}
+
 {% block extra_head %}
 {{ super() }}
 <!-- og -->
@@ -207,6 +210,7 @@
   </div>
 </div>
 {% endblock %}
+
 {% block script_tags %}
 {{ super() }}
 <script type="text/javascript">
