@@ -1,0 +1,7 @@
+{% block breadcrumb %}
+{{ super() }}
+<li>
+  <span class="divider">/</span>
+  <a href="{{ url_for('nereid.website.sales') }}">{{ _('My order history') }}</a>
+</li>
+{% endblock %}
