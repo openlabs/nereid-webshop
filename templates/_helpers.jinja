@@ -58,3 +58,17 @@
   </a>
 </div>
 {%- endmacro %}
+
+{% macro render_product_list(product, browse_node=None, name=None, description=None) -%}
+  {% set name = name or product.name %}
+  {% set description = description or product.description %}
+  <div class="product-item">
+    <a href="{{ url_for('product.product.render', uri=product.uri, browse_node=(browse_node and browse_node.uri + ',' + browse_node.name or None)) }}">
+      <img src="{{ STATIC }}images/sample-img/formal-shirts/shirt1.jpg">
+      <h4>{{ name|safe }}
+        <span class="brand">{% if product.brand %}by {{ product.brand }}{% endif %}</span>
+      </h4>
+      <span class="product-price">{{ product.sale_price|currencyformat(request.nereid_currency.code) }}</span>
+    </a>
+  </div>
+{% endmacro %}
