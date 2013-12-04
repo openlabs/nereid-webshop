@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="{{ request.nereid_language.code }}">
   <head>
-    {% set STATIC = url_for('static', filename='').split('?')[0] %}
     <title>{% trans %}Nereid Webshop{% endtrans %}-{% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block link_tags %}
     {# This block adds <link> tags to the head section of the template. #}
-    <link href="{{ STATIC }}css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="{{ url_for('nereid.webshop.send_static_file', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
       <script src="js/respond.min.js"></script>
     <![endif]-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="{{ STATIC }}css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ STATIC }}css/style.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/font-awesome.min.css') }}">
     {% endblock %}
     {% block extra_head %}
       {# This block is empty by default and can be used to add extra 
@@ -26,6 +24,7 @@
         See why: http://developer.yahoo.com/performance/rules.html#js_bottom
         #}
     {% endblock %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/style.css') }}">
   </head>
   <body>
 
@@ -66,7 +65,15 @@
                   <ul class="list-inline pull-right links">
                     {% block header_links %}
                     <li><a href="tel:+91 120 6455161">&nbsp;<i class="fa fa-phone"></i> &nbsp; +91 120 6455161</a></li>
-                    <li><a class="register-buttons" data-toggle="modal" href="#login-modal">Login / SignUp</a></li>
+                    <li>
+                      {% if not request.is_guest_user %}
+                      <span class="text-muted">Welcome, </span> <span >{{ request.nereid_user.display_name }}</span>
+                      <a href="{{ url_for('nereid.website.logout') }}"><span class="text-danger"><i class="fa fa-sign-out"></i> Log Out</span>
+                      </a>
+                      {% else %}
+                      <a class="register-buttons" href="{{ url_for('nereid.website.login') }}">Login / SignUp</a>
+                      {% endif %}
+                    </li>
                     {% endblock %}
                   </ul>
                 </div>
@@ -78,12 +85,14 @@
       {% endblock %}
 
       {% block header_row_2 %}
-      <div class="container">
+      <div class="container logo-container">
         <div class="row">
           <div class="col-md-3">
             {% block logo %}
             <div class="main-logo">
-              <img src="{{ STATIC }}images/nereid_cart_logo.png">
+              <a href="{{ url_for('nereid.website.home') }}">
+                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/nereid_cart_logo.png') }}">
+              </a>
             </div>
             {% endblock %}
           </div>
@@ -92,7 +101,7 @@
             <div class="input-group">
               <input type="text" class="form-control">
               <span class="input-group-btn">
-                <button class="btn btn-default" type="button">Search</button>
+                <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
               </span>
             </div><!-- /input-group -->
             {% endblock %}
@@ -102,37 +111,22 @@
             <ul class="list-inline pull-right">
               <li>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    My Account <span class="caret"></span>
-                  </button>
+                  <a type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-user"></i> My Account <span class="caret"></span>
+                  </a>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Link 1</a></li>
-                    <li><a href="#">Link 2</a></li>
-                    <li><a href="#">Something else here</a></li>
+                    {% if not request.is_guest_user %}
+                      <li><a href="{{ url_for('nereid.website.account') }}">Profile</a></li>
+                      <li><a href="">My Orders</a></li>
+                      <li><a href="{{ url_for('nereid.website.logout') }}"><i class="fa fa-sign-out"></i>Logout</a></li>
+                    {% else %}
+                      <li><a class="register-buttons" href="{{ url_for('nereid.website.login') }}">Login / SignUp</a></li>
+                    {% endif %}
                   </ul>
                 </div>
               </li>
-              <li>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    Wish list <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Link 1</a></li>
-                    <li><a href="#">Link 2</a></li>
-                  </ul>
-                </div>
-              </li>
-              <li>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <i class="icon-shopping-cart"></i> <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Link 1</a></li>
-                    <li><a href="#">Link 2</a></li>
-                  </ul>
-                </div>
+              <li class="my-cart">
+                <a href="" class="my-cart-show">My Cart <span class="quantity">0</span></a>
               </li>
             </ul>
             {% endblock %}
@@ -142,11 +136,11 @@
       {% endblock %}
 
       <!--Main Navigation -->
-      <div class="main-navbar">
+      <div class="container sticky">
         {% block main_navigation %}
-        <div class="container main-navigation">
-          <div class="row">
-            <ul class="list-inline col-md-12" id="nav-list">
+        <div class="row main-navigation">
+          <div class="col-md-12">
+            <ul class="list-inline" id="nav-list">
               <li>
                 <a class="main-link" href="">Men</a>
                 <!-- Dropdown Menu Starts-->
@@ -300,10 +294,15 @@
             </ul>
           </div>
         </div>
-      {% endblock %}
+        {% endblock %}
       </div>
     </section>
-
+    <div class="container container-breadcrumb">
+      <ol class="breadcrumb">
+        {% block breadcrumb %}
+        {% endblock %}
+      </ol>
+    </div>
     {% block main %}
     {% endblock %}
 
@@ -317,55 +316,61 @@
         <!--First Row-->
         <div class="row">
           <!-- Site Navigation and root links -->
-          <div class="col-md-7">
-            <div class="row">
-              <div class="col-md-3">
-                <h4>Shop By</h4>
-                <ul class="list-unstyled">
-                  <li><a href="">Mens</a></li>
-                  <li><a href="">Womens</a></li>
-                  <li><a href="">Accessories</a></li>
-                  <li><a href="">Sale</a></li>
-                  <li><a href="">Trends</a></li>
-                  <li><a href="">Style Videos</a></li>
-                  <li><a href="">Gift Cards</a></li>
-                </ul>
-              </div>
-              <div class="col-md-3">
-                <h4>Top Brands</h4>
-                <ul class="list-unstyled">
-                  <li><a href="">Adidas</a></li>
-                  <li><a href="">Fila </a></li>
-                  <li><a href="">Reebok</a></li>
-                  <li><a href="">Nike</a></li>
-                  <li><a href="">Roadster</a></li>
-                </ul>
-              </div>
-              <div class="col-md-3">
-                <h4>Customer Service</h4>
-                <ul class="list-unstyled">
-                  <li><a href="">FAQ</a></li>
-                  <li><a href="">Shipping </a></li>
-                  <li><a href="">Cancellation</a></li>
-                  <li><a href="">Returns</a></li>
-                  <li><a href="">Bulk Orders</a></li>
-                  <li><a href="">Customer Stories</a></li>
-                </ul>
-              </div>
-              <div class="col-md-3">
-                <h4>About Company</h4>
-                <ul class="list-unstyled">
-                  <li><a href="">Our Stories</a></li>
-                  <li><a href="">Origin Story </a></li>
-                  <li><a href="">Careers</a></li>
-                  <li><a href="">Partners</a></li>
-                </ul>
-              </div>
-            </div>
+          <div class="col-md-2">
+            <h4>Categories</h4>
+            <ul class="list-unstyled">
+              <li><a href="">Mens</a></li>
+              <li><a href="">Womens</a></li>
+              <li><a href="">Accessories</a></li>
+              <li><a href="">Sale</a></li>
+              <li><a href="">Trends</a></li>
+              <li><a href="">Style Videos</a></li>
+              <li><a href="">Gift Cards</a></li>
+            </ul>
+          </div>
+          <div class="col-md-2">
+            <h4>Customer Service</h4>
+            <ul class="list-unstyled">
+              <li><a href="">FAQ</a></li>
+              <li><a href="">Shipping </a></li>
+              <li><a href="">Cancellation</a></li>
+              <li><a href="">Returns</a></li>
+              <li><a href="">Bulk Orders</a></li>
+              <li><a href="">Customer Stories</a></li>
+            </ul>
+          </div>
+          <div class="col-md-2">
+            <h4>About Company</h4>
+            <ul class="list-unstyled">
+              <li><a href="">Our Stories</a></li>
+              <li><a href="">Origin Story </a></li>
+              <li><a href="">Careers</a></li>
+              <li><a href="">Partners</a></li>
+            </ul>
+          </div>
+          <div class="col-md-2">
+            <h4>Top Brands</h4>
+            <ul class="list-unstyled">
+              <li><a href="">Adidas</a></li>
+              <li><a href="">Fila </a></li>
+              <li><a href="">Reebok</a></li>
+              <li><a href="">Nike</a></li>
+              <li><a href="">Roadster</a></li>
+            </ul>
+          </div>
+          <div class="col-md-2">
+            <h4>Be Inspired</h4>
+            <ul class="list-unstyled">
+              <li><a href="">Get The Look - Men</a></li>
+              <li><a href="">Get The Look - Women </a></li>
+              <li><a href="">Top 25 Trends</a></li>
+              <li><a href="">Look of the Week</a></li>
+              <li><a href="">Look of the Day</a></li>
+            </ul>
           </div>
           <!-- Social Links and Subscribe -->
-          <div class="col-md-4 col-md-offset-1">
-            <div class="col-md-12 social-block">
+          <div class="col-md-2 social-block">
+            <div class="row">
               <h4>Social</h4>
               <a href="" class="social-links facebook"><i></i></a>
               <a href="" class="social-links twitter"><i></i></a>
@@ -373,17 +378,19 @@
               <a href="" class="social-links pinterest"><i></i></a>
               <a href="" class="social-links youtube"><i></i></a>
             </div>
-            <div class="col-md-9 subscribe-block">
-              <h5>Sign Up for the Newsletter</h5>
-              <!--Subscribe form-->
-              <form>
-                <div class="input-group">
-                  <input type="text" class="form-control input-lg" placeholder="you@mail.com">
-                  <span class="input-group-btn">
-                    <button class="btn btn-danger btn-lg" type="button"><i class="fa fa-plus"></i></button>
-                  </span>
-                </div>
-              </form>
+            <div class="row">
+              <div class="subscribe-block">
+                <h5>Sign Up for the Newsletter</h5>
+                <!--Subscribe form-->
+                <form>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="you@mail.com">
+                    <span class="input-group-btn">
+                      <button class="btn btn-danger" type="button"><i class="fa fa-plus"></i></button>
+                    </span>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
@@ -394,25 +401,25 @@
             <h4>Payment Gateway</h4>
             <ul class="list-inline">
               <li>
-                <img src="{{ STATIC }}images/payment-gateway/visa.png">
+                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/visa.png') }}">
               </li>
               <li>
-                <img src="{{ STATIC }}images/payment-gateway/paypal.png">
+                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/paypal.png') }}">
               </li>
               <li>
-                <img src="{{ STATIC }}images/payment-gateway/mastercard.png">
+                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/mastercard.png') }}">
               </li>
               <li>
-                <img src="{{ STATIC }}images/payment-gateway/solo.png">
+                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/solo.png') }}">
               </li>
               <li>
-                <img src="{{ STATIC }}images/payment-gateway/cirrus.png">
+                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/cirrus.png') }}">
               </li>
               <li>
-                <img src="{{ STATIC }}images/payment-gateway/western-union.png">
+                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/western-union.png') }}">
               </li>
               <li>
-                <img src="{{ STATIC }}images/payment-gateway/american-express.png">
+                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/american-express.png') }}">
               </li>
             </ul>
           </div>
@@ -430,19 +437,69 @@
           </ul>
         </div>
       </div>
-    </footer>    
+    </footer>
+    <script type="text/html"  id='cart-html-append'>
+      <a href="" class="my-cart-show">My Cart <span class="quantity"><%= parseInt(user_status.cart_size) %></span></a>
+      <!-- Drop down cart -->
+      <div class="cart-item">
+        <!-- If cart is empty -->
+        <%
+        if (user_status.cart_size > 0){ %>
+          <div class="cart-total">
+            <span class="pull-left"><%= parseInt(user_status.cart_size) %> Item(s)</span><span class="pull-right"><strong>Subtotal :</strong> <%= user_status.cart.total_amount %> 
+            </span>
+          </div>
+          <%
+            _.each(user_status.cart.lines, function(line, index) { %>
+              <div class="product-details">
+                <div class="row">
+                  <div class="col-xs-3 cart-product-image">
+                    <a href="">
+                      <img src="/static/images/products/tee1.jpg">
+                    </a>
+                  </div>
+                  <div class="col-xs-7 cart-product-name">
+                    <a href=""><%= line.product %>
+                    </a><br>
+                    <span class="text-muted"><%= line.quantity %> * <%= line.amount %></span>
+                  </div>
+                  <div class="col-xs-2 cart-product-total">
+                    <a href="/cart/delete/" title="Remove"><i class="fa fa-trash-o"></i></a>
+                  </div>
+                </div>
+              </div>
+          <%
+            });
+          %>
+          <a href="{{ url_for('nereid.cart.view_cart') }}" class="btn btn-danger pull-right" >Checkout</a>
+        <% } else { %>
+          <div class="empty-cart center">
+            <i class="fa fa-frown-o fa-3x"></i>
+            <h3>hey !</h3>
+            <p>Your shopping cart is empty</p>
+          </div>
+        <% } %>
+      </div>
+    </script>    
     {% endblock %}
     
     <!-- javascript section -->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="{{ STATIC }}js/jquery.min.js"></script>
+    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/jquery.min.js') }}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{{ STATIC }}js/bootstrap.min.js"></script>
+    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/app.js') }}"></script>
 
     {% block script_tags %}
-    <script src="{{ STATIC }}js/holder.js"></script>    
-    <script src="{{ STATIC }}js/app.js"></script>    
+    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/holder.js') }}"></script>
+    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/underscore-min.js') }}"></script>
+    <script type="text/javascript">
+      $.getJSON("{{ url_for('nereid.website.user_status') }}", function(data){
+        var template = $("#cart-html-append").html();
+        $("li.my-cart").html(_.template(template, {'user_status': data.status}));
+      });
+    </script>
     {% endblock %}
   </body>
 </html>

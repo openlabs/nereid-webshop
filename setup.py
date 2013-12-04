@@ -7,6 +7,12 @@ import ConfigParser
 from setuptools import setup
 
 
+def get_files(root):
+    for dirname, dirnames, filenames in os.walk(root):
+        for filename in filenames:
+            yield os.path.join(dirname, filename)
+
+
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
@@ -63,7 +69,9 @@ setup(
     package_data={
         'trytond.modules.nereid_webshop': info.get('xml', [])
                 + ['tryton.cfg', 'locale/*.po', 'tests/*.rst']
-                + ['i18n/*.pot', 'i18n/pt_BR/LC_MESSAGES/*'],
+                + ['i18n/*.pot', 'i18n/pt_BR/LC_MESSAGES/*']
+                + list(get_files("templates/"))
+                + list(get_files("static/")),
     },
     license='GPL-3',
     install_requires=requires,

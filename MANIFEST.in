@@ -1,0 +1,10 @@
+include INSTALL
+include README
+include TODO
+include COPYRIGHT
+include CHANGELOG
+include MIGRATION
+include LICENSE
+include Makefile
+graft templates
+graft static

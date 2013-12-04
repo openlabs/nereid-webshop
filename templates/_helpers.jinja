@@ -1,0 +1,74 @@
+{% macro render_field(field, class_="", show_label=True, input_prepend=None) %}
+  <div class="form-group {% if field.errors %}has-error{% endif %}">
+    {% if show_label %}
+    <label for="{{ field.name }}">{{ field.label.text }}
+      {% if field.flags.required %}<span>*</span>{% endif %}:
+    </label>
+    {% endif %}
+      {% if input_prepend %}
+      <div class="input-group">
+        <span class="input-group-addon"><i class="{{ input_prepend }}"></i></span>
+        {% endif %}
+        {% if field.flags.required %}
+          {% set class_ = class_ + " required" %}
+        {% endif %}
+        {% if field.flags.email %}
+          {% set class_ = class_ + " email" %}
+        {% endif %}
+        {{ field(class_=class_, **kwargs) }}
+        {% if input_prepend %}
+        {# close the input-prepend div if one exists #}
+      </div>
+      {% endif %}
+      {% if field.description %}
+      <span class="help-block"><small>{{ field.description }}</small></span>
+      {% endif %}
+      {% for error in field.errors %}
+      <span class="help-block"><small>{{ error|string }}</small></span>
+      {% endfor %}
+  </div>
+{% endmacro %}
+
+{% macro render_address(address, identifier, edit=True) -%}
+<div class="pull-right">
+  {% if edit %}
+  <a href="{{ url_for('party.address.edit_address', address=address.id) }}" ><i class="fa fa-pencil"></i> Edit</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href=""><i class="fa fa-trash-o"></i> Remove</a>
+  {% endif %}
+</div>
+<address>
+  <strong>{{ address.name }}</strong><br>
+  {{ address.street }}, {{ address.city }}<br>
+  , {{ address.subdivision and address.subdivision.code }} {{ address.zip }}<br>
+  <abbr title="Phone"><i class="fa fa-phone"></i></abbr>: {{ address.phone }}<br/>
+</address>
+{%- endmacro %}
+
+{% macro render_product(product) -%}
+<div class="item">
+  <a href="{{ url_for('product.product.render', uri=product.uri) }}">
+    {% if product.image_sets and product.image_sets[-1].large_image %}
+      <img src="{{ CDN }}{{ product.image_sets[-1] }}" alt="{{ product.name }}" title="{{ product.name }}"/>
+    {% else %}
+      <img src="{{ STATIC }}images/sample-img/formal-shirts/shirt3.jpg" alt=""/>
+    {% endif %}
+    <h4> {{ product.name }}
+      <span class="brand">Black Coffee</span>
+    </h4>
+    <span class="product-price">{{ product.sale_price()|currencyformat(request.nereid_currency.code) }}</span>
+  </a>
+</div>
+{%- endmacro %}
+
+{% macro render_product_list(product, browse_node=None, name=None, description=None) -%}
+  {% set name = name or product.name %}
+  {% set description = description or product.description %}
+  <div class="product-item">
+    <a href="{{ url_for('product.product.render', uri=product.uri, browse_node=(browse_node and browse_node.uri + ',' + browse_node.name or None)) }}">
+      <img src="{{ STATIC }}images/sample-img/formal-shirts/shirt1.jpg">
+      <h4>{{ name|safe }}
+        <span class="brand">{% if product.brand %}by {{ product.brand }}{% endif %}</span>
+      </h4>
+      <span class="product-price">{{ product.sale_price|currencyformat(request.nereid_currency.code) }}</span>
+    </a>
+  </div>
+{% endmacro %}
