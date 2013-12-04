@@ -5,6 +5,12 @@ import re
 import os
 import ConfigParser
 from setuptools import setup
+from itertools import chain
+
+def get_templates(root="templates/"):
+    for dirname, dirnames, filenames in os.walk(root):
+        for filename in filenames:
+            yield os.path.join(dirname, filename)
 
 
 def read(fname):
@@ -65,6 +71,9 @@ setup(
                 + ['tryton.cfg', 'locale/*.po', 'tests/*.rst']
                 + ['i18n/*.pot', 'i18n/pt_BR/LC_MESSAGES/*'],
     },
+    data_files=[
+        ('templates', list(get_templates())),
+    ],
     license='GPL-3',
     install_requires=requires,
     zip_safe=False,
