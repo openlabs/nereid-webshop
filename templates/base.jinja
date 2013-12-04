@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="{{ request.nereid_language.code }}">
   <head>
-    {% set STATIC = url_for('static', filename='').split('?')[0] %}
     <title>{% trans %}Nereid Webshop{% endtrans %}-{% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block link_tags %}
     {# This block adds <link> tags to the head section of the template. #}
-    <link href="{{ STATIC }}css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="{{ url_for('nereid.webshop.send_static_file', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
       <script src="js/respond.min.js"></script>
     <![endif]-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="{{ STATIC }}css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/font-awesome.min.css') }}">
     {% endblock %}
     {% block extra_head %}
       {# This block is empty by default and can be used to add extra 
@@ -25,7 +24,7 @@
         See why: http://developer.yahoo.com/performance/rules.html#js_bottom
         #}
     {% endblock %}
-    <link rel="stylesheet" type="text/css" href="{{ STATIC }}css/style.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/style.css') }}">
   </head>
   <body>
 
@@ -92,7 +91,7 @@
             {% block logo %}
             <div class="main-logo">
               <a href="{{ url_for('nereid.website.home') }}">
-                <img src="{{ STATIC }}images/nereid_cart_logo.png">
+                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/nereid_cart_logo.png') }}">
               </a>
             </div>
             {% endblock %}
@@ -402,25 +401,25 @@
             <h4>Payment Gateway</h4>
             <ul class="list-inline">
               <li>
-                <img src="{{ STATIC }}images/payment-gateway/visa.png">
+                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/visa.png') }}">
               </li>
               <li>
-                <img src="{{ STATIC }}images/payment-gateway/paypal.png">
+                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/paypal.png') }}">
               </li>
               <li>
-                <img src="{{ STATIC }}images/payment-gateway/mastercard.png">
+                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/mastercard.png') }}">
               </li>
               <li>
-                <img src="{{ STATIC }}images/payment-gateway/solo.png">
+                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/solo.png') }}">
               </li>
               <li>
-                <img src="{{ STATIC }}images/payment-gateway/cirrus.png">
+                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/cirrus.png') }}">
               </li>
               <li>
-                <img src="{{ STATIC }}images/payment-gateway/western-union.png">
+                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/western-union.png') }}">
               </li>
               <li>
-                <img src="{{ STATIC }}images/payment-gateway/american-express.png">
+                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/american-express.png') }}">
               </li>
             </ul>
           </div>
@@ -487,14 +486,14 @@
     <!-- javascript section -->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="{{ STATIC }}js/jquery.min.js"></script>
+    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/jquery.min.js') }}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{{ STATIC }}js/bootstrap.min.js"></script>
-    <script src="{{ STATIC }}js/app.js"></script>
+    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/app.js') }}"></script>
 
     {% block script_tags %}
-    <script src="{{ STATIC }}js/holder.js"></script>
-    <script src="{{ STATIC }}js/underscore-min.js"></script>
+    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/holder.js') }}"></script>
+    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/underscore-min.js') }}"></script>
     <script type="text/javascript">
       $.getJSON("{{ url_for('nereid.website.user_status') }}", function(data){
         var template = $("#cart-html-append").html();
