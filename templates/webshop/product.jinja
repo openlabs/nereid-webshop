@@ -1,4 +1,4 @@
-{% extends 'base.jinja' %}
+l{% extends 'base.jinja' %}
 
 {% from '_helpers.jinja' import render_product %}
 
@@ -19,7 +19,6 @@
 <meta property="og:upc" content="{{ code.code }}"/>
 {% endif %}
 {% endfor %}
-<link rel="stylesheet" type="text/css" href="{{ STATIC }}css/owl.carousel.css">
 {% endblock %}
 
 {% block main %}
@@ -209,41 +208,4 @@
     </div>
   </div>
 </div>
-{% endblock %}
-
-{% block script_tags %}
-{{ super() }}
-<script type="text/javascript">
-  $(function(){
-    $('.product-size button').click(function(){
-      $('button').removeClass('active');
-      $(this).addClass('active');
-      $("#size-id").val($(this).data("size-id"));
-    });
-  });
-</script>
-<script type="text/javascript" src="{{ STATIC }}js/owl.carousel.min.js"></script>
-<script type="text/javascript">
-  $(document).ready(function() {
-    $("#product-slide").owlCarousel({
-      autoPlay: 6000, //Set AutoPlay to 3 seconds
-      items : 5,
-      itemsDesktop : [1199,3],
-      itemsDesktopSmall : [979,4],
-      itemsTablet : [768,3],
-      paginationSpeed : 2000,
-      pagination : true
-    });
-  });
-</script>
-<script type="text/javascript">
-  $("#product-buy-now, #add-wishlist").submit(function(){
-    if($("#product-buy-now input#size-id, #add-wishlist input#size-id").attr("value") == null)  
-      {  
-        $("div.product-size").addClass("error")  
-        return false;  
-      }
-    return true;
-  });
-</script>
 {% endblock %}
