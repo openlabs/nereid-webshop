@@ -316,60 +316,20 @@
         <!--First Row-->
         <div class="row">
           <!-- Site Navigation and root links -->
+          {% set bottom_article_categories = ['customer-service', 'about-us', 'contact-us', 'press'] %}
+          {% for category_name in bottom_article_categories %}
           <div class="col-md-2">
-            <h4>Categories</h4>
+            {% set category = get_article_category(category_name) %}
+            <h4>{{ category.title }}</h4>
             <ul class="list-unstyled">
-              <li><a href="">Mens</a></li>
-              <li><a href="">Womens</a></li>
-              <li><a href="">Accessories</a></li>
-              <li><a href="">Sale</a></li>
-              <li><a href="">Trends</a></li>
-              <li><a href="">Style Videos</a></li>
-              <li><a href="">Gift Cards</a></li>
+              {% for article in category.articles %}
+              <li><a href="{{ url_for('nereid.cms.article.render', uri=article.uri) }}">{{ article.title }}</a></li>
+              {% endfor %}
             </ul>
           </div>
-          <div class="col-md-2">
-            <h4>Customer Service</h4>
-            <ul class="list-unstyled">
-              <li><a href="">FAQ</a></li>
-              <li><a href="">Shipping </a></li>
-              <li><a href="">Cancellation</a></li>
-              <li><a href="">Returns</a></li>
-              <li><a href="">Bulk Orders</a></li>
-              <li><a href="">Customer Stories</a></li>
-            </ul>
-          </div>
-          <div class="col-md-2">
-            <h4>About Company</h4>
-            <ul class="list-unstyled">
-              <li><a href="">Our Stories</a></li>
-              <li><a href="">Origin Story </a></li>
-              <li><a href="">Careers</a></li>
-              <li><a href="">Partners</a></li>
-            </ul>
-          </div>
-          <div class="col-md-2">
-            <h4>Top Brands</h4>
-            <ul class="list-unstyled">
-              <li><a href="">Adidas</a></li>
-              <li><a href="">Fila </a></li>
-              <li><a href="">Reebok</a></li>
-              <li><a href="">Nike</a></li>
-              <li><a href="">Roadster</a></li>
-            </ul>
-          </div>
-          <div class="col-md-2">
-            <h4>Be Inspired</h4>
-            <ul class="list-unstyled">
-              <li><a href="">Get The Look - Men</a></li>
-              <li><a href="">Get The Look - Women </a></li>
-              <li><a href="">Top 25 Trends</a></li>
-              <li><a href="">Look of the Week</a></li>
-              <li><a href="">Look of the Day</a></li>
-            </ul>
-          </div>
+          {% endfor %}
           <!-- Social Links and Subscribe -->
-          <div class="col-md-2 social-block">
+          <div class="col-md-{{ 12 - 2 * (bottom_article_categories|length) }} social-block">
             <div class="row">
               <h4>Social</h4>
               <a href="" class="social-links facebook"><i></i></a>
