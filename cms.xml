@@ -12,6 +12,84 @@
             <field name="sequence" eval="10"/>
             <field name="content">Some frequently asked questions</field>
             <field name="category" ref="ac_customer_service"/>
+          </record>
+           <record id="a_shipping" model="nereid.cms.article">
+            <field name="title">Shipping</field>
+            <field name="uri">shipping</field>
+            <field name="sequence" eval="20"/>
+            <field name="content">Some shipping menthods</field>
+            <field name="category" ref="ac_customer_service"/>
+          </record>
+           <record id="a_bulk_order" model="nereid.cms.article">
+            <field name="title">Bulk Order</field>
+            <field name="uri">bulk-order</field>
+            <field name="sequence" eval="30"/>
+            <field name="content">Some content related to bult order</field>
+            <field name="category" ref="ac_customer_service"/>
+        </record>
+        <record id="a_customer_stories" model="nereid.cms.article">
+            <field name="title">Customer Stories</field>
+            <field name="uri">customers-stories</field>
+            <field name="sequence" eval="40"/>
+            <field name="content">Checkout our customer stories</field>
+            <field name="category" ref="ac_customer_service"/>
+        </record>
+        <!-- Create category: About Us-->
+        <record id="ac_about_us" model="nereid.cms.article.category">
+            <field name="title">About Us</field>
+            <field name="unique_name">about-us</field>
+        </record>
+        <record id="a_our_identity" model="nereid.cms.article">
+            <field name="title">Our Identity</field>
+            <field name="uri">our-identity</field>
+            <field name="sequence" eval="10"/>
+            <field name="content">Some thing about the company</field>
+            <field name="category" ref="ac_about_us"/>
+        </record>
+        <record id="a_career" model="nereid.cms.article">
+            <field name="title">Career</field>
+            <field name="uri">career</field>
+            <field name="sequence" eval="20"/>
+            <field name="content">Join us</field>
+            <field name="category" ref="ac_about_us"/>
+        </record>
+        <!-- Create category: Contact Us-->
+        <record id="ac_contact_us" model="nereid.cms.article.category">
+            <field name="title">Contact Us</field>
+            <field name="unique_name">contact-us</field>
+        </record>
+        <record id="a_office_location" model="nereid.cms.article">
+            <field name="title">Office Location</field>
+            <field name="uri">office-location</field>
+            <field name="sequence" eval="10"/>
+            <field name="content">Current office location</field>
+            <field name="category" ref="ac_contact_us"/>
+        </record>
+        <!-- Create category: Press-->
+        <record id="ac_press" model="nereid.cms.article.category">
+            <field name="title">Press</field>
+            <field name="unique_name">press</field>
+        </record>
+           <record id="a_press_realeases" model="nereid.cms.article">
+            <field name="title">Press Realeases</field>
+            <field name="uri">press-realeases</field>
+            <field name="sequence" eval="10"/>
+            <field name="content">Latest press realease</field>
+            <field name="category" ref="ac_press"/>
+        </record>
+        <record id="a_publication" model="nereid.cms.article">
+            <field name="title">Publications</field>
+            <field name="uri">publications</field>
+            <field name="sequence" eval="20"/>
+            <field name="content">Latest publication</field>
+            <field name="category" ref="ac_press"/>
+        </record>
+        <record id="a_media" model="nereid.cms.article">
+            <field name="title">Media</field>
+            <field name="uri">media</field>
+            <field name="sequence" eval="30"/>
+            <field name="content">We are in news</field>
+            <field name="category" ref="ac_press"/>
         </record>
     </data>
 </tryton>
