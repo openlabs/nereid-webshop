@@ -942,7 +942,6 @@ dl.dl-horizontal dd{
   width: 30px;
   height: 30px;
   border: 1px solid #34495e;
-  font-weight: 600;
   color: #2c3e50;
   font-weight: 600;
   border-radius: 50%;
@@ -979,7 +978,7 @@ dl.dl-horizontal dd{
   margin: 10px 0 0 -10px;
   width: 51px;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 400;
   position: absolute;
 }
 .checkout-steps a.active:hover div.text, .checkout-steps a.active div.text:hover{
