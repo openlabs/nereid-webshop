@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tryton>
+    <data>
+        <!-- Create article category: Customer Service -->
+        <record id="ac_customer_service" model="nereid.cms.article.category">
+            <field name="title">Customer Service</field>
+            <field name="unique_name">customer-service</field>
+        </record>
+        <record id="a_faq" model="nereid.cms.article">
+            <field name="title">FAQ</field>
+            <field name="uri">faq</field>
+            <field name="sequence" eval="10"/>
+            <field name="content">Some frequently asked questions</field>
+            <field name="category" ref="ac_customer_service"/>
+        </record>
+    </data>
+</tryton>
