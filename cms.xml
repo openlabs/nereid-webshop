@@ -91,5 +91,31 @@
             <field name="content">We are in news</field>
             <field name="category" ref="ac_press"/>
         </record>
+        <!-- Create category: Help-->
+        <record id="ac_help" model="nereid.cms.article.category">
+            <field name="title">Help</field>
+            <field name="unique_name">help</field>
+        </record>
+        <record id="a_support" model="nereid.cms.article">
+            <field name="title">Support</field>
+            <field name="uri">support</field>
+            <field name="sequence" eval="10"/>
+            <field name="content">Minicube PCR Support</field>
+            <field name="category" ref="ac_help"/>
+        </record>
+         <record id="a_software" model="nereid.cms.article">
+            <field name="title">Software</field>
+            <field name="uri">software</field>
+            <field name="sequence" eval="20"/>
+            <field name="content">Minicube PCR Software</field>
+            <field name="category" ref="ac_help"/>
+        </record>
+         <record id="a_documentation" model="nereid.cms.article">
+            <field name="title">Documentation</field>
+            <field name="uri">documentation</field>
+            <field name="sequence" eval="30"/>
+            <field name="content">Minicube PCR Documentation</field>
+            <field name="category" ref="ac_help"/>
+        </record>
     </data>
 </tryton>
