@@ -5,7 +5,7 @@
 <li>
   <a href="{{ url_for('product.category.render', uri=category.uri) }}">{{ category.name }}</a>
 </li>
-{% endblock %}
+{% endblock breadcrumb %}
 
 {% block main %}
 <section>
@@ -56,8 +56,8 @@
     </div>
   </div>
 </section>
-{% endblock %}
+{% endblock main%}
 
 {% block script_tags %}
 <script src="{{ STATIC }}js/masonry.pkgd.min.js" ></script>
-{% endblock %}
+{% endblock script_tags %}

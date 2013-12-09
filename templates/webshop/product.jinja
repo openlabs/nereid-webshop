@@ -2,7 +2,7 @@
 
 {% from '_helpers.jinja' import render_product %}
 
-{% block title %}{{ product.name }}{% endblock %}
+{% block title %}{{ product.name }}{% endblock title %}
 
 {% block extra_head %}
 {{ super() }}
@@ -19,7 +19,7 @@
 <meta property="og:upc" content="{{ code.code }}"/>
 {% endif %}
 {% endfor %}
-{% endblock %}
+{% endblock extra_head %}
 
 {% block main %}
 <!-- Product Section starts -->
@@ -208,4 +208,4 @@
     </div>
   </div>
 </div>
-{% endblock %}
+{% endblock main %}
