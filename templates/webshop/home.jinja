@@ -5,7 +5,7 @@
 <li>
   <a href="{{ url_for('nereid.website.home') }}">Home</a>
 </li>
-{% endblock %}
+{% endblock breadcrumb %}
 
 {% block main %}
 <section class="main-banner">
@@ -130,7 +130,7 @@
     </div>
   </div>
 </section>
-{% endblock %}
+{% endblock main %}
 
 
 {% block script_tags %}
@@ -138,4 +138,4 @@
 <script type="text/javascript">
   $('.container-breadcrumb').hide();
 </script>
-{% endblock %}
+{% endblock script_tags %}
