@@ -64,7 +64,7 @@
   {% set description = description or product.description %}
   <div class="product-item">
     <a href="{{ url_for('product.product.render', uri=product.uri, browse_node=(browse_node and browse_node.uri + ',' + browse_node.name or None)) }}">
-      <img src="{{ STATIC }}images/sample-img/formal-shirts/shirt1.jpg">
+      <img src="{% if product.large_image %}{{ product.large_image }}{% else %}{{ url_for('nereid.webshop.send_static_file', filename='images/no-image.jpg') }}{% endif %}">
       <h4>{{ name|safe }}
         <span class="brand">{% if product.brand %}by {{ product.brand }}{% endif %}</span>
       </h4>
