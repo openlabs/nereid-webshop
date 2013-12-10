@@ -68,7 +68,7 @@
       <h4>{{ name|safe }}
         <span class="brand">{% if product.brand %}by {{ product.brand }}{% endif %}</span>
       </h4>
-      <span class="product-price">{{ product.sale_price|currencyformat(request.nereid_currency.code) }}</span>
+      <span class="product-price">{{ product.sale_price()|currencyformat(request.nereid_currency.code) }}</span>
     </a>
   </div>
 {% endmacro %}
