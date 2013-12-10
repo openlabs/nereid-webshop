@@ -13,8 +13,12 @@
     <![endif]-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/font-awesome.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/style.css') }}">
     {% endblock link_tags %}
+    
+    {% block base_stylesheet %}
+      <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/style.css') }}">
+    {% endblock base_stylesheet %}
+
     {% block extra_head %}
       {# This block is empty by default and can be used to add extra 
         contents into the <head> tag of the generated HTML file. This is 
@@ -449,9 +453,8 @@
     <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/jquery.min.js') }}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/app.js') }}"></script>
-
     {% block script_tags %}
+    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/app.js') }}"></script>
     <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/holder.js') }}"></script>
     <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/underscore-min.js') }}"></script>
     <script type="text/javascript">
