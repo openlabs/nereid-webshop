@@ -68,10 +68,10 @@ setup(
     },
     package_data={
         'trytond.modules.nereid_webshop': info.get('xml', [])
-                + ['tryton.cfg', 'locale/*.po', 'tests/*.rst']
-                + ['i18n/*.pot', 'i18n/pt_BR/LC_MESSAGES/*']
-                + list(get_files("templates/"))
-                + list(get_files("static/")),
+        + ['tryton.cfg', 'locale/*.po', 'tests/*.rst']
+        + ['i18n/*.pot', 'i18n/pt_BR/LC_MESSAGES/*']
+        + list(get_files("templates/"))
+        + list(get_files("static/")),
     },
     license='GPL-3',
     install_requires=requires,
