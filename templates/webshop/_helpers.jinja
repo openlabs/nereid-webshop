@@ -49,7 +49,7 @@
     {% if product.image_sets and product.image_sets[-1].large_image %}
       <img src="{{ CDN }}{{ product.image_sets[-1] }}" alt="{{ product.name }}" title="{{ product.name }}"/>
     {% else %}
-      <img src="{{ STATIC }}images/sample-img/formal-shirts/shirt3.jpg" alt=""/>
+      <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/no-image.jpg') }}" alt=""/>
     {% endif %}
     <h4> {{ product.name }}
       <span class="brand">Black Coffee</span>
@@ -64,7 +64,11 @@
   {% set description = description or product.description %}
   <div class="product-item">
     <a href="{{ url_for('product.product.render', uri=product.uri, browse_node=(browse_node and browse_node.uri + ',' + browse_node.name or None)) }}">
-      <img src="{% if product.large_image %}{{ product.large_image }}{% else %}{{ url_for('nereid.webshop.send_static_file', filename='images/no-image.jpg') }}{% endif %}">
+      {% if product.image_sets and product.image_sets[-1].large_image %}
+        <img src="{{ CDN }}{{ product.image_sets[-1].large_image.transform_command().thumbnail(160, 160, 'a') }}" alt="{{ product.name }}" title="{{ product.name }}"/>
+      {% else %}
+        <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/no-image.jpg') }}" alt="{{ product.name }}" title="{{ product.name }}"/>
+      {% endif %}
       <h4>{{ name|safe }}
         <span class="brand">{% if product.brand %}by {{ product.brand }}{% endif %}</span>
       </h4>
