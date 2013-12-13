@@ -1,7 +1,6 @@
 {% extends 'base.jinja' %}
-{% from '_helpers.jinja' import render_product_list  %}
 
-{% from '_helpers.jinja' import render_product_list %}
+{% from '_helpers.jinja' import render_pagination, render_product_list  %}
 
 {% block breadcrumb %}
 {{ super() }}
@@ -55,6 +54,7 @@
             {{ render_product_list(product) }}
           {% endfor %}
         </div>
+        {{ render_pagination(products, category.uri, 'product.category.render') }}
       </div>
     </div>
   </div>
