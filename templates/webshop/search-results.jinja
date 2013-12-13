@@ -1,22 +1,19 @@
 {% extends 'base.jinja' %}
 
-{% from 'webshop/_helpers.jinja' import render_list_product with context%}
+{% from 'webshop/_helpers.jinja' import render_product_list with context%}
 
 {% block breadcrumb %}
 {{ super() }}
 <li>
   <a href="{{ url_for('product.product.quick_search', q=request.args.get('q', '')) }}">{% trans %}Search Results{% endtrans %}</a>
 </li>
-{% endblock %}
+{% endblock breadcrumb %}
 
 {% block main %}
 <section>
   <div class="container">
     <!-- category page -->
     <div class="row">
-      <!--Side bar -->
-      <div class="col-md-2">
-      </div>
       <!-- Content bar -->
       <div class="col-md-10 product-list">
         <div class="row">
@@ -36,10 +33,10 @@
         </div>
         <div class="masonry js-masonry"  data-masonry-options='{ "columnWidth": ".category-list", "itemSelector": ".product-item", "isFitWidth": true }'>
           <div class="category-list"></div> 
-          {% for product in resultset.hits %}
-            {{ render_list_product(get_product(product['_id']), name=product['highlight']['name'][0]) }}
+          {% for product in products %}
+            {{ render_product_list(product) }}
           {% endfor %}
-          {% if not resultset.count() %}
+          {% if not products %}
             <div class="alert alert-warning">
               {% trans %}Oops! No Products found for your search criteria. Try with something else.{% endtrans %}
             </div>
@@ -49,8 +46,8 @@
     </div>
   </div>
 </section>
-{% endblock %}
+{% endblock main %}
 
 {% block script_tags %}
 <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/masonry.pkgd.min.js') }}" ></script>
-{% endblock %}
+{% endblock script_tags %}
