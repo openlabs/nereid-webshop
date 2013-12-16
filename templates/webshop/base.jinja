@@ -92,50 +92,50 @@
       {% block header_row_2 %}
       <div class="container logo-container">
         <div class="row">
-          <div class="col-md-3">
-            {% block logo %}
-            <div class="main-logo">
-              <a href="{{ url_for('nereid.website.home') }}">
-                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/nereid_cart_logo.png') }}">
-              </a>
+          {% block logo %}
+            <div class="col-md-3">
+              <div class="main-logo">
+                <a href="{{ url_for('nereid.website.home') }}">
+                  <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/nereid_cart_logo.png') }}">
+                </a>
+              </div>
             </div>
-            {% endblock logo %}
-          </div>
-          <div class="col-md-5 top-search">
-            {% block search %}
-            <div class="input-group">
-              <input type="text" class="form-control">
-              <span class="input-group-btn">
-                <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
-              </span>
-            </div><!-- /input-group -->
-            {% endblock search %}
-          </div>
-          <div class="col-md-4 my-account">
-            {% block header_user %}
-            <ul class="list-inline pull-right">
-              <li>
-                <div class="btn-group">
-                  <a type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-user"></i> My Account <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu" role="menu">
-                    {% if not request.is_guest_user %}
-                      <li><a href="{{ url_for('nereid.website.account') }}">Profile</a></li>
-                      <li><a href="">My Orders</a></li>
-                      <li><a href="{{ url_for('nereid.website.logout') }}"><i class="fa fa-sign-out"></i>Logout</a></li>
-                    {% else %}
-                      <li><a class="register-buttons" href="{{ url_for('nereid.website.login') }}">Login / SignUp</a></li>
-                    {% endif %}
-                  </ul>
-                </div>
-              </li>
-              <li class="my-cart">
-                <a href="" class="my-cart-show">My Cart <span class="quantity">0</span></a>
-              </li>
-            </ul>
-            {% endblock header_user %}
-          </div>
+          {% endblock logo %}
+          {% block search %}
+            <div class="col-md-5 top-search">
+              <div class="input-group">
+                <input type="text" class="form-control">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+                </span>
+              </div><!-- /input-group -->
+            </div>
+          {% endblock search %}
+          {% block header_user %}
+            <div class="col-md-4 my-account">
+              <ul class="list-inline pull-right">
+                <li>
+                  <div class="btn-group">
+                    <a type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-user"></i> My Account <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                      {% if not request.is_guest_user %}
+                        <li><a href="{{ url_for('nereid.website.account') }}">Profile</a></li>
+                        <li><a href="">My Orders</a></li>
+                        <li><a href="{{ url_for('nereid.website.logout') }}"><i class="fa fa-sign-out"></i>Logout</a></li>
+                      {% else %}
+                        <li><a class="register-buttons" href="{{ url_for('nereid.website.login') }}">Login / SignUp</a></li>
+                      {% endif %}
+                    </ul>
+                  </div>
+                </li>
+                <li class="my-cart">
+                  <a href="" class="my-cart-show">My Cart <span class="quantity">0</span></a>
+                </li>
+              </ul>
+            </div>
+          {% endblock header_user %}
         </div>
       </div>
       {% endblock header_row_2 %}
