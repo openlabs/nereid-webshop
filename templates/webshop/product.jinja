@@ -30,14 +30,18 @@
       <div class="col-md-3">
         <ul class="list-inline">
           {% for image_set in product.image_sets %}
-          <li><a href="#tab{{ loop.index }}" data-toggle="tab"><img src="{{ image_set.large_image.transform_command().thumbnail(120, 120) }}"></a></li>
+          <li class="{% if loop.first %}active{% endif %}">
+            <a href="#tab{{ loop.index }}" data-toggle="tab">
+              <img src="{{ image_set.large_image.transform_command().thumbnail(120, 120) }}" alt="{{ image_set.name }}">
+            </a>
+          </li>
           {% endfor %}
         </ul>
       </div>
       <div class="col-md-9">
         <div class="tab-content">
           {% for image_set in product.image_sets %}
-          <div class="tab-pane active" id="tab{{ loop.index }}">
+          <div class="tab-pane {% if loop.first %}active{% endif %}" id="tab{{ loop.index }}">
             <div class="zoom-container">
               <a id="zoom-target" href="{{ image_set.large_image.url }}" target="new">
                 <img class="zoom-image" src="{{ image_set.large_image.transform_command().thumbnail(500, 500) }}" alt=""/>
