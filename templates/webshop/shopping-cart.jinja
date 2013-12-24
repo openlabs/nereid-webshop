@@ -63,16 +63,15 @@
                 <tr>
                   <td>
                     <a href="{{ url_for('product.product.render', uri=line.product.uri) }}">
-                      {% if line.product.image_sets and line.product.image_sets[0].thumbnail_image %}
-                        <img src="{{ line.product.image_sets[0].thumbnail_image.url }}" alt="{{ line.product.name }}">
+                      {% if line.product.image_sets and line.product.image_sets[0].large_image %}
+                        <img src="{{ line.product.image_sets[0].large_image.transform_command().thumbnail(100, 100) }}" alt="{{ line.product.name }}">
                       {% else %}
                         <img src="{{ STATIC }}images/products/tee1.jpg" alt="{{ line.product.name }}"></a>
                       {% endif %}
                     </td>
                   <td>
                     <a href="{{ url_for('product.product.render', uri=line.product.uri) }}" class="product-name">{{ line.product.name }} </a><br>
-                    <strong class="text-muted">SIZE : </strong> L
-                    <strong class="text-muted">COLOR :</strong> Blue
+                    <strong class="text-muted">Variation : </strong> {{ line.product.code }}
                   </td>
                   <td>
                     {{ line.unit_price|currencyformat(currency) }}
@@ -107,6 +106,8 @@
             <a href="{{ url_for('nereid.cart.clear_cart') }}" class="btn btn-default" data-original-title="" title=""><i class="fa fa-times"></i> Clear Cart</a>
           </div>
           <div class="col-md-6">
+            {% if cart.sale.coupon %}
+            {# if the promotions module is installed #}
             <form>
               <div class="col-xs-4">
                 <label for="" class="">Have a Coupon ?</label>
@@ -118,6 +119,7 @@
               <a class="btn btn-default btn-sm" data-original-title="" title="">Apply</a>
               </div>
             </form>
+            {% endif %}
           </div>
         </div>
         <!--Item Total-->
@@ -127,10 +129,18 @@
             <dl class="dl-horizontal">
             <dt>Cart Total</dt>
             <dd>{{ cart.sale.untaxed_amount|currencyformat(currency) }}</dd>
+            <dt>Tax Total</dt>
+            <dd>{{ cart.sale.tax_amount|currencyformat(currency) }}</dd>
+
+            {# 
+            
+            ** Examples of line formatting **
             <dt>Delivery (<span class="text-success">Free</span>)</dt>
             <dd><span class="text-success">$ 0</span></dd>
             <dt>Coupon Discount</dt>
             <dd>$ 0</dd>
+            #}
+
             <dt class="cart-total-sum">TOTAL</dt>
             <dd class="cart-total-sum">{{ cart.sale.untaxed_amount|currencyformat(currency) }}</dd>
           </dl>

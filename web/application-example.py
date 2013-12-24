@@ -21,6 +21,14 @@ CONFIG = dict(
 
     # The location where the translations of this template are stored
     TRANSLATIONS_PATH='i18n',
+
+    # Secret Key: Replace this with something random
+    # A good way to generate such a number would be
+    #
+    # >>> import os
+    # >>> os.urandom(20)
+    #
+    SECRET_KEY='\xcd\x04}\x8d\\j-\x98b\xf2'
 )
 
 # Create a new application
@@ -28,6 +36,7 @@ app = Nereid(static_folder='%s/static/' % CWD, static_url_path='/static')
 
 # Update the configuration with the above config values
 app.config.update(CONFIG)
+
 
 # Initialise the app, connect to cache and backend
 app.initialise()

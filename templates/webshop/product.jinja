@@ -29,22 +29,22 @@
     <div class="col-md-5 thumbs-image">
       <div class="col-md-3">
         <ul class="list-inline">
-          <li><a href="#tab1" data-toggle="tab"><img src="images/products/tee1.jpg"></a></li>
-          <li><a href="#tab2" data-toggle="tab"><img src="images/products/tee2.jpg"></a></li>
+          {% for image_set in product.image_sets %}
+          <li><a href="#tab{{ loop.index }}" data-toggle="tab"><img src="{{ image_set.large_image.transform_command().thumbnail(120, 120) }}"></a></li>
+          {% endfor %}
         </ul>
       </div>
       <div class="col-md-9">
         <div class="tab-content">
-          <div class="tab-pane active" id="tab1">
+          {% for image_set in product.image_sets %}
+          <div class="tab-pane active" id="tab{{ loop.index }}">
             <div class="zoom-container">
-              <a id="zoom-target" href="images/products/tee1.jpg">
-                <img class="zoom-image" src="images/products/tee1.jpg" alt=""/>
+              <a id="zoom-target" href="{{ image_set.large_image.url }}" target="new">
+                <img class="zoom-image" src="{{ image_set.large_image.transform_command().thumbnail(500, 500) }}" alt=""/>
               </a>
             </div>
           </div>
-          <div class="tab-pane" id="tab2">
-            <img src="images/products/tee2.jpg">
-          </div>
+          {% endfor %}
         </div>
       </div>
       <!--Add this plugin -->
@@ -67,7 +67,7 @@
       </div>
     </div>
     <div class="col-md-7">
-      <h4 class="product-heading">{{ product.name }}</h4>
+      <h4 class="product-heading">{{ product.rec_name }}</h4>
       {% set sale_price = product.sale_price(1) %}
       {% if sale_price < product.list_price %}
       <h3 class="product-price">
@@ -78,16 +78,20 @@
       <h3 class="product-price">{{ sale_price|currencyformat(request.nereid_currency.code) }}</h3>
       {% endif %}
 
-      <div class="product-size"> Select Size : <br>
+      {% if product.template.products|length > 1 %}
+      {# show if there are more variants than the one being displayed #}
+      <div class="product-size"> Select Variation : <br>
         <div class="size-buttons">
-          <button class="btn btn-size disabled" type="radio" value="">S</button>
-          <button class="btn btn-size" name="size" type="radio" data-size-id="M">M</button>
-          <button class="btn btn-size" name="size" type="radio" data-size-id="L">L</button>
-          <button class="btn btn-size" name="size" type="radio" data-size-id="XL">XL</button>
-          <button class="btn btn-size" name="size" type="radio" data-size-id="XXL">XXL</button>
+          {% for variant in product.template.products %}
+          <a class="btn btn-size"
+            href="{{ url_for('product.product.render', uri=variant.uri) }}"
+            type="radio" value="{{ variant.id }}">{{ variant.code }}</a>
+          {% endfor %}
         </div>
         <span class="error-text text-danger"> Please Select Size</span>
       </div>
+      {% endif %}
+
       <div class="buy-now">
         <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now">
           <input type="hidden" name="quantity" value="1"/>
@@ -96,13 +100,18 @@
           <input type="hidden" name="action" value="add"/>
           <button class="btn btn-danger" type="submit" quantity="1">Buy Now</button>
         </form>
-        <form action="{{ url_for("product.product.add_to_wishlist") }}" id="add-wishlist" method="post">
+        {#
+
+        *** Activate this once the wishlist module is done ***
+
+      	<form action="{{ url_for("product.product.add_to_wishlist") }}" id="add-wishlist" method="post">
           <input type="hidden" name="quantity" value="1"/>
           <input type="hidden" name="size" id="size-id"/>
           <input type="hidden" name="product" value="{{ product.id }}"/>
           <input type="hidden" name="action" value="add"/>
           <button type="submit" class="btn btn-link"><i class="fa fa-heart"></i> Add to Wishlist</button>
         </form>
+        #}
       </div>
     </div>
   </div>
@@ -111,21 +120,6 @@
     <div class="col-md-12 product-desc">
       <h4 class="main-heaidng">Product Description</h5>
       <p>{{ product.description|safe or '' }}</p>
-      <h4> T-Shirt Details</h4>
-      <dl class="dl-horizontal">
-        <dt>Type</dt>
-        <dd>Round Neck</dd>
-        <dt>Fabric</dt>
-        <dd>100% Cotton</dd>
-        <dt>Fit</dt>
-        <dd>Comfort Fit</dd>
-        <dt>Style</dt>
-        <dd>Simple</dd>
-        <dt>Sleeve</dt>
-        <dd>Half Sleeve</dd>
-      </dl>
-      <h4>Fabric Care</h4>
-      <p>Low Iron at Medium Setting, Wash Inside out with Similar Colors, Dry Clean, Tumble Dry at Low Heat, Machine or Hand Wash at 30°C, Do Not Bleach, Do Not Iron on Print or Embellishments, Dry Inside out in Shade</p>
     </div>
   </div>
   <hr>
@@ -143,59 +137,18 @@
     <div class="tab-pane active" id="recommended-products">
       <div class="col-md-10 col-md-offset-1">
         <div id="product-slide">
+          {% for recommended_product in product.recommended_products %}
+          {# FIXME #}
           <div class="item">
             <a href="">
               <img src="{{ STATIC }}images/sample-img/formal-shirts/shirt1.jpg" />
-              <h4> White Striped Slim Fit Formal Shirt
+              <h4> {{ recommended_product.name }}
                 <span class="brand">Black Coffee</span>
               </h4>
               <span class="product-price">$ 25.99</span>
             </a>
           </div>
-          <div class="item">
-            <a href="">
-              <img src="{{ STATIC }}images/sample-img/formal-shirts/shirt2.jpg" />
-              <h4> White Striped Slim Fit Formal Shirt
-                <span class="brand">Black Coffee</span>
-              </h4>
-              <span class="product-price">$ 25.99</span>
-            </a>
-          </div>
-          <div class="item">
-            <a href="">
-              <img src="{{ STATIC }}images/sample-img/formal-shirts/shirt3.jpg" />
-              <h4> White Striped Slim Fit Formal Shirt
-                <span class="brand">Black Coffee</span>
-              </h4>
-              <span class="product-price">$ 25.99</span>
-            </a>
-          </div>
-          <div class="item">
-            <a href="">
-              <img src="{{ STATIC }}images/sample-img/formal-shirts/shirt6.jpg" />
-              <h4> White Striped Slim Fit Formal Shirt
-                <span class="brand">Black Coffee</span>
-              </h4>
-              <span class="product-price">$ 25.99</span>
-            </a>
-          </div>
-          <div class="item">
-            <a href="">
-              <img src="{{ STATIC }}images/sample-img/formal-shirts/shirt4.jpg" />
-              <h4> White Striped Slim Fit Formal Shirt
-                <span class="brand">Black Coffee</span>
-              </h4>
-              <span class="product-price">$ 25.99</span>
-            </a>
-          </div>
-          <div class="item">
-            <a href="">
-              <img src="{{ STATIC }}images/sample-img/formal-shirts/shirt5.jpg" />
-              <h4> White Striped Slim Fit Formal Shirt
-                <span class="brand">Black Coffee</span>
-              </h4>
-              <span class="product-price">$ 25.99</span>
-            </a>
+          {% endfor %}
           </div>
         </div>
       </div>
