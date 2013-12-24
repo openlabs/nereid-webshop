@@ -41,14 +41,26 @@ Step 3: Setup Database
 ```````````````````````
 
 The module should now be available on the modules list and can be
-installed into any database
+installed into any database. Setup a website as shown below:
 
+.. image:: doc/website.png
+
+
+You will have to create a guest user for nereid. The guest user would be
+the user which would be available in the context when there are no users
+logged into the website.
+
+Ensure that you have the following too:
+
+  * A pricelist
+  * A payment_term
 
 Step 4: Create an application script
 ````````````````````````````````````
 
 Create an `application.py` script which could lauch the application. A
-reference is provided in the web folder (`application-example.py`).
+reference is provided in the web folder (`application-example.py
+<web/application-example.py>`_).
 
 In most cases the only changes you may need are:
 
@@ -59,8 +71,12 @@ In most cases the only changes you may need are:
 You should now be able to run the development server by running the
 application using::
 
-  cd web
   python application.py
+
+On pointing the browser to `localhost:5000 <http://localhost:5000/>`_ you
+should be able to see the home page.
+
+.. image:: doc/homepage.png
 
 Step 5: Production Deployment
 `````````````````````````````
