@@ -1,7 +1,22 @@
+{% extends 'article-category.jinja' %}
+
 {% block breadcrumb %}
-{{ super() }}
 <li>
-  <span class="divider">/</span>
-  <a href="{{ url_for('nereid.website.sales') }}">{{ _('My order history') }}</a>
+  {{ article.title }}
 </li>
 {% endblock breadcrumb %}
+
+{% block main %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>{{ article.title }}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+    <p>{{ article.content }}</p>
+    </div>
+  </div>
+</div>
+{% endblock main %}
