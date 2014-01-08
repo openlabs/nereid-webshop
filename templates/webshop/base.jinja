@@ -148,156 +148,28 @@
         <div class="row main-navigation">
           <div class="col-md-12">
             <ul class="list-inline" id="nav-list">
+              {% for category in root_categories() %}
               <li>
-                <a class="main-link" href="">Men</a>
+                <a class="main-link" href="{{ url_for('product.category.render', uri=category.id) }}">{{ category.name }}</a>
+                {% if category.childs %}
                 <!-- Dropdown Menu Starts-->
                 <div class="container menbg">
                   <div class="row">
+                    {% for child in category.childs %}
                     <div class="col-md-2">
                       <ul class="list-unstyled">
-                        <li><a href=""><strong>Men's Footwear</strong></a></li>
-                        <li><a href="">Casual Shoes</a></li>
-                        <li><a href="">Sports Shoes</a></li>
-                        <li><a href="">Formal Shoes</a></li>
-                        <li><a href="">Slipper's &amp; Flip Flops</a></li>
+                        <li><a href="{{ url_for('product.category.render', uri=child.id) }}"><strong>{{ child.name }}</strong></a></li>
+                        {% for grandchild in child.childs %}
+                        <li><a href="{{ url_for('product.category.render', uri=grandchild.id) }}">{{ grandchild.name }}</a></li>
+                        {% endfor %}
                       </ul>
                     </div>
-                    <div class="col-md-2">
-                      <ul class="list-unstyled">
-                        <li><a href=""><strong>Men's Clothing</strong></a></li>
-                        <li><a href="">T-Shirts</a></li>
-                        <li><a href="">Casual Shirts </a></li>
-                        <li><a href="">Formal Shirts </a></li>
-                        <li><a href="">Sports Shirts</a></li>
-                        <li><a href="">T-Shirts</a></li>
-                        <li><a href="">Polos</a></li>
-                        <li><a href="">Jeans</a></li>
-                        <li><a href="">Trousers</a></li>
-                        <li><a href="">Capri</a></li>
-                      </ul>
-                    </div>
-                    <div class="col-md-2">
-                      <ul class="list-unstyled">
-                        <li><a href=""><strong>Men's Accessories</strong></a></li>
-                        <li><a href="">Bags &amp; Backpacks</a></li>
-                        <li><a href="">Belt</a></li>
-                        <li><a href="">Caps &amp; Hats</a></li>
-                        <li><a href="">Fragrances &amp; Deos</a></li>
-                        <li><a href="">Jewellery</a></li>
-                        <li><a href="">Sunglasses</a></li>
-                        <li><a href="">Scarves &amp; Mufflers</a></li>
-                        <li><a href="">Wallets</a></li>
-                        <li><a href="">Watches</a></li>
-                      </ul>
-                    </div>
+                    {% endfor %}
                   </div>
                 </div>
+                {% endif %}
               </li>
-              <li>
-                <a class="main-link" href="">Women</a>
-                <!-- Dropdown Menu Starts-->
-                <div class="container womenbg">
-                  <div class="row">
-                    <div class="col-md-2">
-                      <ul class="list-unstyled">
-                        <li><a href=""><strong>Women's Footwear</strong></a></li>
-                        <li><a href="">Casual Shoes</a></li>
-                        <li><a href="">Sports Shoes</a></li>
-                        <li><a href="">Formal Shoes</a></li>
-                        <li><a href="">Slipper's &amp; Flip Flops</a></li>
-                      </ul>
-                    </div>
-                    <div class="col-md-2">
-                      <ul class="list-unstyled">
-                        <li><a href=""><strong>Women's Clothing</strong></a></li>
-                        <li><a href="">T-Shirts</a></li>
-                        <li><a href="">Casual Shirts </a></li>
-                        <li><a href="">Formal Shirts </a></li>
-                        <li><a href="">Sports Shirts</a></li>
-                        <li><a href="">T-Shirts</a></li>
-                        <li><a href="">Polos</a></li>
-                        <li><a href="">Jeans</a></li>
-                        <li><a href="">Trousers</a></li>
-                        <li><a href="">Capri</a></li>
-                      </ul>
-                    </div>
-                    <div class="col-md-2">
-                      <ul class="list-unstyled">
-                        <li><a href=""><strong>Women's Accessories</strong></a></li>
-                        <li><a href="">Bags &amp; Backpacks</a></li>
-                        <li><a href="">Belt</a></li>
-                        <li><a href="">Caps &amp; Hats</a></li>
-                        <li><a href="">Fragrances &amp; Deos</a></li>
-                        <li><a href="">Jewellery</a></li>
-                        <li><a href="">Sunglasses</a></li>
-                        <li><a href="">Scarves &amp; Mufflers</a></li>
-                        <li><a href="">Wallets</a></li>
-                        <li><a href="">Watches</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <a class="main-link" href="">Accessories</a>
-                <!-- Dropdown Menu Starts-->
-                <div class="container">
-                  <div class="row">
-                    <div class="col-md-2">
-                      <ul class="list-unstyled">
-                        <li><a href=""><strong>Women's Footwear</strong></a></li>
-                        <li><a href="">Casual Shoes</a></li>
-                        <li><a href="">Sports Shoes</a></li>
-                        <li><a href="">Formal Shoes</a></li>
-                        <li><a href="">Slipper's &amp; Flip Flops</a></li>
-                      </ul>
-                    </div>
-                    <div class="col-md-2">
-                      <ul class="list-unstyled">
-                        <li><a href=""><strong>Women's Clothing</strong></a></li>
-                        <li><a href="">T-Shirts</a></li>
-                        <li><a href="">Casual Shirts </a></li>
-                        <li><a href="">Formal Shirts </a></li>
-                        <li><a href="">Sports Shirts</a></li>
-                        <li><a href="">T-Shirts</a></li>
-                        <li><a href="">Polos</a></li>
-                        <li><a href="">Jeans</a></li>
-                        <li><a href="">Trousers</a></li>
-                        <li><a href="">Capri</a></li>
-                      </ul>
-                    </div>
-                    <div class="col-md-2">
-                      <ul class="list-unstyled">
-                        <li><a href=""><strong>Women's Accessories</strong></a></li>
-                        <li><a href="">Bags &amp; Backpacks</a></li>
-                        <li><a href="">Belt</a></li>
-                        <li><a href="">Caps &amp; Hats</a></li>
-                        <li><a href="">Fragrances &amp; Deos</a></li>
-                        <li><a href="">Jewellery</a></li>
-                        <li><a href="">Sunglasses</a></li>
-                        <li><a href="">Scarves &amp; Mufflers</a></li>
-                        <li><a href="">Wallets</a></li>
-                        <li><a href="">Watches</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <a class="main-link" href="">Kids</a>
-              </li>
-              <li>
-                <a class="main-link" href="">Brands</a>
-              </li>
-              <li>
-                <a class="main-link" href="">Trends</a>
-              </li>
-              <li>
-                <a class="main-link" href="">Sale</a>
-              </li>
-              <li>
-                <a class="main-link" href="">Style Videos</a>
-              </li>
+              {% endfor %}
             </ul>
           </div>
         </div>
