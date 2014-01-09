@@ -150,7 +150,7 @@
             <ul class="list-inline" id="nav-list">
               {% for category in root_categories() %}
               <li>
-                <a class="main-link" href="{{ url_for('product.category.render', uri=category.id) }}">{{ category.name }}</a>
+                <a class="main-link" href="{{ url_for('product.category.render', uri=category.uri) }}">{{ category.name }}</a>
                 {% if category.childs %}
                 <!-- Dropdown Menu Starts-->
                 <div class="container menbg">
