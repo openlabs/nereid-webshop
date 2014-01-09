@@ -158,9 +158,9 @@
                     {% for child in category.childs %}
                     <div class="col-md-2">
                       <ul class="list-unstyled">
-                        <li><a href="{{ url_for('product.category.render', uri=child.id) }}"><strong>{{ child.name }}</strong></a></li>
+                        <li><a href="{{ url_for('product.category.render', uri=child.uri) }}"><strong>{{ child.name }}</strong></a></li>
                         {% for grandchild in child.childs %}
-                        <li><a href="{{ url_for('product.category.render', uri=grandchild.id) }}">{{ grandchild.name }}</a></li>
+                        <li><a href="{{ url_for('product.category.render', uri=grandchild.uri) }}">{{ grandchild.name }}</a></li>
                         {% endfor %}
                       </ul>
                     </div>
