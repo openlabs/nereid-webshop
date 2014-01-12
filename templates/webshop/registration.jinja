@@ -1,5 +1,7 @@
 {% extends 'base.jinja' %}
 
+{% from '_helpers.jinja' import render_field %}
+
 {% block main %}
 <section>
   <div class="container">
@@ -14,9 +16,10 @@
             <div class="row">
               <div class="col-md-5">
                 <form class="register-form" method="POST" action="{{ url_for('nereid.user.registration') }}">
-                  <input type="email" class="form-control input-lg" placeholder="Enter your E-mail address" name="email" required>
-                  <input type="password" class="form-control input-lg" placeholder="Your Password" name="password" required>
-                  <input type="text" class="form-control input-lg" placeholder="Mobile Number" name="mobileno" required>
+                  {{ render_field(form.name) }}
+                  {{ render_field(form.email) }}
+                  {{ render_field(form.password) }}
+                  {{ render_field(form.confirm) }}
                   <button type="submit" class="btn btn-lg btn-block">Register</button>
                 </form>
               </div>

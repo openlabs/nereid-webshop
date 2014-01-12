@@ -1,0 +1,113 @@
+{% extends 'checkout/base.jinja' %}
+
+{% from '_helpers.jinja' import render_field %}
+
+{% block main %}
+<section class="checkout-container">
+  <div class="container">
+
+    <!-- Checkout Step Indicator -->
+    {{ checkout_breadcrumb(3) }}
+
+    <!--Delivery Address Selection -->
+    <div class="row delivery-address">
+      <div class="col-md-10 col-md-offset-1">
+        <h4><span>Billing Address</span></h4>
+        <div class="col-md-8">
+          <div class="address-container">
+            {% if not request.is_guest_user and addresses %}
+            <h4><span>Choose from an existing address below</span></h4>
+            <div class="row">
+              {% for address in addresses %}
+              <div class="col-md-6">
+                <div class="well well-small" data-address-id="{{ address.id }}">
+                {{ render_address(address, edit=False) }}
+                </div>
+                <form role="form" method="POST">
+                  <input type="hidden" name="address" value="{{ address.id }}"/>
+                  <button type="submit" class="btn btn-primary pull-right">
+                    Use this address&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                </button>
+                </form>
+              </div>
+              {% endfor %}
+            </div>
+
+            {#
+            <!-- On selecting address this input field will have id of selected address -->
+            <input type="hidden" class="form-control" name="address" id="address-id"> 
+            <div class="row">
+              <div class="col-md-6 pull-right">
+                <a href="checkout-step-three.html" class="btn btn-primary pull-right">
+                  Proceed to Payment&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                </a>
+              </div>
+            </div>
+            #}
+
+            <div class="row center">
+              <div class="or"><span class="circle">or</span></div>
+            </div>
+            {% endif %}
+
+            <h4>
+              {% if addresses %}
+              <span>Add a new address below</span>
+              {% else %}
+              <span>Enter your billing address</span>
+              {% endif %}
+            </h4>
+            <!-- Add new address form -->
+            <form role="form" method="POST">
+              {{ render_field(address_form.name) }}
+              {{ render_field(address_form.street) }}
+              {{ render_field(address_form.streetbis) }}
+              {{ render_field(address_form.zip) }}
+              {{ render_field(address_form.city) }}
+              {{ render_field(address_form.country) }}
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="exampleInputEmail1">State *</label>
+                  <select class="form-control" id="subdivision" name="subdivision">
+                  </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary pull-right">
+                  Proceed to Payment&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Cart Summary -->
+        {{ cart_summary() }}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main %}
+
+{% block scripts %}
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+  // Register on change event
+
+  $("select#country").change(function(){
+    $.getJSON("{{ url_for('nereid.website.subdivision_list') }}",
+      {country: $(this).val()}, function(data){
+      var options = '';
+      $.each(data.result, function(index, map){
+          options += '<option value="' + map.id + '" code="' + map.code + '">' + map.name + '</option>';
+      });
+      $("select#subdivision").html(options);
+      $("select#subdivision option[value='{{ address_form.subdivision.data }}']").attr('selected', true);
+    });
+  });
+
+ // Onload trigger the change as country comes packed with form
+  $("select#country").triggerHandler("change")
+
+});
+</script>
+{% endblock  scripts %}

@@ -17,6 +17,7 @@
             <li><a>My Credits</a></li>
           </ul>
         </div>
+
         <!--My Orders-->
         <div class="row">
           <h4 class="account-heading">My Orders</h4>
@@ -38,12 +39,13 @@
               <tbody>
                 {% for sale in sales %}
                 <tr>
-                  <td><a href="">123456</a></td>
-                  <td class="orderd-products">
-                    <a href="" class="product-name">United Colors of Benetton </a><br>
-                    <span class="text-muted">Size : </span> L <span class="text-muted">Qty : </span> 2 <br>
-                    <a href="" class="product-name">United Colors of Benetton </a><br>
-                    <span class="text-muted">Size : </span> L <span class="text-muted">Qty : </span> 2 <br>
+                  <td><a href="">{{ sale.reference }}</a></td>
+                  <td class="orderd-products"> 
+                    {% for line in sale.lines %}              
+                    <a href="" class="product-name">line.description </a><br>
+                    {#<span class="text-muted">Size : </span> L#}
+                    <span class="text-muted">Qty : </span> {{ line.quantity }}<br>
+                    {% endfor %}
                   </td>
                   <td>
                     {{ sale.total_amount|currencyformat(sale.currency.code) }}
@@ -55,12 +57,14 @@
                     <span class="{% if sale.state ==  "done" %}text-success{% elif sale.state == "confirmed" %}text-info{% elif sale.state == "cancel" %}text-danger{% endif %}">{{ sale.state }}</span>                     
                   </td>
                   <td class="action">
+                    {#
                     <span>
                       <a href="">
                         Return
                       </a> / 
                       <a href="">Exchange </a>
                     </span>
+                    #}
                   </td>
                 </tr>
                 {% endfor %}
