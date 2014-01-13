@@ -25,10 +25,10 @@
               <tbody>
                 {% for sale in sales %}
                 <tr>
-                  <td><a href="">{{ sale.reference }}</a></td>
+                  <td><a href="{{ url_for('sale.sale.render', active_id=sale.id) }}">#{{ sale.reference }}</a></td>
                   <td class="orderd-products"> 
                     {% for line in sale.lines %}              
-                    <a href="" class="product-name">line.description </a><br>
+                    <a href="{{ url_for('product.product.render', uri=line.product.uri) }}" class="product-name">{{ line.description }}</a><br>
                     {#<span class="text-muted">Size : </span> L#}
                     <span class="text-muted">Qty : </span> {{ line.quantity }}<br>
                     {% endfor %}
