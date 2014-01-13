@@ -1,4 +1,4 @@
-{% extends 'base.jinja' %}
+{% extends 'account-base.jinja' %}
 
 {% from '_helpers.jinja' import render_address %}
 
@@ -8,95 +8,81 @@
   <div class="container">
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
-        <div class="row">
-          <h3>My Account / Orders</h3>
-          <!-- Navigation tabs of my account -->
-          <ul class="list-inline account-links">
-            <li><a href="{{ url_for('nereid.website.account') }}">Profile</a></li>
-            <li class="active"><a href="{{ url_for('nereid.website.sales') }}">Orders</a></li>
-            <li><a >Wishlist</a></li>
-            <li><a href="{{ url_for('party.address.view_address') }}">Address Book</a></li>
-            <li><a>My Credits</a></li>
-          </ul>
-        </div>
+
+        {{ account_header(_('My Account') + "Order #" + sale.reference, 'orders') }}
 
         <!--My Orders-->
-        <div class="row">
-          <h4 class="account-heading">Order #{{ sale.reference }}</h4>
-        </div>
         <div class="row cart-table">
+          <div class="row-fluid">
+            <div class="col-md-6">
+              <div class="page-header">
+                <h4>Invoice Address</h4>
+              </div>
+              {{ render_address(sale.invoice_address, edit=False) }}
+            </div>
+            <div class="col-md-6 pull-right">
+              <div class="page-header">
+                <h4>Shipment Address</h4>
+              </div>
+              {{ render_address(sale.shipment_address, edit=False) }}
+            </div>
+          </div>
 
-<div class="row-fluid">
-  <div class="col-md-6">
-    <div class="page-header">
-      <h4>Invoice Address</h4>
-    </div>
-    {{ render_address(sale.invoice_address, edit=False) }}
-  </div>
-  <div class="col-md-6 pull-right">
-    <div class="page-header">
-      <h4>Shipment Address</h4>
-    </div>
-    {{ render_address(sale.shipment_address, edit=False) }}
-  </div>
-</div>
-
-<div class="row-fluid">
-  <div class="page-header">
-    <h4>Order Details</h4>
-  </div>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Description</th>
-        <th>Ordered Quantity</th>
-        <th>Shipments</th>
-        <th>Unit Price</th>
-        <th>Sub Total</th>
-      </tr>
-    </thead>
-    {% for line in sale.lines %}
-    <tr>
-      <td>{{ loop.index }}</td>
-      <td>
-        {% if line.product and line.product.displayed_on_eshop %}
-        <a href="{{ url_for('product.product.render', uri=line.product.uri) }}">{{ line.description }}</a>
-        {% else %}
-        {{ line.description }}
-        {% endif %}
-      </td>
-      <td>{{ line.quantity|int }} {{ line.unit.name }}</td>
-      <td> 
-        {% for move in line.moves if move.state == 'done' and move.to_location.type == 'customer' %}
-        {{ move.quantity }} x {{ move.lot and move.lot.number or '<No Serial #>' }}<br>
-        {% endfor %}
-      </td>
-      <td>{{ line.unit_price|currencyformat(sale.currency.code) }}</td>
-      <td>{{ line.amount|currencyformat(sale.currency.code) }}</td>
-    </tr>
-    {% endfor %}
-    <tr>
-      <td colspan="5">
-        <strong class="pull-right">Sub Total</strong>
-      </td>
-      <td><strong>{{ sale.untaxed_amount|currencyformat(sale.currency.code) }}</strong></td>
-    </tr>
-    <tr>
-      <td colspan="5">
-        <strong class="pull-right">Tax Amount</strong>
-      </td>
-      <td><strong>{{ sale.tax_amount|currencyformat(sale.currency.code) }}</strong></td>
-    </tr>
-    <tr>
-      <td colspan="5">
-        <strong class="pull-right">Total Amount</strong>
-      </td>
-      <td><strong>{{ sale.total_amount|currencyformat(sale.currency.code) }}</strong></td>
-    </tr>
-  </table>
-</div>
-        
+          <div class="row-fluid">
+            <div class="page-header">
+              <h4>Order Details</h4>
+            </div>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Description</th>
+                  <th>Ordered Quantity</th>
+                  <th>Shipments</th>
+                  <th>Unit Price</th>
+                  <th>Sub Total</th>
+                </tr>
+              </thead>
+              {% for line in sale.lines %}
+              <tr>
+                <td>{{ loop.index }}</td>
+                <td>
+                  {% if line.product and line.product.displayed_on_eshop %}
+                  <a href="{{ url_for('product.product.render', uri=line.product.uri) }}">{{ line.description }}</a>
+                  {% else %}
+                  {{ line.description }}
+                  {% endif %}
+                </td>
+                <td>{{ line.quantity|int }} {{ line.unit.name }}</td>
+                <td> 
+                  {% for move in line.moves if move.state == 'done' and move.to_location.type == 'customer' %}
+                  {{ move.quantity }} x {{ move.lot and move.lot.number or '<No Serial #>' }}<br>
+                  {% endfor %}
+                </td>
+                <td>{{ line.unit_price|currencyformat(sale.currency.code) }}</td>
+                <td>{{ line.amount|currencyformat(sale.currency.code) }}</td>
+              </tr>
+              {% endfor %}
+              <tr>
+                <td colspan="5">
+                  <strong class="pull-right">Sub Total</strong>
+                </td>
+                <td><strong>{{ sale.untaxed_amount|currencyformat(sale.currency.code) }}</strong></td>
+              </tr>
+              <tr>
+                <td colspan="5">
+                  <strong class="pull-right">Tax Amount</strong>
+                </td>
+                <td><strong>{{ sale.tax_amount|currencyformat(sale.currency.code) }}</strong></td>
+              </tr>
+              <tr>
+                <td colspan="5">
+                  <strong class="pull-right">Total Amount</strong>
+                </td>
+                <td><strong>{{ sale.total_amount|currencyformat(sale.currency.code) }}</strong></td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
     </div>
