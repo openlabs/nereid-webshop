@@ -347,17 +347,20 @@
         {% endfor %}
       });
     </script>
-
-    {% block script_tags %}
-    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/app.js') }}"></script>
-    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/holder.js') }}"></script>
-    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/underscore-min.js') }}"></script>
     <script type="text/javascript">
       $.getJSON("{{ url_for('nereid.website.user_status') }}", function(data){
         var template = $("#cart-html-append").html();
         $("li.my-cart").html(_.template(template, {'user_status': data.status}));
       });
     </script>
+
+    {% block script_tags %}
+    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/holder.js') }}"></script>
+    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/underscore-min.js') }}"></script>
     {% endblock script_tags %}
+
+    {% block scripts %}
+    {% endblock scripts %}
   </body>
 </html>

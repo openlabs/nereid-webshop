@@ -1,24 +1,24 @@
 {% extends 'base.jinja' %}
 
-{% block main %}
-<section class="my-account">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1">
-        <div class="row">
-          <h3>My Account / Orders</h3>
-          <ul class="list-inline account-links">
-            <li><a href="{{ url_for('nereid.website.account') }}">Profile</a></li>
-            <li><a href="">Orders</a></li>
-            <li><a href="">Wishlist</a></li>
-            <li><a href="{{ url_for('party.address.view_address') }}">Address Book</a></li>
-            <li><a href="">My Credits</a></li>
-          </ul>
-        </div>
-        {% block account %}
-        {% endblock account %}
-      </div>
-    </div>
-  </div>
-</section>
-{% endblock main%}
+{% macro account_header(title='My Account', active='') %}
+<div class="row">
+  <h3>{{ title }}</h3>
+  <ul class="list-inline account-links">
+    <li {% if active == 'profile' %}class="active"{% endif %}>
+      <a href="{{ url_for('nereid.website.account') }}">Profile</a>
+    </li>
+    <li {% if active == 'orders' %}class="active"{% endif %}>
+      <a href="{{ url_for('sale.sale.render_list') }}">Orders</a>
+    </li>
+    {#<li>
+      <a href="">Wishlist</a>
+    </li>#}
+    <li {% if active == 'address-book' %}class="active"{% endif %}>
+      <a href="{{ url_for('party.address.view_address') }}">Address Book</a>
+    </li>
+    {#<li>
+      <a href="">My Credits</a>
+    </li>#}
+  </ul>
+</div>
+{% endmacro %}

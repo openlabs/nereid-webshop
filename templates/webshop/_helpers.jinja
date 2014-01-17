@@ -1,4 +1,4 @@
-{% macro render_field(field, class_="", show_label=True, input_prepend=None) %}
+{% macro render_field(field, class_="form-control", show_label=True, input_prepend=None) %}
   <div class="form-group {% if field.errors %}has-error{% endif %}">
     {% if show_label %}
     <label for="{{ field.name }}">{{ field.label.text }}
@@ -38,8 +38,10 @@
 <address>
   <strong>{{ address.name }}</strong><br>
   {{ address.street }}, {{ address.city }}<br>
-  , {{ address.subdivision and address.subdivision.code }} {{ address.zip }}<br>
+  {{ address.subdivision and address.subdivision.code }} {{ address.zip }}<br>
+  {% if address.phone %}
   <abbr title="Phone"><i class="fa fa-phone"></i></abbr>: {{ address.phone }}<br/>
+  {% endif %}
 </address>
 {%- endmacro %}
 

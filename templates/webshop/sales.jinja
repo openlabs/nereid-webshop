@@ -1,4 +1,4 @@
-{% extends 'base.jinja' %}
+{% extends 'account-base.jinja' %}
 
 {% block main %}
 <!-- My Orders Page starts here -->
@@ -6,21 +6,8 @@
   <div class="container">
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
-        <div class="row">
-          <h3>My Account / Orders</h3>
-          <!-- Navigation tabs of my account -->
-          <ul class="list-inline account-links">
-            <li><a href="{{ url_for('nereid.website.account') }}">Profile</a></li>
-            <li class="active"><a href="{{ url_for('nereid.website.sales') }}">Orders</a></li>
-            <li><a >Wishlist</a></li>
-            <li><a href="{{ url_for('party.address.view_address') }}">Address Book</a></li>
-            <li><a>My Credits</a></li>
-          </ul>
-        </div>
+        {{ account_header(_('My Account / Orders'), 'orders') }}
         <!--My Orders-->
-        <div class="row">
-          <h4 class="account-heading">My Orders</h4>
-        </div>
         <div class="row cart-table">
           <!--Recent Orders Table starts here -->
           <div class="table-responsive">
@@ -38,12 +25,13 @@
               <tbody>
                 {% for sale in sales %}
                 <tr>
-                  <td><a href="">123456</a></td>
-                  <td class="orderd-products">
-                    <a href="" class="product-name">United Colors of Benetton </a><br>
-                    <span class="text-muted">Size : </span> L <span class="text-muted">Qty : </span> 2 <br>
-                    <a href="" class="product-name">United Colors of Benetton </a><br>
-                    <span class="text-muted">Size : </span> L <span class="text-muted">Qty : </span> 2 <br>
+                  <td><a href="{{ url_for('sale.sale.render', active_id=sale.id) }}">#{{ sale.reference }}</a></td>
+                  <td class="orderd-products"> 
+                    {% for line in sale.lines %}              
+                    <a href="{{ url_for('product.product.render', uri=line.product.uri) }}" class="product-name">{{ line.description }}</a><br>
+                    {#<span class="text-muted">Size : </span> L#}
+                    <span class="text-muted">Qty : </span> {{ line.quantity }}<br>
+                    {% endfor %}
                   </td>
                   <td>
                     {{ sale.total_amount|currencyformat(sale.currency.code) }}
@@ -55,12 +43,14 @@
                     <span class="{% if sale.state ==  "done" %}text-success{% elif sale.state == "confirmed" %}text-info{% elif sale.state == "cancel" %}text-danger{% endif %}">{{ sale.state }}</span>                     
                   </td>
                   <td class="action">
+                    {#
                     <span>
                       <a href="">
                         Return
                       </a> / 
                       <a href="">Exchange </a>
                     </span>
+                    #}
                   </td>
                 </tr>
                 {% endfor %}
