@@ -1,0 +1,140 @@
+{% extends 'base.jinja' %}
+
+{% block breadcrumb %}
+<li>
+  <a href="{{ url_for('nereid.website.home') }}">Home</a>
+</li>
+{% endblock breadcrumb %}
+
+{% block main %}
+<section class="main-banner">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div id="carousel-example-generic" class="carousel slide">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+          </ol>
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner">
+            <div class="item">
+              <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/sample-img/banner1.jpg') }}" alt="...">
+              <div class="carousel-caption">
+              </div>
+            </div>
+            <div class="item">
+              <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/sample-img/banner2.jpg') }}" alt="...">
+              <div class="carousel-caption">
+              </div>
+            </div>
+            <div class="item active">
+              <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/sample-img/banner3.jpg') }}" alt="...">
+              <div class="carousel-caption">
+              </div>
+            </div>
+          </div>
+          <!-- Controls -->
+          <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+            <span class="icon-prev"></span>
+          </a>
+          <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+            <span class="icon-next"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="products latest">
+  <div class="container">
+    <div class="row">
+      <h3>Latest Products</h3>
+      <div class="col-md-4 thumb">
+        <img src="holder.js/100%x280" alt="...">
+        <div class="fig-caption">
+          <h4>Product Name</h4>
+          <p>Description </p>
+        </div>
+      </div>
+      <div class="col-md-4 thumb">
+        <img src="holder.js/100%x280" alt="...">
+        <div class="fig-caption">
+          <h4>Product Name</h4>
+          <p>Description </p>
+        </div>
+      </div>
+      <div class="col-md-4 thumb">
+        <img src="holder.js/100%x280" alt="...">
+        <div class="fig-caption">
+          <h4>Product Name</h4>
+          <p>Description </p>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-6 thumb">
+        <img src="holder.js/100%x320" alt="...">
+        <div class="fig-caption" style="width:95%">
+          <h4>Product Name</h4>
+          <p>Description </p>
+        </div>
+      </div>
+      <div class="col-md-6 thumb">
+        <img src="holder.js/100%x320" alt="...">
+        <div class="fig-caption" style="width:95%">
+          <h4>Product Name</h4>
+          <p>Description </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="container">
+    <div class="col-md-12 shop-assurance">
+      <ul class="list-inline center">
+        <li>
+          <div class="feature-assurance">
+            <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/assurance/lock.png') }}">
+            <h5>SECURE PAYMENT</h5>
+            <p>Payment via credit card or Paypal</p>
+          </div>
+        </li>
+        <li>
+          <div class="feature-assurance">
+            <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/assurance/warranty-services.png') }}">
+            <h5>WARRANTY &amp; SERVICE</h5>
+            <p>Our customer service is simple and effective.</p>
+          </div>
+        </li>
+        <li>
+          <div class="feature-assurance">
+            <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/assurance/heart.png') }}">
+            <h5>QUALITY</h5>
+            <p>We are Certified Quality and Environment. And Living Heritage Company.</p>
+          </div>
+        </li>
+        <li>
+          <div class="feature-assurance">
+            <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/assurance/customer-service.png') }}">
+            <h5>CUSTOMER SERVICE</h5>
+            <p>A doubt, a question? reach us at 0000-000-0000.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+{% endblock main %}
+
+
+{% block script_tags %}
+{{ super() }}
+<script type="text/javascript">
+  $('.container-breadcrumb').hide();
+</script>
+{% endblock script_tags %}

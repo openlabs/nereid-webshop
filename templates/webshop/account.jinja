@@ -1,0 +1,80 @@
+{% extends 'account-base.jinja' %}
+
+{% block main %}
+<section class="my-account">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        {{ account_header(_('My Account'), 'profile') }}
+      </div>
+      <!-- Account Information -->
+      <div class="row">
+        <h4 class="account-heading">Account Information</h4>
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label for="" class="col-sm-2 control-label">Your Name </label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" id="" placeholder="Your Name" value="{{ request.nereid_user.display_name }}" disabled>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="" class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-4">
+              <input type="email" class="form-control" id="" placeholder="Email" value="{{ request.nereid_user.email }}" disabled>
+            </div>
+          </div>
+          <!-- Password Change Tab -->
+          <div class="tab-content">
+            <div class="tab-pane active" id="current-password">
+              <div class="form-group">
+                <label for="" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-4">
+                  <input type="text" class="form-control" id="" placeholder="Password" value="********" disabled>
+                </div>
+                <div class="col-sm-3">
+                  <a href="#new-password" data-toggle="tab"><i class="fa fa-pencil"></i>&nbsp;Change Password</a>
+                </div>
+              </div>
+            </div>
+            <!-- Tab Pane for new Password -->
+            <div class="tab-pane" id="new-password">
+              <div class="form-group">
+                <label for="" class="col-sm-2 control-label">Old Password</label>
+                <div class="col-sm-4">
+                  <input type="password" class="form-control" id="" placeholder="old password">
+                </div>
+                <div class="col-sm-3">
+                  <a href="#current-password" data-toggle="tab"><i class="fa fa-times"></i>&nbsp;Cancel</a>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-2 control-label">New Password</label>
+                <div class="col-sm-4">
+                  <input type="password" class="form-control" id="" placeholder="new password">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-sm-2 control-label">Confirm Password</label>
+                <div class="col-sm-4">
+                  <input type="password" class="form-control" id="" placeholder="confirm password">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="" class="col-sm-2 control-label">Mobile No. </label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" id="" placeholder="your mobile no" value="{{ request.nereid_user.party.phone }}">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-warning btn-sm">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main %}

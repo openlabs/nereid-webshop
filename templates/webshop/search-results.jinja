@@ -1,0 +1,55 @@
+{% extends 'base.jinja' %}
+
+{% from 'webshop/_helpers.jinja' import render_product_list with context%}
+
+{% block breadcrumb %}
+{{ super() }}
+<li>
+  <a href="{{ url_for('product.product.quick_search', q=request.args.get('q', '')) }}">{% trans %}Search Results{% endtrans %}</a>
+</li>
+{% endblock breadcrumb %}
+
+{% block main %}
+<section>
+  <div class="container">
+    <!-- category page -->
+    <div class="row">
+      <!-- Content bar -->
+      <div class="col-md-10 product-list">
+        <div class="row">
+          <div class="col-md-9">
+            <h3 class="list-heading">{% trans %}You searched for{% endtrans %}: <em>{{ request.args.get('q', '') }}</em></h3>
+          </div>
+          <!--Filter Option -->
+          <div class="col-md-3">
+            <select class="form-control select-sort">
+              <option>Discount</option>
+              <option>Low Price First</option>
+              <option>High Price First</option>
+              <option>Popularity</option>
+              <option>What's New</option>
+            </select>
+          </div>
+        </div>
+          <div class="masonry js-masonry"  data-masonry-options='{ "columnWidth": ".category-list", "itemSelector": ".product-item", "isFitWidth": true }'>
+            <div class="category-list"></div> 
+            {% for product in products %}
+              {{ render_product_list(product) }}
+            {% endfor %}
+          </div>
+          {% if not products %}
+          <div class="row">
+            <div class="alert alert-warning">
+              {% trans %}Oops! No Products found for your search criteria. Try with something else.{% endtrans %}
+            </div>
+          </div>
+          {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main %}
+
+{% block script_tags %}
+<script src="{{ url_for('nereid.webshop.send_static_file', filename='js/masonry.pkgd.min.js') }}" ></script>
+{% endblock script_tags %}

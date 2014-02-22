@@ -1,0 +1,149 @@
+{% extends 'base.jinja' %}
+{% block main %}
+<section class="checkout-container">
+  <div class="container">
+    <!-- Checkout Step Indicator -->
+    <div class="row checkout-steps">
+      <ul class="list-inline center">
+        <li>
+          <a href="" class="active" data-original-title="" title=""><span>1</span>
+            <div class="text">Cart</div>
+          </a>
+        </li>
+        <li><span class="muted"></span>------------</li>
+        <li>
+          <a class="undone" data-original-title="" title=""><span>2</span>
+            <div class="text">Delivery</div>
+          </a>
+        </li>
+        <li><span class="muted"></span>------------</li>
+        <li>
+          <a class="undone" data-original-title="" title=""><span>3</span>
+            <div class="text">Payment</div>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- Shopping cart Starts -->
+    <div class="row cart-table">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="row"><h3> Shopping Cart</h3></div>
+        <!--Cart table starts here -->
+        <div class="row">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Unit Total</th>
+                <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="" data-original-title="" title=""><img src="images/products/tee1.jpg"></a></td>
+                  <td>
+                    <a href="" class="product-name" data-original-title="" title="">United Colors of Benetton </a><br>
+                    <strong class="text-muted">SIZE : </strong> L
+                    <strong class="text-muted">COLOR :</strong> Blue
+                  </td>
+                  <td>
+                    $ 1523
+                  </td>
+                  <td>
+                    <div class="quantity buttons_added">
+                      <form>
+                        <input type="button" class="minus" id="minus1" value="-" data-loading-text="...">
+                        <input maxlength="12" class="input-text qty text" title="Qty" size="4" value="1" name="quantity">
+                        <input class="product" type="hidden" value="23">
+                        <input type="button" class="plus" id="add1" value="+" data-loading-text="...">
+                      </form>
+                    </div>                       
+                  </td>
+                  <td>
+                    $ 1523
+                  </td>
+                  <td class="action">
+                    <a href="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Move to Wishlist"><i class="fa fa-heart"></i></a>
+                    <a href="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove Item"><i class="fa fa-trash-o"></i></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a href="" data-original-title="" title=""><img src="images/products/tee1.jpg"></a></td>
+                  <td>
+                    <a href="" class="product-name" data-original-title="" title="">United Colors of Benetton</a><br>
+                    <strong class="text-muted">SIZE : </strong> L
+                    <strong class="text-muted">COLOR :</strong> Blue
+                  </td>
+                  <td>
+                    $ 1523
+                  </td>
+                  <td>
+                    <div class="quantity buttons_added">
+                      <form>
+                        <input type="button" class="minus" id="minus1" value="-" data-loading-text="...">
+                        <input maxlength="12" class="input-text qty text" title="Qty" size="4" value="1" name="quantity">
+                        <input class="product" type="hidden" value="23">
+                        <input type="button" class="plus" id="add1" value="+" data-loading-text="...">
+                      </form>
+                    </div>                       
+                  </td>
+                  <td>
+                    $ 1523
+                  </td>
+                  <td class="action">
+                    <a href="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Move to Wishlist"><i class="fa fa-heart"></i></a>
+                    <a href="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove Item"><i class="fa fa-trash-o"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!--Coupon row-->
+        <div class="row coupon-row">
+          <div class="col-md-6">
+            <a href="" class="btn btn-default btn-md" data-original-title="" title=""><i class="fa fa-angle-double-left"></i>&nbsp; Continue Shopping</a>
+            <a href="" class="btn btn-default" data-original-title="" title=""><i class="fa fa-times"></i> Clear Cart</a>
+          </div>
+          <div class="col-md-6">
+            <form>
+              <div class="col-xs-4">
+                <label for="" class="">Have a Coupon ?</label>
+              </div>
+              <div class="col-xs-6">
+                <input type="text" class="form-control input-sm" id="" placeholder="Enter your coupon code">
+              </div>
+              <div class="col-xs-2">
+              <a class="btn btn-default btn-sm" data-original-title="" title="">Apply</a>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!--Item Total-->
+        <div class="row cart-total">
+          <div class="col-md-7"></div>
+          <div class="col-md-5">
+            <dl class="dl-horizontal">
+            <dt>Cart Total</dt>
+            <dd>$ 1523</dd>
+            <dt>Delivery (<span class="text-success">Free</span>)</dt>
+            <dd><span class="text-success">$ 0</span></dd>
+            <dt>Coupon Discount</dt>
+            <dd>$ 0</dd>
+            <dt class="cart-total-sum">TOTAL</dt>
+            <dd class="cart-total-sum">$ 1523</dd>
+          </dl>
+          <div class="col-md-10">
+            <a href="checkout-step-two.html" class="btn btn-primary btn-block btn-lg" data-original-title="" title="">Checkout </a>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main %}

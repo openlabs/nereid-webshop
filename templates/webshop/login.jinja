@@ -1,0 +1,55 @@
+{% extends 'base.jinja' %}
+
+{% block main %}
+<section>
+  <div class="container">
+    <!--Login Container-->
+    <div class="row login-container">
+      <div class="account-auth col-md-10 col-md-offset-1">
+        <div class="login-header center">
+          <h5 class="modal-title login-text">New to shop ? <a href="{{ url_for('nereid.user.registration') }}"><span>Register here </span></a></h5>
+        </div>
+          <div class="login-body">
+            <h4 class="center login-text"><span>Log in to your account</span></h4>
+            <div class="row">
+              <div class="col-md-5">
+                <form class="login-form" method="POST">
+                  <input type="email" class="form-control input-lg" placeholder="Enter your E-mail address" name="email" required>
+                  <input type="password" class="form-control input-lg" placeholder="Your Password" name="password"required>
+                  <button type="submit" class="btn btn-lg btn-block">Login</button>
+                  <a href="{{ url_for('nereid.user.reset_account', next=request.args.get('next', url_for('nereid.website.home'))) }}" class="text-muted"><strong>Forgot Password ?</strong></a>
+                </form>
+              </div>
+              <div class="col-md-2 ">
+                <div class="dotted-line"></div>
+                <div class="or-circle center">or</div>
+                <div class="dotted-line"></div>
+              </div>
+              <div class="col-md-5">
+                <h5>Login with</h5>
+                <ul class="list-inline social-login">
+                  <li class="facebook">
+                    <a href="">
+                      <i class="fa fa-facebook"></i>&nbsp;&nbsp; facebook
+                    </a>
+                  </li>
+                  <li class="twitter">
+                    <a href="">
+                      <i class="fa fa-twitter"></i>&nbsp;&nbsp; twitter
+                    </a>
+                  </li>
+                  <li class="google-plus">
+                    <a href="">
+                      <i class="fa fa-google-plus"></i>&nbsp;&nbsp; google+
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+  </div>
+</section>
+{% endblock main %}

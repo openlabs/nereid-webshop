@@ -1,0 +1,82 @@
+{% extends 'checkout/base.jinja' %}
+
+{% from '_helpers.jinja' import render_field %}
+
+{% block main %}
+<section class="checkout-container">
+  <div class="container">
+    <!-- Checkout Step Indicator -->
+    {{ checkout_breadcrumb(3) }}
+
+    <!--Payment Section-->
+    <div class="row delivery-address">
+      <div class="col-md-11">
+        <div class="col-md-8">
+          <div class="payment-container">
+            <h4><span>Choose from a payment method below</span></h4>
+            <div class="table-responsive">
+              <!-- tabs left -->
+              <div class="col-xs-4">
+                <ul class="list-unstyled payment-tab">
+                  <li class="active"><a href="#credit-card" data-toggle="tab"> Credit Card</a></li>
+                  {% for method_id, method_name in payment_form.alternate_payment_method.choices %}
+                  <li><a href="#method-{{ method_id }}" data-toggle="tab"> {{ method_name }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+              <div class="col-xs-8">
+                <div class="tab-content">
+                  <!-- Credit card-->
+                  <div class="tab-pane fade active in" id="credit-card">
+                    <span>Please enter all details *</span>
+                    <form class="form-horizontal" role="form" method="POST">
+                      {{ render_field(credit_card_form.number) }}
+                      {{ render_field(credit_card_form.owner) }}
+                      <div class="row">
+                        <div class="col-xs-4">
+                          {{ render_field(credit_card_form.expiry_month) }}
+                        </div>
+                        <div class="col-xs-4 col-xs-offset-4">
+                          {{ render_field(credit_card_form.expiry_year) }}
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xs-4">
+                          {{ render_field(credit_card_form.cvv) }}
+                        </div>
+                      </div>
+                      {% if not request.is_guest_user %}
+                      {{ render_field(credit_card_form.add_card_to_profiles) }}
+                      {% endif %}
+
+                      {{ render_field(payment_form.use_shipment_address) }}
+
+                      <button type="submit" class="btn btn-primary">Pay Now</button>
+                    </form>
+                  </div>
+
+                  <!-- Alternate payment methods if any -->
+                  {% for method_id, method_name in payment_form.alternate_payment_method.choices %}
+                  <div class="tab-pane fade center" id="method-{{ method_id }}">
+                    {% set method = PaymentMethod(method_id) %}
+                    <p><strong><span class="text-success">{{ method.instructions|safe }}</strong></p>
+                    <form method="post">
+                      <input type="hidden" name="alternate_payment_method" value="{{ method.id }}"/>
+                      <button type="submit" class="btn btn-primary">Pay using {{ method.name }}</button>
+                    </form>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cart Summary -->
+        {{ cart_summary() }}
+
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main %}

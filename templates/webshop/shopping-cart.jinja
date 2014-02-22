@@ -1,0 +1,210 @@
+{% extends 'base.jinja' %}
+
+{% block main %}
+<section class="checkout-container">
+  {% if not (cart.sale and cart.sale.lines) %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4 center">
+        <div class="alert alert-info">
+          <i class="fa fa-frown-o fa-4x"></i>
+          <h3>Awwww !</h3>
+          <p>Your shopping cart is empty</p>
+          <a href="{{ url_for('nereid.website.home') }}" >Shop Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  {% set currency = cart.sale.currency.code %}
+  <div class="container">
+    <!-- Checkout Step Indicator -->
+    <div class="row checkout-steps">
+      <ul class="list-inline center">
+        <li>
+          <a href="" class="active" data-original-title="" title=""><span>1</span>
+            <div class="text">Cart</div>
+          </a>
+        </li>
+        <li><span class="muted"></span>------------</li>
+        <li>
+          <a class="undone" data-original-title="" title=""><span>2</span>
+            <div class="text">Delivery</div>
+          </a>
+        </li>
+        <li><span class="muted"></span>------------</li>
+        <li>
+          <a class="undone" data-original-title="" title=""><span>3</span>
+            <div class="text">Payment</div>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- Shopping cart Starts -->
+    <div class="row cart-table">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="row"><h3> Shopping Cart</h3></div>
+        <!--Cart table starts here -->
+        <div class="row">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Unit Price</th>
+                  <th>Quantity</th>
+                  <th>Unit Total</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for line in cart.sale.lines %}
+                <tr>
+                  <td>
+                    <a href="{{ url_for('product.product.render', uri=line.product.uri) }}">
+                      {% if line.product.image_sets and line.product.image_sets[0].large_image %}
+                        <img src="{{ line.product.image_sets[0].large_image.transform_command().thumbnail(100, 100) }}" alt="{{ line.product.name }}">
+                      {% else %}
+                        <img src="{{ STATIC }}images/products/tee1.jpg" alt="{{ line.product.name }}"></a>
+                      {% endif %}
+                    </td>
+                  <td>
+                    <a href="{{ url_for('product.product.render', uri=line.product.uri) }}" class="product-name">{{ line.product.name }} </a><br>
+                    <strong class="text-muted">Variation : </strong> {{ line.product.code }}
+                  </td>
+                  <td>
+                    {{ line.unit_price|currencyformat(currency) }}
+                  </td>
+                  <td>
+                    <div class="quantity buttons_added">
+                      <form>
+                        <input type="button" class="minus" id="minus1" value="-" data-loading-text="...">
+                        <input maxlength="12" class="input-text qty text" title="Qty" size="4" value="{{ line.quantity|int }}" name="quantity">
+                        <input class="product" type="hidden" value="{{ line.product.id }}">
+                        <input type="button" class="plus" id="add1" value="+" data-loading-text="...">
+                      </form>
+                    </div>                       
+                  </td>
+                  <td>
+                    {{ line.amount|currencyformat(currency) }}
+                  </td>
+                  <td class="action">
+                    <a href="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Move to Wishlist"><i class="fa fa-heart"></i></a>
+                    <a href="{{ url_for('nereid.cart.delete_from_cart', line=line.id) }}" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove Item"><i class="fa fa-trash-o"></i></a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!--Coupon row-->
+        <div class="row coupon-row">
+          <div class="col-md-6">
+            <a href="{{ url_for('nereid.website.home') }}" class="btn btn-warning btn-md" data-original-title="" title=""><i class="fa fa-angle-double-left"></i>&nbsp; Continue Shopping</a>
+            <a href="{{ url_for('nereid.cart.clear_cart') }}" class="btn btn-default" data-original-title="" title=""><i class="fa fa-times"></i> Clear Cart</a>
+          </div>
+          <div class="col-md-6">
+            {% if cart.sale.coupon %}
+            {# if the promotions module is installed #}
+            <form>
+              <div class="col-xs-4">
+                <label for="" class="">Have a Coupon ?</label>
+              </div>
+              <div class="col-xs-6">
+                <input type="text" class="form-control input-sm" id="" placeholder="Enter your coupon code">
+              </div>
+              <div class="col-xs-2">
+              <a class="btn btn-default btn-sm" data-original-title="" title="">Apply</a>
+              </div>
+            </form>
+            {% endif %}
+          </div>
+        </div>
+        <!--Item Total-->
+        <div class="row cart-total">
+          <div class="col-md-7"></div>
+          <div class="col-md-5">
+            <dl class="dl-horizontal">
+            <dt>Cart Total</dt>
+            <dd>{{ cart.sale.untaxed_amount|currencyformat(currency) }}</dd>
+            <dt>Tax Total</dt>
+            <dd>{{ cart.sale.tax_amount|currencyformat(currency) }}</dd>
+
+            {# 
+            
+            ** Examples of line formatting **
+            <dt>Delivery (<span class="text-success">Free</span>)</dt>
+            <dd><span class="text-success">$ 0</span></dd>
+            <dt>Coupon Discount</dt>
+            <dd>$ 0</dd>
+            #}
+
+            <dt class="cart-total-sum">TOTAL</dt>
+            <dd class="cart-total-sum">{{ cart.sale.untaxed_amount|currencyformat(currency) }}</dd>
+          </dl>
+          <div class="col-md-10">
+            <a class="btn btn-primary btn-block btn-lg" href="{{ url_for('nereid.checkout.sign_in') }}"><i class="fa fa-flag"></i>&nbsp;&nbsp; Checkout </a>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</section>
+{% endblock main %}
+
+{% block script_tags %}
+{{ super() }}
+<script>
+  $(document).ready(function(){
+    $("input.plus").click(function(){
+      $(this).button("loading");
+      var qty_element = $(this).siblings("input.qty");
+      var product_element = $(this).siblings("input.product");
+      var new_quantity = parseInt(qty_element.val()) + 1;
+      $.post('{{ url_for('nereid.cart.add_to_cart')  }}', 
+        {'quantity': new_quantity, 'product': product_element.val()},
+        function(data){
+          window.location.reload(true);
+        }
+      );
+    });
+    $("input.minus").click(function(){
+      $(this).button("loading");
+      var qty_element = $(this).siblings("input.qty");
+      var product_element = $(this).siblings("input.product");
+      var new_quantity = parseInt(qty_element.val()) - 1;
+      if (new_quantity > 0){
+        $.post('{{ url_for('nereid.cart.add_to_cart')  }}',
+          {'quantity': new_quantity, 'product': product_element.val()},
+          function(data){
+            window.location.reload(true);
+          }
+        );
+      } else {
+        $(this).button("reset");
+      }
+    });
+    $("input.qty").change(function() {
+      var qty_element = $(this);
+      var product_element = $(this).siblings("input.product");
+      var new_quantity = parseInt(qty_element.val());
+      if (isNaN(new_quantity)) {
+        new_quantity = 1;
+      }
+      $.post('{{ url_for('nereid.cart.add_to_cart')  }}',
+        {'quantity': new_quantity, 'product': product_element.val()},
+        function(data){
+          window.location.href=window.location.href;
+        }
+      );
+    });
+    $("a.clear-cart").click(function(){
+      $(this).button('loading');
+    });
+  });
+</script>
+{% endblock script_tags %}

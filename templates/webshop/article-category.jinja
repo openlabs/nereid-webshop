@@ -1,0 +1,32 @@
+{% extends 'home.jinja' %}
+
+{% block breadcrumb %}
+{{ super() }}
+<li>
+  <a href="{{ url_for('nereid.cms.article.category.render', uri=article.category.unique_name) }}">{{ article.category.title }}</a>
+</li>
+something
+{% endblock breadcrumb %}
+
+{% block main %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>{{ category.title }}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <ul>
+        {% for article in category.articles %}
+        <li>
+          <a href="{{ url_for('nereid.cms.article.render', uri=article.uri) }}">
+            {{ article.title }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock main %}

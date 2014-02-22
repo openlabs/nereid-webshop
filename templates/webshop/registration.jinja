@@ -1,0 +1,58 @@
+{% extends 'base.jinja' %}
+
+{% from '_helpers.jinja' import render_field %}
+
+{% block main %}
+<section>
+  <div class="container">
+    <!--Registration container Container-->
+    <div class="row login-container">
+      <div class="account-auth col-md-10 col-md-offset-1">
+        <div class="login-header center">
+          <h5 class="modal-title register-text">Already registered ? <a href="{{ url_for('nereid.website.login') }}"><span>Login here </span></a></h5>
+        </div>
+          <div class="login-body">
+            <h4 class="center"><span>Create new account</span></h4>
+            <div class="row">
+              <div class="col-md-5">
+                <form class="register-form" method="POST" action="{{ url_for('nereid.user.registration') }}">
+                  {{ render_field(form.name) }}
+                  {{ render_field(form.email) }}
+                  {{ render_field(form.password) }}
+                  {{ render_field(form.confirm) }}
+                  <button type="submit" class="btn btn-lg btn-block">Register</button>
+                </form>
+              </div>
+              <div class="col-md-2 ">
+                <div class="dotted-line"></div>
+                <div class="or-circle center">or</div>
+                <div class="dotted-line"></div>
+              </div>
+              <div class="col-md-5">
+                <h5>Register with</h5>
+                <ul class="list-inline social-login">
+                  <li class="facebook">
+                    <a href="">
+                      <i class="fa fa-facebook"></i>&nbsp;&nbsp; facebook
+                    </a>
+                  </li>
+                  <li class="twitter">
+                    <a href="">
+                      <i class="fa fa-twitter"></i>&nbsp;&nbsp; twitter
+                    </a>
+                  </li>
+                  <li class="google-plus">
+                    <a href="">
+                      <i class="fa fa-google-plus"></i>&nbsp;&nbsp; google+
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+  </div>
+</section>
+{% endblock main %}

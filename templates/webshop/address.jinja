@@ -1,0 +1,40 @@
+{% extends 'account-base.jinja' %}
+
+{% from '_helpers.jinja' import render_address, render_field %}
+
+{% block main %}
+<section class="my-account">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        {{ account_header(_('My Account / Edit Address'), 'address-book') }}
+      </div>
+      <!-- Account Information -->
+      <div class="row">
+        <div class="row">
+          <h4 class="account-heading col-md-7">Address Book 
+            <a href="{{ url_for('party.address.create_address') }}" class="btn btn-info pull-right btn-xs"title=""><i class="fa fa-plus"></i> &nbsp;Add new address</a>
+          </h4>
+        </div>
+        <div class="tab-content row">
+          <div class="col-md-7 tab-pane active" id="saved-address">
+            {% for address in request.nereid_user.party.addresses %}
+            <div class="well well-small">
+              {{ render_address(address, 'Address # '+ loop.index|string) }}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+</section>
+{% endblock main %}
+
+{% block script_tags %}
+<script type="text/javascript">
+  $('.account-heading a').click(function() {
+    $(this).toggleClass('selected').siblings().addClass("selected");
+  });
+</script>
+{% endblock script_tags %}

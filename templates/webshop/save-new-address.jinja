@@ -1,0 +1,65 @@
+{% extends 'account-base.jinja' %}
+
+{% from '_helpers.jinja' import render_address %}
+
+{% block main %}
+<!-- Address Book starts here -->
+<section class="my-account">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        {{ account_header(_('My Account / Add a new Address'), 'address-book') }}
+        <!-- Account Information -->
+        <div class="row">
+          <div class="row">
+            <h4 class="account-heading col-md-7">Add new Address</h4>
+          </div>
+          <div class="row">
+            <div class="col-md-5 fade">
+              <form role="form">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Name *</label>
+                  <input type="text" class="form-control" placeholder="your name">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Address *</label>
+                  <textarea class="form-control" rows="3"></textarea> 
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label for="exampleInputEmail1">Pin code *</label>
+                    <input type="text" class="form-control" placeholder="pin code">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="exampleInputEmail1">City *</label>
+                    <input type="text" class="form-control" placeholder="city">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label for="exampleInputEmail1">State *</label>
+                    <select class="form-control">
+                      <option>Delhi </option>
+                      <option>Goa</option>
+                      <option>Noida</option>
+                      <option>Ghaziabad</option>
+                      <option>Gurgaon</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="exampleInputEmail1">Mobile *</label>
+                    <input type="text" class="form-control" placeholder="mobile">
+                  </div>
+                  <div class="col-md-10">
+                    <a href="" class="btn btn-warning btn-sm" data-original-title="" title="">Save Address</a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main %}

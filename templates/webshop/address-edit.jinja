@@ -1,0 +1,107 @@
+{% extends 'account-base.jinja' %}
+
+{% from '_helpers.jinja' import render_field %}
+
+{% block main %}
+<section class="my-account">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        {{ account_header(_('My Account / Edit Address'), 'address-book') }}
+      </div>
+      <div class="row">
+        <div class="row">
+          <h4 class="account-heading col-md-7"> Edit Address &nbsp;&nbsp;<small>[ Fields marked with (<span>*</span>) are requried.]</small></h4>
+        </div>
+        <div class="row">
+          <div class="col-md-7">
+            <form action="{{ url_for('party.address.edit_address', address=address) }}" 
+              method="post" id="address">
+              {{ render_field(form.name, placeholder=_("John Doe"), class_="form-control") }}
+              {{ render_field(form.street, placeholder=_("1600 Amphitheatre Parkway"), class_="form-control") }}
+              {{ render_field(form.streetbis, placeholder=_("Mountain View"), class_="form-control") }}
+              <div class="row">
+                <div class="col-md-6">
+                  {{ render_field(form.city, placeholder=_("California"), class_="form-control") }}
+                </div>
+                <div class="col-md-6">
+                  {{ render_field(form.zip, placeholder=_("33130"), class_="form-control") }}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  {{ render_field(form.email, type='email', placeholder=_("email@example.com"), class_="form-control") }}
+                </div>
+                <div class="col-md-6">
+                  {{ render_field(form.phone, placeholder=_("1234567890"), class_="form-control") }}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  {{ render_field(form.country, class_="form-control")}}
+                </div>
+                {% set field = form.subdivision %}
+                <div class="form-group col-md-6">
+                  <label class="control-label" for="{{ field.name }}">{{ field.label.text }}</label>
+                  <select name="{{ field.name }}" id="{{ field.id }}" selected_id="{{field.data}}" class="form-control">
+                  </select>
+                  {% if field.description %}
+                  <br/><span class="help-block">{{ field.description }}</span>
+                  {% endif %}
+                  
+                  {% for error in field.errors %}
+                  <br/><span class="help-block">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+              <button href="" class="btn btn-warning btn-sm" type="submit">Save Address</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main %}
+
+{% block script_tags %}
+{{ super() }}
+<script src="{{ url_for('nereid.webshop.send_static_file', filename='js/jquery.validate.min.js') }}"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    // Register on change event
+    $("select#country").change(function(){
+      $.getJSON("{{ url_for('nereid.website.subdivision_list') }}",
+        {country: $(this).val()}, function(data){
+        var options = '';
+        $.each(data.result, function(index, map){
+            options += '<option value="' + map.id + '" code="' + map.code + '">' + map.name + '</option>';
+        });
+        $("select#subdivision").html(options);
+        $("select#subdivision option[value='{{ form.subdivision.data }}']").attr('selected', true);
+      });
+    });
+    // Onload trigger the change as country comes packed with form
+    $("select#country").triggerHandler("change")
+    // Use client side validation on the form
+    $("form#address").validate({
+      errorElement: "span",
+      //wrapper: "li",
+      errorPlacement: function(error, element) {
+        error.addClass('help-block');
+        error.insertAfter(element);
+      },
+      highlight: function(element, errorClass) {
+        $(element).parents("div.form-group").addClass("has-error");
+      },
+      unhighlight: function(element, errorClass) {
+        $(element).parents("div.form-group").removeClass("has-error");
+      },
+      submitHandler: function(form) {
+        $("form#address button").button('loading');
+        form.submit();
+      }
+    });
+  });
+</script>
+{% endblock script_tags %}

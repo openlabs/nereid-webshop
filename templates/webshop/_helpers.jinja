@@ -1,0 +1,129 @@
+{% macro render_field(field, class_="form-control", show_label=True, input_prepend=None) %}
+  <div class="form-group {% if field.errors %}has-error{% endif %}">
+    {% if show_label %}
+    <label for="{{ field.name }}">{{ field.label.text }}
+      {% if field.flags.required %}<span>*</span>{% endif %}:
+    </label>
+    {% endif %}
+      {% if input_prepend %}
+      <div class="input-group">
+        <span class="input-group-addon"><i class="{{ input_prepend }}"></i></span>
+        {% endif %}
+        {% if field.flags.required %}
+          {% set class_ = class_ + " required" %}
+        {% endif %}
+        {% if field.flags.email %}
+          {% set class_ = class_ + " email" %}
+        {% endif %}
+        {{ field(class_=class_, **kwargs) }}
+        {% if input_prepend %}
+        {# close the input-prepend div if one exists #}
+      </div>
+      {% endif %}
+      {% if field.description %}
+      <span class="help-block"><small>{{ field.description }}</small></span>
+      {% endif %}
+      {% for error in field.errors %}
+      <span class="help-block"><small>{{ error|string }}</small></span>
+      {% endfor %}
+  </div>
+{% endmacro %}
+
+{% macro render_address(address, identifier, edit=True) -%}
+<div class="pull-right">
+  {% if edit %}
+  <a href="{{ url_for('party.address.edit_address', address=address.id) }}" ><i class="fa fa-pencil"></i> Edit</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href=""><i class="fa fa-trash-o"></i> Remove</a>
+  {% endif %}
+</div>
+<address>
+  <strong>{{ address.name }}</strong><br>
+  {{ address.street }}, {{ address.city }}<br>
+  {{ address.subdivision and address.subdivision.code }} {{ address.zip }}<br>
+  {% if address.phone %}
+  <abbr title="Phone"><i class="fa fa-phone"></i></abbr>: {{ address.phone }}<br/>
+  {% endif %}
+</address>
+{%- endmacro %}
+
+{% macro render_product(product) -%}
+<div class="item">
+  <a href="{{ url_for('product.product.render', uri=product.uri) }}">
+    {% if product.image_sets and product.image_sets[-1].large_image %}
+      <img src="{{ CDN }}{{ product.image_sets[-1] }}" alt="{{ product.name }}" title="{{ product.name }}"/>
+    {% else %}
+      <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/no-image.jpg') }}" alt=""/>
+    {% endif %}
+    <h4> {{ product.name }}
+      <span class="brand">Black Coffee</span>
+    </h4>
+    <span class="product-price">{{ product.sale_price()|currencyformat(request.nereid_currency.code) }}</span>
+  </a>
+</div>
+{%- endmacro %}
+
+{% macro render_product_list(template, browse_node=None, name=None, description=None) -%}
+  {% set name = name or template.name %}
+  {% set description = description or template.description %}
+  {% set product = template.products_displayed_on_eshop[0] %}
+  <div class="product-item">
+    <a href="{{ url_for('product.product.render', uri=product.uri, browse_node=(browse_node and browse_node.uri + ',' + browse_node.name or None)) }}">
+      {% if product.image_sets and product.image_sets[-1].large_image %}
+        <img src="{{ CDN }}{{ product.image_sets[-1].large_image.transform_command().thumbnail(160, 160, 'a') }}" alt="{{ product.name }}" title="{{ product.name }}"/>
+      {% else %}
+        <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/no-image.jpg') }}" alt="{{ product.name }}" title="{{ product.name }}"/>
+      {% endif %}
+      <h4>{{ name|safe }}
+        <span class="brand">{% if product.brand %}by {{ product.brand }}{% endif %}</span>
+        <span class="brand">{% if template.products_displayed_on_eshop|length > 1 %}See {{ template.products_displayed_on_eshop|length }} options{% endif %}</span>
+      </h4>
+      <span class="product-price">{{ product.sale_price()|currencyformat(request.nereid_currency.code) }}</span>
+    </a>
+  </div>
+{% endmacro %}
+
+{% macro render_pagination(pagination, uri, endpoint) %}
+<ul class="pagination pull-right">
+  {% if pagination.has_prev -%}
+  <li>
+    <a href="{{ url_for(endpoint, uri=uri, page=pagination.prev_num, **kwargs) }}">
+      &laquo; {% trans %}Previous{% endtrans %}
+    </a>
+  </li>
+  {% else %}
+  <li class="disabled">
+    <a>
+    &laquo; {% trans %}Previous{% endtrans %}
+    </a>
+  </li>
+  {% endif %}
+
+  {%- for page in pagination.iter_pages(left_edge=0, left_current=5, right_current=5, right_edge=0) %}
+    {% if loop.first and page !=1 %}
+    <li class="disabled"><a>...</a></li>
+    {% endif %}
+
+    {% if page %}
+    <li {% if page == pagination.page %}class="active"{% endif %}>
+      <a href="{{ url_for(endpoint, uri=uri, page=page, **kwargs) }}">{{ page }}</a>
+    </li>
+    {% endif %}
+
+    {% if loop.last and page != pagination.pages %}
+    <li class="disabled"><a>...</a></li>
+    {% endif %}
+  {% endfor %}
+
+  {% if pagination.has_next -%}
+  <li>
+    <a class="" href="{{ url_for(endpoint, uri=uri, page=pagination.next_num, **kwargs) }}">
+      {% trans %}Next{% endtrans %} &raquo;
+    </a>
+  </li>
+  {% else %}
+  <li class="disabled">
+    <a>{% trans %}Next{% endtrans %} &raquo;</a>
+  </li>
+  {% endif %}
+
+</ul>
+{% endmacro %}

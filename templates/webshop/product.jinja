@@ -1,0 +1,168 @@
+{% extends 'base.jinja' %}
+
+{% from '_helpers.jinja' import render_product %}
+
+{% block title %}{{ product.name }}{% endblock title %}
+
+{% block extra_head %}
+{{ super() }}
+<!-- og -->
+<meta property="og:url" content="{{ url_for('product.product.render', uri=product.uri, _external=True) }}"/>
+<meta property="og:title" content="{{ product.name  }}" />
+<meta property="og:description" content="{{ (product.description or '')|truncate(300) }}" />
+<meta property="og:type" content="product"/>
+{% if product.image_sets and product.image_sets[-1].large_image %}
+<meta property="og:image" content="http:{{ CDN }}{{ product.image_sets[-1].large_image.transform_command().thumbnail(1500, 1500, 'a') }}"/>
+{% endif %}
+{% for code in product.codes %}
+{% if code.code_type == 'upc-a' %}
+<meta property="og:upc" content="{{ code.code }}"/>
+{% endif %}
+{% endfor %}
+{% endblock extra_head %}
+
+{% block main %}
+<!-- Product Section starts -->
+<div class="container">
+  <!--Product-main section-->
+  <div class="row">
+    <div class="col-md-5 thumbs-image">
+      <div class="col-md-3">
+        <ul class="list-inline">
+          {% for image_set in product.image_sets %}
+          <li class="{% if loop.first %}active{% endif %}">
+            <a href="#tab{{ loop.index }}" data-toggle="tab">
+              <img src="{{ image_set.large_image.transform_command().thumbnail(120, 120) }}" alt="{{ image_set.name }}">
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="col-md-9">
+        <div class="tab-content">
+          {% for image_set in product.image_sets %}
+          <div class="tab-pane {% if loop.first %}active{% endif %}" id="tab{{ loop.index }}">
+            <div class="zoom-container">
+              <a id="zoom-target" href="{{ image_set.large_image.url }}" target="new">
+                <img class="zoom-image" src="{{ image_set.large_image.transform_command().thumbnail(500, 500) }}" alt=""/>
+              </a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <!--Add this plugin -->
+      <div class="row addthis-social">
+        <br>
+        <!-- AddThis Button BEGIN -->
+        <!--
+        <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+          <a class="addthis_button_preferred_1"></a>
+          <a class="addthis_button_preferred_2"></a>
+          <a class="addthis_button_preferred_3"></a>
+          <a class="addthis_button_preferred_4"></a>
+          <a class="addthis_button_compact"></a>
+          <a class="addthis_counter addthis_bubble_style"></a>
+        </div>
+        <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51bc173019597874"></script>
+      -->
+        <!-- AddThis Button END -->
+      </div>
+    </div>
+    <div class="col-md-7">
+      <h4 class="product-heading">{{ product.rec_name }}</h4>
+      {% set sale_price = product.sale_price(1) %}
+      {% if sale_price < product.list_price %}
+      <h3 class="product-price">
+        <span class="not">{{ product.list_price|currencyformat(request.nereid_currency.code) }}</span>
+        {{ sale_price|currencyformat(request.nereid_currency.code) }}
+      </h3>
+      {% else %}
+      <h3 class="product-price">{{ sale_price|currencyformat(request.nereid_currency.code) }}</h3>
+      {% endif %}
+
+      {% if product.template.products|length > 1 %}
+      {# show if there are more variants than the one being displayed #}
+      <div class="product-size"> Select Variation : <br>
+        <div class="size-buttons">
+          {% for variant in product.template.products %}
+          <a class="btn btn-size"
+            href="{{ url_for('product.product.render', uri=variant.uri) }}"
+            type="radio" value="{{ variant.id }}">{{ variant.code }}</a>
+          {% endfor %}
+        </div>
+        <span class="error-text text-danger"> Please Select Size</span>
+      </div>
+      {% endif %}
+
+      <div class="buy-now">
+        <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now">
+          <input type="hidden" name="quantity" value="1"/>
+          <input type="hidden" name="size" id="size-id"/>
+          <input type="hidden" name="product" value="{{ product.id }}"/>
+          <input type="hidden" name="action" value="add"/>
+          <button class="btn btn-danger" type="submit" quantity="1">Buy Now</button>
+        </form>
+        {#
+
+        *** Activate this once the wishlist module is done ***
+
+      	<form action="{{ url_for("product.product.add_to_wishlist") }}" id="add-wishlist" method="post">
+          <input type="hidden" name="quantity" value="1"/>
+          <input type="hidden" name="size" id="size-id"/>
+          <input type="hidden" name="product" value="{{ product.id }}"/>
+          <input type="hidden" name="action" value="add"/>
+          <button type="submit" class="btn btn-link"><i class="fa fa-heart"></i> Add to Wishlist</button>
+        </form>
+        #}
+      </div>
+    </div>
+  </div>
+  <!--Product Description -->
+  <div class="row">
+    <div class="col-md-12 product-desc">
+      <h4 class="main-heaidng">Product Description</h5>
+      <p>{{ product.description|safe or '' }}</p>
+    </div>
+  </div>
+  <hr>
+  <!-- Related Products -->
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 center">
+      <ul class="list-inline recommended-tabs">
+        <li class="active"><a href="#recommended-products" data-toggle="tab">Recommended</a></li>
+        <li><a href="#bought-together" data-toggle="tab">Bought Together</a></li>
+        <li><a href="#recently-viewed" data-toggle="tab">Recently Viewed</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="row tab-content center">
+    <div class="tab-pane active" id="recommended-products">
+      <div class="col-md-10 col-md-offset-1">
+        <div id="product-slide">
+          {% for recommended_product in product.recommended_products %}
+          {# FIXME #}
+          <div class="item">
+            <a href="">
+              <img src="{{ STATIC }}images/sample-img/formal-shirts/shirt1.jpg" />
+              <h4> {{ recommended_product.name }}
+                <span class="brand">Black Coffee</span>
+              </h4>
+              <span class="product-price">$ 25.99</span>
+            </a>
+          </div>
+          {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="bought-together">
+      <h1>hello world</h1>
+    </div>
+    <div class="tab-pane fade" id="recently-viewed">
+      <h1>hi there</h1>
+    </div>
+  </div>
+</div>
+{% endblock main %}

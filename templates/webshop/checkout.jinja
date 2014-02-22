@@ -1,0 +1,237 @@
+{% extends 'base.jinja' %}
+
+{% from '_helpers.jinja' import render_field %}
+
+{% macro render_delivery_address(address, identifier) %}
+  <div class="well well-small" data-address-id="{{ address.id }}">
+    <address >
+      <strong>{{ address.name }}</strong><br>
+      {{ address.street }}, {{ address.streetbis }}<br>
+      {{ address.city }}, {{ address.subdivision and address.subdivision.code }} {{ address.zip }}<br>
+      <abbr title="Phone"><i class="fa fa-phone"></i></abbr> : {{ address.phone }}<br/>
+    </address>
+  </div>
+{% endmacro %}
+
+{% block main %}
+<section class="checkout-container">
+  <div class="container">
+    <!-- Checkout Step Indicator -->
+    <div class="row checkout-steps">
+      <ul class="list-inline center">
+        <li>
+          <a href="checkout-step-one.html" class="done" data-original-title="" title=""><span><i class="fa fa-check"></i></span>
+            <div class="text">Cart</div>
+          </a>
+        </li>
+        <li><span class="muted"></span>------------</li>
+        <li>
+          <a href="" class="active" data-original-title="" title=""><span>2</span>
+            <div class="text">Delivery</div>
+          </a>
+        </li>
+        <li><span class="muted"></span>------------</li>
+        <li>
+          <a class="undone" data-original-title="" title=""><span>3</span>
+            <div class="text">Payment</div>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!--Delivery Address Selection -->
+    <div class="row delivery-address">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-8">
+          <div class="address-container">
+            {% if request.nereid_user.party.addresses %}
+            <h4><span>Choose from an existing address below</span></h4>
+            <div class="row">
+              {% for address in request.nereid_user.party.addresses %}
+              <div class="col-md-6 clearfix">
+                {{ render_delivery_address(address) }}
+              </div>
+              {% endfor %}
+            </div>
+            <!-- On selecting address this input field will have id of selected address -->
+            <input type="hidden" class="form-control" name="address" > 
+            <div class="row">
+              <div class="col-md-6 pull-right">
+                <form action="" method="post">
+                  <input type="hidden" name="address" id="address-id" value=""/>
+                  <button  class="btn btn-primary pull-right" id="existing-address-payment" address="">Proceed to Payment&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+            <div class="row center">
+              <div class="or"><span class="circle">or</span></div>
+            </div>
+            {% endif %}
+
+            <!--Block for adding new address -->
+            <h4><span>Add a new address below</span></h4>
+            <!-- Add new address form -->
+            <form role="form" action="" method="POST">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Name *</label>
+                <input type="text" class="form-control" placeholder="your name">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Street *</label>
+                <input type="text" class="form-control" placeholder="street">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Street (Bis)*</label>
+                <input type="text" class="form-control" placeholder="street (bis)">
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="exampleInputEmail1">City *</label>
+                  <input type="text" class="form-control" placeholder="California">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="exampleInputEmail1">Post Code*</label>
+                  <input type="text" class="form-control" placeholder="33130">
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label for="exampleInputEmail1">Email</label>
+                  <input type="email" class="form-control" placeholder="California">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="exampleInputEmail1">Phone</label>
+                  <input type="text" class="form-control" placeholder="1234567890">
+                </div>
+              </div>
+              <div class="row">
+                <!--Select country -->
+                <div class="form-group col-md-6">
+                  <label for="">Country *</label>
+                  <select id="country" class="form-control">
+                  </select>
+                </div>
+                <!--Select State/County -->
+                <div class="form-group col-md-6">
+                  <label for="">State/County *</label>
+                  <select id="subdivision" class="form-control">
+                  </select>
+                </div>
+              </div>
+              <a href="" class="btn btn-primary pull-right">Proceed to Payment&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></a>
+            </form>
+          </div>
+        </div>
+        <!-- Cart Summary -->
+        <div class="col-md-4">
+          <div class="row">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Bag Summery / {{ cart.lines|length}} Item
+                  <span class="pull-right"><a href="{{ url_for('nereid.cart.view_cart') }}"><i class="fa fa-pencil"></i> Edit</a></span>
+                </h3>
+              </div>
+              <div class="panel-body">
+                {% set currency = cart.sale.currency.code %}
+                <!-- Product Item -->
+                {% for line in cart.sale.lines %}
+                <div class="row border">
+                  <div class="col-xs-3">
+                    <a href="" data-original-title="" title=""><img src="{{ STATIC }}images/products/tee1.jpg"></a>
+                  </div>
+                  <div class="col-xs-6">
+                    <a href="" class="product-name" data-original-title="" title="">{{ line.product.name }} </a><br>
+                    <strong class="text-muted">Size : </strong> L
+                    <strong class="text-muted">Qty :</strong>
+                  </div>
+                  <div class="col-xs-3">
+                    <span class="price">{{ line.unit_price|currencyformat(currency) }}</span>
+                  </div>
+                </div>
+                {% endfor %}
+                <div class="row">
+                  <div class="col-xs-8">
+                    <strong class="pull-right total">Cart Total</strong>
+                  </div>
+                  <div class="col-xs-4">
+                    <span class="price total"> <strong>{{ cart.sale.untaxed_amount|currencyformat(currency) }}</strong></span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-8">
+                    <strong class="pull-right total">Delivery</strong>
+                  </div>
+                  <div class="col-xs-4">
+                    <span class="total text-success">$ 0</span>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-xs-8">
+                    <strong class="pull-right grand-total">Total</strong>
+                  </div>
+                  <div class="col-xs-4">
+                    <span class="price grand-total">{{ cart.sale.untaxed_amount|currencyformat(currency) }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main %}
+
+{% block script_tags %}
+{{ super() }}
+<script type="text/javascript">
+  $(function(){
+    $('.address-container .well-small').click(function(){
+      $('.well-small').removeClass('active');
+      $(this).addClass('active');
+      $("#address-id").val($(this).data("address-id"));
+      $("#existing-address-payment").attr('address', $(this).data("address-id"));
+    });
+  });
+</script>
+<script src="{{ STATIC }}js/jquery.validate.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    // Register on change event
+    $("select#country").change(function(){
+      $.getJSON("{{ url_for('nereid.website.subdivision_list') }}",
+        {country: $(this).val()}, function(data){
+        var options = '';
+        $.each(data.result, function(index, map){
+            options += '<option value="' + map.id + '" code="' + map.code + '">' + map.name + '</option>';
+        });
+        $("select#subdivision").html(options);
+        $("select#subdivision option[value='{{ form.subdivision.data }}']").attr('selected', true);
+      });
+    });
+    // Onload trigger the change as country comes packed with form
+    $("select#country").triggerHandler("change")
+    // Use client side validation on the form
+    $("form#address").validate({
+      errorElement: "span",
+      //wrapper: "li",
+      errorPlacement: function(error, element) {
+        error.addClass('help-block');
+        error.insertAfter(element);
+      },
+      highlight: function(element, errorClass) {
+        $(element).parents("div.form-group").addClass("has-error");
+      },
+      unhighlight: function(element, errorClass) {
+        $(element).parents("div.form-group").removeClass("has-error");
+      },
+      submitHandler: function(form) {
+        $("form#address button").button('loading');
+        form.submit();
+      }
+    });
+  });
+</script>
+{% endblock script_tags %}

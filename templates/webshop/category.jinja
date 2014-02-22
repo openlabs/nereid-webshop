@@ -1,0 +1,66 @@
+{% extends 'base.jinja' %}
+
+{% from '_helpers.jinja' import render_pagination, render_product_list  %}
+
+{% block breadcrumb %}
+{{ super() }}
+<li>
+  <a href="{{ url_for('product.category.render', uri=category.uri) }}">{{ category.name }}</a>
+</li>
+{% endblock breadcrumb %}
+
+{% block main %}
+<section>
+  <div class="container">
+    <!-- category page -->
+    <div class="row">
+      <!--Side bar -->
+      <div class="col-md-2">
+        {% for menuitem in menu_for('browse-node-menu', 'webshop')['children'] %}
+          <h4><a href="{{ url_for('product.browse_node.render', uri=menuitem['uri']) }}">{{ menuitem['name'] }}</a></h4>
+          {% for child in menuitem.get('children') %}
+            <ul class="list-unstyled">
+              <li><a href="{{ url_for('product.browse_node.render', uri=child['uri']) }}">&nbsp;&nbsp;{{ child['name'] }}</a></li>
+              {% for subchild in child.get('children') %}
+                <ul class="list-unstyled">
+                  <li><a href="{{ url_for('product.browse_node.render', uri=subchild['uri']) }}">&nbsp;&nbsp;&nbsp;&nbsp;{{ subchild['name'] }}</a></li>
+                </ul>
+              {% endfor %}
+            </ul>
+          {% endfor %}
+          <hr>
+        {% endfor %}
+      </div>
+      <!-- Content bar -->
+      <div class="col-md-10 product-list">
+        <div class="row">
+          <div class="col-md-9">
+            <h3 class="list-heading">{{ category.get_rec_name(category.name) }}</h3>
+          </div>
+          <!--Filter Option -->
+          <div class="col-md-3">
+            <select class="form-control select-sort">
+              <option>Discount</option>
+              <option>Low Price First</option>
+              <option>High Price First</option>
+              <option>Popularity</option>
+              <option>What's New</option>
+            </select>
+          </div>
+        </div>
+        <div class="masonry js-masonry"  data-masonry-options='{ "columnWidth": ".category-list", "itemSelector": ".product-item", "isFitWidth": true }'>
+          <div class="category-list"></div> 
+          {% for product in products %}
+            {{ render_product_list(product) }}
+          {% endfor %}
+        </div>
+        {{ render_pagination(products, category.uri, 'product.category.render') }}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main%}
+
+{% block script_tags %}
+<script src="{{ url_for('nereid.webshop.send_static_file', filename='js/masonry.pkgd.min.js') }}" ></script>
+{% endblock script_tags %}
