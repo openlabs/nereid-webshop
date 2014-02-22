@@ -17,6 +17,7 @@
           <div class="col-md-7">
             <form action="{{ url_for('party.address.edit_address', address=address) }}" 
               method="post" id="address">
+	      {{ form.csrf_token }}
               {{ render_field(form.name, placeholder=_("John Doe"), class_="form-control") }}
               {{ render_field(form.street, placeholder=_("1600 Amphitheatre Parkway"), class_="form-control") }}
               {{ render_field(form.streetbis, placeholder=_("Mountain View"), class_="form-control") }}

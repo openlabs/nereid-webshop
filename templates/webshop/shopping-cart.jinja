@@ -79,6 +79,7 @@
                   <td>
                     <div class="quantity buttons_added">
                       <form>
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                         <input type="button" class="minus" id="minus1" value="-" data-loading-text="...">
                         <input maxlength="12" class="input-text qty text" title="Qty" size="4" value="{{ line.quantity|int }}" name="quantity">
                         <input class="product" type="hidden" value="{{ line.product.id }}">
@@ -109,6 +110,7 @@
             {% if cart.sale.coupon %}
             {# if the promotions module is installed #}
             <form>
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
               <div class="col-xs-4">
                 <label for="" class="">Have a Coupon ?</label>
               </div>

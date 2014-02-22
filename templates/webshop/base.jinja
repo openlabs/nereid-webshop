@@ -3,6 +3,7 @@
   <head>
     <title>{% trans %}Nereid Webshop{% endtrans %}-{% block title %}{% endblock title %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     {% block link_tags %}
     {# This block adds <link> tags to the head section of the template. #}
     <link href="{{ url_for('nereid.webshop.send_static_file', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
@@ -330,6 +331,17 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/jquery.pnotify.min.js') }}"></script>
+    <script type="text/javascript">
+      var csrftoken = $('meta[name=csrf-token]').attr('content')
+
+      $.ajaxSetup({
+          beforeSend: function(xhr, settings) {
+              if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type)) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken)
+              }
+          }
+      })
+    </script>
     <script type="text/javascript">
       $(document).ready(function($){
         {# Message flashin #}

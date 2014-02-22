@@ -24,6 +24,7 @@
                 {{ render_address(address, edit=False) }}
                 </div>
                 <form role="form" method="POST">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                   <input type="hidden" name="address" value="{{ address.id }}"/>
                   <button type="submit" class="btn btn-primary pull-right">
                     Use this address&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
@@ -59,6 +60,7 @@
             </h4>
             <!-- Add new address form -->
             <form role="form" method="POST">
+              {{ address_form.csrf_token }}
               {{ render_field(address_form.name) }}
               {{ render_field(address_form.street) }}
               {{ render_field(address_form.streetbis) }}

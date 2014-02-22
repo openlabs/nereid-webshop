@@ -98,6 +98,7 @@
 
       <div class="buy-now">
         <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
           <input type="hidden" name="quantity" value="1"/>
           <input type="hidden" name="size" id="size-id"/>
           <input type="hidden" name="product" value="{{ product.id }}"/>
