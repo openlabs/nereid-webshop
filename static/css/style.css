@@ -631,6 +631,16 @@ li.google-plus a{
 li.google-plus a:hover, li.google a:active{
  background-color: #CF2E19; 
 }
+.checkbox input[type="checkbox"]{
+ height: auto !important;
+ padding-right: 10px !important;
+}
+.account-auth form .checkbox{
+ text-align: left !important;
+ padding: 10px 0 10px 20px !important;
+
+}
+
 @media(max-width: 768px){
   .modal-dialog{
     width: 100%;
