@@ -17,6 +17,10 @@
                   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                   <input type="email" class="form-control input-lg" placeholder="Enter your E-mail address" name="email" required>
                   <input type="password" class="form-control input-lg" placeholder="Your Password" name="password"required>
+                  <div class="checkbox">
+                      <input type="checkbox" name="remember" id="remember_me"> 
+                      <label for="remember_me">Remember Me</label>
+                  </div>
                   <button type="submit" class="btn btn-lg btn-block">Login</button>
                   <a href="{{ url_for('nereid.user.reset_account', next=request.args.get('next', url_for('nereid.website.home'))) }}" class="text-muted"><strong>Forgot Password ?</strong></a>
                 </form>
