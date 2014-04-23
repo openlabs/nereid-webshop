@@ -1,10 +1,11 @@
 {% macro render_field(field, class_="form-control", show_label=True, input_prepend=None) %}
   <div class="form-group {% if field.errors %}has-error{% endif %}">
-    {% if show_label %}
+    {% if show_label and field.type == 'BooleanField' %}
     <label for="{{ field.name }}">{{ field.label.text }}
       {% if field.flags.required %}<span>*</span>{% endif %}:
     </label>
     {% endif %}
+  
       {% if input_prepend %}
       <div class="input-group">
         <span class="input-group-addon"><i class="{{ input_prepend }}"></i></span>
@@ -12,10 +13,20 @@
         {% if field.flags.required %}
           {% set class_ = class_ + " required" %}
         {% endif %}
+
         {% if field.flags.email %}
           {% set class_ = class_ + " email" %}
+          {{ field.flags }}
         {% endif %}
-        {{ field(class_=class_, **kwargs) }}
+        {% if field.flags.password %}
+          {% set class_ = class_ + " password" %}
+          {{ field.flags }}
+        {% endif %}
+        {% if field.flags.required %}
+        {{ field(class_=class_, placeholder=field.label.text, required=required, **kwargs) }}
+        {% else %}
+        {{ field(class_=class_, placeholder=field.label.text, **kwargs) }}
+        {% endif %}
         {% if input_prepend %}
         {# close the input-prepend div if one exists #}
       </div>
