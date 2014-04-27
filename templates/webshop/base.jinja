@@ -16,18 +16,18 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/font-awesome.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/jquery.pnotify.default.css') }}">
     {% endblock link_tags %}
-    
+
     {% block base_stylesheet %}
       <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/style.css') }}">
     {% endblock base_stylesheet %}
 
     {% block extra_head %}
-      {# This block is empty by default and can be used to add extra 
-        contents into the <head> tag of the generated HTML file. This is 
-        the right place to add references to extra CSS files. 
-      
+      {# This block is empty by default and can be used to add extra
+        contents into the <head> tag of the generated HTML file. This is
+        the right place to add references to extra CSS files.
+
         Though it is possible to add Javascript files to this section, It
-        is not recommended. 
+        is not recommended.
         See why: http://developer.yahoo.com/performance/rules.html#js_bottom
         #}
     {% endblock extra_head %}
@@ -53,7 +53,7 @@
                     </span>
                   </a>
                 </div>
-              {% endblock new_offers %}  
+              {% endblock new_offers %}
               <div class="row">
                 {% block locales %}
                 <div class="col-xs-3">
@@ -106,12 +106,14 @@
           {% endblock logo %}
           {% block search %}
             <div class="col-md-5 top-search">
+              <form action="{{ url_for('product.product.quick_search') }}" id="search_form">
               <div class="input-group">
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" name="q">
                 <span class="input-group-btn">
-                  <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+                  <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
                 </span>
               </div><!-- /input-group -->
+              </form>
             </div>
           {% endblock search %}
           {% block header_user %}
@@ -287,7 +289,7 @@
         <%
         if (user_status.cart_size > 0){ %>
           <div class="cart-total">
-            <span class="pull-left"><%= parseInt(user_status.cart_size) %> Item(s)</span><span class="pull-right"><strong>Subtotal :</strong> <%= user_status.cart.total_amount %> 
+            <span class="pull-left"><%= parseInt(user_status.cart_size) %> Item(s)</span><span class="pull-right"><strong>Subtotal :</strong> <%= user_status.cart.total_amount %>
             </span>
           </div>
           <%
@@ -321,9 +323,9 @@
           </div>
         <% } %>
       </div>
-    </script>    
+    </script>
     {% endblock footer %}
-    
+
     <!-- javascript section -->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
