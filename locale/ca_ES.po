@@ -1,0 +1,956 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "field:nereid.webshop,create_date:"
+msgid "Create Date"
+msgstr "Data de creació"
+
+msgctxt "field:nereid.webshop,create_uid:"
+msgid "Create User"
+msgstr "Usuari de creació"
+
+msgctxt "field:nereid.webshop,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt "field:nereid.webshop,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:nereid.webshop,write_date:"
+msgid "Write Date"
+msgstr "Data modificació"
+
+msgctxt "field:nereid.webshop,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "model:nereid.cms.article,content:None"
+msgid "Checkout our customer stories"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:None"
+msgid "Current office location"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:None"
+msgid "Join us"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:None"
+msgid "Latest press realease"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:None"
+msgid "Latest publication"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:None"
+msgid "Minicube PCR Documentation"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:None"
+msgid "Minicube PCR Software"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:None"
+msgid "Minicube PCR Support"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:None"
+msgid "Some content related to bult order"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:None"
+msgid "Some frequently asked questions 222"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:None"
+msgid "Some shipping menthods"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:None"
+msgid "Some thing about the company"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:None"
+msgid "We are in news"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:a_bulk_order"
+msgid "Some content related to bult order"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:a_career"
+msgid "Join us"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:a_customer_stories"
+msgid "Checkout our customer stories"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:a_documentation"
+msgid "Minicube PCR Documentation"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:a_faq"
+msgid "Some frequently asked questions"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:a_media"
+msgid "We are in news"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:a_office_location"
+msgid "Current office location"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:a_our_identity"
+msgid "Some thing about the company"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:a_press_realeases"
+msgid "Latest press realease"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:a_publication"
+msgid "Latest publication"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:a_shipping"
+msgid "Some shipping menthods"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:a_software"
+msgid "Minicube PCR Software"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,content:a_support"
+msgid "Minicube PCR Support"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:None"
+msgid "Bulk Order"
+msgstr "Ordres massives"
+
+msgctxt "model:nereid.cms.article,title:None"
+msgid "Career"
+msgstr "Carrera"
+
+msgctxt "model:nereid.cms.article,title:None"
+msgid "Customer Stories"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:None"
+msgid "Documentation"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:None"
+msgid "FAQ"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:None"
+msgid "Media"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:None"
+msgid "Office Location"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:None"
+msgid "Our Identity"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:None"
+msgid "Press Realeases"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:None"
+msgid "Publications"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:None"
+msgid "Shipping"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:None"
+msgid "Software"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:None"
+msgid "Support"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:a_bulk_order"
+msgid "Bulk Order"
+msgstr "Ordres massives"
+
+msgctxt "model:nereid.cms.article,title:a_career"
+msgid "Career"
+msgstr "Carrera"
+
+msgctxt "model:nereid.cms.article,title:a_customer_stories"
+msgid "Customer Stories"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:a_documentation"
+msgid "Documentation"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:a_faq"
+msgid "FAQ"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:a_media"
+msgid "Media"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:a_office_location"
+msgid "Office Location"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:a_our_identity"
+msgid "Our Identity"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:a_press_realeases"
+msgid "Press Realeases"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:a_publication"
+msgid "Publications"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:a_shipping"
+msgid "Shipping"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:a_software"
+msgid "Software"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,title:a_support"
+msgid "Support"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:None"
+msgid "bulk-order"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:None"
+msgid "career"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:None"
+msgid "customers-stories"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:None"
+msgid "documentation"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:None"
+msgid "faq"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:None"
+msgid "media"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:None"
+msgid "office-location"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:None"
+msgid "our-identity"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:None"
+msgid "press-realeases"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:None"
+msgid "publications"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:None"
+msgid "shipping"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:None"
+msgid "software"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:None"
+msgid "support"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:a_bulk_order"
+msgid "bulk-order"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:a_career"
+msgid "career"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:a_customer_stories"
+msgid "customers-stories"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:a_documentation"
+msgid "documentation"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:a_faq"
+msgid "faq"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:a_media"
+msgid "media"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:a_office_location"
+msgid "office-location"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:a_our_identity"
+msgid "our-identity"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:a_press_realeases"
+msgid "press-realeases"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:a_publication"
+msgid "publications"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:a_shipping"
+msgid "shipping"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:a_software"
+msgid "software"
+msgstr ""
+
+msgctxt "model:nereid.cms.article,uri:a_support"
+msgid "support"
+msgstr ""
+
+msgctxt "model:nereid.cms.article.category,title:None"
+msgid "About Us"
+msgstr "Sobre nosaltres"
+
+msgctxt "model:nereid.cms.article.category,title:None"
+msgid "Contact Us"
+msgstr "Contacteu amb nosaltres"
+
+msgctxt "model:nereid.cms.article.category,title:None"
+msgid "Customer Service"
+msgstr ""
+
+msgctxt "model:nereid.cms.article.category,title:None"
+msgid "Help"
+msgstr "Ajuda"
+
+msgctxt "model:nereid.cms.article.category,title:None"
+msgid "Press"
+msgstr ""
+
+msgctxt "model:nereid.cms.article.category,title:ac_about_us"
+msgid "About Us"
+msgstr "Sobre nosaltres"
+
+msgctxt "model:nereid.cms.article.category,title:ac_contact_us"
+msgid "Contact Us"
+msgstr "Contacteu amb nosaltres"
+
+msgctxt "model:nereid.cms.article.category,title:ac_customer_service"
+msgid "Customer Service"
+msgstr ""
+
+msgctxt "model:nereid.cms.article.category,title:ac_help"
+msgid "Help"
+msgstr "Ajuda"
+
+msgctxt "model:nereid.cms.article.category,title:ac_press"
+msgid "Press"
+msgstr ""
+
+msgctxt "model:nereid.webshop,name:"
+msgid "website"
+msgstr ""
+
+msgctxt "nereid_template:webshop/_helpers.jinja:"
+msgid "Next"
+msgstr "Següent"
+
+msgctxt "nereid_template:webshop/_helpers.jinja:"
+msgid "Next"
+msgstr "Següent"
+
+msgctxt "nereid_template:webshop/_helpers.jinja:"
+msgid "Previous"
+msgstr "Anterior"
+
+msgctxt "nereid_template:webshop/_helpers.jinja:"
+msgid "Previous"
+msgstr "Anterior"
+
+msgctxt "nereid_template:webshop/account-base.jinja:"
+msgid "Address Book"
+msgstr "Llibreta de direccions"
+
+msgctxt "nereid_template:webshop/account-base.jinja:"
+msgid "Orders"
+msgstr "Comandes"
+
+msgctxt "nereid_template:webshop/account-base.jinja:"
+msgid "Profile"
+msgstr "Perfil"
+
+msgctxt "nereid_template:webshop/account.jinja:"
+msgid "Cancel"
+msgstr "Cancel·la"
+
+msgctxt "nereid_template:webshop/account.jinja:"
+msgid "Change Password"
+msgstr "Canviar contrasenya"
+
+msgctxt "nereid_template:webshop/account.jinja:"
+msgid "Confirm Password"
+msgstr "Confirmar contrasenya"
+
+msgctxt "nereid_template:webshop/account.jinja:"
+msgid "Confirm Password"
+msgstr "Confirmar contrasenya"
+
+#, fuzzy
+msgctxt "nereid_template:webshop/account.jinja:"
+msgid "Email"
+msgstr "Email"
+
+#, fuzzy
+msgctxt "nereid_template:webshop/account.jinja:"
+msgid "Email"
+msgstr "Email"
+
+msgctxt "nereid_template:webshop/account.jinja:"
+msgid "Mobile No."
+msgstr "Núm. mobil"
+
+msgctxt "nereid_template:webshop/account.jinja:"
+msgid "My Account"
+msgstr "El meu compte"
+
+msgctxt "nereid_template:webshop/account.jinja:"
+msgid "New Password"
+msgstr "Nova contrasenya"
+
+msgctxt "nereid_template:webshop/account.jinja:"
+msgid "New Password"
+msgstr "Nova contrasenya"
+
+msgctxt "nereid_template:webshop/account.jinja:"
+msgid "Old Password"
+msgstr "Contrasenya anterior"
+
+msgctxt "nereid_template:webshop/account.jinja:"
+msgid "Old Password"
+msgstr "Contrasenya anterior"
+
+msgctxt "nereid_template:webshop/account.jinja:"
+msgid "Password"
+msgstr "Contrasenya"
+
+msgctxt "nereid_template:webshop/account.jinja:"
+msgid "Password"
+msgstr "Contrasenya"
+
+msgctxt "nereid_template:webshop/account.jinja:"
+msgid "Your Name"
+msgstr "El vostre nom"
+
+msgctxt "nereid_template:webshop/account.jinja:"
+msgid "Your Name"
+msgstr "El vostre nom"
+
+msgctxt "nereid_template:webshop/account.jinja:"
+msgid "your mobile no"
+msgstr "El vostre telèfon mobil"
+
+msgctxt "nereid_template:webshop/address-add.jinja:"
+msgid "1234567890"
+msgstr ""
+
+msgctxt "nereid_template:webshop/address-add.jinja:"
+msgid "1600 Amphitheatre Parkway"
+msgstr ""
+
+msgctxt "nereid_template:webshop/address-add.jinja:"
+msgid "33130"
+msgstr ""
+
+msgctxt "nereid_template:webshop/address-add.jinja:"
+msgid "Add a new Address"
+msgstr "Afegir una nova adreça"
+
+msgctxt "nereid_template:webshop/address-add.jinja:"
+msgid "California"
+msgstr "California"
+
+msgctxt "nereid_template:webshop/address-add.jinja:"
+msgid "Fields marked with (<span>*</span>) are requried."
+msgstr "Els camps marcats amb (<span>*</span>) són obligatoris."
+
+msgctxt "nereid_template:webshop/address-add.jinja:"
+msgid "John Doe"
+msgstr ""
+
+msgctxt "nereid_template:webshop/address-add.jinja:"
+msgid "Mountain View"
+msgstr ""
+
+msgctxt "nereid_template:webshop/address-add.jinja:"
+msgid "Save Address"
+msgstr "Guarda l'adreça"
+
+msgctxt "nereid_template:webshop/address-add.jinja:"
+msgid "email@example.com"
+msgstr "correu@exemple.com"
+
+msgctxt "nereid_template:webshop/address-edit.jinja:"
+msgid "1234567890"
+msgstr ""
+
+msgctxt "nereid_template:webshop/address-edit.jinja:"
+msgid "1600 Amphitheatre Parkway"
+msgstr ""
+
+msgctxt "nereid_template:webshop/address-edit.jinja:"
+msgid "33130"
+msgstr ""
+
+msgctxt "nereid_template:webshop/address-edit.jinja:"
+msgid "California"
+msgstr "California"
+
+msgctxt "nereid_template:webshop/address-edit.jinja:"
+msgid "Edit Address "
+msgstr "Edita adreça"
+
+msgctxt "nereid_template:webshop/address-edit.jinja:"
+msgid "Fields marked with (<span>*</span>) are requried."
+msgstr "Els camps marcats amb (<span>*</span>) són obligatoris."
+
+msgctxt "nereid_template:webshop/address-edit.jinja:"
+msgid "John Doe"
+msgstr ""
+
+msgctxt "nereid_template:webshop/address-edit.jinja:"
+msgid "Mountain View"
+msgstr ""
+
+msgctxt "nereid_template:webshop/address-edit.jinja:"
+msgid "My Account / Edit Address"
+msgstr "El meu compte / Editar adreça"
+
+msgctxt "nereid_template:webshop/address-edit.jinja:"
+msgid "Save Address"
+msgstr "Guarda l'adreça"
+
+msgctxt "nereid_template:webshop/address-edit.jinja:"
+msgid "email@example.com"
+msgstr "correu@exemple.com"
+
+msgctxt "nereid_template:webshop/address.jinja:"
+msgid "Add new address"
+msgstr "Afegir una nova adreça"
+
+msgctxt "nereid_template:webshop/address.jinja:"
+msgid "Address Book"
+msgstr "Llibreta de direccions"
+
+msgctxt "nereid_template:webshop/address.jinja:"
+msgid "My Account / Edit Address"
+msgstr "El meu compte / Editar adreça"
+
+msgctxt "nereid_template:webshop/base.jinja:"
+msgid "Checkout"
+msgstr "Pasar per caixa"
+
+msgctxt "nereid_template:webshop/base.jinja:"
+msgid "Login / SignUp"
+msgstr "Entreu / Registreu-vos"
+
+msgctxt "nereid_template:webshop/base.jinja:"
+msgid "Login / SignUp"
+msgstr "Entreu / Registreu-vos"
+
+msgctxt "nereid_template:webshop/base.jinja:"
+msgid "Logout"
+msgstr "Desconectat"
+
+msgctxt "nereid_template:webshop/base.jinja:"
+msgid "My Account"
+msgstr "El meu compte"
+
+msgctxt "nereid_template:webshop/base.jinja:"
+msgid "My Cart"
+msgstr "La meva compra"
+
+msgctxt "nereid_template:webshop/base.jinja:"
+msgid "My Cart"
+msgstr "La meva compra"
+
+msgctxt "nereid_template:webshop/base.jinja:"
+msgid "My Orders"
+msgstr "La meva compra"
+
+msgctxt "nereid_template:webshop/base.jinja:"
+msgid "Nereid Webshop"
+msgstr ""
+
+msgctxt "nereid_template:webshop/base.jinja:"
+msgid "Profile"
+msgstr "Perfil"
+
+msgctxt "nereid_template:webshop/base.jinja:"
+msgid "Remove"
+msgstr "Elimina"
+
+msgctxt "nereid_template:webshop/base.jinja:"
+msgid "Subtotal"
+msgstr "Subtotal"
+
+msgctxt "nereid_template:webshop/base.jinja:"
+msgid "Your shopping cart is empty"
+msgstr "La vostra cistella de la compra esta buida"
+
+msgctxt "nereid_template:webshop/checkout/base.jinja:"
+msgid "Billing Address"
+msgstr "Adreça de facturació"
+
+msgctxt "nereid_template:webshop/checkout/base.jinja:"
+msgid "Cart Summary"
+msgstr "Resum de la compra"
+
+msgctxt "nereid_template:webshop/checkout/base.jinja:"
+msgid "Cart Total"
+msgstr "Total compra"
+
+msgctxt "nereid_template:webshop/checkout/base.jinja:"
+msgid "Delivery"
+msgstr "Enviament"
+
+msgctxt "nereid_template:webshop/checkout/base.jinja:"
+msgid "Edit"
+msgstr "Edita"
+
+msgctxt "nereid_template:webshop/checkout/base.jinja:"
+msgid "Edit"
+msgstr "Edita"
+
+msgctxt "nereid_template:webshop/checkout/base.jinja:"
+msgid "Edit"
+msgstr "Edita"
+
+msgctxt "nereid_template:webshop/checkout/base.jinja:"
+msgid "Payment"
+msgstr "Pagament"
+
+msgctxt "nereid_template:webshop/checkout/base.jinja:"
+msgid "Qty"
+msgstr "Qtat."
+
+msgctxt "nereid_template:webshop/checkout/base.jinja:"
+msgid "Sign In"
+msgstr "Entreu"
+
+msgctxt "nereid_template:webshop/checkout/base.jinja:"
+msgid "Tax"
+msgstr "Impost"
+
+msgctxt "nereid_template:webshop/checkout/base.jinja:"
+msgid "Total"
+msgstr "Total"
+
+msgctxt "nereid_template:webshop/checkout/billing_address.jinja:"
+msgid "Add a new address below"
+msgstr "Afegiu una nova adreça a continuació"
+
+msgctxt "nereid_template:webshop/checkout/billing_address.jinja:"
+msgid "Billing Address"
+msgstr "Adreça de facturació"
+
+msgctxt "nereid_template:webshop/checkout/billing_address.jinja:"
+msgid "Choose from an existing address below"
+msgstr "Seleccioneu una adreça existent"
+
+msgctxt "nereid_template:webshop/checkout/billing_address.jinja:"
+msgid "Enter your billing address"
+msgstr "Introduïu la vostra adreça de facturació"
+
+msgctxt "nereid_template:webshop/checkout/billing_address.jinja:"
+msgid "Proceed to Payment"
+msgstr "Continueu amb el pagament"
+
+msgctxt "nereid_template:webshop/checkout/billing_address.jinja:"
+msgid "Use this address"
+msgstr "Utilitzeu aquesta adreça"
+
+msgctxt "nereid_template:webshop/checkout/billing_address.jinja:"
+msgid "or"
+msgstr "o"
+
+msgctxt "nereid_template:webshop/checkout/shipping_address.jinja:"
+msgid "Add a new address below"
+msgstr "Afegiu una nova adreça a continuació"
+
+msgctxt "nereid_template:webshop/checkout/shipping_address.jinja:"
+msgid "Choose from an existing address below"
+msgstr "Seleccioneu una adreça existent"
+
+msgctxt "nereid_template:webshop/checkout/shipping_address.jinja:"
+msgid "Enter your shipping address"
+msgstr "Introduïu la vostra adreça d'enviament"
+
+msgctxt "nereid_template:webshop/checkout/shipping_address.jinja:"
+msgid "Proceed to Payment"
+msgstr "Continueu amb el pagament"
+
+msgctxt "nereid_template:webshop/checkout/shipping_address.jinja:"
+msgid "Use this address"
+msgstr "Utilitzeu aquesta adreça"
+
+msgctxt "nereid_template:webshop/checkout/shipping_address.jinja:"
+msgid "or"
+msgstr "o"
+
+msgctxt "nereid_template:webshop/checkout/signin.jinja:"
+msgid "Forgot Password ?"
+msgstr "Heu oblidat la contrasenya?"
+
+msgctxt "nereid_template:webshop/checkout/signin.jinja:"
+msgid "Login"
+msgstr "Nom d'usuari"
+
+msgctxt "nereid_template:webshop/checkout/signin.jinja:"
+msgid "Logout"
+msgstr "Desconectat"
+
+msgctxt "nereid_template:webshop/checkout/signin.jinja:"
+msgid "Not"
+msgstr "No sou"
+
+msgctxt "nereid_template:webshop/checkout/signin.jinja:"
+msgid "Sign In"
+msgstr "Entreu"
+
+msgctxt "nereid_template:webshop/home.jinja:"
+msgid "Home"
+msgstr "Inici"
+
+msgctxt "nereid_template:webshop/login.jinja:"
+msgid "Enter your E-mail address"
+msgstr "Introduïu el vostre correu electrònic"
+
+msgctxt "nereid_template:webshop/login.jinja:"
+msgid "Forgot Password ?"
+msgstr "Heu oblidat la contrasenya?"
+
+msgctxt "nereid_template:webshop/login.jinja:"
+msgid "Log in to your account"
+msgstr "Entreu al vostre compte"
+
+msgctxt "nereid_template:webshop/login.jinja:"
+msgid "Login"
+msgstr "Nom d'usuari"
+
+msgctxt "nereid_template:webshop/login.jinja:"
+msgid "New to shop ?"
+msgstr "Nou a la botiga?"
+
+msgctxt "nereid_template:webshop/login.jinja:"
+msgid "Register here"
+msgstr "Registreu-vos aquí"
+
+msgctxt "nereid_template:webshop/login.jinja:"
+msgid "Your Password"
+msgstr "La vostra contrasenya"
+
+msgctxt "nereid_template:webshop/registration.jinja:"
+msgid "Already registered ?"
+msgstr "Ja esteu registrats?"
+
+msgctxt "nereid_template:webshop/registration.jinja:"
+msgid "Create new account"
+msgstr "Crear un compte nou"
+
+msgctxt "nereid_template:webshop/registration.jinja:"
+msgid "Login here"
+msgstr "Entreu aquí"
+
+msgctxt "nereid_template:webshop/registration.jinja:"
+msgid "Register"
+msgstr "Registreu-vos"
+
+msgctxt "nereid_template:webshop/sale.jinja:"
+msgid "<No Serial #>"
+msgstr ""
+
+msgctxt "nereid_template:webshop/sale.jinja:"
+msgid "Description"
+msgstr "Descripció"
+
+msgctxt "nereid_template:webshop/sale.jinja:"
+msgid "Invoice Address"
+msgstr "Adreça de facturació"
+
+msgctxt "nereid_template:webshop/sale.jinja:"
+msgid "My Account / Order #"
+msgstr "El meu compte / Comanda #"
+
+msgctxt "nereid_template:webshop/sale.jinja:"
+msgid "Order Details"
+msgstr "Detalls de la compra"
+
+msgctxt "nereid_template:webshop/sale.jinja:"
+msgid "Ordered Quantity"
+msgstr "Quantiat"
+
+msgctxt "nereid_template:webshop/sale.jinja:"
+msgid "Shipment Address"
+msgstr "Adreça enviament"
+
+msgctxt "nereid_template:webshop/sale.jinja:"
+msgid "Shipments"
+msgstr "Enviaments"
+
+msgctxt "nereid_template:webshop/sale.jinja:"
+msgid "Sub Total"
+msgstr "Subtotal"
+
+msgctxt "nereid_template:webshop/sale.jinja:"
+msgid "Unit Price"
+msgstr "Preu unitat"
+
+msgctxt "nereid_template:webshop/sales.jinja:"
+msgid "Action"
+msgstr "Acció"
+
+msgctxt "nereid_template:webshop/sales.jinja:"
+msgid "Date Placed"
+msgstr "Data creació"
+
+msgctxt "nereid_template:webshop/sales.jinja:"
+msgid "My Account / Orders"
+msgstr "El meu compte / Comandes"
+
+msgctxt "nereid_template:webshop/sales.jinja:"
+msgid "Order No."
+msgstr "Número de comanda"
+
+msgctxt "nereid_template:webshop/sales.jinja:"
+msgid "Ordered Products"
+msgstr "Productes"
+
+msgctxt "nereid_template:webshop/sales.jinja:"
+msgid "Qty"
+msgstr "Qtat."
+
+msgctxt "nereid_template:webshop/sales.jinja:"
+msgid "Status"
+msgstr "Estat"
+
+msgctxt "nereid_template:webshop/sales.jinja:"
+msgid "Total Amount"
+msgstr "Import total"
+
+msgctxt "nereid_template:webshop/save-new-address.jinja:"
+msgid "My Account / Add a new Address"
+msgstr "El meu compte / Afegir una nova adreça"
+
+msgctxt "nereid_template:webshop/search-results.jinja:"
+msgid ""
+"Oops! No Products found for your search criteria. Try with something else."
+msgstr ""
+"No s'ha trobat cap producte que coincideixi amb la vostra cerca. Proveu "
+"alguna una altra cerca."
+
+msgctxt "nereid_template:webshop/search-results.jinja:"
+msgid "Search Results"
+msgstr "Resultats de la cerca"
+
+msgctxt "nereid_template:webshop/search-results.jinja:"
+msgid "You searched for"
+msgstr "Heu buscat "
+
+msgctxt "nereid_template:webshop/shopping-cart.jinja:"
+msgid "Action"
+msgstr "Acció"
+
+msgctxt "nereid_template:webshop/shopping-cart.jinja:"
+msgid "Awwww !"
+msgstr "Agghhh !"
+
+msgctxt "nereid_template:webshop/shopping-cart.jinja:"
+msgid "Cart Total"
+msgstr "Total compra"
+
+msgctxt "nereid_template:webshop/shopping-cart.jinja:"
+msgid "Checkout"
+msgstr "Pasar per caixa"
+
+msgctxt "nereid_template:webshop/shopping-cart.jinja:"
+msgid "Clear Cart"
+msgstr "Netejar compra"
+
+msgctxt "nereid_template:webshop/shopping-cart.jinja:"
+msgid "Continue Shopping"
+msgstr "Continueu comprant"
+
+msgctxt "nereid_template:webshop/shopping-cart.jinja:"
+msgid "Image"
+msgstr "Imatge"
+
+msgctxt "nereid_template:webshop/shopping-cart.jinja:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "nereid_template:webshop/shopping-cart.jinja:"
+msgid "Quantity"
+msgstr "Quantitat"
+
+msgctxt "nereid_template:webshop/shopping-cart.jinja:"
+msgid "Remove Item"
+msgstr "Elimina"
+
+msgctxt "nereid_template:webshop/shopping-cart.jinja:"
+msgid "Shop Now"
+msgstr "Compreu ara"
+
+msgctxt "nereid_template:webshop/shopping-cart.jinja:"
+msgid "Shopping Cart"
+msgstr "Cistella de la compra"
+
+msgctxt "nereid_template:webshop/shopping-cart.jinja:"
+msgid "TOTAL"
+msgstr "TOTAL"
+
+msgctxt "nereid_template:webshop/shopping-cart.jinja:"
+msgid "Tax Total"
+msgstr "Total impostos"
+
+msgctxt "nereid_template:webshop/shopping-cart.jinja:"
+msgid "Unit Price"
+msgstr "Preu unitat"
+
+msgctxt "nereid_template:webshop/shopping-cart.jinja:"
+msgid "Unit Total"
+msgstr "Total unitat"
+
+msgctxt "nereid_template:webshop/shopping-cart.jinja:"
+msgid "Your shopping cart is empty"
+msgstr "La vostra cistella de la compra esta buida"
