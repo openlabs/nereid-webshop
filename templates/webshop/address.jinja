@@ -12,8 +12,8 @@
       <!-- Account Information -->
       <div class="row">
         <div class="row">
-          <h4 class="account-heading col-md-7">Address Book 
-            <a href="{{ url_for('party.address.create_address') }}" class="btn btn-info pull-right btn-xs"title=""><i class="fa fa-plus"></i> &nbsp;Add new address</a>
+          <h4 class="account-heading col-md-7">{{ _('Address Book') }}
+            <a href="{{ url_for('party.address.create_address') }}" class="btn btn-info pull-right btn-xs"title=""><i class="fa fa-plus"></i> &nbsp;{{ _('Add new address') }}</a>
           </h4>
         </div>
         <div class="tab-content row">
@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-    </div> 
+    </div>
   </div>
 </section>
 {% endblock main %}
