@@ -1,6 +1,12 @@
 nereid-webshop
 ==============
 
+.. image:: https://travis-ci.org/openlabs/nereid-webshop.png?branch=develop
+    :target: https://travis-ci.org/openlabs/nereid-webshop
+
+.. image:: https://coveralls.io/repos/openlabs/nereid-webshop/badge.png?branch=develop
+    :target: https://coveralls.io/r/openlabs/nereid-webshop
+
 Full Webshop based on Tryton Nereid
 
 
