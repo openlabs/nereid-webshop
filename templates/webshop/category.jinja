@@ -40,16 +40,16 @@
           <!--Filter Option -->
           <div class="col-md-3">
             <select class="form-control select-sort">
-              <option>Discount</option>
-              <option>Low Price First</option>
-              <option>High Price First</option>
-              <option>Popularity</option>
-              <option>What's New</option>
+              <option>{{ _('Discount') }}</option>
+              <option>{{ _('Low Price First') }}</option>
+              <option>{{ _('High Price First') }}</option>
+              <option>{{ _('Popularity') }}</option>
+              <option>{{ _('What\'s New') }}</option>
             </select>
           </div>
         </div>
         <div class="masonry js-masonry"  data-masonry-options='{ "columnWidth": ".category-list", "itemSelector": ".product-item", "isFitWidth": true }'>
-          <div class="category-list"></div> 
+          <div class="category-list"></div>
           {% for product in products %}
             {{ render_product_list(product) }}
           {% endfor %}

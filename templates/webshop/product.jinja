@@ -86,7 +86,7 @@
       {# show if there are more variants than the one being displayed #}
       <div class="product-size"> Select Variation : <br>
         <div class="size-buttons">
-          {% for variant in product.template.products|selectattr('displayed_on_eshop') %}
+          {% for variant in product.template.products %}
           <a class="btn btn-size"
             href="{{ url_for('product.product.render', uri=variant.uri) }}"
             type="radio" value="{{ variant.id }}">{{ variant.code }}</a>

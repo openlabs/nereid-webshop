@@ -10,14 +10,15 @@
       <div class="account-auth col-md-10 col-md-offset-1">
         <div class="login-header center">
           <div class="login-body">
-            <h4 class="center login-text"><span>Sign In</span></h4>
+            <h4 class="center login-text"><span>{{ _('Sign In') }}</span></h4>
             <div class="row">
               <div class="col-md-6 offset-md-3">
                 <form class="login-form" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                   {{ form.csrf_token }}
                   {{ render_field(form.email) }}
                   {% if not request.is_guest_user %}
-                  <small>(Not {{ request.nereid_user.display_name }} ? <a href="{{ url_for('nereid.website.logout') }}">Logout</a>)</small>
+                  <small>({{ _('Not') }} {{ request.nereid_user.display_name }} ? <a href="{{ url_for('nereid.website.logout') }}">{{ _('Logout') }}</a>)</small>
                   {% endif %}
                   {{ render_field(form.password) }}
                   {% if request.is_guest_user %}
@@ -25,8 +26,8 @@
                   {% else %}
                   <input type="hidden" name="checkout_mode" value="account"/>
                   {% endif %}
-                  <button type="submit" class="btn btn-lg btn-block">Login</button>
-                  <a href="{{ url_for('nereid.user.reset_account', next=request.args.get('next', url_for('nereid.website.home'))) }}" class="text-muted"><strong>Forgot Password ?</strong></a>
+                  <button type="submit" class="btn btn-lg btn-block">{{ _('Login') }}</button>
+                  <a href="{{ url_for('nereid.user.reset_account', next=request.args.get('next', url_for('nereid.website.home'))) }}" class="text-muted"><strong>{{ _('Forgot Password ?') }}</strong></a>
                 </form>
               </div>
             </div>
