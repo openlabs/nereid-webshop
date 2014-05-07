@@ -65,7 +65,7 @@
                     <form method="post">
                       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                       <input type="hidden" name="alternate_payment_method" value="{{ method.id }}"/>
-                      <button type="submit" class="btn btn-primary">{% trans %}Pay using {{ method.name }}{% endtrans %}</button>
+                      <button type="submit" class="btn btn-primary">{% trans %}Pay using {% endtrans %}{{ method.name }}</button>
                     </form>
                   </div>
                   {% endfor %}
