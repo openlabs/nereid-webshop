@@ -117,5 +117,31 @@
             <field name="content">Minicube PCR Documentation</field>
             <field name="category" ref="ac_help"/>
         </record>
+
+        <!-- Create Banners and Banner Categories -->
+        <record id="home_page_banner" model="nereid.cms.banner.category">
+            <field name="name">Home Page Banners</field>
+        </record>
+        <record id="home_banner_1" model="nereid.cms.banner">
+            <field name="name">banner1</field>
+            <field name="category" ref="home_page_banner"/>
+            <field name="type">remote_image</field>
+            <field name="remote_image_url">/static-webshop/images/sample-img/banner1.jpg</field>
+            <field name="state">published</field>
+        </record>
+        <record id="home_banner_2" model="nereid.cms.banner">
+            <field name="name">banner2</field>
+            <field name="category" ref="home_page_banner"/>
+            <field name="type">remote_image</field>
+            <field name="remote_image_url">/static-webshop/images/sample-img/banner2.jpg</field>
+            <field name="state">published</field>
+        </record>
+        <record id="home_banner_3" model="nereid.cms.banner">
+            <field name="name">banner3</field>
+            <field name="category" ref="home_page_banner"/>
+            <field name="type">remote_image</field>
+            <field name="remote_image_url">/static-webshop/images/sample-img/banner3.jpg</field>
+            <field name="state">published</field>
+        </record>
     </data>
 </tryton>
