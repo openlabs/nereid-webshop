@@ -62,5 +62,6 @@
 {% endblock main%}
 
 {% block script_tags %}
+{{ super() }}
 <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/masonry.pkgd.min.js') }}" ></script>
 {% endblock script_tags %}
