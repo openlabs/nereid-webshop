@@ -13,12 +13,12 @@
       <div class="col-md-11">
         <div class="col-md-8">
           <div class="payment-container">
-            <h4><span>Choose from a payment method below</span></h4>
+            <h4><span>{{ _('Choose from a payment method below') }}</span></h4>
             <div class="table-responsive">
               <!-- tabs left -->
               <div class="col-xs-4">
                 <ul class="list-unstyled payment-tab">
-                  <li class="active"><a href="#credit-card" data-toggle="tab"> Credit Card</a></li>
+                  <li class="active"><a href="#credit-card" data-toggle="tab"> {{ _('Credit Card') }}</a></li>
                   {% for method_id, method_name in payment_form.alternate_payment_method.choices %}
                   <li><a href="#method-{{ method_id }}" data-toggle="tab"> {{ method_name }}</a></li>
                   {% endfor %}
@@ -28,8 +28,9 @@
                 <div class="tab-content">
                   <!-- Credit card-->
                   <div class="tab-pane fade active in" id="credit-card">
-                    <span>Please enter all details *</span>
+                    <span>{{ _('Please enter all details') }} *</span>
                     <form class="form-horizontal" role="form" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                       {{ credit_card_form.csrf_token }}
                       {{ render_field(credit_card_form.number) }}
                       {{ render_field(credit_card_form.owner) }}
@@ -52,7 +53,7 @@
 
                       {{ render_field(payment_form.use_shipment_address) }}
 
-                      <button type="submit" class="btn btn-primary">Pay Now</button>
+                      <button type="submit" class="btn btn-primary">{{ _('Pay Now') }}</button>
                     </form>
                   </div>
 
@@ -64,7 +65,7 @@
                     <form method="post">
                       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                       <input type="hidden" name="alternate_payment_method" value="{{ method.id }}"/>
-                      <button type="submit" class="btn btn-primary">Pay using {{ method.name }}</button>
+                      <button type="submit" class="btn btn-primary">{% trans %}Pay using {% endtrans %}{{ method.name }}</button>
                     </form>
                   </div>
                   {% endfor %}

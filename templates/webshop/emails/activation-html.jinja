@@ -1,8 +1,9 @@
+{% trans %}
 Dear {{ nereid_user.display_name }},
 <br/>
 Thank youf or signing up.
 <br/>
-To verify your account please 
+To verify your account please
 <a href="{{ nereid_user.get_activation_link(_external=True) }}">click here</a>
 or copy and paste it to your browser:
 <br/>
@@ -13,3 +14,4 @@ Thanks
 <br/>
 
 Team
+{% endtrans %}

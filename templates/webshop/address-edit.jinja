@@ -11,11 +11,11 @@
       </div>
       <div class="row">
         <div class="row">
-          <h4 class="account-heading col-md-7"> Edit Address &nbsp;&nbsp;<small>[ Fields marked with (<span>*</span>) are requried.]</small></h4>
+          <h4 class="account-heading col-md-7"> {{ _('Edit Address ') }}&nbsp;&nbsp;<small>[ {{ _('Fields marked with (<span>*</span>) are requried.') }}]</small></h4>
         </div>
         <div class="row">
           <div class="col-md-7">
-            <form action="{{ url_for('party.address.edit_address', address=address) }}" 
+            <form action="{{ url_for('party.address.edit_address', address=address) }}"
               method="post" id="address">
 	      {{ form.csrf_token }}
               {{ render_field(form.name, placeholder=_("John Doe"), class_="form-control") }}
@@ -49,13 +49,13 @@
                   {% if field.description %}
                   <br/><span class="help-block">{{ field.description }}</span>
                   {% endif %}
-                  
+
                   {% for error in field.errors %}
                   <br/><span class="help-block">{{ error }}</span>
                   {% endfor %}
                 </div>
               </div>
-              <button href="" class="btn btn-warning btn-sm" type="submit">Save Address</button>
+              <button href="" class="btn btn-warning btn-sm" type="submit">{{ _('Save Address') }}</button>
             </form>
           </div>
         </div>

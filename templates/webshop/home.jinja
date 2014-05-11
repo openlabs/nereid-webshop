@@ -2,7 +2,7 @@
 
 {% block breadcrumb %}
 <li>
-  <a href="{{ url_for('nereid.website.home') }}">Home</a>
+  <a href="{{ url_for('nereid.website.home') }}">{{ _('Home') }}</a>
 </li>
 {% endblock breadcrumb %}
 
@@ -10,40 +10,37 @@
 <section class="main-banner">
   <div class="container">
     <div class="row">
+
+      <!-- Banner Background Image -->
       <div class="col-md-12">
-        <div id="carousel-example-generic" class="carousel slide">
-          <!-- Indicators -->
-          <ol class="carousel-indicators">
-            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-          </ol>
-          <!-- Wrapper for slides -->
+        <div id="carousel-example-generic" class="carousel slide hidden-xs hidden-sm" data-ride="carousel">
+        {% if get_banner_category('Home Page Banners') %}
           <div class="carousel-inner">
-            <div class="item">
-              <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/sample-img/banner1.jpg') }}" alt="...">
-              <div class="carousel-caption">
-              </div>
-            </div>
-            <div class="item">
-              <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/sample-img/banner2.jpg') }}" alt="...">
-              <div class="carousel-caption">
-              </div>
-            </div>
-            <div class="item active">
-              <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/sample-img/banner3.jpg') }}" alt="...">
-              <div class="carousel-caption">
-              </div>
-            </div>
+          {% for banner in get_banner_category('Home Page Banners').published_banners %}
+            <div class="item {% if loop.first %}active{% endif %}">
+            {% if banner.type == 'custom_code' %}
+              {{ banner.custom_code|safe }}
+            {% else %}
+              <a href="{% if banner.click_url %}{{ banner.click_url }} {% endif%}">
+            <img
+            {% if banner.type == 'image' %}
+              src="{{ banner.file.url }}"
+            {% elif banner.type == 'remote_image' %}
+              src="{{ banner.remote_image_url }}"
+            {% endif %}
+              alt="{{ banner.alternative_text }}">
+            </a>
+            {% endif %}
           </div>
-          <!-- Controls -->
-          <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+        {% endfor %}
+
+        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
             <span class="icon-prev"></span>
-          </a>
-          <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
             <span class="icon-next"></span>
-          </a>
-        </div>
+        </a>
+      {% endif %}
       </div>
     </div>
   </div>

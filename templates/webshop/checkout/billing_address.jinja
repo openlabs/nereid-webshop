@@ -12,11 +12,11 @@
     <!--Delivery Address Selection -->
     <div class="row delivery-address">
       <div class="col-md-10 col-md-offset-1">
-        <h4><span>Billing Address</span></h4>
+        <h4><span>{{ _('Billing Address') }}</span></h4>
         <div class="col-md-8">
           <div class="address-container">
             {% if not request.is_guest_user and addresses %}
-            <h4><span>Choose from an existing address below</span></h4>
+            <h4><span>{{ _('Choose from an existing address below') }}</span></h4>
             <div class="row">
               {% for address in addresses %}
               <div class="col-md-6">
@@ -27,7 +27,7 @@
                   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                   <input type="hidden" name="address" value="{{ address.id }}"/>
                   <button type="submit" class="btn btn-primary pull-right">
-                    Use this address&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                    {{ _('Use this address') }}&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
                 </button>
                 </form>
               </div>
@@ -36,26 +36,26 @@
 
             {#
             <!-- On selecting address this input field will have id of selected address -->
-            <input type="hidden" class="form-control" name="address" id="address-id"> 
+            <input type="hidden" class="form-control" name="address" id="address-id">
             <div class="row">
               <div class="col-md-6 pull-right">
                 <a href="checkout-step-three.html" class="btn btn-primary pull-right">
-                  Proceed to Payment&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                  {{ _('Proceed to Payment') }}&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
                 </a>
               </div>
             </div>
             #}
 
             <div class="row center">
-              <div class="or"><span class="circle">or</span></div>
+              <div class="or"><span class="circle">{{ _('or') }}</span></div>
             </div>
             {% endif %}
 
             <h4>
               {% if addresses %}
-              <span>Add a new address below</span>
+              <span>{{ _('Add a new address below') }}</span>
               {% else %}
-              <span>Enter your billing address</span>
+              <span>{{ _('Enter your billing address') }}</span>
               {% endif %}
             </h4>
             <!-- Add new address form -->
@@ -75,7 +75,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary pull-right">
-                  Proceed to Payment&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                  {{ _('Proceed to Payment') }}&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
                 </button>
               </div>
             </form>

@@ -2,7 +2,7 @@
 '''
     website
 
-    :copyright: (c) 2013 by Openlabs Technologies & Consulting (P) Ltd.
+    :copyright: (c) 2013-2014 by Openlabs Technologies & Consulting (P) Ltd.
     :license: GPLv3, see LICENSE for more details
 
 '''
@@ -10,7 +10,7 @@ import os
 
 from flask.helpers import send_from_directory
 from trytond.model import ModelSQL
-from nereid import current_app
+from nereid import current_app, route
 
 
 __all__ = ['WebShop']
@@ -29,6 +29,7 @@ class WebShop(ModelSQL):
     __name__ = "nereid.webshop"
 
     @classmethod
+    @route("/static-webshop/<path:filename>", methods=["GET"])
     def send_static_file(self, filename):
         """Function used internally to send static files from the static
         folder to the browser.
