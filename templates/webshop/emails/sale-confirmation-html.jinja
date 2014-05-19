@@ -1,0 +1,17 @@
+{% trans %}
+Dear {{ nereid_user.display_name }},
+<br/>
+Thank you for shopping from our store.
+<br/>
+To view your order details please
+<a href="{{ url_for('sale.sale.render', active_id=sale.id, access_code=sale.guest_access_code, _external=True) }}"> click here </a>
+or copy and paste it to your browser:
+<br/>
+{{ url_for('sale.sale.render', active_id=sale.id, access_code=sale.guest_access_code, _external=True) }}
+<br/>
+
+Thanks
+<br/>
+
+Team
+{% endtrans %}
