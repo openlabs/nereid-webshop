@@ -7,10 +7,10 @@
 {% endblock breadcrumb %}
 
 {% block main %}
+{% block banner %}
 <section class="main-banner">
   <div class="container">
     <div class="row">
-
       <!-- Banner Background Image -->
       <div class="col-md-12">
         <div id="carousel-example-generic" class="carousel slide hidden-xs hidden-sm" data-ride="carousel">
@@ -33,7 +33,7 @@
             {% endif %}
           </div>
         {% endfor %}
-
+        </div>
         <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
             <span class="icon-prev"></span>
         </a>
@@ -45,6 +45,8 @@
     </div>
   </div>
 </section>
+{% endblock banner %}
+
 <section class="products latest">
   <div class="container">
     <div class="row">
