@@ -20,6 +20,8 @@
           <div class="col-md-9">
             <h3 class="list-heading">{% trans %}You searched for{% endtrans %}: <em>{{ request.args.get('q', '') }}</em></h3>
           </div>
+
+	  {% block filter %}
           <!--Filter Option -->
           <div class="col-md-3">
             <select class="form-control select-sort">
@@ -30,6 +32,8 @@
               <option>What's New</option>
             </select>
           </div>
+	  {% endblock filter %}
+
         </div>
           <div class="masonry js-masonry"  data-masonry-options='{ "columnWidth": ".category-list", "itemSelector": ".product-item", "isFitWidth": true }'>
             <div class="category-list"></div>
