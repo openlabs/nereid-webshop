@@ -6,11 +6,13 @@
 
 '''
 from trytond.pool import Pool
-from webshop import WebShop
+from webshop import WebShop, BannerCategory, Banner
 
 
 def register():
     Pool.register(
         WebShop,
+        BannerCategory,
+        Banner,
         module='nereid_webshop', type_='model'
     )
