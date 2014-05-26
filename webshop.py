@@ -10,10 +10,11 @@ import os
 
 from flask.helpers import send_from_directory
 from trytond.model import ModelSQL
+from trytond.pool import PoolMeta
 from nereid import current_app, route
 
-
-__all__ = ['WebShop']
+__metaclass__ = PoolMeta
+__all__ = ['WebShop', 'BannerCategory', 'Banner']
 
 #: Get the static folder. The static folder also
 #: goes into the site packages
@@ -39,3 +40,21 @@ class WebShop(ModelSQL):
             STATIC_FOLDER, filename,
             cache_timeout=cache_timeout
         )
+
+
+class BannerCategory:
+    """Collection of related Banners"""
+    __name__ = 'nereid.cms.banner.category'
+
+    @staticmethod
+    def check_xml_record(records, values):
+        return True
+
+
+class Banner:
+    """Banner for CMS"""
+    __name__ = 'nereid.cms.banner'
+
+    @staticmethod
+    def check_xml_record(records, values):
+        return True
