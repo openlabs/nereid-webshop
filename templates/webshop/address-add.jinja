@@ -12,6 +12,7 @@
       <form method="post" id="address">
 	{{ form.csrf_token }}
         {{ render_field(form.name, placeholder=_("John Doe"), class_="form-control") }}
+        
         {{ render_field(form.street, placeholder=_("1600 Amphitheatre Parkway"), class_="form-control") }}
         {{ render_field(form.streetbis, placeholder=_("Mountain View"), class_="form-control") }}
         <div class="row">
@@ -36,7 +37,7 @@
           </div>
           {% set field = form.subdivision %}
           <div class="form-group col-md-6">
-            <label class="control-label" for="{{ field.name }}">{{ field.label.text }}</label>
+            <label for="{{ field.id }}">State *:</label>
             <select name="{{ field.name }}" id="{{ field.id }}" selected_id="{{field.data}}" class="form-control">
             </select>
             {% if field.description %}

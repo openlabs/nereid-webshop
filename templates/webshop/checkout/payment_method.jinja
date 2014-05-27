@@ -31,9 +31,9 @@
                     <span>{{ _('Please enter all details') }} *</span>
                     <form class="form-horizontal" role="form" method="POST">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-                      {{ credit_card_form.csrf_token }}
-                      {{ render_field(credit_card_form.number) }}
-                      {{ render_field(credit_card_form.owner) }}
+                      {{ credit_card_form.hidden_tag() }}
+                      {{ render_field(credit_card_form.number, placeholder="Credit card number", required=required) }}
+                      {{ render_field(credit_card_form.owner, placeholder="Full name on card", required=required) }}
                       <div class="row">
                         <div class="col-xs-4">
                           {{ render_field(credit_card_form.expiry_month) }}
@@ -44,15 +44,20 @@
                       </div>
                       <div class="row">
                         <div class="col-xs-4">
-                          {{ render_field(credit_card_form.cvv) }}
+                          {{ render_field(credit_card_form.cvv, placeholder="cvv", required=required) }}
                         </div>
                       </div>
                       {% if not request.is_guest_user %}
-                      {{ render_field(credit_card_form.add_card_to_profiles) }}
+                      <div class="checkbox">
+                        {{ credit_card_form.add_card_to_profiles }}
+                        <label for="remember_me">Save Card</label>
+                      </div>
+                    
                       {% endif %}
-
-                      {{ render_field(payment_form.use_shipment_address) }}
-
+                      <div class="checkbox">
+                        {{ payment_form.use_shipment_address }}
+                        <label for="remember_me">Use shipping address as billing address</label>
+                      </div>
                       <button type="submit" class="btn btn-primary">{{ _('Pay Now') }}</button>
                     </form>
                   </div>

@@ -11,15 +11,17 @@
       </div>
       <div class="row">
         <div class="row">
-          <h4 class="account-heading col-md-7"> {{ _('Edit Address ') }}&nbsp;&nbsp;<small>[ {{ _('Fields marked with (<span>*</span>) are requried.') }}]</small></h4>
+          <h4 class="account-heading col-md-7 col-md-offset-1"> {{ _('Edit Address ') }}</h4>
         </div>
         <div class="row">
-          <div class="col-md-7">
+          <div class="col-md-7 col-md-offset-1">
             <form action="{{ url_for('party.address.edit_address', address=address) }}"
               method="post" id="address">
-	      {{ form.csrf_token }}
+	            {{ form.hidden_tag() }}
               {{ render_field(form.name, placeholder=_("John Doe"), class_="form-control") }}
+              
               {{ render_field(form.street, placeholder=_("1600 Amphitheatre Parkway"), class_="form-control") }}
+              
               {{ render_field(form.streetbis, placeholder=_("Mountain View"), class_="form-control") }}
               <div class="row">
                 <div class="col-md-6">
@@ -43,8 +45,8 @@
                 </div>
                 {% set field = form.subdivision %}
                 <div class="form-group col-md-6">
-                  <label class="control-label" for="{{ field.name }}">{{ field.label.text }}</label>
-                  <select name="{{ field.name }}" id="{{ field.id }}" selected_id="{{field.data}}" class="form-control">
+                  <label for="{{ field.id }}">State *:</label>
+                  <select name="{{ field.name }}" id="{{ field.id }}" selected_id="{{field.data}}" class="form-control"> 
                   </select>
                   {% if field.description %}
                   <br/><span class="help-block">{{ field.description }}</span>
