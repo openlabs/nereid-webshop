@@ -1,5 +1,7 @@
 {% extends 'base.jinja' %}
 
+{% from '_helpers.jinja' import render_field %}
+
 {% block main %}
 <section>
   <div class="container">
@@ -14,12 +16,12 @@
             <div class="row">
               <div class="col-md-5">
                 <form class="login-form" method="POST">
-                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-                  <input type="email" class="form-control input-lg" placeholder="{{ _('Enter your E-mail address') }}" name="email" required>
-                  <input type="password" class="form-control input-lg" placeholder="{{ _('Your Password') }}" name="password"required>
+                  {{ login_form.hidden_tag()  }}
+                  {{ render_field(login_form.email, placeholder= _('Enter your E-mail'), required=required, type="email") }}
+                  {{ render_field(login_form.password, placeholder=_('Your Password'), required=required) }}
                   <div class="checkbox">
-                      <input type="checkbox" name="remember" id="remember_me">
-                      <label for="remember_me">Remember Me</label>
+                    <input type="checkbox" name="remember" id="remember_me">
+                    <label for="remember_me">{{ _('Remember Me') }}</label>
                   </div>
                   <button type="submit" class="btn btn-lg btn-block">{{ _('Login') }}</button>
                   <a href="{{ url_for('nereid.user.reset_account', next=request.args.get('next', url_for('nereid.website.home'))) }}" class="text-muted"><strong>{{ _('Forgot Password ?') }}</strong></a>

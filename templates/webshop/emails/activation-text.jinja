@@ -1,13 +1,16 @@
 {% trans %}
-Dear {{ nereid_user.display_name }},
+Dear {% endtrans %} {{ nereid_user.display_name }}{% trans %},
 
-Thank you for signing up.
+Thank you for signing up. {% endtrans %}
 
+{% trans %}
 To verify your account please click on the link below or copy
 and paste it to your browser:
+{% endtrans %}
 
 {{ nereid_user.get_activation_link(_external=True) }}
 
+{% trans %}
 Thanks
 
 Team
