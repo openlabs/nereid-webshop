@@ -57,23 +57,23 @@
             </h4>
             <!-- Add new address form -->
             <form role="form" method="POST">
-              {{ address_form.csrf_token }}
-              {{ render_field(address_form.name) }}
-              {{ render_field(address_form.street) }}
-              {{ render_field(address_form.streetbis) }}
-              {{ render_field(address_form.zip) }}
-              {{ render_field(address_form.city) }}
-              {{ render_field(address_form.country) }}
+              {{ address_form.hidden_tag() }}
+              {{ render_field(address_form.name, show_label=False, placeholder="Name", required=required) }}
+              {{ render_field(address_form.street, show_label=False, placeholder="Street", required=required) }}
+              {{ render_field(address_form.streetbis, show_label=False, placeholder="Streetbis", required=required) }}
+              {{ render_field(address_form.zip, show_label=False, placeholder="Zip", required=required, type="number") }}
+              {{ render_field(address_form.city, show_label=False, placeholder="city", required=required) }}
+              {{ render_field(address_form.country, show_label=False) }}
               <div class="row">
                 <div class="form-group col-md-6">
-                  <label for="exampleInputEmail1">State *</label>
-                  <select class="form-control" id="subdivision" name="subdivision">
+                  <select class="form-control" id="subdivision" name="subdivision" placeholder="State">
                   </select>
                 </div>
-
-                <button type="submit" class="btn btn-primary pull-right">
-                  {{ _('Proceed to Payment') }}&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
-                </button>
+                <div class="col-md-offset-3 col-md-6">
+                  <button type="submit" class="btn btn-primary btn-block" id="address-btn">
+                    {{ _('Proceed to Payment') }}&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                  </button>
+                </div>
               </div>
             </form>
           </div>
@@ -90,7 +90,7 @@
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function(){
   // Register on change event
-
+  
   $("select#country").change(function(){
     $.getJSON("{{ url_for('nereid.website.subdivision_list') }}",
       {country: $(this).val()}, function(data){
@@ -105,7 +105,6 @@
 
  // Onload trigger the change as country comes packed with form
   $("select#country").triggerHandler("change")
-
 });
 </script>
 {% endblock  scripts %}

@@ -1338,3 +1338,32 @@ span.text-success, span.text-warning, span.text-danger, span.text-info{
   color: #3a87ad;
   text-decoration: none;
 }
+
+/* Checkout sign in */
+
+#checkout_mode{
+  list-style: none;
+  padding-left: 10px;
+}
+
+#checkout_mode li {
+  display: inline;   
+}
+
+#checkout_mode li:first-child{
+  padding-right: 30px;
+}
+
+.account-auth input, .account-auth .btn-lg {
+  height: inherit !important;
+}
+
+.address-container >.row >.col-md-6{
+  padding-bottom: 20px;
+}
+
+.address-container >.row .well{
+  margin-bottom: 5px;
+}
+
+
