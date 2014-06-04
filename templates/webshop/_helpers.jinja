@@ -48,7 +48,7 @@
 {% macro render_product(product) -%}
 <div class="item">
   <a href="{{ url_for('product.product.render', uri=product.uri) }}">
-    {% if product.image_sets and product.image_sets[-1].large_image %}
+    {% if product.image_sets %}
       <img src="{{ CDN }}{{ product.image_sets[-1] }}" alt="{{ product.name }}" title="{{ product.name }}"/>
     {% else %}
       <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/no-image.jpg') }}" alt=""/>
@@ -67,8 +67,8 @@
   {% set product = template.products_displayed_on_eshop[0] %}
   <div class="product-item">
     <a href="{{ url_for('product.product.render', uri=product.uri, browse_node=(browse_node and browse_node.uri + ',' + browse_node.name or None)) }}">
-      {% if product.image_sets and product.image_sets[-1].large_image %}
-        <img src="{{ CDN }}{{ product.image_sets[-1].large_image.transform_command().thumbnail(160, 160, 'a') }}" alt="{{ product.name }}" title="{{ product.name }}"/>
+      {% if product.image_sets %}
+        <img src="{{ CDN }}{{ product.image_sets[-1].image.transform_command().thumbnail(160, 160, 'a') }}" alt="{{ product.name }}" title="{{ product.name }}"/>
       {% else %}
         <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/no-image.jpg') }}" alt="{{ product.name }}" title="{{ product.name }}"/>
       {% endif %}

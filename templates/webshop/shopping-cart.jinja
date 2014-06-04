@@ -63,8 +63,8 @@
                 <tr>
                   <td>
                     <a href="{{ url_for('product.product.render', uri=line.product.uri) }}">
-                      {% if line.product.image_sets and line.product.image_sets[0].large_image %}
-                        <img src="{{ line.product.image_sets[0].large_image.transform_command().thumbnail(100, 100) }}" alt="{{ line.product.name }}">
+                      {% if line.product.image_sets %}
+                        <img src="{{ line.product.image_sets[0].thumbnail }}" alt="{{ line.product.name }}">
                       {% else %}
                         <img src="{{ STATIC }}images/products/tee1.jpg" alt="{{ line.product.name }}"></a>
                       {% endif %}
