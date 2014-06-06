@@ -11,9 +11,7 @@
 <meta property="og:title" content="{{ product.name  }}" />
 <meta property="og:description" content="{{ (product.description or '')|truncate(300) }}" />
 <meta property="og:type" content="product"/>
-{% if product.image_sets and product.image_sets[-1].large_image %}
-<meta property="og:image" content="http:{{ CDN }}{{ product.image_sets[-1].large_image.transform_command().thumbnail(1500, 1500, 'a') }}"/>
-{% endif %}
+<meta property="og:image" content="http:{{ CDN }}{{ product.default_image.transform_command().thumbnail(1500, 1500, 'a') }}"/>
 {% for code in product.codes %}
 {% if code.code_type == 'upc-a' %}
 <meta property="og:upc" content="{{ code.code }}"/>
@@ -32,7 +30,7 @@
           {% for image_set in product.image_sets %}
           <li class="{% if loop.first %}active{% endif %}">
             <a href="#tab{{ loop.index }}" data-toggle="tab">
-              <img src="{{ image_set.large_image.transform_command().thumbnail(120, 120) }}" alt="{{ image_set.name }}">
+              <img src="{{ image_set.image.transform_command().thumbnail(120, 120) }}" alt="{{ image_set.name }}">
             </a>
           </li>
           {% endfor %}
@@ -43,8 +41,8 @@
           {% for image_set in product.image_sets %}
           <div class="tab-pane {% if loop.first %}active{% endif %}" id="tab{{ loop.index }}">
             <div class="zoom-container">
-              <a id="zoom-target" href="{{ image_set.large_image.url }}" target="new">
-                <img class="zoom-image" src="{{ image_set.large_image.transform_command().thumbnail(500, 500) }}" alt=""/>
+              <a id="zoom-target" href="{{ image_set.image.url }}" target="new">
+                <img class="zoom-image" src="{{ image_set.image.transform_command().thumbnail(500, 500) }}" alt=""/>
               </a>
             </div>
           </div>
