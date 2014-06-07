@@ -49,12 +49,17 @@
                             {{ render_field(credit_card_form.cvv) }}
                           </div>
                         </div>
+
                         {% if current_user.is_authenticated() and request.nereid_website.save_payment_profile %}
-                          {{ render_field(credit_card_form.add_card_to_profiles) }}
+                        <div class="checkbox">
+                          {{ credit_card_form.add_card_to_profiles }}
+                          <label for="add_card_to_profiles">{{ _('Save Card') }}</label>
+                        </div>
                         {% endif %}
-
-                        {{ render_field(payment_form.use_shipment_address) }}
-
+                        <div class="checkbox">
+                          {{ payment_form.use_shipment_address }}
+                          <label for="use_shipment_address">{{ _('Use shipping address as billing address') }}</label>
+                        </div>
                         <button type="submit" class="btn btn-primary">{{ _('Pay Now') }}</button>
                       </form>
                     </div>

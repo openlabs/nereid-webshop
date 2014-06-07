@@ -60,23 +60,24 @@
             </h4>
             <!-- Add new address form -->
             <form role="form" method="POST">
-              {{ address_form.csrf_token }}
-              {{ render_field(address_form.name) }}
-              {{ render_field(address_form.street) }}
-              {{ render_field(address_form.streetbis) }}
-              {{ render_field(address_form.zip) }}
-              {{ render_field(address_form.city) }}
+              {{ address_form.hidden_tag() }}
+              {{ render_field(address_form.name, placeholder=_('Name'), required=required) }}
+              {{ render_field(address_form.street, placeholder= _('Street'), required=required) }}
+              {{ render_field(address_form.streetbis, placeholder= _('Streetbis')) }}
+              {{ render_field(address_form.zip, placeholder=_('Zip'), required=required) }}
+              {{ render_field(address_form.city, placeholder=_('city'), required=required) }}
               {{ render_field(address_form.country) }}
               <div class="row">
                 <div class="form-group col-md-6">
-                  <label for="exampleInputEmail1">State *</label>
+                  <label>{{ _('State') }} *:</label>
                   <select class="form-control" id="subdivision" name="subdivision">
                   </select>
                 </div>
-
-                <button type="submit" class="btn btn-primary pull-right">
-                  {{ _('Proceed to Payment') }}&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
-                </button>
+                <div class="col-md-offset-3 col-md-6">
+                  <button type="submit" class="btn btn-primary btn-block">
+                    {{ _('Proceed to Payment') }}&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                  </button>
+              </div>
               </div>
             </form>
           </div>
@@ -109,7 +110,6 @@
 
  // Onload trigger the change as country comes packed with form
   $("select#country").triggerHandler("change")
-
 });
 </script>
 {% endblock  scripts %}

@@ -16,12 +16,12 @@
             <div class="row">
               <div class="col-md-5">
                 <form class="register-form" method="POST" action="{{ url_for('nereid.user.registration') }}">
-                  {{ form.csrf_token }}
-                  {{ render_field(form.name) }}
-                  {{ render_field(form.email) }}
-                  {{ render_field(form.password) }}
-                  {{ render_field(form.confirm) }}
-                  <button type="submit" class="btn btn-lg btn-block">{{ _('Register') }}</button>
+                  {{ form.hidden_tag() }}
+                  {{ render_field(form.name, placeholder=_('Name'), required=required) }}
+                  {{ render_field(form.email, placeholder=_('E-mail'), required=required, type="email") }}
+                  {{ render_field(form.password, placeholder=_('Password'), required=required) }}
+                  {{ render_field(form.confirm, placeholder=_('Confirm Password'), required=required) }}
+                  <button type="submit" class="btn btn-lg btn-block"> {{ _('Register') }}</button>
                 </form>
               </div>
               <div class="col-md-2 ">
