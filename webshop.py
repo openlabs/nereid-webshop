@@ -14,7 +14,7 @@ from trytond.pool import PoolMeta
 from nereid import current_app, route
 
 __metaclass__ = PoolMeta
-__all__ = ['WebShop', 'BannerCategory', 'Banner']
+__all__ = ['WebShop', 'BannerCategory', 'Banner', 'Article']
 
 #: Get the static folder. The static folder also
 #: goes into the site packages
@@ -57,4 +57,18 @@ class Banner:
 
     @staticmethod
     def check_xml_record(records, values):
+        return True
+
+
+class Article:
+    "CMS Articles"
+    __name__ = 'nereid.cms.article'
+
+    @staticmethod
+    def check_xml_record(records, values):
+        """The webshop module creates a bunch of commonly used articles on
+        webshops. Since tryton does not allow records created via XML to be
+        edited, this method explicitly allows users to modify the articles
+        created by the module.
+        """
         return True
