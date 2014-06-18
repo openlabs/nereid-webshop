@@ -32,7 +32,7 @@
 {% macro render_address(address, identifier, edit=True) -%}
 <div class="pull-right">
   {% if edit %}
-  <a href="{{ url_for('party.address.edit_address', address=address.id) }}" ><i class="fa fa-pencil"></i> Edit</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href=""><i class="fa fa-trash-o"></i> Remove</a>
+  <a href="{{ url_for('party.address.edit_address', address=address.id) }}" ><i class="fa fa-pencil"></i>{% trans %}Edit {% endtrans %}</a>&nbsp;&nbsp;/&nbsp;&nbsp;<span class="remove-address" data-url="{{ url_for('party.address.remove_address', active_id=address.id) }}"><i class="fa fa-trash-o"></i> {% trans %} Remove {% endtrans %}</a>
   {% endif %}
 </div>
 <address>

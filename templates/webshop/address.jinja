@@ -36,5 +36,15 @@
   $('.account-heading a').click(function() {
     $(this).toggleClass('selected').siblings().addClass("selected");
   });
+  $(".remove-address").on('click', function(){
+    var current_url = $(this).data('url');
+    $.ajax({
+      type: "POST",
+      url: current_url,
+    })
+    .success(function () {
+      location.reload();         
+    });
+  });
 </script>
 {% endblock script_tags %}
