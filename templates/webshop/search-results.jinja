@@ -1,6 +1,6 @@
 {% extends 'base.jinja' %}
 
-{% from 'webshop/_helpers.jinja' import render_product_list with context%}
+{% from 'webshop/_helpers.jinja' import render_pagination, render_product_list with context%}
 
 {% block breadcrumb %}
 {{ super() }}
@@ -20,6 +20,8 @@
           <div class="col-md-9">
             <h3 class="list-heading">{% trans %}You searched for{% endtrans %}: <em>{{ request.args.get('q', '') }}</em></h3>
           </div>
+
+	  {% block filter %}
           <!--Filter Option -->
           <div class="col-md-3">
             <select class="form-control select-sort">
@@ -30,9 +32,11 @@
               <option>What's New</option>
             </select>
           </div>
+	  {% endblock filter %}
+
         </div>
           <div class="masonry js-masonry"  data-masonry-options='{ "columnWidth": ".category-list", "itemSelector": ".product-item", "isFitWidth": true }'>
-            <div class="category-list"></div> 
+            <div class="category-list"></div>
             {% for product in products %}
               {{ render_product_list(product) }}
             {% endfor %}
@@ -43,6 +47,8 @@
               {% trans %}Oops! No Products found for your search criteria. Try with something else.{% endtrans %}
             </div>
           </div>
+          {% else %}
+            {{ render_pagination(products, endpoint='product.product.quick_search', q=request.args.get('q', '')) }}
           {% endif %}
       </div>
     </div>

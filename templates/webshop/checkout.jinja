@@ -1,5 +1,11 @@
 {% extends 'base.jinja' %}
 
+<!--
+
+*** TODO: Is this file due for deprecation ***
+
+-->
+
 {% from '_helpers.jinja' import render_field %}
 
 {% macro render_delivery_address(address, identifier) %}
@@ -137,7 +143,7 @@
                 {% for line in cart.sale.lines %}
                 <div class="row border">
                   <div class="col-xs-3">
-                    <a href="" data-original-title="" title=""><img src="{{ STATIC }}images/products/tee1.jpg"></a>
+                    <a href="" data-original-title="" title=""><img src="{{ line.product.default_image }}"></a>
                   </div>
                   <div class="col-xs-6">
                     <a href="" class="product-name" data-original-title="" title="">{{ line.product.name }} </a><br>

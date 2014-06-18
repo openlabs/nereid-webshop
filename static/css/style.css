@@ -550,9 +550,7 @@ section.products{
 .account-auth .btn-lg{
   margin-bottom: 15px;
 }
-.account-auth form{
-  text-align: center;
-}
+
 .account-auth a{
   text-decoration: none;
 }
@@ -631,6 +629,16 @@ li.google-plus a{
 li.google-plus a:hover, li.google a:active{
  background-color: #CF2E19; 
 }
+.checkbox input[type="checkbox"]{
+ height: auto !important;
+ padding-right: 10px !important;
+}
+.account-auth form .checkbox{
+ text-align: left !important;
+ padding: 10px 0 10px 20px !important;
+
+}
+
 @media(max-width: 768px){
   .modal-dialog{
     width: 100%;
@@ -1089,7 +1097,7 @@ dl.dl-horizontal dd{
 }
 .delivery-address .form-horizontal .form-group label{
   font-weight: 600;
-  color: #808080;
+  color: #373435;
 }
 /** Quick fixes to form **/
 input.form-control, select.form-control , textarea.form-control,.btn{
@@ -1143,7 +1151,7 @@ span.circle{
   padding: 2px 5px 5px 5px 
 }
 .delivery-address label{
-  color: #808080
+  color: #373435;
 }
 .delivery-address .panel-default{
   border-radius: 2px;
@@ -1327,4 +1335,35 @@ span.text-success, span.text-warning, span.text-danger, span.text-info{
   font-weight: 600;
   color: #3a87ad;
   text-decoration: none;
+}
+
+/* Checkout sign in */
+
+#checkout_mode{
+  list-style: none;
+  padding-left: 10px;
+}
+
+#checkout_mode li {
+  display: inline;   
+}
+
+#checkout_mode li:first-child{
+  padding-right: 30px;
+}
+
+.account-auth input, .account-auth .btn-lg {
+  height: inherit !important;
+}
+
+.address-container >.row >.col-md-6{
+  padding-bottom: 20px;
+}
+
+.address-container >.row .well{
+  margin-bottom: 5px;
+}
+
+.center form .form-group{
+  text-align: left;
 }

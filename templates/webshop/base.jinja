@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="{{ request.nereid_language.code }}">
   <head>
-    <title>{% trans %}Nereid Webshop{% endtrans %}-{% block title %}{% endblock title %}</title>
+    <title>{% block title %}{% trans %}Nereid Webshop{% endtrans %}{% endblock title %}</title>  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
     {% block link_tags %}
     {# This block adds <link> tags to the head section of the template. #}
     <link href="{{ url_for('nereid.webshop.send_static_file', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
@@ -15,18 +17,18 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/font-awesome.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/jquery.pnotify.default.css') }}">
     {% endblock link_tags %}
-    
+
     {% block base_stylesheet %}
       <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/style.css') }}">
     {% endblock base_stylesheet %}
 
     {% block extra_head %}
-      {# This block is empty by default and can be used to add extra 
-        contents into the <head> tag of the generated HTML file. This is 
-        the right place to add references to extra CSS files. 
-      
+      {# This block is empty by default and can be used to add extra
+        contents into the <head> tag of the generated HTML file. This is
+        the right place to add references to extra CSS files.
+
         Though it is possible to add Javascript files to this section, It
-        is not recommended. 
+        is not recommended.
         See why: http://developer.yahoo.com/performance/rules.html#js_bottom
         #}
     {% endblock extra_head %}
@@ -52,7 +54,7 @@
                     </span>
                   </a>
                 </div>
-              {% endblock new_offers %}  
+              {% endblock new_offers %}
               <div class="row">
                 {% block locales %}
                 <div class="col-xs-3">
@@ -78,7 +80,7 @@
                       <a href="{{ url_for('nereid.website.logout') }}"><span class="text-danger"><i class="fa fa-sign-out"></i> Log Out</span>
                       </a>
                       {% else %}
-                      <a class="register-buttons" href="{{ url_for('nereid.website.login') }}">Login / SignUp</a>
+                      <a class="register-buttons" href="{{ url_for('nereid.website.login') }}">{{ _('Login / SignUp') }}</a>
                       {% endif %}
                     </li>
                     {% endblock header_links %}
@@ -105,12 +107,14 @@
           {% endblock logo %}
           {% block search %}
             <div class="col-md-5 top-search">
+              <form action="{{ url_for('product.product.quick_search') }}" id="search_form">
               <div class="input-group">
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" name="q">
                 <span class="input-group-btn">
-                  <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+                  <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
                 </span>
               </div><!-- /input-group -->
+              </form>
             </div>
           {% endblock search %}
           {% block header_user %}
@@ -119,21 +123,21 @@
                 <li>
                   <div class="btn-group">
                     <a type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-user"></i> My Account <span class="caret"></span>
+                      <i class="fa fa-user"></i> {{ _('My Account') }} <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                       {% if not request.is_guest_user %}
-                        <li><a href="{{ url_for('nereid.website.account') }}">Profile</a></li>
-                        <li><a href="">My Orders</a></li>
-                        <li><a href="{{ url_for('nereid.website.logout') }}"><i class="fa fa-sign-out"></i>Logout</a></li>
+                        <li><a href="{{ url_for('nereid.website.account') }}">{{ _('Profile') }}</a></li>
+                        <li><a href="">{{ _('My Orders') }}</a></li>
+                        <li><a href="{{ url_for('nereid.website.logout') }}"><i class="fa fa-sign-out"></i>{{ _('Logout') }}</a></li>
                       {% else %}
-                        <li><a class="register-buttons" href="{{ url_for('nereid.website.login') }}">Login / SignUp</a></li>
+                        <li><a class="register-buttons" href="{{ url_for('nereid.website.login') }}">{{ _('Login / SignUp') }}</a></li>
                       {% endif %}
                     </ul>
                   </div>
                 </li>
                 <li class="my-cart">
-                  <a href="" class="my-cart-show">My Cart <span class="quantity">0</span></a>
+                  <a href="" class="my-cart-show">{{ _('My Cart') }} <span class="quantity">0</span></a>
                 </li>
               </ul>
             </div>
@@ -279,14 +283,14 @@
       </div>
     </footer>
     <script type="text/html"  id='cart-html-append'>
-      <a href="{{ url_for('nereid.cart.view_cart') }}" class="my-cart-show">My Cart <span class="quantity"><%= parseInt(user_status.cart_size) %></span></a>
+      <a href="{{ url_for('nereid.cart.view_cart') }}" class="my-cart-show">{{ _('My Cart') }} <span class="quantity"><%= parseInt(user_status.cart_size) %></span></a>
       <!-- Drop down cart -->
       <div class="cart-item">
         <!-- If cart is empty -->
         <%
         if (user_status.cart_size > 0){ %>
           <div class="cart-total">
-            <span class="pull-left"><%= parseInt(user_status.cart_size) %> Item(s)</span><span class="pull-right"><strong>Subtotal :</strong> <%= user_status.cart.total_amount %> 
+            <span class="pull-left"><%= parseInt(user_status.cart_size) %> Item(s)</span><span class="pull-right"><strong>{{ _('Subtotal') }} :</strong> <%= user_status.cart.total_amount %>
             </span>
           </div>
           <%
@@ -295,7 +299,7 @@
                 <div class="row">
                   <div class="col-xs-3 cart-product-image">
                     <a href="">
-                      <img src="/static/images/products/tee1.jpg">
+                      <img src="<%= line.image %>">
                     </a>
                   </div>
                   <div class="col-xs-7 cart-product-name">
@@ -304,25 +308,25 @@
                     <span class="text-muted"><%= line.quantity %> x <%= line.amount %></span>
                   </div>
                   <div class="col-xs-2 cart-product-total">
-                    <a href="/cart/delete/" title="Remove"><i class="fa fa-trash-o"></i></a>
+                    <a href="/cart/delete/" title="{{ _('Remove') }}"><i class="fa fa-trash-o"></i></a>
                   </div>
                 </div>
               </div>
           <%
             });
           %>
-          <a href="{{ url_for('nereid.cart.view_cart') }}" class="btn btn-danger pull-right" >Checkout</a>
+          <a href="{{ url_for('nereid.cart.view_cart') }}" class="btn btn-danger pull-right" >{{ _('Checkout') }}</a>
         <% } else { %>
           <div class="empty-cart center">
             <i class="fa fa-frown-o fa-3x"></i>
             <h3>hey !</h3>
-            <p>Your shopping cart is empty</p>
+            <p>{{ _('Your shopping cart is empty') }}</p>
           </div>
         <% } %>
       </div>
-    </script>    
+    </script>
     {% endblock footer %}
-    
+
     <!-- javascript section -->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -330,6 +334,17 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/jquery.pnotify.min.js') }}"></script>
+    <script type="text/javascript">
+      var csrftoken = $('meta[name=csrf-token]').attr('content')
+
+      $.ajaxSetup({
+          beforeSend: function(xhr, settings) {
+              if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type)) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken)
+              }
+          }
+      })
+    </script>
     <script type="text/javascript">
       $(document).ready(function($){
         {# Message flashin #}

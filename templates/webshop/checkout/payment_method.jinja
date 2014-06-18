@@ -13,12 +13,14 @@
       <div class="col-md-11">
         <div class="col-md-8">
           <div class="payment-container">
-            <h4><span>Choose from a payment method below</span></h4>
+            <h4><span>{{ _('Choose from a payment method below') }}</span></h4>
             <div class="table-responsive">
               <!-- tabs left -->
               <div class="col-xs-4">
                 <ul class="list-unstyled payment-tab">
-                  <li class="active"><a href="#credit-card" data-toggle="tab"> Credit Card</a></li>
+                  {% if request.nereid_website.accept_credit_card %}
+                    <li class="active"><a href="#credit-card" data-togle="tab"> {{ _('Credit Card') }}</a></li>
+                  {% endif %}
                   {% for method_id, method_name in payment_form.alternate_payment_method.choices %}
                   <li><a href="#method-{{ method_id }}" data-toggle="tab"> {{ method_name }}</a></li>
                   {% endfor %}
@@ -26,34 +28,42 @@
               </div>
               <div class="col-xs-8">
                 <div class="tab-content">
-                  <!-- Credit card-->
-                  <div class="tab-pane fade active in" id="credit-card">
-                    <span>Please enter all details *</span>
-                    <form class="form-horizontal" role="form" method="POST">
-                      {{ render_field(credit_card_form.number) }}
-                      {{ render_field(credit_card_form.owner) }}
-                      <div class="row">
-                        <div class="col-xs-4">
-                          {{ render_field(credit_card_form.expiry_month) }}
+                  {% if request.nereid_website.accept_credit_card %}
+                    <!-- Credit card-->
+                    <div class="tab-pane fade active in" id="credit-card">
+                      <span>{{ _('Please enter all details') }} *</span>
+                      <form class="form-horizontal" role="form" method="POST">
+                        {{ credit_card_form.csrf_token }}
+                        {{ render_field(credit_card_form.number) }}
+                        {{ render_field(credit_card_form.owner) }}
+                        <div class="row">
+                          <div class="col-xs-4">
+                            {{ render_field(credit_card_form.expiry_month) }}
+                          </div>
+                          <div class="col-xs-4 col-xs-offset-4">
+                            {{ render_field(credit_card_form.expiry_year) }}
+                          </div>
                         </div>
-                        <div class="col-xs-4 col-xs-offset-4">
-                          {{ render_field(credit_card_form.expiry_year) }}
+                        <div class="row">
+                          <div class="col-xs-4">
+                            {{ render_field(credit_card_form.cvv) }}
+                          </div>
                         </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xs-4">
-                          {{ render_field(credit_card_form.cvv) }}
-                        </div>
-                      </div>
-                      {% if not request.is_guest_user %}
-                      {{ render_field(credit_card_form.add_card_to_profiles) }}
-                      {% endif %}
 
-                      {{ render_field(payment_form.use_shipment_address) }}
-
-                      <button type="submit" class="btn btn-primary">Pay Now</button>
-                    </form>
-                  </div>
+                        {% if current_user.is_authenticated() and request.nereid_website.save_payment_profile %}
+                        <div class="checkbox">
+                          {{ credit_card_form.add_card_to_profiles }}
+                          <label for="add_card_to_profiles">{{ _('Save Card') }}</label>
+                        </div>
+                        {% endif %}
+                        <div class="checkbox">
+                          {{ payment_form.use_shipment_address }}
+                          <label for="use_shipment_address">{{ _('Use shipping address as billing address') }}</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">{{ _('Pay Now') }}</button>
+                      </form>
+                    </div>
+                  {% endif %}
 
                   <!-- Alternate payment methods if any -->
                   {% for method_id, method_name in payment_form.alternate_payment_method.choices %}
@@ -61,8 +71,9 @@
                     {% set method = PaymentMethod(method_id) %}
                     <p><strong><span class="text-success">{{ method.instructions|safe }}</strong></p>
                     <form method="post">
+                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                       <input type="hidden" name="alternate_payment_method" value="{{ method.id }}"/>
-                      <button type="submit" class="btn btn-primary">Pay using {{ method.name }}</button>
+                      <button type="submit" class="btn btn-primary">{% trans %}Pay using {% endtrans %}{{ method.name }}</button>
                     </form>
                   </div>
                   {% endfor %}

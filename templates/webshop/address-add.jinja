@@ -5,12 +5,14 @@
 {% block account %}
 <div class="row">
   <div class="row">
-    <h4 class="account-heading col-md-7"> Add a new Address &nbsp;&nbsp;<small>[ Fields marked with (<span>*</span>) are requried.]</small></h4>
+    <h4 class="account-heading col-md-7"> {{ _('Add a new Address') }} &nbsp;&nbsp;<small>[ {{ _('Fields marked with (<span>*</span>) are requried.') }}]</small></h4>
   </div>
   <div class="row">
     <div class="col-md-7">
       <form method="post" id="address">
+	{{ form.hidden_tag() }}
         {{ render_field(form.name, placeholder=_("John Doe"), class_="form-control") }}
+        
         {{ render_field(form.street, placeholder=_("1600 Amphitheatre Parkway"), class_="form-control") }}
         {{ render_field(form.streetbis, placeholder=_("Mountain View"), class_="form-control") }}
         <div class="row">
@@ -35,19 +37,19 @@
           </div>
           {% set field = form.subdivision %}
           <div class="form-group col-md-6">
-            <label class="control-label" for="{{ field.name }}">{{ field.label.text }}</label>
+            <label for="{{ field.id }}">{{ _("State") }} *:</label>
             <select name="{{ field.name }}" id="{{ field.id }}" selected_id="{{field.data}}" class="form-control">
             </select>
             {% if field.description %}
             <br/><span class="help-block">{{ field.description }}</span>
             {% endif %}
-            
+
             {% for error in field.errors %}
             <br/><span class="help-block">{{ error }}</span>
             {% endfor %}
           </div>
         </div>
-        <button href="" class="btn btn-warning btn-sm" type="submit">Save Address</button>
+        <button href="" class="btn btn-warning btn-sm" type="submit">{{ _('Save Address') }}</button>
       </form>
     </div>
   </div>

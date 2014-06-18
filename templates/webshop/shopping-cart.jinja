@@ -8,9 +8,9 @@
       <div class="col-md-4 col-md-offset-4 center">
         <div class="alert alert-info">
           <i class="fa fa-frown-o fa-4x"></i>
-          <h3>Awwww !</h3>
-          <p>Your shopping cart is empty</p>
-          <a href="{{ url_for('nereid.website.home') }}" >Shop Now</a>
+          <h3>{{ _('Awwww !') }}</h3>
+          <p>{{ _('Your shopping cart is empty') }}</p>
+          <a href="{{ url_for('nereid.website.home') }}" >{{ _('Shop Now') }}</a>
         </div>
       </div>
     </div>
@@ -43,19 +43,19 @@
     <!-- Shopping cart Starts -->
     <div class="row cart-table">
       <div class="col-md-10 col-md-offset-1">
-        <div class="row"><h3> Shopping Cart</h3></div>
+        <div class="row"><h3> {{ _('Shopping Cart') }}</h3></div>
         <!--Cart table starts here -->
         <div class="row">
           <div class="table-responsive">
             <table class="table">
               <thead>
                 <tr>
-                  <th>Image</th>
-                  <th>Name</th>
-                  <th>Unit Price</th>
-                  <th>Quantity</th>
-                  <th>Unit Total</th>
-                  <th>Action</th>
+                  <th>{{ _('Image') }}</th>
+                  <th>{{ _('Name') }}</th>
+                  <th>{{ _('Unit Price') }}</th>
+                  <th>{{ _('Quantity') }}</th>
+                  <th>{{ _('Unit Total') }}</th>
+                  <th>{{ _('Action') }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -63,11 +63,7 @@
                 <tr>
                   <td>
                     <a href="{{ url_for('product.product.render', uri=line.product.uri) }}">
-                      {% if line.product.image_sets and line.product.image_sets[0].large_image %}
-                        <img src="{{ line.product.image_sets[0].large_image.transform_command().thumbnail(100, 100) }}" alt="{{ line.product.name }}">
-                      {% else %}
-                        <img src="{{ STATIC }}images/products/tee1.jpg" alt="{{ line.product.name }}"></a>
-                      {% endif %}
+                        <img src="{{ line.product.default_image.transform_command().thumbnail(100, 100) }}" alt="{{ line.product.name }}">
                     </td>
                   <td>
                     <a href="{{ url_for('product.product.render', uri=line.product.uri) }}" class="product-name">{{ line.product.name }} </a><br>
@@ -79,19 +75,20 @@
                   <td>
                     <div class="quantity buttons_added">
                       <form>
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                         <input type="button" class="minus" id="minus1" value="-" data-loading-text="...">
                         <input maxlength="12" class="input-text qty text" title="Qty" size="4" value="{{ line.quantity|int }}" name="quantity">
                         <input class="product" type="hidden" value="{{ line.product.id }}">
                         <input type="button" class="plus" id="add1" value="+" data-loading-text="...">
                       </form>
-                    </div>                       
+                    </div>
                   </td>
                   <td>
                     {{ line.amount|currencyformat(currency) }}
                   </td>
                   <td class="action">
                     <a href="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Move to Wishlist"><i class="fa fa-heart"></i></a>
-                    <a href="{{ url_for('nereid.cart.delete_from_cart', line=line.id) }}" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove Item"><i class="fa fa-trash-o"></i></a>
+                    <a href="{{ url_for('nereid.cart.delete_from_cart', line=line.id) }}" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{ _('Remove Item') }}"><i class="fa fa-trash-o"></i></a>
                   </td>
                 </tr>
                 {% endfor %}
@@ -102,13 +99,14 @@
         <!--Coupon row-->
         <div class="row coupon-row">
           <div class="col-md-6">
-            <a href="{{ url_for('nereid.website.home') }}" class="btn btn-warning btn-md" data-original-title="" title=""><i class="fa fa-angle-double-left"></i>&nbsp; Continue Shopping</a>
-            <a href="{{ url_for('nereid.cart.clear_cart') }}" class="btn btn-default" data-original-title="" title=""><i class="fa fa-times"></i> Clear Cart</a>
+            <a href="{{ url_for('nereid.website.home') }}" class="btn btn-warning btn-md" data-original-title="" title=""><i class="fa fa-angle-double-left"></i>&nbsp; {{ _('Continue Shopping') }}</a>
+            <a href="{{ url_for('nereid.cart.clear_cart') }}" class="btn btn-default" data-original-title="" title=""><i class="fa fa-times"></i> {{ _('Clear Cart') }}</a>
           </div>
           <div class="col-md-6">
             {% if cart.sale.coupon %}
             {# if the promotions module is installed #}
             <form>
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
               <div class="col-xs-4">
                 <label for="" class="">Have a Coupon ?</label>
               </div>
@@ -127,13 +125,13 @@
           <div class="col-md-7"></div>
           <div class="col-md-5">
             <dl class="dl-horizontal">
-            <dt>Cart Total</dt>
+            <dt>{{ _('Cart Total') }}</dt>
             <dd>{{ cart.sale.untaxed_amount|currencyformat(currency) }}</dd>
-            <dt>Tax Total</dt>
+            <dt>{{ _('Tax Total') }}</dt>
             <dd>{{ cart.sale.tax_amount|currencyformat(currency) }}</dd>
 
-            {# 
-            
+            {#
+
             ** Examples of line formatting **
             <dt>Delivery (<span class="text-success">Free</span>)</dt>
             <dd><span class="text-success">$ 0</span></dd>
@@ -141,11 +139,11 @@
             <dd>$ 0</dd>
             #}
 
-            <dt class="cart-total-sum">TOTAL</dt>
+            <dt class="cart-total-sum">{{ _('TOTAL') }}</dt>
             <dd class="cart-total-sum">{{ cart.sale.untaxed_amount|currencyformat(currency) }}</dd>
           </dl>
           <div class="col-md-10">
-            <a class="btn btn-primary btn-block btn-lg" href="{{ url_for('nereid.checkout.sign_in') }}"><i class="fa fa-flag"></i>&nbsp;&nbsp; Checkout </a>
+            <a class="btn btn-primary btn-block btn-lg" href="{{ url_for('nereid.checkout.sign_in') }}"><i class="fa fa-flag"></i>&nbsp;&nbsp; {{ _('Checkout') }} </a>
           </div>
           </div>
         </div>
@@ -165,7 +163,7 @@
       var qty_element = $(this).siblings("input.qty");
       var product_element = $(this).siblings("input.product");
       var new_quantity = parseInt(qty_element.val()) + 1;
-      $.post('{{ url_for('nereid.cart.add_to_cart')  }}', 
+      $.post('{{ url_for('nereid.cart.add_to_cart')  }}',
         {'quantity': new_quantity, 'product': product_element.val()},
         function(data){
           window.location.reload(true);

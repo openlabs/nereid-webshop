@@ -14,23 +14,23 @@
             <table class="table">
               <thead class="col-heading">
                 <tr>
-                  <th>Order No.</th>
-                  <th>Ordered Products</th>
-                  <th>Total Amount </th>
-                  <th>Date Placed</th>
-                  <th>Status</th>
-                  <th>Action</th>
+                  <th>{{ _('Order No.') }}</th>
+                  <th>{{ _('Ordered Products') }}</th>
+                  <th>{{ _('Total Amount') }} </th>
+                  <th>{{ _('Date Placed') }}</th>
+                  <th>{{ _('Status') }}</th>
+                  <th>{{ _('Action') }}</th>
                 </tr>
               </thead>
               <tbody>
                 {% for sale in sales %}
                 <tr>
                   <td><a href="{{ url_for('sale.sale.render', active_id=sale.id) }}">#{{ sale.reference }}</a></td>
-                  <td class="orderd-products"> 
-                    {% for line in sale.lines %}              
+                  <td class="orderd-products">
+                    {% for line in sale.lines %}
                     <a href="{{ url_for('product.product.render', uri=line.product.uri) }}" class="product-name">{{ line.description }}</a><br>
                     {#<span class="text-muted">Size : </span> L#}
-                    <span class="text-muted">Qty : </span> {{ line.quantity }}<br>
+                    <span class="text-muted">{{ _('Qty') }} : </span> {{ line.quantity }}<br>
                     {% endfor %}
                   </td>
                   <td>
@@ -40,14 +40,14 @@
                     {{ sale.sale_date|dateformat }}
                   </td>
                   <td>
-                    <span class="{% if sale.state ==  "done" %}text-success{% elif sale.state == "confirmed" %}text-info{% elif sale.state == "cancel" %}text-danger{% endif %}">{{ sale.state }}</span>                     
+                    <span class="{% if sale.state ==  "done" %}text-success{% elif sale.state == "confirmed" %}text-info{% elif sale.state == "cancel" %}text-danger{% endif %}">{{ sale.state }}</span>
                   </td>
                   <td class="action">
                     {#
                     <span>
                       <a href="">
                         Return
-                      </a> / 
+                      </a> /
                       <a href="">Exchange </a>
                     </span>
                     #}

@@ -10,23 +10,24 @@
       <div class="account-auth col-md-10 col-md-offset-1">
         <div class="login-header center">
           <div class="login-body">
-            <h4 class="center login-text"><span>Sign In</span></h4>
+            <h4 class="center login-text"><span>{{ _('Sign In') }}</span></h4>
             <div class="row">
-              <div class="col-md-6 offset-md-3">
-                <form class="login-form" method="POST">
-                  {{ render_field(form.email) }}
-                  {% if not request.is_guest_user %}
-                  <small>(Not {{ request.nereid_user.display_name }} ? <a href="{{ url_for('nereid.website.logout') }}">Logout</a>)</small>
+              <div class="col-md-6 col-md-offset-3">
+                <form class="login-form" method="POST" id="checkout-signin">
+                  {{ form.hidden_tag() }}
+                  {{ render_field(form.email, placeholder=_('Enter your E-mail'), required=required, type="email") }}
+                  {% if not current_user.is_anonymous() %}
+                    <small>({{ _('Not') }} {{ request.nereid_user.display_name }} ? <a href="{{ url_for('nereid.website.logout') }}">{{ _('Logout') }}</a>)</small> 
                   {% endif %}
-                  {{ render_field(form.password) }}
-                  {% if request.is_guest_user %}
+                  <div id="password_field" {% if form.checkout_mode.data == "guest" %}style="display:none"{% endif %}>
+                    {{ render_field(form.password, placeholder=_('Your Password')) }}
+                  </div>
                   {{ form.checkout_mode }}
-                  {% else %}
-                  <input type="hidden" name="checkout_mode" value="account"/>
-                  {% endif %}
-                  <button type="submit" class="btn btn-lg btn-block">Login</button>
-                  <a href="{{ url_for('nereid.user.reset_account', next=request.args.get('next', url_for('nereid.website.home'))) }}" class="text-muted"><strong>Forgot Password ?</strong></a>
-                </form>
+                  <button type="submit" class="btn btn-lg btn-block">{{ _('Login') }}</button>
+                  <div id="forgot-password">
+                  <a href="{{ url_for('nereid.user.reset_account', next=request.args.get('next', url_for('nereid.website.home'))) }}" class="text-muted"><strong>{{ _('Forgot Password ?') }}</strong></a>
+                </div>  
+              </form>
               </div>
             </div>
           </div>
@@ -36,3 +37,25 @@
   </div>
 </section>
 {% endblock main %}
+
+{% block script_tags %}
+  {{ super() }}
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $("input[name='checkout_mode']").change(function(){
+        var checkout_method = $("input[name='checkout_mode']:checked").val();
+        if(checkout_method == 'account'){
+          $('#forgot-password').show();
+          $("#password_field").show();
+          $('.login-form button').text('Login');
+          $('#password_field input[type=password]').attr('required', 'required');
+        }else{
+          $('#forgot-password').hide();
+          $("#password_field").hide();
+          $('.login-form button').text('{{ _("Proceed to checkout") }}');
+          $('#password_field input[type=password]').removeAttr('required');
+        }
+      }).change();
+    });
+  </script>
+{% endblock script_tags %}

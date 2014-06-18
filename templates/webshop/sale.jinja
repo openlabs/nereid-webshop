@@ -16,13 +16,13 @@
           <div class="row-fluid">
             <div class="col-md-6">
               <div class="page-header">
-                <h4>Invoice Address</h4>
+                <h4>{{ _('Invoice Address') }}</h4>
               </div>
               {{ render_address(sale.invoice_address, edit=False) }}
             </div>
             <div class="col-md-6 pull-right">
               <div class="page-header">
-                <h4>Shipment Address</h4>
+                <h4>{{ _('Shipment Address') }}</h4>
               </div>
               {{ render_address(sale.shipment_address, edit=False) }}
             </div>
@@ -30,17 +30,17 @@
 
           <div class="row-fluid">
             <div class="page-header">
-              <h4>Order Details</h4>
+              <h4>{{ _('Order Details') }}</h4>
             </div>
             <table class="table table-bordered">
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Description</th>
-                  <th>Ordered Quantity</th>
-                  <th>Shipments</th>
-                  <th>Unit Price</th>
-                  <th>Sub Total</th>
+                  <th>{{ _('Description') }}</th>
+                  <th>{{ _('Ordered Quantity') }}</th>
+                  <th>{{ _('Shipments') }}</th>
+                  <th>{{ _('Unit Price') }}</th>
+                  <th>{{ _('Sub Total') }}</th>
                 </tr>
               </thead>
               {% for line in sale.lines %}
@@ -54,9 +54,9 @@
                   {% endif %}
                 </td>
                 <td>{{ line.quantity|int }} {{ line.unit.name }}</td>
-                <td> 
+                <td>
                   {% for move in line.moves if move.state == 'done' and move.to_location.type == 'customer' %}
-                  {{ move.quantity }} x {{ move.lot and move.lot.number or '<No Serial #>' }}<br>
+                  {{ move.quantity }} x {{ move.lot and move.lot.number or  _('<No Serial #>') }}<br>
                   {% endfor %}
                 </td>
                 <td>{{ line.unit_price|currencyformat(sale.currency.code) }}</td>

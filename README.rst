@@ -1,6 +1,12 @@
 nereid-webshop
 ==============
 
+.. image:: https://travis-ci.org/openlabs/nereid-webshop.png?branch=develop
+    :target: https://travis-ci.org/openlabs/nereid-webshop
+
+.. image:: https://coveralls.io/repos/openlabs/nereid-webshop/badge.png?branch=develop
+    :target: https://coveralls.io/r/openlabs/nereid-webshop
+
 Full Webshop based on Tryton Nereid
 
 
@@ -43,7 +49,7 @@ Step 3: Setup Database
 The module should now be available on the modules list and can be
 installed into any database. Setup a website as shown below:
 
-.. image:: doc/website.png
+.. image:: docs/source/_static/img//website.png
 
 
 You will have to create a guest user for nereid. The guest user would be
@@ -76,7 +82,7 @@ application using::
 On pointing the browser to `localhost:5000 <http://localhost:5000/>`_ you
 should be able to see the home page.
 
-.. image:: doc/homepage.png
+.. image:: docs/source/_static/img/homepage.png
 
 Step 5: Production Deployment
 `````````````````````````````
