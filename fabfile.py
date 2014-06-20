@@ -7,7 +7,6 @@
 import os
 import getpass
 
-import requests
 from fabric.tasks import execute
 from fabric.api import sudo, cd, prefix, run, env
 from fabric.decorators import hosts
@@ -19,27 +18,6 @@ env.use_ssh_config = True
 hipchat_notification_token = open(
     os.path.expanduser('~/.hipchat-token')
 ).read().replace('\n', '')
-
-
-def notify_hipchat(
-        message, from_='deployer', color='gray', room_id='352564',
-        message_format="text", notify=False):
-    """
-    Send the given message to hipchat room
-    """
-    rv = requests.post(
-        "https://api.hipchat.com/v1/rooms/message?format=json"
-        "&auth_token=%s" % (hipchat_notification_token),
-        data={
-            'room_id': room_id,
-            'from': from_,
-            'message': message,
-            'message_format': message_format,
-            'notify': notify and 1 or 0,
-            'color': color,
-        }
-    )
-    return rv
 
 
 def _update_schema(database, module=None):
@@ -57,7 +35,6 @@ def _update_schema(database, module=None):
 @hosts('%s@demo.openlabs.us' % getpass.getuser())
 def deploy_staging(schema_update=False):
     "Deploy to staging"
-    notify_hipchat("Beginning deployment", from_="Staging")
     root_path = '/opt/webshop_demo'
     sudo('chmod -R g+rw %s' % root_path)
 
@@ -71,14 +48,12 @@ def deploy_staging(schema_update=False):
             if schema_update:
                 execute(_update_schema, 'webshop')
 
-            notify_hipchat("Restarting services", from_="Staging")
             sudo('bin/supervisorctl restart all')
 
 
 @hosts('%s@demo.openlabs.us' % getpass.getuser())
 def update_module(module):
     "Deploy to staging"
-    notify_hipchat("Updating module", from_="Staging")
     root_path = '/opt/webshop-demo'
     sudo('chmod -R g+rw %s' % root_path)
 
@@ -91,7 +66,6 @@ def update_module(module):
 
             execute(_update_schema, 'webshop', module.replace('-', '_'))
 
-            notify_hipchat("Restarting services", from_="Staging")
             sudo('bin/supervisorctl restart all')
 
 
