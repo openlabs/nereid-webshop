@@ -1367,3 +1367,8 @@ span.text-success, span.text-warning, span.text-danger, span.text-info{
 .center form .form-group{
   text-align: left;
 }
+#saved-address a:hover, #saved-address .remove-address:hover{
+  cursor: pointer;
+  color: #b94a48;
+  text-decoration: none;
+}
