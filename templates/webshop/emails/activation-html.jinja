@@ -3,17 +3,20 @@ Dear {% endtrans %} {{ nereid_user.display_name }} {% trans %},
 <br/>
 Thank you for signing up. {% endtrans %}
 <br/>
+<br/>
 {% trans %}
 To verify your account please
 {% endtrans %}
 <a href="{{ nereid_user.get_activation_link(_external=True) }}">{% trans %}click here {% endtrans %}</a>
+{% trans %}
 or copy and paste it to your browser:
+{% endtrans %}
 <br/>
 {{ nereid_user.get_activation_link(_external=True) }}
 <br/>
-{% trans %}
-Thanks
 <br/>
-
+{% trans %}
+Thanks,
+<br/>
 Team
 {% endtrans %}

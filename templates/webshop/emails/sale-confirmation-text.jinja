@@ -1,14 +1,17 @@
 {% trans %}
-Dear {{ nereid_user.display_name }},
+Dear {% endtrans %} {{ nereid_user.display_name }}{% trans %},
 
-Thank you for shopping from our store.
+Thank you for shopping from our store.{% endtrans %}
 
+{% trans %}
 To view your order details please click on the link below or copy
 and paste it to your browser:
+{% endtrans %}
 
 {{ url_for('sale.sale.render', active_id=sale.id, access_code=sale.guest_access_code, _external=True) }}
 
-Thanks
+{% trans %}
+Thanks,
 
 Team
 {% endtrans %}
