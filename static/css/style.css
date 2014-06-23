@@ -344,6 +344,8 @@ a,.item a{
 }
 .main-logo img{
   max-width: 170px;
+  width: auto;
+  max-height: 80px;
 }
 .top-search .btn{
   min-height: 35px;
@@ -1366,4 +1368,9 @@ span.text-success, span.text-warning, span.text-danger, span.text-info{
 
 .center form .form-group{
   text-align: left;
+}
+#saved-address a:hover, #saved-address .remove-address:hover{
+  cursor: pointer;
+  color: #b94a48;
+  text-decoration: none;
 }

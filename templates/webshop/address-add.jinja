@@ -2,8 +2,8 @@
 
 {% from '_helpers.jinja' import render_field %}
 
-{% block account %}
-<div class="row">
+{% block main %}
+<div class="container">
   <div class="row">
     <h4 class="account-heading col-md-7"> {{ _('Add a new Address') }} &nbsp;&nbsp;<small>[ {{ _('Fields marked with (<span>*</span>) are requried.') }}]</small></h4>
   </div>
@@ -54,7 +54,7 @@
     </div>
   </div>
 </div>
-{% endblock account %}
+{% endblock main %}
 
 
 {% block scripts %}

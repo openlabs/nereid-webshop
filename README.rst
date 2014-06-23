@@ -88,3 +88,20 @@ Step 5: Production Deployment
 `````````````````````````````
 
 TODO
+
+
+Step 6: Customization
+`````````````````````
+
+For base customization in webshop you have to inherit base.jinja as follow::
+
+    {% extends "webshop/base.jinja" %}
+
+
+6.1: Favicon and logo
+*********************
+
+Set custom favicon by setting icon path in *SHOP_FAVICON* variable before extending *webshop/base.jinja* as follows::
+
+    {% set SHOP_FAVICON = "<path to custom favicon>" %}
+    {% extends "webshop/base.jinja" %}
