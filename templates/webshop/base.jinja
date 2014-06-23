@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <link rel="icon" href="{{ SHOP_FAVICON or url_for('nereid.webshop.send_static_file', filename='images/favicon.ico') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ SHOP_FAVICON or url_for('nereid.webshop.send_static_file', filename='images/favicon.ico') }}" type="image/x-icon">
     {% block link_tags %}
     {# This block adds <link> tags to the head section of the template. #}
     <link href="{{ url_for('nereid.webshop.send_static_file', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
