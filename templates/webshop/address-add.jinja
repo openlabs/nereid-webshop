@@ -5,10 +5,13 @@
 {% block main %}
 <div class="container">
   <div class="row">
-    <h4 class="account-heading col-md-7"> {{ _('Add a new Address') }} &nbsp;&nbsp;<small>[ {{ _('Fields marked with (<span>*</span>) are requried.') }}]</small></h4>
+    <div class="col-md-10 col-md-offset-1">
+        {{ account_header(_('My Account / Add Address'), 'address-book') }}
+    </div>
+    <h4 class="account-heading col-md-7 col-md-offset-1"> {{ _('Add a new Address') }} &nbsp;&nbsp;<small>[ {{ _('Fields marked with (<span>*</span>) are requried.') }}]</small></h4>
   </div>
   <div class="row">
-    <div class="col-md-7">
+    <div class="col-md-7 col-md-offset-1">
       <form method="post" id="address">
 	{{ form.hidden_tag() }}
         {{ render_field(form.name, placeholder=_("John Doe"), class_="form-control") }}
