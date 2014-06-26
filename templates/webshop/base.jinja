@@ -61,15 +61,25 @@
                 {% block locales %}
                 <div class="col-xs-3">
                   <!-- Choose Language -->
+                  {% if request.nereid_website.locales %}
+                  {% set current_locale = request.nereid_locale.language %}
                   <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
-                      <img class="flag flag-us"> English &nbsp;<span class="caret"></span>
+                      <img class="flag flag-{{ current_locale.code[3:]|lower }}"> {{ current_locale.rec_name }}&nbsp;<span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                      <li><a href><img class="flag flag-br">&nbsp;Brazil</a></li>
-                      <li><a href><img class="flag flag-in">&nbsp;India</a></li>
+                      {% for locale in request.nereid_website.locales + (request.nereid_website.default_locale,) %}
+                        {% if locale.id != request.nereid_locale.id %}
+                          <li>
+                            <a href="{{url_for('nereid.website.home', locale=locale.code)}}">
+                              <img class="flag flag-{{ locale.language.code[3:]|lower }}">&nbsp;{{ locale.language.rec_name }}
+                            </a>
+                          </li>
+                        {% endif %}
+                      {% endfor %}
                     </ul>
                   </div>
+                  {% endif %}
                 </div>
                 {% endblock locales %}
                 <div class="col-xs-9 pull-right">
