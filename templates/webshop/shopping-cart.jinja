@@ -88,7 +88,7 @@
                   </td>
                   <td class="action">
                     <a href="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Move to Wishlist"><i class="fa fa-heart"></i></a>
-                    <a href="{{ url_for('nereid.cart.delete_from_cart', line=line.id) }}" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{ _('Remove Item') }}"><i class="fa fa-trash-o"></i></a>
+                    <span data-url="{{ url_for('nereid.cart.delete_from_cart', line=line.id) }}" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{ _('Remove Item') }}" class="remove_from_cart"><i class="fa fa-trash-o"></i></span>
                   </td>
                 </tr>
                 {% endfor %}
@@ -202,6 +202,15 @@
     });
     $("a.clear-cart").click(function(){
       $(this).button('loading');
+    });
+    $('.remove_from_cart').on('click', function(){
+      $.ajax({
+        type: "DELETE",
+        url: $(this).data("url"),
+      })
+      .success(function(){
+        location.reload();
+      });
     });
   });
 </script>
