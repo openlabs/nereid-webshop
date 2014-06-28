@@ -140,7 +140,7 @@
             #}
 
             <dt class="cart-total-sum">{{ _('TOTAL') }}</dt>
-            <dd class="cart-total-sum">{{ cart.sale.untaxed_amount|currencyformat(currency) }}</dd>
+            <dd class="cart-total-sum">{{ cart.sale.total_amount|currencyformat(currency) }}</dd>
           </dl>
           <div class="col-md-10">
             <a class="btn btn-primary btn-block btn-lg" href="{{ url_for('nereid.checkout.sign_in') }}"><i class="fa fa-flag"></i>&nbsp;&nbsp; {{ _('Checkout') }} </a>
