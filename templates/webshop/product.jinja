@@ -83,7 +83,9 @@
       </div>
     </div>
     <div class="col-md-7">
-      <h4 class="product-heading">{{ product.rec_name }}</h4>
+      <h4 class="product-heading product-name">{{ product.rec_name }}
+        <small class="product-code">{{ product.code }}</small>
+      </h4>
       {% set sale_price = product.sale_price(1) %}
       {% if sale_price < product.list_price %}
       <h3 class="product-price">
@@ -94,20 +96,25 @@
       <h3 class="product-price">{{ sale_price|currencyformat(request.nereid_currency.code) }}</h3>
       {% endif %}
 
-      {% if product.template.products|length > 1 %}
-      {# show if there are more variants than the one being displayed #}
-      <div class="product-size"> Select Variation : <br>
-        <div class="size-buttons">
-          {% for variant in product.template.products %}
-          <a class="btn btn-size"
-            href="{{ url_for('product.product.render', uri=variant.uri) }}"
-            type="radio" value="{{ variant.id }}">{{ variant.code }}</a>
-          {% endfor %}
+      {% if product.template.get_product_variation_data %}
+        <div id="product-varying-attrs"></div>
+      {% else %}
+        {% if product.template.products|length > 1 %}
+        {# show if there are more variants than the one being displayed #}
+        <div class="product-size"> Select Variation : <br>
+          <div class="size-buttons">
+            {% for variant in product.template.products %}
+            <a class="btn btn-size"
+              href="{{ url_for('product.product.render', uri=variant.uri) }}"
+              type="radio" value="{{ variant.id }}">{{ variant.code }}</a>
+            {% endfor %}
+          </div>
+          <span class="error-text text-danger"> Please Select Size</span>
         </div>
-        <span class="error-text text-danger"> Please Select Size</span>
-      </div>
+        {% endif %}
       {% endif %}
 
+      <span class="text-warning" style="display:none" id="product-not-available"><i class="fa fa-warning"></i> {{ _('This product is not available') }}</span>
       <div class="buy-now">
         <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
@@ -115,7 +122,7 @@
           <input type="hidden" name="size" id="size-id"/>
           <input type="hidden" name="product" value="{{ product.id }}"/>
           <input type="hidden" name="action" value="add"/>
-          <button class="btn btn-danger" type="submit" quantity="1">Buy Now</button>
+          <button class="btn btn-danger" type="submit" quantity="1" id="buy-now-btn">Buy Now</button>
         </form>
         {#
 
@@ -178,3 +185,108 @@
   </div>
 </div>
 {% endblock main %}
+
+{# all this is valid only if nereid-catalog-variants module is installed #}
+{% block script_tags %}
+{{ super() }}
+{% if product.template.get_product_variation_data %}
+<script type="text/html"  id='product-varying-attrs-tpl'>
+  <% _.each(attrs, function(attr, index) { %>
+    <% if (attr.widget == 'dropdown') { %>
+      <div class="row">
+        <div class="col-md-3"> Select <%= attr.name %>: <br/>
+          <select class="form-control select-sort attribute" data-attr-name="<%= attr.name %>">
+            <% _.each(attr.options, function(option, index) { %>
+            <option value="<%= option[0] %>" <% if (option[0] == currentVariantAttrs[attr.name]) { %> selected <% } %> ><%= option[1] %></option>
+            <% }); %>
+          </select>
+        </div>
+      </div>
+      <br/>
+    <% } %>
+  <% }); %>
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    var productObj = {{ product.template.get_product_variation_data(as_json=True)|safe }}
+
+    var currentVariantId = {{ product.id }}; // on page load this is the product ID
+
+    /*
+       Return the variant information given a product variant ID
+    */
+    var getVariantInfo = function(variantId) {
+      return _.find(productObj['variants'], function(product) {
+        return (product.id == variantId) ;
+      });
+    };
+
+    var currentVariant = getVariantInfo(currentVariantId);
+
+    /*
+       Find a variant from the list which matches the attributes
+       selected. If there is none then return null
+    */
+    var findVariantMatching = function(attributeSelection) {
+      return _.find(productObj['variants'], function(product) {
+        return _.isEqual(product.attributes, attributeSelection)
+      });
+    };
+
+    /*
+       called when an attribute changes. Based on the selected attributes,
+       it tries to identify the product. If it does, then it returns the
+       id of that product
+    */
+    var onChangeAttribute = function() {
+      var attributeSelection = _.reduce(
+        $(".attribute"),  // Selector for the attribute fields.
+        function(memo, attrEl) {
+          // Append the attribute name and value to the map
+          memo[attrEl.getAttribute('data-attr-name')] = attrEl.value;
+          return memo;
+        },
+        {} // Initial empty attribute set
+      );
+
+      // Find a product which matches the attributes
+      product = findVariantMatching(attributeSelection);
+
+      if (product) {
+        // Set this product's assets as the current product
+        $('#product-not-available').hide();
+        $('#buy-now-btn').removeAttr('disabled');
+        $('.product-price').show();
+        $('.product-code').text(product.code);
+        // Set only, no removals
+        $('.product-name').text(product.rec_name);
+        // Set the correct product in all input field
+        $('input[name="product"]').val(product.id);
+      } else {
+        // Display that the product is not available
+        $('#product-not-available').show();
+        $('#buy-now-btn').attr('disabled', 'disabled');
+        $('.product-price').hide();
+        $('.product-code').text('');
+      }
+    };
+
+    /* Use _ templates to render the attribute options
+       Same thing could have been done in jinja but at the
+       cost of server time ;)
+       */
+    $("#product-varying-attrs").html(_.template(
+      $("#product-varying-attrs-tpl").html(), {
+        'attrs': productObj.varying_attributes,
+        'currentVariantAttrs': getVariantInfo({{ product.id }}).attributes
+      }
+    ));
+
+    $('.attribute').change(onChangeAttribute);
+
+  });
+</script>
+{% endif %}
+{% endblock script_tags %}
