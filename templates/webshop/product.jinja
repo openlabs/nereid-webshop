@@ -19,6 +19,20 @@
 {% endfor %}
 {% endblock extra_head %}
 
+{% block breadcrumb %}
+{{ super() }}
+{% if product.category %}
+  {% for url, category in make_crumbs(product.category, 'product.category.render', field_map_changes={'title_field': 'name'}) %}
+    <li>
+      <a href="{{ url }}">{{ category }}</a>
+    </li>
+  {% endfor %}
+{% endif %}
+<li>
+  {{ product.name }}
+</li>
+{% endblock breadcrumb %}
+
 {% block main %}
 <!-- Product Section starts -->
 <div class="container">
