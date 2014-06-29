@@ -44,7 +44,7 @@
           {% for image in product.get_images() %}
           <li class="{% if loop.first %}active{% endif %}">
             <a href="#tab{{ loop.index }}" data-toggle="tab">
-              <img src="{{ image.transform_command().thumbnail(120, 120) }}" alt="{{ image_set.name }}">
+              <img src="{{ image.transform_command().thumbnail(120, 120) }}" alt="{{ image.name }}">
             </a>
           </li>
           {% endfor %}
