@@ -115,6 +115,7 @@
       {% endif %}
 
       <span class="text-warning" style="display:none" id="product-not-available"><i class="fa fa-warning"></i> {{ _('This product is not available') }}</span>
+      {% if product.salable %}
       <div class="buy-now">
         <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
@@ -124,19 +125,24 @@
           <input type="hidden" name="action" value="add"/>
           <button class="btn btn-danger" type="submit" quantity="1" id="buy-now-btn">Buy Now</button>
         </form>
-        {#
-
-        *** Activate this once the wishlist module is done ***
-
-      	<form action="{{ url_for("product.product.add_to_wishlist") }}" id="add-wishlist" method="post">
-          <input type="hidden" name="quantity" value="1"/>
-          <input type="hidden" name="size" id="size-id"/>
-          <input type="hidden" name="product" value="{{ product.id }}"/>
-          <input type="hidden" name="action" value="add"/>
-          <button type="submit" class="btn btn-link"><i class="fa fa-heart"></i> Add to Wishlist</button>
-        </form>
-        #}
       </div>
+      {% else %}
+        <div style="padding-top:15px;">
+          <span class="text-danger" id="product-not-for-sale"><i class="fa fa-warning"></i>This product is not for sale</span>
+        </div>
+      {% endif %}
+      {#
+        *** Activate this once the wishlist module is done ***
+        <div>
+          <form action="{{ url_for("product.product.add_to_wishlist") }}" id="add-wishlist" method="post">
+            <input type="hidden" name="quantity" value="1"/>
+            <input type="hidden" name="size" id="size-id"/>
+            <input type="hidden" name="product" value="{{ product.id }}"/>
+            <input type="hidden" name="action" value="add"/>
+            <button type="submit" class="btn btn-link"><i class="fa fa-heart"></i> Add to Wishlist</button>
+          </form>
+        </div>
+      #}
     </div>
   </div>
   <!--Product Description -->
