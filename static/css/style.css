@@ -1374,3 +1374,8 @@ span.text-success, span.text-warning, span.text-danger, span.text-info{
   color: #b94a48;
   text-decoration: none;
 }
+/* shopping_cart.jinja */
+.action span i:hover{
+  cursor: pointer;
+  color: #AD4242;
+}
