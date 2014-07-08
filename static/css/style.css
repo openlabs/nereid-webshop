@@ -1374,3 +1374,6 @@ span.text-success, span.text-warning, span.text-danger, span.text-info{
   color: #b94a48;
   text-decoration: none;
 }
+#featured-node img{
+  height: 360px;
+}

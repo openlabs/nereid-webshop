@@ -49,31 +49,26 @@
 
 <section class="products latest">
   <div class="container">
-    <div class="row">
-      <h3>Latest Products</h3>
-      <div class="col-md-4 thumb">
-        <img src="holder.js/100%x280" alt="...">
-        <div class="fig-caption">
-          <h4>Product Name</h4>
-          <p>Description </p>
-        </div>
-      </div>
-      <div class="col-md-4 thumb">
-        <img src="holder.js/100%x280" alt="...">
-        <div class="fig-caption">
-          <h4>Product Name</h4>
-          <p>Description </p>
-        </div>
-      </div>
-      <div class="col-md-4 thumb">
-        <img src="holder.js/100%x280" alt="...">
-        <div class="fig-caption">
-          <h4>Product Name</h4>
-          <p>Description </p>
-        </div>
-      </div>
+    {% set node = request.nereid_website.featured_products_node %}
+    {% if node %}
+    <div class="row" id="featured-node">
+      <h3>Featured Products</h3>
+      {% for product in node.products[:3] %}
+        <a href="{{ url_for('product.product.render', uri=product.uri) }}">
+          <div class="col-md-4 thumb">
+            <img class="img img-responsive"
+              src="{{ CDN }}{{ product.default_image.transform_command().thumbnail(400, 400, 'a') }}"
+              alt="{{ product.name }}" title="{{ product.name }}"/>
+            <div class="fig-caption">
+              <h4>{{ product.name }}</h4>
+              <p>{{ product.get_description()|truncate(70, end="...View Details") }}</p>
+            </div>
+          </div>
+        </a>
+      {% endfor %}
     </div>
     <br>
+    {% endif %}
     <div class="row">
       <div class="col-md-6 thumb">
         <img src="holder.js/100%x320" alt="...">
