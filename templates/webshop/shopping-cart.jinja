@@ -46,6 +46,7 @@
         <div class="row"><h3> {{ _('Shopping Cart') }}</h3></div>
         <!--Cart table starts here -->
         <div class="row">
+          {% block shopping_cart_table %}
           <div class="table-responsive">
             <table class="table">
               <thead>
@@ -58,6 +59,7 @@
                   <th>{{ _('Action') }}</th>
                 </tr>
               </thead>
+              {% block lines %}
               <tbody>
                 {% for line in cart.sale.lines %}
                 <tr>
@@ -93,8 +95,10 @@
                 </tr>
                 {% endfor %}
               </tbody>
+             {% endblock lines %}
             </table>
           </div>
+        {% endblock shopping_cart_table %}
         </div>
         <!--Coupon row-->
         <div class="row coupon-row">
