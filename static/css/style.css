@@ -1377,3 +1377,20 @@ span.text-success, span.text-warning, span.text-danger, span.text-info{
 #featured-node img{
   height: 360px;
 }
+.reset_password{
+  padding-top: 50px;
+}
+.reset_password .form-horizontal{
+  padding-top: 10px;
+  margin-bottom: 50px;
+}
+.reset_password .row{
+  margin-right: 0;
+  margin-left: 0;
+}
+.reset_password .reset_heading{
+  border-bottom: 3px solid #2980b9;
+}
+.reset_password #password{
+  margin-bottom: 10px;
+}
