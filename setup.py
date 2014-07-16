@@ -86,4 +86,7 @@ setup(
     """,
     test_suite='tests.suite',
     test_loader='trytond.test_loader:Loader',
+    tests_require=[
+        'pycountry',
+    ],
 )

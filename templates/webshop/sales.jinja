@@ -43,14 +43,14 @@
                     <span class="{% if sale.state ==  "done" %}text-success{% elif sale.state == "confirmed" %}text-info{% elif sale.state == "cancel" %}text-danger{% endif %}">{{ sale.state }}</span>
                   </td>
                   <td class="action">
-                    {#
-                    <span>
-                      <a href="">
-                        Return
-                      </a> /
-                      <a href="">Exchange </a>
-                    </span>
-                    #}
+                    {% for invoice in sale.invoices %}
+                      {% if invoice.state == "paid" %}
+                        <a href="{{ url_for('account.invoice.download_invoice', active_id=invoice.id) }}" class="text-muted download-invoice">
+                          <i class="fa fa-cloud-download"></i> {{ _('Download invoice') }}
+                        </a>
+                        <br>
+                      {% endif %}
+                    {% endfor %}
                   </td>
                 </tr>
                 {% endfor %}

@@ -1394,3 +1394,6 @@ span.text-success, span.text-warning, span.text-danger, span.text-info{
 .reset_password #password{
   margin-bottom: 10px;
 }
+.action .download-invoice:hover{
+  text-decoration: none;
+};
