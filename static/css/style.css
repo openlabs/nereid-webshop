@@ -1361,6 +1361,7 @@ span.text-success, span.text-warning, span.text-danger, span.text-info{
 .center form .form-group{
   text-align: left;
 }
+/* My-account */
 #saved-address a:hover, #saved-address .remove-address:hover{
   cursor: pointer;
   color: #b94a48;
@@ -1389,3 +1390,13 @@ span.text-success, span.text-warning, span.text-danger, span.text-info{
 .action .download-invoice:hover{
   text-decoration: none;
 };
+#add-card #cvv{
+  width: 20%;
+}
+#payment-profile form button{
+  color: #373435;
+}
+#payment-profile form button:hover{
+  text-decoration: none;
+  color: #a94442;
+}
