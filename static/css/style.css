@@ -1197,51 +1197,14 @@ span.price{
   margin: 20px 0 10px 0;
   max-width: 220px;
 }
-
-/******** Category page *********/
-.masonry {
-  padding: 10px 0 20px 0 }
-#fit-width .masonry {
-  margin: 0 auto;
-}
-.masonry .item,
-.masonry .grid-sizer {
-  width:  33.3%;
-  min-width: 150px;
-}
-.masonry .item,
-.masonry .grid-sizer {
-  padding: 4px;
-  float: left;
-}
-.masonry .item a,
-.masonry .grid-sizer a{
-  display: inline-block;
-  border: 2px solid #eee;
-  border-radius: 2px;
-}
-.item.w2 { width:  50%; }
-
 /******** Category list *********/
-.masonry .product-item,
-.masonry .category-list{
-  width: 25%;
-  padding: 4px;
-  float: left;
-  min-width: 180px;
-}
-.masonry .product-item a,
-.masonry .category-list a{
+.product-item a,
+.category-list a{
   text-align: center;
-  min-height: 400px;
-  display: inline-block;
   border: 1px solid transparent;
   border-radius: 2px;
   text-decoration: none;
-}
-.masonry .product-item a:hover,
-.masonry .category-list a:hover{
-  border: 1px solid #eee;
+  margin-bottom: 30px;
 }
 .product-item h4, #product-slide .item h4{
   padding: 0 2px;
@@ -1255,10 +1218,12 @@ span.price{
   padding-top: 3px;
   font-weight: normal;
 }
-.product-item span.product-price, #product-slide .item span.product-price{
+.product-item .product-price, #product-slide .item .product-price{
   color: #e74c3c;
   font-weight: 600;
   font-size: 14px;
+  text-align: center;
+  margin-bottom: 0;
 }
 .product-list h3.list-heading{
   margin-top: 5px;
@@ -1270,6 +1235,33 @@ span.price{
   height: 30px;
   padding: 3px 12px;
   max-width: 200px;
+}
+#product-image .thumbnail {
+  width: 80%;
+}
+#product-image{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  min-height: 100px;
+}
+#product-image h4{
+  font-size: 14px;
+  font-weight: 700;
+  color: #686868;
+  margin-bottom: 3px;
+  height:40px;
+  width: 190px;
+}
+#product-image h5{
+  width: 190px;
+  padding-top: 3px;
+}
+ #product-image .thumbnail{
+  border: none;
+}
+#product-image img{
+  height: 150px;
+  width: 190px;
 }
 /****** My account Page *****/
 
