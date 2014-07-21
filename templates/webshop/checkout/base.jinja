@@ -51,7 +51,7 @@
         <!-- Product Item 1 -->
         <div class="row border">
           <div class="col-xs-3">
-            {# product image #}
+            <img src="{{ CDN }}{{ line.product.default_image.transform_command().thumbnail(100, 100, 'a') }}" alt="{{ line.product.name }}" title="{{ line.product.name }}"/>
           </div>
           <div class="col-xs-6">
             <a href="" class="product-name">{{ line.description }}</a><br>
