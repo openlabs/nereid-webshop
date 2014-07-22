@@ -155,7 +155,7 @@
   {% for node in root_node.children %}
     <li>
       <a class="main-link" href="{{ url_for('product.tree_node.render', active_id=node.id, slug=node.slug) }}">{{ node.name }}</a>
-      {% if node.childs %}
+      {% if node.children %}
       <!-- Dropdown Menu Starts-->
       <div class="container menbg">
         <div class="row">
