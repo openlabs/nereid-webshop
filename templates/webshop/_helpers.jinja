@@ -175,3 +175,11 @@
     </li>
   {% endfor %}
 {% endmacro %}
+
+{% macro render_payment_profile(card) -%}
+<div>
+  <h5>Card owner: {{ card.party.rec_name }} </h5>
+  <h5>Card number: XXXX XXXX XXXX {{ card.last_4_digits }}<h5>
+  <h5>Valid Till: {{ card.expiry_month }}/{{ card.expiry_year }} </h5>
+</div>
+{%- endmacro %}
