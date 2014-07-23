@@ -14,7 +14,7 @@ CONFIG = dict(
     DATABASE_NAME='webshop',
 
     # Tryton Config file path
-    TRYTON_CONFIG='../../etc/trytond.conf',
+    TRYTON_CONFIG='/etc/trytond.conf',
 
     # If the application is to be configured in the debug mode
     DEBUG=False,

@@ -10,8 +10,32 @@ nereid-webshop
 Full Webshop based on Tryton Nereid
 
 
-Installation
-------------
+Installation using docker
+-------------------------
+
+Use this to build a new image
+
+::
+
+  docker build  -t nereid-webshop .
+
+Running the container
+
+::
+
+  docker run nereid-webshop
+
+Get your container's IP Address
+
+::
+
+  docker inspect <container_id> | grep IPAddress | cut -d '"' -f 4
+
+Now connect to <your container's ip>:8000 using tryton client.
+
+
+Installation using virtualenv
+-----------------------------
 
 Setting this module up is similar to the setup of any other tryton module.
 
