@@ -1,0 +1,36 @@
+{% extends 'base.jinja' %}
+
+{% from '_helpers.jinja' import render_pagination, render_product_list  %}
+
+{% block breadcrumb %}
+{{ super() }}
+<li>
+  <a href="{{ url_for('product.tree_node.render', active_id=node.id, slug=node.slug) }}">{{ node.name }}</a>
+</li>
+{% endblock breadcrumb %}
+
+{% block main %}
+<section>
+  <div class="container">
+    <!-- category page -->
+      <!-- Content bar -->
+      <div class="col-md-12 product-list">
+        <div class="row">
+          <div class="col-md-9">
+            <h3 class="list-heading">{{ node.rec_name }}</h3>
+          </div>
+        </div>
+        <div class="row">
+        <div class="category-list"></div>
+          {% for product in products %}
+            {{ render_product_list(product) }}
+          {% endfor %}
+        </div>
+        <div class="row">
+          {{ render_pagination(products, endpoint='product.tree_node.render', active_id=node.id, slug=node.slug) }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main%}

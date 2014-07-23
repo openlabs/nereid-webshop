@@ -28,7 +28,8 @@ major_version = int(major_version)
 minor_version = int(minor_version)
 
 requires = [
-    'trytond_nereid>=3.0.7.0, <3.1',
+    'trytond_nereid>=3.0.8.1, <3.1',
+    'trytond_nereid_catalog>=3.0.5.0,<3.1',
 ]
 for dep in info.get('depends', []):
     if not re.match(r'(ir|res|webdav)(\W|$)', dep):
@@ -85,4 +86,7 @@ setup(
     """,
     test_suite='tests.suite',
     test_loader='trytond.test_loader:Loader',
+    tests_require=[
+        'pycountry',
+    ],
 )

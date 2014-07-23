@@ -61,15 +61,25 @@
                 {% block locales %}
                 <div class="col-xs-3">
                   <!-- Choose Language -->
+                  {% if request.nereid_website.locales %}
+                  {% set current_locale = request.nereid_locale.language %}
                   <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
-                      <img class="flag flag-us"> English &nbsp;<span class="caret"></span>
+                      <img class="flag flag-{{ current_locale.code[3:]|lower }}"> {{ current_locale.rec_name }}&nbsp;<span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                      <li><a href><img class="flag flag-br">&nbsp;Brazil</a></li>
-                      <li><a href><img class="flag flag-in">&nbsp;India</a></li>
+                      {% for locale in request.nereid_website.locales + (request.nereid_website.default_locale,) %}
+                        {% if locale.id != request.nereid_locale.id %}
+                          <li>
+                            <a href="{{url_for('nereid.website.home', locale=locale.code)}}">
+                              <img class="flag flag-{{ locale.language.code[3:]|lower }}">&nbsp;{{ locale.language.rec_name }}
+                            </a>
+                          </li>
+                        {% endif %}
+                      {% endfor %}
                     </ul>
                   </div>
+                  {% endif %}
                 </div>
                 {% endblock locales %}
                 <div class="col-xs-9 pull-right">
@@ -154,28 +164,13 @@
         <div class="row main-navigation">
           <div class="col-md-12">
             <ul class="list-inline" id="nav-list">
-              {% for category in root_categories() %}
-              <li>
-                <a class="main-link" href="{{ url_for('product.category.render', uri=category.uri) }}">{{ category.name }}</a>
-                {% if category.childs %}
-                <!-- Dropdown Menu Starts-->
-                <div class="container menbg">
-                  <div class="row">
-                    {% for child in category.childs %}
-                    <div class="col-md-2">
-                      <ul class="list-unstyled">
-                        <li><a href="{{ url_for('product.category.render', uri=child.uri) }}"><strong>{{ child.name }}</strong></a></li>
-                        {% for grandchild in child.childs %}
-                        <li><a href="{{ url_for('product.category.render', uri=grandchild.uri) }}">{{ grandchild.name }}</a></li>
-                        {% endfor %}
-                      </ul>
-                    </div>
-                    {% endfor %}
-                  </div>
-                </div>
-                {% endif %}
-              </li>
-              {% endfor %}
+              {% from '_helpers.jinja' import nav_from_category, nav_from_tree_node %}
+              {% if request.nereid_website.root_navigation_model == 'product.tree_node' %}
+                {{ nav_from_tree_node(request.nereid_website.root_tree_node) }}
+              {% elif request.nereid_website.root_navigation_model == 'product.category' %}
+                {{ nav_from_category(request.nereid_website.root_category) }}
+              {% endif %}
+              {# add any other navigational elements like probably an article list or custom link here #}
             </ul>
           </div>
         </div>

@@ -22,7 +22,8 @@ class Product:
         "Returns default product image"
         ModelData = Pool().get('ir.model.data')
 
-        if self.image_sets:
-            return self.image_sets[0].image.id
+        images = self.get_images()
+        if images:
+            return images[0].id
         else:
             return ModelData.get_id("nereid_webshop", "mystery_box")

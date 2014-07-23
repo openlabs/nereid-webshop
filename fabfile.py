@@ -48,7 +48,7 @@ def deploy_staging(schema_update=False):
             if schema_update:
                 execute(_update_schema, 'webshop')
 
-            sudo('bin/supervisorctl restart all')
+    sudo('supervisorctl restart all')
 
 
 @hosts('%s@demo.openlabs.us' % getpass.getuser())
@@ -66,7 +66,7 @@ def update_module(module):
 
             execute(_update_schema, 'webshop', module.replace('-', '_'))
 
-            sudo('bin/supervisorctl restart all')
+    sudo('supervisorctl restart all')
 
 
 @hosts('%s@demo.openlabs.us' % getpass.getuser())
