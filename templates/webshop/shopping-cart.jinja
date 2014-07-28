@@ -46,7 +46,7 @@
         <div class="row"><h3> {{ _('Shopping Cart') }}</h3></div>
         <!--Cart table starts here -->
         <div class="row">
-          {% block shopping_cart_table %}
+          {% block shopping_cart_table scoped %}
           <div class="table-responsive">
             <table class="table">
               <thead>
@@ -59,7 +59,7 @@
                   <th>{{ _('Action') }}</th>
                 </tr>
               </thead>
-              {% block lines %}
+              {% block lines scoped %}
               <tbody>
                 {% for line in cart.sale.lines %}
                 <tr>
