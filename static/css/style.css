@@ -1400,7 +1400,123 @@ span.text-success, span.text-warning, span.text-danger, span.text-info{
   text-decoration: none;
   color: #a94442;
 }
-#email-in-use .login-container .alert .col-md-1{
+/* Wishlist */
+#add-wishlist{
+  width:95%;
+  border: 3px dashed #F1EEEE;
+  min-height: 200px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px; /* future proofing */
+  -khtml-border-radius: 5px; /* for old Konqueror browsers */
+  margin-bottom: 30px;
+}
+#add-wishlist p{
+  color: rgba(121, 119, 128, 0.8);
+  text-align: center;
+  font-size: 20px;
+  margin-top: 40%;
+}
+#add-wishlist:hover{
+  cursor: pointer;
+  background: #FAFAFA;
+  border: 3px dashed #DFDFDF;
+  color: rgba(121, 119, 128, 1);
+}
+#wishlist .thumbnail1 a img{
+  height: 160px;
+}
+#wishlist .thumbnail1{
+  background-size: cover !important;
+  background-position: 0% 82% !important;
+  min-height: 200px;
+  overflow: hidden !important;
+  padding: 0px;
+  width: 95%;
+  border: 1px solid #D5D5D5;
+  text-align: center;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 10px;
+  border-radius: 5px; /* future proofing */
+  -khtml-border-radius: 5px; /* for old Konqueror browsers */
+  margin-bottom: 30px;
+}
+#wishlist .thumbnail1 a h4{
+  margin-bottom: 5px;
+}
+#wishlist .thumbnail1 span{
+  font-size: 12px;
+  color: #923A3A;
+}
+#wishlist .thumbnail1 a:hover{
+  text-decoration: none;
+}
+.margin-top-30{
+  margin-top: 30px;
+}
+.wishlist-options{
+  padding-bottom: 5px;
+  position: relative;
+  top: 140px;
+  width: 100%;
+  left: 0px;
+  background: rgba(253, 253, 253, 0.7);
+border-top: 1px solid rgba(248, 248, 248, 0.2);
+}
+#myModal .modal-sm{
+  width: 400px;
+}
+#wishlist-row{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+#specific-wishlist .col-md-3 .thumbnail{
+  width: 220px;
+  height: 200px;
+}
+#specific-wishlist .col-md-3 .thumbnail img{
+  height: 190px;
+}
+#specific-wishlist #product-buy-now button{
+  margin-top: 10px;
+}
+#specific-wishlist #remove-product button{
+  color: #c0392b;
+}
+#specific-wishlist #remove-product button:hover{
+  text-decoration: none;
+}
+#dropdownMenu1{
+  margin-right: 11px;
+}
+.no-pad-right{
+  padding-right: 0px;
+}
+.margin-top-5{
+  margin-top: 5px;
+}
+.margin-bottom-10{
+  margin-bottom: 10px;
+}
+.pull-right .dropdown{
+  padding-right: 17px;
+}
+#wishlist-settings{
+  padding-top: 20px;
+}
+#add-to-wishlist #wishlist-dropdown{
+  margin-left: -6px;
+  padding: 6px 10px;
+}
+#add-to-wishlist{
+  padding-top: 20px;
+}
+#rename-form .form-group{
+  float: none;
+}
+#add-to-wishlist ul.dropdown-menu li{
+  cursor: pointer;
+}#email-in-use .login-container .alert .col-md-1{
   width: 4%;
   font-size: 30px;
 }
