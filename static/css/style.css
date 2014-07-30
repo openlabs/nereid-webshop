@@ -1389,7 +1389,7 @@ span.text-success, span.text-warning, span.text-danger, span.text-info{
 }
 .action .download-invoice:hover{
   text-decoration: none;
-};
+}
 #add-card #cvv{
   width: 20%;
 }
@@ -1399,6 +1399,39 @@ span.text-success, span.text-warning, span.text-danger, span.text-info{
 #payment-profile form button:hover{
   text-decoration: none;
   color: #a94442;
+}
+#email-in-use .login-container .alert .col-md-1{
+  width: 4%;
+  font-size: 30px;
+}
+#email-in-use .login-container .alert .col-md-11{
+  width: 94%;
+}
+#email-in-use .login-container .alert .col-md-11 h4{
+  font-size: 16px;
+}
+#email-in-use{
+  line-height: 1.428571429;
+}
+#email-in-use a:hover{
+  text-decoration: none;
+}
+#email-in-use >.row{
+  margin-right: 0;
+  margin-left: 0;
+}
+#email-in-use .login-container >.row{
+  margin-right: 0;
+  margin-left: 0;
+}
+#email-in-use .email-in-use-header h4>span{
+  font-size: 18px;
+  display: inline-block;
+  color: #2c3e50;
+  padding-bottom: 8px;
+  border-bottom: 3px solid #2980b9;
+  margin-bottom: 20px;
+  font-weight: 400;
 }
 #pay-from-credit-card input[type="radio"]:checked{
   height: 18px;
@@ -1412,4 +1445,27 @@ span.text-success, span.text-warning, span.text-danger, span.text-info{
 }
 #pay-from-credit-card #credit-card{
     padding-top: 20px;
+}
+#email-in-use .email-in-use-body .col-md-5{
+  text-align: center;
+  border: 1px solid #eee;
+  margin-bottom: 20px;
+}
+#email-in-use .email-in-use-body{
+ margin-top: 20px;
+}
+#email-in-use .email-in-use-body h4 span{
+  color: #2c3e50;
+  border-bottom: 3px solid #2980b9;
+  font-weight: 400;
+}
+#email-in-use .email-in-use-body h4{
+  margin-bottom: 20px;
+}
+#email-in-use .email-in-use-body h5{
+  margin-bottom: 20px;
+}
+#email-in-use .email-in-use-body h5 a{
+  font-size: 16px;
+  border-radius: 5px;
 }
