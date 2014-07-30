@@ -87,7 +87,7 @@
                     {% block header_links %}
                     <li><a href="tel:+91 120 6455161">&nbsp;<i class="fa fa-phone"></i> &nbsp; +91 120 6455161</a></li>
                     <li>
-                      {% if not request.is_guest_user %}
+                      {% if not current_user.is_anonymous() %}
                       <span class="text-muted">Welcome, </span> <span >{{ request.nereid_user.display_name }}</span>
                       <a href="{{ url_for('nereid.website.logout') }}"><span class="text-danger"><i class="fa fa-sign-out"></i> Log Out</span>
                       </a>
@@ -138,7 +138,7 @@
                       <i class="fa fa-user"></i> {{ _('My Account') }} <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                      {% if not request.is_guest_user %}
+                      {% if not current_user.is_anonymous() %}
                         <li><a href="{{ url_for('nereid.website.account') }}">{{ _('Profile') }}</a></li>
                         <li><a href="">{{ _('My Orders') }}</a></li>
                         <li><a href="{{ url_for('nereid.website.logout') }}"><i class="fa fa-sign-out"></i>{{ _('Logout') }}</a></li>
