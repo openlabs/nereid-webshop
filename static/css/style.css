@@ -1400,3 +1400,16 @@ span.text-success, span.text-warning, span.text-danger, span.text-info{
   text-decoration: none;
   color: #a94442;
 }
+#pay-from-credit-card input[type="radio"]:checked{
+  height: 18px;
+  width: 18px;
+  display:inline-block;
+  padding: 0 0 0 0px;
+}
+.payment-container .table-responsive .col-xs-8{
+  border-left: 1px solid #eee;
+  padding-top: 15px;
+}
+#pay-from-credit-card #credit-card{
+    padding-top: 20px;
+}
