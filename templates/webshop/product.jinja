@@ -55,7 +55,7 @@
           {% for image in product.get_images() %}
           <div class="tab-pane {% if loop.first %}active{% endif %}" id="tab{{ loop.index }}">
             <div class="zoom-container">
-              <a id="zoom-target" href="{{ image.url }}" target="new">
+              <a id="zoom-target" href="{{ image.url }}" data-lightbox="{{ product.rec_name }}" > 
                 <img class="zoom-image" src="{{ image.transform_command().thumbnail(500, 500) }}" />
               </a>
             </div>

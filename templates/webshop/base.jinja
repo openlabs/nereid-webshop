@@ -21,6 +21,7 @@
     {% endblock link_tags %}
 
     {% block base_stylesheet %}
+      <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/lightbox.css') }}">
       <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/style.css') }}">
     {% endblock base_stylesheet %}
 
@@ -370,6 +371,7 @@
     <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/app.js') }}"></script>
     <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/holder.js') }}"></script>
     <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/underscore-min.js') }}"></script>
+    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/lightbox.js') }}"></script>
     {% endblock script_tags %}
 
     {% block scripts %}
