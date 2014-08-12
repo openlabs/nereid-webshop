@@ -120,34 +120,6 @@
 </ul>
 {% endmacro %}
 
-
-{% macro nav_from_category(root_category) %}
-  {# render the children of the given category as menu #}
-  {% for category in root_category.childs %}
-    <li>
-      <a class="main-link" href="{{ url_for('product.category.render', uri=category.uri) }}">{{ category.name }}</a>
-      {% if category.childs %}
-      <!-- Dropdown Menu Starts-->
-      <div class="container menbg">
-        <div class="row">
-          {% for child in category.childs %}
-          <div class="col-md-2">
-            <ul class="list-unstyled">
-              <li><a href="{{ url_for('product.category.render', uri=child.uri) }}"><strong>{{ child.name }}</strong></a></li>
-              {% for grandchild in child.childs %}
-              <li><a href="{{ url_for('product.category.render', uri=grandchild.uri) }}">{{ grandchild.name }}</a></li>
-              {% endfor %}
-            </ul>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-      {% endif %}
-    </li>
-  {% endfor %}
-{% endmacro %}
-
-
 {% macro nav_from_tree_node(root_node) %}
   {# render the children of the given node as menu #}
   {% for node in root_node.children %}

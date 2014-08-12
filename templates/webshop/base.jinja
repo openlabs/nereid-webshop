@@ -165,11 +165,9 @@
         <div class="row main-navigation">
           <div class="col-md-12">
             <ul class="list-inline" id="nav-list">
-              {% from '_helpers.jinja' import nav_from_category, nav_from_tree_node %}
-              {% if request.nereid_website.root_navigation_model == 'product.tree_node' %}
+              {% from '_helpers.jinja' import nav_from_tree_node %}
+              {% if request.nereid_website.root_tree_node %}
                 {{ nav_from_tree_node(request.nereid_website.root_tree_node) }}
-              {% elif request.nereid_website.root_navigation_model == 'product.category' %}
-                {{ nav_from_category(request.nereid_website.root_category) }}
               {% endif %}
               {# add any other navigational elements like probably an article list or custom link here #}
             </ul>
