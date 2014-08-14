@@ -124,18 +124,29 @@
           <span class="text-danger" id="product-not-for-sale"><i class="fa fa-warning"></i>This product is not for sale</span>
         </div>
       {% endif %}
-      {#
-        *** Activate this once the wishlist module is done ***
-        <div>
-          <form action="{{ url_for("product.product.add_to_wishlist") }}" id="add-wishlist" method="post">
-            <input type="hidden" name="quantity" value="1"/>
-            <input type="hidden" name="size" id="size-id"/>
-            <input type="hidden" name="product" value="{{ product.id }}"/>
+      <div class="row">
+        <div class="btn-group col-md-6" id="add-to-wishlist">
+          <form method="post" action="{{ url_for('wishlist.wishlist.wishlist_product') }}" >
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
             <input type="hidden" name="action" value="add"/>
-            <button type="submit" class="btn btn-link"><i class="fa fa-heart"></i> Add to Wishlist</button>
-          </form>
+            <input type="hidden" name="product" value="{{ product.id }}" />
+            <button type="submit" class="btn btn-default">Add To Wishlist</button>
+
+            {% if current_user.is_authenticated() and current_user.wishlists|length > 0 %}
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="wishlist-dropdown">
+              <i class="fa fa-angle-down"></i>
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            {# Drop down for add to wishlist #}
+              <ul class="dropdown-menu" role="menu" aria-labelledby="wishlist-dropdown">
+              {% for wishlist in current_user.wishlists %}
+                <li name="wishlist" value="{{ wishlist.id }}" class="center">{{ wishlist.name|title }}</li>
+              {% endfor %}
+              </ul>
+              {% endif %}
+            </form>
+          </div>
         </div>
-      #}
     </div>
   </div>
   <!--Product Description -->
@@ -284,8 +295,24 @@
     ));
 
     $('.attribute').change(onChangeAttribute);
-
   });
 </script>
 {% endif %}
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#add-to-wishlist .dropdown-menu li').on('click', function(){
+      var wishlist_id = $(this).val();
+      var product_id = {{ product.id }};
+      var data = {'wishlist': wishlist_id, 'product': product_id, 'action': "add"}
+      console.log(data);
+      $.ajax({
+        type: "POST",
+        url: "{{ url_for('wishlist.wishlist.wishlist_product') }}",
+        data: data,
+      }).done(function(){
+        $(location).attr('href',"{{ url_for('wishlist.wishlist.render_wishlists', _external=True) }}");
+      });
+    });
+  });
+</script>
 {% endblock script_tags %}

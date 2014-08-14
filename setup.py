@@ -49,6 +49,9 @@ class SQLiteTest(Command):
             sys.exit(0)
         sys.exit(-1)
 
+MODULE2PREFIX = {
+    'nereid_wishlist': 'openlabs',
+}
 
 config = ConfigParser.ConfigParser()
 config.readfp(open('tryton.cfg'))
@@ -64,9 +67,10 @@ requires = []
 for dep in info.get('depends', []):
     if not re.match(r'(ir|res|webdav)(\W|$)', dep):
         requires.append(
-            'trytond_%s >= %s.%s, < %s.%s' % (
-                dep, major_version, minor_version,
-                major_version, minor_version + 1
+            '%s_%s >= %s.%s, < %s.%s' % (
+                MODULE2PREFIX.get(dep, 'trytond'), dep,
+                major_version, minor_version, major_version,
+                minor_version + 1
             )
         )
 requires.append(

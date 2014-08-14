@@ -1,152 +1,146 @@
-{% extends 'base.jinja' %}
+{% extends 'account-base.jinja' %}
+{% from '_helpers.jinja' import render_field, render_product_list %}
 {% block main %}
-<section class="checkout-container">
+<section id="specific-wishlist">
   <div class="container">
-    <!-- Checkout Step Indicator -->
-    <div class="row checkout-steps">
-      <ul class="list-inline center">
-        <li>
-          <a href="" class="active" data-original-title="" title=""><span>1</span>
-            <div class="text">Cart</div>
-          </a>
-        </li>
-        <li><span class="muted"></span>------------</li>
-        <li>
-          <a class="undone" data-original-title="" title=""><span>2</span>
-            <div class="text">Delivery</div>
-          </a>
-        </li>
-        <li><span class="muted"></span>------------</li>
-        <li>
-          <a class="undone" data-original-title="" title=""><span>3</span>
-            <div class="text">Payment</div>
-          </a>
-        </li>
-      </ul>
+    <div class="col-md-11 col-md-offset-1">
+      {{ account_header(_('My Account / wishlist'), 'Wishlist') }}
     </div>
-    <!-- Shopping cart Starts -->
-    <div class="row cart-table">
-      <div class="col-md-10 col-md-offset-1">
-        <div class="row"><h3> Shopping Cart</h3></div>
-        <!--Cart table starts here -->
-        <div class="row">
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Unit Price</th>
-                <th>Quantity</th>
-                <th>Unit Total</th>
-                <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><a href="" data-original-title="" title=""><img src="images/products/tee1.jpg"></a></td>
-                  <td>
-                    <a href="" class="product-name" data-original-title="" title="">United Colors of Benetton </a><br>
-                    <strong class="text-muted">SIZE : </strong> L
-                    <strong class="text-muted">COLOR :</strong> Blue
-                  </td>
-                  <td>
-                    $ 1523
-                  </td>
-                  <td>
-                    <div class="quantity buttons_added">
-                      <form>
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-                        <input type="button" class="minus" id="minus1" value="-" data-loading-text="...">
-                        <input maxlength="12" class="input-text qty text" title="Qty" size="4" value="1" name="quantity">
-                        <input class="product" type="hidden" value="23">
-                        <input type="button" class="plus" id="add1" value="+" data-loading-text="...">
-                      </form>
-                    </div>                       
-                  </td>
-                  <td>
-                    $ 1523
-                  </td>
-                  <td class="action">
-                    <a href="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Move to Wishlist"><i class="fa fa-heart"></i></a>
-                    <a href="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove Item"><i class="fa fa-trash-o"></i></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td><a href="" data-original-title="" title=""><img src="images/products/tee1.jpg"></a></td>
-                  <td>
-                    <a href="" class="product-name" data-original-title="" title="">United Colors of Benetton</a><br>
-                    <strong class="text-muted">SIZE : </strong> L
-                    <strong class="text-muted">COLOR :</strong> Blue
-                  </td>
-                  <td>
-                    $ 1523
-                  </td>
-                  <td>
-                    <div class="quantity buttons_added">
-                      <form>
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-                        <input type="button" class="minus" id="minus1" value="-" data-loading-text="...">
-                        <input maxlength="12" class="input-text qty text" title="Qty" size="4" value="1" name="quantity">
-                        <input class="product" type="hidden" value="23">
-                        <input type="button" class="plus" id="add1" value="+" data-loading-text="...">
-                      </form>
-                    </div>                       
-                  </td>
-                  <td>
-                    $ 1523
-                  </td>
-                  <td class="action">
-                    <a href="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Move to Wishlist"><i class="fa fa-heart"></i></a>
-                    <a href="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove Item"><i class="fa fa-trash-o"></i></a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+    <div class="col-md-11 col-md-offset-1">
+      <div class="row">
+        <div class="col-md-10">
+          <h2>{{ wishlist.name|title }}'s Wishlist</h2>
         </div>
-        <!--Coupon row-->
-        <div class="row coupon-row">
-          <div class="col-md-6">
-            <a href="" class="btn btn-default btn-md" data-original-title="" title=""><i class="fa fa-angle-double-left"></i>&nbsp; Continue Shopping</a>
-            <a href="" class="btn btn-default" data-original-title="" title=""><i class="fa fa-times"></i> Clear Cart</a>
-          </div>
-          <div class="col-md-6">
-            <form>
-              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-              <div class="col-xs-4">
-                <label for="" class="">Have a Coupon ?</label>
-              </div>
-              <div class="col-xs-6">
-                <input type="text" class="form-control input-sm" id="" placeholder="Enter your coupon code">
-              </div>
-              <div class="col-xs-2">
-              <a class="btn btn-default btn-sm" data-original-title="" title="">Apply</a>
-              </div>
-            </form>
-          </div>
+        <div class="col-md-2" id="wishlist-settings">
+          <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#privacy-settings">
+            <i class="fa fa-cog"></i> &nbsp;settings
+          </button>
         </div>
-        <!--Item Total-->
-        <div class="row cart-total">
-          <div class="col-md-7"></div>
-          <div class="col-md-5">
-            <dl class="dl-horizontal">
-            <dt>Cart Total</dt>
-            <dd>$ 1523</dd>
-            <dt>Delivery (<span class="text-success">Free</span>)</dt>
-            <dd><span class="text-success">$ 0</span></dd>
-            <dt>Coupon Discount</dt>
-            <dd>$ 0</dd>
-            <dt class="cart-total-sum">TOTAL</dt>
-            <dd class="cart-total-sum">$ 1523</dd>
-          </dl>
-          <div class="col-md-10">
-            <a href="checkout-step-two.html" class="btn btn-primary btn-block btn-lg" data-original-title="" title="">Checkout </a>
-          </div>
+        <div class="modal fade" id="privacy-settings" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">{{ wishlist.name|title }}'s Settings</h4>
+              </div>
+              <div class="modal-body">
+              <form name="rename-wishlist" method="post" action="" id="rename-form" class="form-horizontal">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                <input type="hidden" name="wishlist" value="{{ wishlist.id }}">
+                 <div class="form-group col-md-10 col-md-offset-1">
+                  <label>Name:</label>
+                  <input type="text" name="name" value="" placeholder="Name" class="form-control" required >
+                </div>
+              </form>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-default" data-url="{{ url_for('wishlist.wishlist.render_wishlist', active_id=wishlist.id) }}" id="remove-wishlist-btn">Remove This Wishlist</button>
+                <button type="button" class="btn btn-primary" id="save-changes">Save changes</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      {% if wishlist.products %}
+        {% for product in wishlist.products %}
+        <div class="row" id="wishlist-row">
+            <div class="col-md-3">
+              <div class="thumbnail">
+                <img src="{{ CDN }}{{ product and product.default_image.transform_command().thumbnail(200, 200, 'a') }}" alt="{{ product.name }}" title="{{ product.name }}"/>
+              </div>
+            </div>
+            <div class="col-md-9">
+              <div class="row">
+                <div class="col-md-12">
+                  <a href="{{ url_for('product.product.render', uri=product.uri) }}">
+                    <h4>{{ product.rec_name|title }}</h4>
+                  </a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  {% set sale_price = 300 %}
+                  {% if sale_price < product.list_price %}
+                    <h3 class="product-price">
+                      <span class="not">{{ product.list_price|currencyformat(request.nereid_currency.code) }}</span>
+                      {{ sale_price|currencyformat(request.nereid_currency.code) }}
+                    </h3>
+                  {% else %}
+                    <h3 class="product-price">{{ sale_price|currencyformat(request.nereid_currency.code) }}</h3>
+                  {% endif %}
+                </div>
+                <div class="col-md-6 no-pad-right">
+                  {% if product.salable %}
+                    <div class="buy-now pull-right">
+                      <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                        <input type="hidden" name="quantity" value="1"/>
+                        <input type="hidden" name="size" id="size-id"/>
+                        <input type="hidden" name="product" value="{{ product.id }}"/>
+                        <input type="hidden" name="action" value="add"/>
+                        <button class="btn btn-danger" type="submit" quantity="1" id="buy-now-btn"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                      </form>
+                    </div>
+                  {% else %}
+                    <div style="padding-top:15px;">
+                      <span class="text-danger" id="product-not-for-sale"><i class="fa fa-warning"></i>This product is not for sale</span>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="row margin-top-5 margin-bottom-10">
+                <div class="pull-right">
+                <div class="dropdown pull-left">
+                  {% if current_user.wishlists|length > 1 %}
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                    Move
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    {% for wishlist in current_user.wishlists %}
+                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">{{ wishlist.name }}</a></li>
+                    {% endfor %}
+                  </ul>
+                  {% endif %}
+                </div>
+                <form action="{{ url_for('wishlist.wishlist.wishlist_product') }}" id="remove-product" method="post" class="pull-left">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                  <input type="hidden" name="product" value="{{ product.id }}"/>
+                  <input type="hidden" name="wishlist" value="{{ wishlist.id }}"/>
+                  <input type="hidden" name="action" value="remove" />
+                  <button type="submit" class=" btn btn-default"><i class="fa fa-trash-o"></i>&nbsp;Remove</button>
+                </form>
+              </div>
+              </div>
+              <div class="row">
+                <p class="col-md-12">{{ product.get_description()|truncate(200) }}</p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <h4> No products in this wishlist </h4>
+      {% endif %}
     </div>
   </div>
 </section>
 {% endblock main %}
+{% block script_tags %}
+{{ super }}
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#save-changes').on('click', function(){
+      $('#rename-form').submit();
+    });
+    $('#remove-wishlist-btn').on('click', function(){
+      $.ajax({
+        type: "DELETE",
+        url: $(this).data('url'),
+      })
+        .done(function() {
+          $(location).attr('href',"{{ url_for('wishlist.wishlist.render_wishlists', _external=True) }}");
+      });
+    });
+  });
+</script>
+{% endblock script_tags %}
