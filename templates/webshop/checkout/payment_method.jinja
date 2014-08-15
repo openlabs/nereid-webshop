@@ -31,7 +31,7 @@
                   {% if request.nereid_website.accept_credit_card %}
                     <form class="form-horizontal tab-content" role="form" method="POST" id="pay-from-credit-card">
                       {{ credit_card_form.csrf_token }}
-                      {% if current_user.party.payment_profiles %}
+                      {% if current_user.is_authenticated() and current_user.party.payment_profiles %}
                         <div id="select-credit-card">
                           {% for card in current_user.party.payment_profiles %}
                           <p class="pad-bottom-15">
@@ -105,7 +105,7 @@
 {% block script_tags %}
 {{ super() }}
 <script type="text/javascript">
-{% if current_user.party.payment_profiles %}
+{% if current_user.is_authenticated() and current_user.party.payment_profiles %}
   $(document).ready(function(){
     $('#credit-card').removeClass('in active');
     $('.select-card').on('change', function() {
