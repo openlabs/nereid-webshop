@@ -1,0 +1,33 @@
+{% extends 'base.jinja' %}
+
+{% from '_helpers.jinja' import render_pagination, render_product_list  %}
+
+{% block breadcrumb %}
+
+{% endblock breadcrumb %}
+
+{% block main %}
+<section>
+  <div class="container">
+    <!-- category page -->
+      <!-- Content bar -->
+      <div class="col-md-12 product-list">
+        <div class="row">
+          <div class="col-md-9">
+            <h3 class="list-heading">{{ _('All Products') }}</h3>
+          </div>
+        </div>
+        <div class="row">
+        <div class="category-list"></div>
+          {% for product in products %}
+            {{ render_product_list(product) }}
+          {% endfor %}
+        </div>
+        <div class="row">
+          {{ render_pagination(products, endpoint='product.product.render_list') }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main%}
