@@ -124,6 +124,7 @@
           <span class="text-danger" id="product-not-for-sale"><i class="fa fa-warning"></i>This product is not for sale</span>
         </div>
       {% endif %}
+      {% if current_user.is_authenticated() %}
       <div class="row">
         <div class="btn-group col-md-6" id="add-to-wishlist">
           <form method="post" action="{{ url_for('wishlist.wishlist.wishlist_product') }}" >
@@ -132,7 +133,7 @@
             <input type="hidden" name="product" value="{{ product.id }}" />
             <button type="submit" class="btn btn-default">Add To Wishlist</button>
 
-            {% if current_user.is_authenticated() and current_user.wishlists|length > 0 %}
+            {% if current_user.wishlists|length > 0 %}
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="wishlist-dropdown">
               <i class="fa fa-angle-down"></i>
               <span class="sr-only">Toggle Dropdown</span>
@@ -147,6 +148,7 @@
             </form>
           </div>
         </div>
+        {% endif %}
     </div>
   </div>
   <!--Product Description -->
