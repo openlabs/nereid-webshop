@@ -1260,8 +1260,9 @@ span.price{
   border: none;
 }
 #product-image img{
-  height: 150px;
-  width: 190px;
+  max-height: 150px;
+  max-width: 190px;
+  margin:0 auto;
 }
 /****** My account Page *****/
 
