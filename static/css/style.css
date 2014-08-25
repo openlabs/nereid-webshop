@@ -1586,3 +1586,8 @@ border-top: 1px solid rgba(248, 248, 248, 0.2);
   font-size: 16px;
   border-radius: 5px;
 }
+/* shopping_cart.jinja */
+.action span i:hover{
+  cursor: pointer;
+  color: #AD4242;
+}
