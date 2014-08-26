@@ -15,7 +15,7 @@
     <!-- category page -->
     <div class="row">
       <!-- Content bar -->
-      <div class="col-md-10 product-list">
+      <div class="col-md-12 product-list">
         <div class="row">
           <div class="col-md-9">
             <h3 class="list-heading">{% trans %}You searched for{% endtrans %}: <em>{{ request.args.get('q', '') }}</em></h3>
@@ -35,7 +35,7 @@
 	  {% endblock filter %}
 
         </div>
-          <div class="masonry js-masonry"  data-masonry-options='{ "columnWidth": ".category-list", "itemSelector": ".product-item", "isFitWidth": true }'>
+          <div>
             <div class="category-list"></div>
             {% for product in products %}
               {{ render_product_list(product) }}
@@ -55,7 +55,3 @@
   </div>
 </section>
 {% endblock main %}
-
-{% block script_tags %}
-<script src="{{ url_for('nereid.webshop.send_static_file', filename='js/masonry.pkgd.min.js') }}" ></script>
-{% endblock script_tags %}

@@ -1239,33 +1239,42 @@ span.price{
   padding: 3px 12px;
   max-width: 200px;
 }
-#product-image .thumbnail {
-  width: 80%;
+div.product-image{
+  padding:15px;
+  border:2px solid #fff;
+  margin-top:20px;
+  margin-bottom:10px;
+  transition:all .3s;
 }
-#product-image{
-  margin-top: 20px;
-  margin-bottom: 20px;
-  min-height: 100px;
+div.product-image:hover{
+  border:2px solid #ccc;
 }
-#product-image h4{
+div.product-image > a > div:nth-child(1){
+  width:100%;
+  height:150px !important;
+  overflow:hidden;
+  text-align:center;
+}
+div.product-image > a > div:nth-child(1) > img{
+  max-height:150px;
+  max-width:100%;
+  margin:auto;
+  width:auto !important;
+}
+div.product-image > a > div:nth-child(2){
+  height:40px;
+  margin-top:15px;
+}
+div.product-image > a > div:nth-child(3){
+  height:20px;
+  margin-top:10px;
+}
+div.product-image h4{
   font-size: 14px;
   font-weight: 700;
+  margin:0px;
   color: #686868;
-  margin-bottom: 3px;
   height:40px;
-  width: 190px;
-}
-#product-image h5{
-  width: 190px;
-  padding-top: 3px;
-}
- #product-image .thumbnail{
-  border: none;
-}
-#product-image img{
-  max-height: 150px;
-  max-width: 190px;
-  margin:0 auto;
 }
 /****** My account Page *****/
 
