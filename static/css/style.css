@@ -357,7 +357,7 @@ a,.item a{
   -moz-box-shadow: 0 1px 5px #bdc3c7 inset;
   box-shadow: 0 1px 5px #bdc3c7 inset;
 }
-.top-search,.my-account{
+.top-search{
   margin-top: 15px;
 }
 .my-account  a.dropdown-toggle{
@@ -367,6 +367,9 @@ a,.item a{
   border-color: #eee;
   background: #FAFAFA;
   box-shadow: none;
+}
+.my-account > div.container{
+  padding-bottom:25px;
 }
 .dropdown-toggle:after {
   content: none;
@@ -1480,7 +1483,8 @@ border-top: 1px solid rgba(248, 248, 248, 0.2);
   height: 200px;
 }
 #specific-wishlist .col-md-3 .thumbnail img{
-  height: 190px;
+  max-height: 200px !important;
+  max-width: 220px !important;
 }
 #specific-wishlist #product-buy-now button{
   margin-top: 10px;
