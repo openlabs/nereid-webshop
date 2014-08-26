@@ -1,15 +1,15 @@
 {% extends 'account-base.jinja' %}
 {% from '_helpers.jinja' import render_field, render_product_list %}
 {% block main %}
-<section id="specific-wishlist">
+<section class="my-account" id="specific-wishlist">
   <div class="container">
-    <div class="col-md-11 col-md-offset-1">
-      {{ account_header(_('My Account / wishlist'), 'Wishlist') }}
+    <div class="col-md-10 col-md-offset-1">
+      {{ account_header(_('My Account / Wishlist'), 'Wishlist') }}
     </div>
-    <div class="col-md-11 col-md-offset-1">
+    <div class="col-md-10 col-md-offset-1">
       <div class="row">
         <div class="col-md-10">
-          <h2>{{ wishlist.name|title }}'s Wishlist</h2>
+          <h3>{{ wishlist.name|title }}'s Wishlist</h3>
         </div>
         <div class="col-md-2" id="wishlist-settings">
           <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#privacy-settings">

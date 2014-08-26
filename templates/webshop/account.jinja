@@ -3,23 +3,22 @@
 {% block main %}
 <section class="my-account">
   <div class="container">
-    <div class="row">
+    <div class="col-md-12">
       <div class="col-md-10 col-md-offset-1">
         {{ account_header(_('My Account'), 'profile') }}
       </div>
       <!-- Account Information -->
-      <div class="row">
-        <h4 class="account-heading">{{ _('Account Information') }}</h4>
+      <div class="col-md-10 col-md-offset-1">
         <form class="form-horizontal" role="form">
           <div class="form-group">
             <label for="" class="col-sm-2 control-label">{{ _('Your Name') }}</label>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
               <input type="text" class="form-control" id="" placeholder="{{ _('Your Name') }}" value="{{ request.nereid_user.display_name }}" disabled>
             </div>
           </div>
           <div class="form-group">
             <label for="" class="col-sm-2 control-label">{{ _('Email') }}</label>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
               <input type="email" class="form-control" id="" placeholder="{{ _('Email') }}" value="{{ request.nereid_user.email }}" disabled>
             </div>
           </div>
@@ -28,10 +27,10 @@
             <div class="tab-pane active" id="current-password">
               <div class="form-group">
                 <label for="" class="col-sm-2 control-label">{{ _('Password') }}</label>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                   <input type="text" class="form-control" id="" placeholder="{{ _('Password') }}" value="********" disabled>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                   <a href="#new-password" data-toggle="tab"><i class="fa fa-pencil"></i>&nbsp;{{ _('Change Password') }}</a>
                 </div>
               </div>
@@ -40,7 +39,7 @@
             <div class="tab-pane" id="new-password">
               <div class="form-group">
                 <label for="" class="col-sm-2 control-label">{{ _('Old Password') }}</label>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                   <input type="password" class="form-control" id="" placeholder="{{ _('Old Password') }}">
                 </div>
                 <div class="col-sm-3">
@@ -49,13 +48,13 @@
               </div>
               <div class="form-group">
                 <label for="" class="col-sm-2 control-label">{{ _('New Password') }}</label>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                   <input type="password" class="form-control" id="" placeholder="{{ _('New Password') }}">
                 </div>
               </div>
               <div class="form-group">
                 <label for="" class="col-sm-2 control-label">{{ _('Confirm Password') }}</label>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                   <input type="password" class="form-control" id="" placeholder="{{ _('Confirm Password') }}">
                 </div>
               </div>
@@ -63,7 +62,7 @@
           </div>
           <div class="form-group">
             <label for="" class="col-sm-2 control-label">{{ _('Mobile No.') }} </label>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
               <input type="text" class="form-control" id="" placeholder="{{ _('your mobile no') }}" value="{{ request.nereid_user.party.phone }}">
             </div>
           </div>
