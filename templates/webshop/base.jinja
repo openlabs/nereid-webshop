@@ -304,7 +304,7 @@
                     <span class="text-muted"><%= line.quantity %> x <%= line.amount %></span>
                   </div>
                   <div class="col-xs-2 cart-product-total">
-                    <a href="/cart/delete/" title="{{ _('Remove') }}"><i class="fa fa-trash-o"></i></a>
+                    <span data-url="<%= line.remove_url %>" title="{{ _('Remove') }}" class="remove_product"><i class="fa fa-trash-o"></i></span>
                   </div>
                 </div>
               </div>
@@ -362,6 +362,15 @@
       $.getJSON("{{ url_for('nereid.website.user_status') }}", function(data){
         var template = $("#cart-html-append").html();
         $("li.my-cart").html(_.template(template, {'user_status': data.status}));
+        $('.remove_product').on('click', function(){
+          $.ajax({
+            type: "DELETE",
+            url: $(this).data("url"),
+          })
+          .success(function(){
+            location.reload();
+          });
+        });
       });
     </script>
 

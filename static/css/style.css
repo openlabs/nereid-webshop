@@ -1368,6 +1368,10 @@ span.text-success, span.text-warning, span.text-danger, span.text-info{
   color: #b94a48;
   text-decoration: none;
 }
+.remove_product i:hover{
+  cursor: pointer;
+  color: #C34848;
+}
 #featured-node img{
   height: 360px;
 }
