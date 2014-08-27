@@ -48,7 +48,9 @@
             </div>
           </div>
           {% else %}
+          <div class="row">
             {{ render_pagination(products, endpoint='product.product.quick_search', q=request.args.get('q', '')) }}
+          </div>
           {% endif %}
       </div>
     </div>
