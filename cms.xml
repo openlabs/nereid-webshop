@@ -11,29 +11,39 @@
             <field name="uri">faq</field>
             <field name="sequence" eval="10"/>
             <field name="content">Some frequently asked questions</field>
-            <field name="category" ref="ac_customer_service"/>
-          </record>
-           <record id="a_shipping" model="nereid.cms.article">
+        </record>
+        <record id="a_shipping" model="nereid.cms.article">
             <field name="title">Shipping</field>
             <field name="uri">shipping</field>
             <field name="sequence" eval="20"/>
             <field name="content">Some shipping menthods</field>
-            <field name="category" ref="ac_customer_service"/>
-          </record>
+        </record>
            <record id="a_bulk_order" model="nereid.cms.article">
             <field name="title">Bulk Order</field>
             <field name="uri">bulk-order</field>
             <field name="sequence" eval="30"/>
             <field name="content">Some content related to bult order</field>
-            <field name="category" ref="ac_customer_service"/>
         </record>
+
         <record id="a_customer_stories" model="nereid.cms.article">
             <field name="title">Customer Stories</field>
             <field name="uri">customers-stories</field>
             <field name="sequence" eval="40"/>
             <field name="content">Checkout our customer stories</field>
-            <field name="category" ref="ac_customer_service"/>
         </record>
+        <record id="customer_service-a_faq"  model="nereid.cms.category-article">
+            <field name="category" ref="ac_customer_service"/>
+            <field name="article" ref="a_faq"/>
+        </record>
+        <record id="customer_service-a_shipping"  model="nereid.cms.category-article">
+            <field name="category" ref="ac_customer_service"/>
+            <field name="article" ref="a_shipping"/>
+        </record>
+        <record id="customer_service-a_bulk_order"  model="nereid.cms.category-article">
+            <field name="category" ref="ac_customer_service"/>
+            <field name="article" ref="a_bulk_order"/>
+        </record>
+
         <!-- Create category: About Us-->
         <record id="ac_about_us" model="nereid.cms.article.category">
             <field name="title">About Us</field>
@@ -44,15 +54,22 @@
             <field name="uri">our-identity</field>
             <field name="sequence" eval="10"/>
             <field name="content">Some thing about the company</field>
-            <field name="category" ref="ac_about_us"/>
         </record>
         <record id="a_career" model="nereid.cms.article">
             <field name="title">Career</field>
             <field name="uri">career</field>
             <field name="sequence" eval="20"/>
             <field name="content">Join us</field>
-            <field name="category" ref="ac_about_us"/>
         </record>
+        <record id="ac_about_us-a_our_identity"  model="nereid.cms.category-article">
+            <field name="category" ref="ac_about_us"/>
+            <field name="article" ref="a_our_identity"/>
+        </record>
+        <record id="ac_about_us-a_carrer"  model="nereid.cms.category-article">
+            <field name="category" ref="ac_about_us"/>
+            <field name="article" ref="a_career"/>
+        </record>
+
         <!-- Create category: Contact Us-->
         <record id="ac_contact_us" model="nereid.cms.article.category">
             <field name="title">Contact Us</field>
@@ -63,8 +80,12 @@
             <field name="uri">office-location</field>
             <field name="sequence" eval="10"/>
             <field name="content">Current office location</field>
-            <field name="category" ref="ac_contact_us"/>
         </record>
+        <record id="ac_contact_us-a_office_location"  model="nereid.cms.category-article">
+            <field name="category" ref="ac_contact_us"/>
+            <field name="article" ref="a_office_location"/>
+        </record>
+
         <!-- Create category: Press-->
         <record id="ac_press" model="nereid.cms.article.category">
             <field name="title">Press</field>
@@ -75,22 +96,32 @@
             <field name="uri">press-realeases</field>
             <field name="sequence" eval="10"/>
             <field name="content">Latest press realease</field>
-            <field name="category" ref="ac_press"/>
         </record>
         <record id="a_publication" model="nereid.cms.article">
             <field name="title">Publications</field>
             <field name="uri">publications</field>
             <field name="sequence" eval="20"/>
             <field name="content">Latest publication</field>
-            <field name="category" ref="ac_press"/>
         </record>
         <record id="a_media" model="nereid.cms.article">
             <field name="title">Media</field>
             <field name="uri">media</field>
             <field name="sequence" eval="30"/>
             <field name="content">We are in news</field>
-            <field name="category" ref="ac_press"/>
         </record>
+        <record id="ac_press-a_press_releases"  model="nereid.cms.category-article">
+            <field name="category" ref="ac_press"/>
+            <field name="article" ref="a_press_realeases"/>
+        </record>
+        <record id="ac_press-a_publication"  model="nereid.cms.category-article">
+            <field name="category" ref="ac_press"/>
+            <field name="article" ref="a_publication"/>
+        </record>
+        <record id="ac_press-a_media"  model="nereid.cms.category-article">
+            <field name="category" ref="ac_press"/>
+            <field name="article" ref="a_media"/>
+        </record>
+
         <!-- Create category: Help-->
         <record id="ac_help" model="nereid.cms.article.category">
             <field name="title">Help</field>
@@ -101,21 +132,30 @@
             <field name="uri">support</field>
             <field name="sequence" eval="10"/>
             <field name="content">Minicube PCR Support</field>
-            <field name="category" ref="ac_help"/>
         </record>
          <record id="a_software" model="nereid.cms.article">
             <field name="title">Software</field>
             <field name="uri">software</field>
             <field name="sequence" eval="20"/>
             <field name="content">Minicube PCR Software</field>
-            <field name="category" ref="ac_help"/>
         </record>
          <record id="a_documentation" model="nereid.cms.article">
             <field name="title">Documentation</field>
             <field name="uri">documentation</field>
             <field name="sequence" eval="30"/>
             <field name="content">Minicube PCR Documentation</field>
+        </record>
+        <record id="ac_help-a_support"  model="nereid.cms.category-article">
             <field name="category" ref="ac_help"/>
+            <field name="article" ref="a_support"/>
+        </record>
+        <record id="ac_help-a_software"  model="nereid.cms.category-article">
+            <field name="category" ref="ac_help"/>
+            <field name="article" ref="a_software"/>
+        </record>
+        <record id="ac_help-a_documentation"  model="nereid.cms.category-article">
+            <field name="category" ref="ac_help"/>
+            <field name="article" ref="a_documentation"/>
         </record>
 
         <!-- Create Banners and Banner Categories -->

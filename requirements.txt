@@ -1,0 +1,6 @@
+# Install zikzakmedia's sale shop module from bitbucket.
+https://bitbucket.org/zikzakmedia/trytond-sale_shop/get/default.tar.gz
+
+# Install this package itself
+.
+
