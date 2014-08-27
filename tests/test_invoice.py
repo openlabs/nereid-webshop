@@ -26,6 +26,31 @@ class TestDownloadInvoice(BaseTestCase):
         self.Account = POOL.get('account.invoice')
         self.AccountLine = POOL.get('account.invoice.line')
         self.Category = POOL.get('product.category')
+        self.Node = POOL.get('product.tree_node')
+
+    def create_website(self):
+        """
+        Creates a website. Since the fields required to make this could
+        change depending on modules installed and this is a base test case
+        the creation is separated to another method
+        """
+        node, = self.Node.create([{
+            'name': 'root',
+            'slug': 'root',
+            'type_': 'catalog',
+        }])
+
+        return self.NereidWebsite.create([{
+            'name': 'localhost',
+            'shop': self.shop,
+            'company': self.company.id,
+            'application_user': USER,
+            'default_locale': self.locale_en_us.id,
+            'guest_user': self.guest_user,
+            'root_tree_node': node,
+            'countries': [('add', self.available_countries)],
+            'currencies': [('add', [self.usd.id])],
+        }])
 
     def setup_defaults(self):
         """
