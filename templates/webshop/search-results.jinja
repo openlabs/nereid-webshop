@@ -21,7 +21,7 @@
             <h3 class="list-heading">{% trans %}You searched for{% endtrans %}: <em>{{ request.args.get('q', '') }}</em></h3>
           </div>
 
-	  {% block filter %}
+          {% block filter %}
           <!--Filter Option -->
           <div class="col-md-3">
             <select class="form-control select-sort">
@@ -32,26 +32,26 @@
               <option>What's New</option>
             </select>
           </div>
-	  {% endblock filter %}
+          {% endblock filter %}
 
         </div>
-          <div>
-            <div class="category-list"></div>
-            {% for product in products %}
-              {{ render_product_list(product) }}
-            {% endfor %}
+        <div class="col-md-12">
+          <div class="category-list"></div>
+          {% for product in products %}
+          {{ render_product_list(product) }}
+          {% endfor %}
+        </div>
+        {% if not products %}
+        <div class="col-md-12">
+          <div class="alert alert-warning">
+            {% trans %}Oops! No Products found for your search criteria. Try with something else.{% endtrans %}
           </div>
-          {% if not products %}
-          <div class="row">
-            <div class="alert alert-warning">
-              {% trans %}Oops! No Products found for your search criteria. Try with something else.{% endtrans %}
-            </div>
-          </div>
-          {% else %}
-          <div class="row">
-            {{ render_pagination(products, endpoint='product.product.quick_search', q=request.args.get('q', '')) }}
-          </div>
-          {% endif %}
+        </div>
+        {% else %}
+        <div class="col-md-12">
+          {{ render_pagination(products, endpoint='product.product.quick_search', q=request.args.get('q', '')) }}
+        </div>
+        {% endif %}
       </div>
     </div>
   </div>
