@@ -1,19 +1,21 @@
 {% extends 'account-base.jinja' %}
-{% from '_helpers.jinja' import render_field, render_product_list %}
+{% from '_helpers.jinja' import render_product_list %}
 {% block main %}
 <section class="my-account" id="specific-wishlist">
   <div class="container">
     <div class="col-md-10 col-md-offset-1">
-      {{ account_header(_('My Account / Wishlist'), 'Wishlist') }}
+      {{ account_header(_('My Account / Wishlist'), 'wishlist') }}
     </div>
     <div class="col-md-10 col-md-offset-1">
+      <br>
+      <br>
       <div class="row">
         <div class="col-md-10">
-          <h3>{{ wishlist.name|title }}'s Wishlist</h3>
+          <h4 class="wishlist-heading">{{ wishlist.name|title }}'s Wishlist</h4>
         </div>
         <div class="col-md-2" id="wishlist-settings">
           <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#privacy-settings">
-            <i class="fa fa-cog"></i> &nbsp;settings
+            <i class="fa fa-cog"></i> &nbsp;&nbsp;Settings
           </button>
         </div>
         <div class="modal fade" id="privacy-settings" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -28,13 +30,13 @@
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                 <input type="hidden" name="wishlist" value="{{ wishlist.id }}">
                  <div class="form-group col-md-10 col-md-offset-1">
-                  <label>Name:</label>
+                  <label>Edit Wishlist Name:</label>
                   <input type="text" name="name" value="" placeholder="Name" class="form-control" required >
                 </div>
               </form>
               </div>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-default" data-url="{{ url_for('wishlist.wishlist.render_wishlist', active_id=wishlist.id) }}" id="remove-wishlist-btn">Remove This Wishlist</button>
+                <button type="submit" class="btn btn-danger pull-left" data-url="{{ url_for('wishlist.wishlist.render_wishlist', active_id=wishlist.id) }}" id="remove-wishlist-btn">Remove This Wishlist</button>
                 <button type="button" class="btn btn-primary" id="save-changes">Save changes</button>
               </div>
             </div>
@@ -43,90 +45,57 @@
       </div>
       {% if wishlist.products %}
         {% for product in wishlist.products %}
-        <div class="row" id="wishlist-row">
-            <div class="col-md-3">
-              <div class="thumbnail">
-                <img src="{{ CDN }}{{ product and product.default_image.transform_command().thumbnail(200, 200, 'a') }}" alt="{{ product.name }}" title="{{ product.name }}"/>
+        <div class="row">
+          <div class="product-image col-md-3 col-sm-4 col-xs-6">
+            <form action="{{ url_for('wishlist.wishlist.wishlist_product') }}" method="post" class="pull-right remove-product-icon" style="">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+              <input type="hidden" name="product" value="{{ product.id }}"/>
+              <input type="hidden" name="wishlist" value="{{ wishlist.id }}"/>
+              <input type="hidden" name="action" value="remove" />
+              <button type="submit" class=" btn btn-link"><i class="fa fa-trash-o"></i></button>
+            </form>
+            <a href="{{ url_for('product.product.render', uri=product.uri, tree_node=(tree_node and tree_node.uri + ',' + tree_node.name or None)) }}">
+              <div>
+                <img src="{{ CDN }}{{ product.default_image.transform_command().thumbnail(300, 300, 'a') }}" alt="{{ product.name }}" title="{{ product.name }}">
               </div>
-            </div>
-            <div class="col-md-9">
-              <div class="row">
-                <div class="col-md-12">
-                  <a href="{{ url_for('product.product.render', uri=product.uri) }}">
-                    <h4>{{ product.rec_name|title }}</h4>
-                  </a>
-                </div>
+              <div class="text-center">
+                <h4>{{ product.name|safe|truncate(50) }}
+                  <br>
+                  <span class="brand">{{ product.code|safe }}</span>
+                </h4>
               </div>
-              <div class="row">
-                <div class="col-md-6">
-                  {% set sale_price = 300 %}
-                  {% if sale_price < product.list_price %}
-                    <h3 class="product-price">
-                      <span class="not">{{ product.list_price|currencyformat(request.nereid_currency.code) }}</span>
-                      {{ sale_price|currencyformat(request.nereid_currency.code) }}
-                    </h3>
-                  {% else %}
-                    <h3 class="product-price">{{ sale_price|currencyformat(request.nereid_currency.code) }}</h3>
-                  {% endif %}
-                </div>
-                <div class="col-md-6 no-pad-right">
-                  {% if product.salable %}
-                    <div class="buy-now pull-right">
-                      <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now" autocomplete="off">
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-                        <input type="hidden" name="quantity" value="1"/>
-                        <input type="hidden" name="size" id="size-id"/>
-                        <input type="hidden" name="product" value="{{ product.id }}"/>
-                        <input type="hidden" name="action" value="add"/>
-                        <button class="btn btn-danger" type="submit" quantity="1" id="buy-now-btn"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                      </form>
-                    </div>
-                  {% else %}
-                    <div style="padding-top:15px;">
-                      <span class="text-danger" id="product-not-for-sale"><i class="fa fa-warning"></i>This product is not for sale</span>
-                    </div>
-                  {% endif %}
-                </div>
+              <div class="text-center">
+                <h5 class="text-danger">{{ product.sale_price()|currencyformat(request.nereid_currency.code) }}</h5>
               </div>
-              <div class="row margin-top-5 margin-bottom-10">
-                <div class="pull-right">
-                <div class="dropdown pull-left">
-                  {% if current_user.wishlists|length > 1 %}
-                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                    Move
-                    <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                    {% for wishlist in current_user.wishlists %}
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">{{ wishlist.name }}</a></li>
-                    {% endfor %}
-                  </ul>
-                  {% endif %}
-                </div>
-                <form action="{{ url_for('wishlist.wishlist.wishlist_product') }}" id="remove-product" method="post" class="pull-left" autocomplete="off">
+            </a>
+             {% if product.salable %}
+              <div class="buy-now pull-right">
+                <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now">
                   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                  <input type="hidden" name="quantity" value="1"/>
+                  <input type="hidden" name="size" id="size-id"/>
                   <input type="hidden" name="product" value="{{ product.id }}"/>
-                  <input type="hidden" name="wishlist" value="{{ wishlist.id }}"/>
-                  <input type="hidden" name="action" value="remove" />
-                  <button type="submit" class=" btn btn-default"><i class="fa fa-trash-o"></i>&nbsp;Remove</button>
+                  <input type="hidden" name="action" value="add"/>
+                  <button class="btn btn-danger" type="submit" quantity="1" id="buy-now-btn"><i class="fa fa-shopping-cart"></i> Add to cart</button>
                 </form>
               </div>
+            {% else %}
+              <div style="padding-top:15px;">
+                <span class="text-danger" id="product-not-for-sale"><i class="fa fa-warning"></i>This product is not for sale</span>
               </div>
-              <div class="row">
-                <p class="col-md-12">{{ product.get_description()|truncate(200) }}</p>
-              </div>
-            </div>
+            {% endif %}
           </div>
+        </div>
         {% endfor %}
       {% else %}
-        <h4> No products in this wishlist </h4>
+        <h4 class="center text-muted"> No products in this wishlist </h4>
       {% endif %}
     </div>
   </div>
 </section>
 {% endblock main %}
 {% block script_tags %}
-{{ super }}
+{{ super() }}
 <script type="text/javascript">
   $(document).ready(function(){
     $('#save-changes').on('click', function(){
