@@ -24,7 +24,7 @@
                 <h4 class="modal-title" id="myModalLabel">{{ wishlist.name|title }}'s Settings</h4>
               </div>
               <div class="modal-body">
-              <form name="rename-wishlist" method="post" action="" id="rename-form" class="form-horizontal">
+              <form name="rename-wishlist" method="post" action="" id="rename-form" class="form-horizontal" autocomplete="off">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                 <input type="hidden" name="wishlist" value="{{ wishlist.id }}">
                  <div class="form-group col-md-10 col-md-offset-1">
@@ -72,7 +72,7 @@
                 <div class="col-md-6 no-pad-right">
                   {% if product.salable %}
                     <div class="buy-now pull-right">
-                      <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now">
+                      <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now" autocomplete="off">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                         <input type="hidden" name="quantity" value="1"/>
                         <input type="hidden" name="size" id="size-id"/>
@@ -103,7 +103,7 @@
                   </ul>
                   {% endif %}
                 </div>
-                <form action="{{ url_for('wishlist.wishlist.wishlist_product') }}" id="remove-product" method="post" class="pull-left">
+                <form action="{{ url_for('wishlist.wishlist.wishlist_product') }}" id="remove-product" method="post" class="pull-left" autocomplete="off">
                   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                   <input type="hidden" name="product" value="{{ product.id }}"/>
                   <input type="hidden" name="wishlist" value="{{ wishlist.id }}"/>

@@ -13,7 +13,7 @@
     </div>
     <div class="row">
       <div class="col-md-7 col-md-offset-1">
-        <form method="post" id="address">
+        <form method="post" id="address" autocomplete="off">
   	{{ form.hidden_tag() }}
           {{ render_field(form.name, placeholder=_("John Doe"), class_="form-control") }}
           

@@ -16,7 +16,7 @@
         <div class="row">
           <div class="col-md-7 col-md-offset-1">
             <form action="{{ url_for('party.address.edit_address', address=address) }}"
-              method="post" id="address">
+              method="post" id="address" autocomplete="off">
 	            {{ form.hidden_tag() }}
               {{ render_field(form.name, placeholder=_("John Doe"), class_="form-control") }}
               

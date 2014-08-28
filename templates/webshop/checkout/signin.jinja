@@ -13,7 +13,7 @@
             <h4 class="center login-text"><span>{{ _('Sign In') }}</span></h4>
             <div class="row">
               <div class="col-md-6 col-md-offset-3">
-                <form class="login-form" method="POST" id="checkout-signin">
+                <form class="login-form" method="POST" id="checkout-signin" autocomplete="off">
                   {{ form.hidden_tag() }}
                   {{ render_field(form.email, placeholder=_('Enter your E-mail'), required=required, type="email") }}
                   {% if not current_user.is_anonymous() %}

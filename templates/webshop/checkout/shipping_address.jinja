@@ -22,7 +22,7 @@
                 <div class="well well-small" data-address-id="{{ address.id }}">
                 {{ render_address(address, edit=False) }}
                 </div>
-                <form role="form" method="POST">
+                <form role="form" method="POST" autocomplete="off">
                   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                   <input type="hidden" name="address" value="{{ address.id }}"/>
                   <button type="submit" class="btn btn-primary pull-right">
@@ -56,7 +56,7 @@
               {% endif %}
             </h4>
             <!-- Add new address form -->
-            <form role="form" method="POST">
+            <form role="form" method="POST" autocomplete="off">
               {{ address_form.hidden_tag() }}
               {{ render_field(address_form.name, placeholder=_('Name'), required=required) }}
               {{ render_field(address_form.street, placeholder=_('Street'), required=required) }}
