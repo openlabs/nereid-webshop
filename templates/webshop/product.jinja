@@ -110,7 +110,7 @@
       <span class="text-warning" style="display:none" id="product-not-available"><i class="fa fa-warning"></i> {{ _('This product is not available') }}</span>
       {% if product.salable %}
       <div class="buy-now">
-        <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now">
+        <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now" autocomplete="off">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
           <input type="hidden" name="quantity" value="1"/>
           <input type="hidden" name="size" id="size-id"/>
@@ -126,7 +126,7 @@
       {% endif %}
       <div class="row">
         <div class="btn-group col-md-6" id="add-to-wishlist">
-          <form method="post" action="{{ url_for('wishlist.wishlist.wishlist_product') }}" >
+          <form method="post" action="{{ url_for('wishlist.wishlist.wishlist_product') }}"  autocomplete="off">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
             <input type="hidden" name="action" value="add"/>
             <input type="hidden" name="product" value="{{ product.id }}" />

@@ -15,7 +15,7 @@
             <h4 class="center"><span>{{ _('Create new account') }}</span></h4>
             <div class="row">
               <div class="col-md-5">
-                <form class="register-form" method="POST" action="{{ url_for('nereid.user.registration') }}">
+                <form class="register-form" method="POST" action="{{ url_for('nereid.user.registration') }}" autocomplete="off">
                   {{ form.hidden_tag() }}
                   {{ render_field(form.name, placeholder=_('Name'), required=required) }}
                   {{ render_field(form.email, placeholder=_('E-mail'), required=required, type="email") }}
