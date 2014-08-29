@@ -5,14 +5,14 @@
   <div class="container" id="wishlist">
     <!-- Checkout Step Indicator -->
     <div class="col-md-10 col-md-offset-1">
-      {{ account_header(_('My Account / wishlist'), 'Wishlist') }}
+      {{ account_header(_('My Account / Wishlist'), 'wishlist') }}
     </div>
     <div class="col-md-10 col-md-offset-1 margin-top-30">
       <div class="row">
         <div class="col-md-3 col-sm-4 col-xs-6">
           <div id="add-wishlist" data-toggle="modal" data-target="#myModal">
             <p>
-              <i class="fa fa-plus"></i>
+              <i class="fa fa-plus"></i> Add to wishlist
             </p>
           </div>
         </div>
@@ -25,10 +25,8 @@
               <form method="post" name="new_wishlist" action="" class="form-horizontal" autocomplete="off">
                 <div class="modal-body">
                   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-                  <div class="form-group col-md-10">
                     <label for="name">Name*:</label>
                     <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name">
-                  </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -40,10 +38,10 @@
         </div>
         {% for wishlist in current_user.wishlists %}
         <div class="col-md-3 col-sm-4 col-xs-6">
-          <div class="thumbnail1" style="background: url('{{ CDN }}{{ wishlist.products and wishlist.products[0].thumbnail or url_for('nereid.webshop.send_static_file', filename='images/no-image.jpg') }}') no-repeat">
+          <div class="thumbnail1" style="background: url('{{ CDN }}{{ wishlist.products and wishlist.products[0].default_image.transform_command().thumbnail(300, 300, 'a') or url_for('nereid.webshop.send_static_file', filename='images/no-image.jpg') }}') no-repeat">
             <div class="wishlist-options">
             <a href="{{ url_for('wishlist.wishlist.render_wishlist', active_id=wishlist.id) }}">
-              <h4> {{ wishlist.name|title }}'s Wishlist</h4>
+              <h4> {{ wishlist.name|title }}</h4>
             </a>
             <span>( {{ wishlist.products|length }} Products )</span>
           </div>

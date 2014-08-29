@@ -1444,12 +1444,12 @@ span.text-success, span.text-warning, span.text-danger, span.text-info{
   height: 160px;
 }
 #wishlist .thumbnail1{
-  background-size: cover !important;
-  background-position: 0% 82% !important;
+  background-size: contain !important;
+  background-position: center !important;
   min-height: 200px;
   overflow: hidden !important;
   padding: 0px;
-  width: 95%;
+  width: 97%;
   border: 1px solid #D5D5D5;
   text-align: center;
   -moz-border-radius: 5px;
@@ -1490,10 +1490,23 @@ border-top: 1px solid rgba(248, 248, 248, 0.2);
 #specific-wishlist .col-md-3 .thumbnail{
   width: 220px;
   height: 200px;
+  border: none;
 }
 #specific-wishlist .col-md-3 .thumbnail img{
   max-height: 200px !important;
   max-width: 220px !important;
+}
+.remove-product-icon{
+  position:absolute;
+  right:  0;
+  top:  0;
+}
+.remove-product-icon i {
+  color: black;
+  font-size: 12pt;
+}
+.remove-product-icon i:hover{
+  color: #e74c3c;
 }
 #specific-wishlist #product-buy-now button{
   margin-top: 10px;
@@ -1503,6 +1516,10 @@ border-top: 1px solid rgba(248, 248, 248, 0.2);
 }
 #specific-wishlist #remove-product button:hover{
   text-decoration: none;
+}
+#specific-wishlist .wishlist-heading{
+  font-size: 20px;
+  padding-top: 22px;
 }
 #dropdownMenu1{
   margin-right: 11px;
