@@ -36,6 +36,7 @@
 {% endblock main %}
 
 {% block script_tags %}
+  {{ super() }}
 <script type="text/javascript">
   $('.account-heading a').click(function() {
     $(this).toggleClass('selected').siblings().addClass("selected");
