@@ -11,7 +11,7 @@
       <br>
       <div class="row">
         <div class="col-md-10">
-          <h4 class="wishlist-heading">{{ wishlist.name|title }}'s Wishlist</h4>
+          <h4 class="wishlist-heading">{{ wishlist.name|title }}</h4>
         </div>
         <div class="col-md-2" id="wishlist-settings">
           <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#privacy-settings">
@@ -44,15 +44,15 @@
         </div>
       </div>
       {% if wishlist.products %}
+      <div class="row">
         {% for product in wishlist.products %}
-        <div class="row">
           <div class="product-image col-md-3 col-sm-4 col-xs-6">
             <form action="{{ url_for('wishlist.wishlist.wishlist_product') }}" method="post" class="pull-right remove-product-icon" style="">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
               <input type="hidden" name="product" value="{{ product.id }}"/>
               <input type="hidden" name="wishlist" value="{{ wishlist.id }}"/>
               <input type="hidden" name="action" value="remove" />
-              <button type="submit" class=" btn btn-link"><i class="fa fa-trash-o"></i></button>
+              <button type="submit" class=" btn btn-link text-muted"><i class="fa fa-times"></i></button>
             </form>
             <a href="{{ url_for('product.product.render', uri=product.uri, tree_node=(tree_node and tree_node.uri + ',' + tree_node.name or None)) }}">
               <div>
@@ -69,14 +69,14 @@
               </div>
             </a>
              {% if product.salable %}
-              <div class="buy-now pull-right">
+              <div class="btn-block">
                 <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now">
                   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                   <input type="hidden" name="quantity" value="1"/>
                   <input type="hidden" name="size" id="size-id"/>
                   <input type="hidden" name="product" value="{{ product.id }}"/>
                   <input type="hidden" name="action" value="add"/>
-                  <button class="btn btn-danger" type="submit" quantity="1" id="buy-now-btn"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                  <button class="btn btn-danger btn-block" type="submit" quantity="1" id="buy-now-btn"><i class="fa fa-shopping-cart"></i> Add to cart</button>
                 </form>
               </div>
             {% else %}
@@ -85,8 +85,8 @@
               </div>
             {% endif %}
           </div>
-        </div>
         {% endfor %}
+      </div>
       {% else %}
         <h4 class="center text-muted"> No products in this wishlist </h4>
       {% endif %}
