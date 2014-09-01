@@ -38,13 +38,14 @@
         </div>
         {% for wishlist in current_user.wishlists %}
         <div class="col-md-3 col-sm-4 col-xs-6">
-          <div class="thumbnail1" style="background: url('{{ CDN }}{{ wishlist.products and wishlist.products[0].default_image.transform_command().thumbnail(300, 300, 'a') or url_for('nereid.webshop.send_static_file', filename='images/no-image.jpg') }}') no-repeat">
+          <div class="thumbnail1" 
+            style="background: url('{{ CDN }}{{ wishlist.products and wishlist.products[0].get_images() and wishlist.products[0].get_images()[0].transform_command().thumbnail(300, 300, 'a') or url_for('nereid.webshop.send_static_file', filename='images/no-image.jpg') }}') no-repeat">
             <div class="wishlist-options">
-            <a href="{{ url_for('wishlist.wishlist.render_wishlist', active_id=wishlist.id) }}">
-              <h4> {{ wishlist.name|title }}</h4>
-            </a>
-            <span>( {{ wishlist.products|length }} Products )</span>
-          </div>
+              <a href="{{ url_for('wishlist.wishlist.render_wishlist', active_id=wishlist.id) }}">
+                <h4> {{ wishlist.name|title }}</h4>
+              </a>
+              <span>( {{ wishlist.products|length }} Products )</span>
+            </div>
           </div>
         </div>
         {% endfor %}

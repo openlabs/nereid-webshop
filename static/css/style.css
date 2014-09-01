@@ -1502,7 +1502,7 @@ border-top: 1px solid rgba(248, 248, 248, 0.2);
   top:  0;
 }
 .remove-product-icon i {
-  color: black;
+  color: #ccc;
   font-size: 12pt;
 }
 .remove-product-icon i:hover{
