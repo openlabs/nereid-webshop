@@ -175,7 +175,6 @@
       );
     });
     $("input.minus").click(function(){
-      $(this).button("loading");
       var qty_element = $(this).siblings("input.qty");
       var product_element = $(this).siblings("input.product");
       var new_quantity = parseInt(qty_element.val()) - 1;
