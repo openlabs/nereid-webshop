@@ -353,7 +353,9 @@
             history: false,
             type: '{{ category }}',
             nonblock: true,
-            nonblock_opacity: .4
+            delay:2000,
+            nonblock_opacity: .4,
+            animation: 'show'
           });
         {% endfor %}
       });
