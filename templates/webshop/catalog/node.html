@@ -36,7 +36,9 @@
               <div class="product-image col-md-3 col-sm-4 col-xs-6">
                 <a href="{{ url_for('product.tree_node.render', active_id=child.id, slug=child.slug) }}">
                   <div>
+                  {% if child.image %}
                     <img src="{{ child.image.transform_command().thumbnail(500, 500) }}" alt="{{ child.name }}" title="{{ child.name }}">
+                  {% endif %}
                   </div>
                   <div class="text-center">
                     <h4>{{ child.name|safe|truncate(50) }}
