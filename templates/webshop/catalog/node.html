@@ -3,9 +3,11 @@
 {% from '_helpers.jinja' import render_pagination, render_product_list  %}
 
 {% block breadcrumb %}
-{{ super() }}
 <li>
-  {{ node.rec_name }}
+  <li><a href="{{ url_for('nereid.website.home') }}">Home</a></li>
+  {% for url, node in make_tree_crumbs(node=node, add_home=False)[1:] %}
+    <li><a href="{{ url }}">{{ node }}</a></li>
+  {% endfor %}
 </li>
 {% endblock breadcrumb %}
 
