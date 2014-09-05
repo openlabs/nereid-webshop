@@ -14,23 +14,53 @@
 {% block main %}
 <section>
   <div class="container">
-    <!-- category page -->
-      <!-- Content bar -->
-      <div class="col-md-12 product-list">
-        <div class="row">
-          <div class="col-md-9">
-            <h3 class="list-heading">{{ node.name }}</h3>
+    <div class="col-md-12">
+      <div class="col-md-12">
+       <h4 class="center"> {{ node.name|title }}</h4>
+      </div>
+      {% if node.description or node.image %}
+        <div class="col-md-12 node-description">
+          {% if node.description %}
+            {{ node.description|safe }}
+          {% elif node.image %}
+            <div class="col-md-8 col-md-offset-2 margin-top-30">
+              <img src="{{ CDN }}{{ node.image.url }}" class="img img-responsive img-thumbnail"/>
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+      <div class="row">
+        {% if node.children %}
+          <div class="col-md-12">
+            {% for child in node.children %}
+              <div class="product-image col-md-3 col-sm-4 col-xs-6">
+                <a href="{{ url_for('product.tree_node.render', active_id=child.id, slug=child.slug) }}">
+                  <div>
+                    <img src="{{ child.image.transform_command().thumbnail(500, 500) }}" alt="{{ child.name }}" title="{{ child.name }}">
+                  </div>
+                  <div class="text-center">
+                    <h4>{{ child.name|safe|truncate(50) }}
+                    </h4>
+                  </div>
+                </a>
+              </div>
+            {% endfor %}
           </div>
-        </div>
-        <div class="row">
-        <div class="category-list"></div>
-          {% for product in products %}
-            {{ render_product_list(product) }}
-          {% endfor %}
-        </div>
-        <div class="row">
+        {% endif %}
+        {% if node.products %}
+          <div class="col-md-12">
+            <div class="node-heading row">
+              <p><b>Items</b><span class="pull-right">Total Products: {{ node.products|length }}<span></p>
+            </div>
+            <div class="category-list"></div>
+            {% for product in node.products %}
+              {{ render_product_list(product) }}
+            {% endfor %}
+          </div>
+          <div class="col-md-12">
           {{ render_pagination(products, endpoint='product.tree_node.render', active_id=node.id, slug=node.slug) }}
         </div>
+        {% endif %}
       </div>
     </div>
   </div>
