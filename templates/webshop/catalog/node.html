@@ -18,14 +18,10 @@
       <div class="col-md-12">
        <h4 class="center"> {{ node.name|title }}</h4>
       </div>
-      {% if node.description or node.image %}
+      {% if node.description %}
         <div class="col-md-12 node-description">
           {% if node.description %}
             {{ node.description|safe }}
-          {% elif node.image %}
-            <div class="col-md-8 col-md-offset-2 margin-top-30">
-              <img src="{{ CDN }}{{ node.image.url }}" class="img img-responsive img-thumbnail"/>
-            </div>
           {% endif %}
         </div>
       {% endif %}
@@ -36,9 +32,7 @@
               <div class="product-image col-md-3 col-sm-4 col-xs-6">
                 <a href="{{ url_for('product.tree_node.render', active_id=child.id, slug=child.slug) }}">
                   <div>
-                  {% if child.image %}
-                    <img src="{{ child.image.transform_command().thumbnail(500, 500) }}" alt="{{ child.name }}" title="{{ child.name }}">
-                  {% endif %}
+                    <img src="{{ child.image and child.image.transform_command().thumbnail(500, 500) or url_for('nereid.webshop.send_static_file', filename='images/no-image.jpg') }}" alt="{{ child.name }}" title="{{ child.name }}">
                   </div>
                   <div class="text-center">
                     <h4>{{ child.name|safe|truncate(50) }}
@@ -56,7 +50,9 @@
             </div>
             <div class="category-list"></div>
             {% for product in node.products %}
-              {{ render_product_list(product) }}
+              {% if product.displayed_on_eshop %}
+                {{ render_product_list(product) }}
+              {% endif %}
             {% endfor %}
           </div>
           <div class="col-md-12">
