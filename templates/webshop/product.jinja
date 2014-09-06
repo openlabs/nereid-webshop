@@ -37,7 +37,7 @@
           {% for image in product.get_images() %}
           <li class="{% if loop.first %}active{% endif %}">
             <a href="#tab{{ loop.index }}" data-toggle="tab">
-              <img src="{{ image.transform_command().thumbnail(120, 120) }}" />
+              <img src="{{ image.transform_command().thumbnail(120, 120, 'a') }}" />
             </a>
           </li>
           {% endfor %}
@@ -49,7 +49,7 @@
           <div class="tab-pane {% if loop.first %}active{% endif %}" id="tab{{ loop.index }}">
             <div class="zoom-container">
               <a id="zoom-target" href="{{ image.url }}" data-lightbox="{{ product.rec_name }}" > 
-                <img class="zoom-image" src="{{ image.transform_command().thumbnail(500, 500) }}" />
+                <img class="zoom-image" src="{{ image.transform_command().thumbnail(500, 500, 'a') }}" />
               </a>
             </div>
           </div>

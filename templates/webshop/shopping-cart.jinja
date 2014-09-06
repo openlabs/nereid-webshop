@@ -65,7 +65,7 @@
                 <tr>
                   <td>
                     <a href="{{ url_for('product.product.render', uri=line.product.uri) }}">
-                        <img src="{{ line.product.default_image.transform_command().thumbnail(100, 100) }}" alt="{{ line.product.name }}">
+                        <img src="{{ line.product.default_image.transform_command().thumbnail(100, 100, 'a') }}" alt="{{ line.product.name }}">
                     </td>
                   <td>
                     <a href="{{ url_for('product.product.render', uri=line.product.uri) }}" class="product-name">{{ line.product.name }} </a><br>
