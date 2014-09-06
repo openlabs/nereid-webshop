@@ -41,20 +41,20 @@
             {% endfor %}
           </div>
         {% endif %}
-        {% if node.products %}
-          <div class="col-md-12">
-            <div class="node-heading row">
-              <p><b>Items</b><span class="pull-right">Total Products: {{ node.products|selectattr('displayed_on_eshop')|list|length }}<span></p>
-            </div>
+        <div class="col-md-12">
+          <div class="node-heading row">
+            <p><b>Items</b><span class="pull-right">Total Products: {{ products.count }}<span></p>
+          </div>
+          <div class="category-list"></div>
+          <div class="row">
             <div class="category-list"></div>
-            {% for product in node.products|selectattr('displayed_on_eshop') %}
+            {% for product in products %}
               {{ render_product_list(product) }}
             {% endfor %}
           </div>
-          <div class="col-md-12">
+        <div class="col-md-12">
           {{ render_pagination(products, endpoint='product.tree_node.render', active_id=node.id, slug=node.slug) }}
         </div>
-        {% endif %}
       </div>
     </div>
   </div>
