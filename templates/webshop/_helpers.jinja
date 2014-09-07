@@ -36,12 +36,18 @@
   {% endif %}
 </div>
 <address>
-  <strong>{{ address.name }}</strong><br>
-  {{ address.street }}, {{ address.city }}<br>
-  {{ address.subdivision and address.subdivision.code }} {{ address.zip }}<br>
+  {% for line in address.full_address.split('\n') %}
+    {% if loop.first %}
+      <strong>{{ line }}</strong><br/>
+    {% else %}
+      {{ line }}<br/>
+    {% endif %}
+  {% endfor %}
+  {# Note: Commenting until phone numbers are associated with addresses
   {% if address.phone %}
   <abbr title="Phone"><i class="fa fa-phone"></i></abbr>: {{ address.phone }}<br/>
   {% endif %}
+  #}
 </address>
 {%- endmacro %}
 
