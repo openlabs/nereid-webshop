@@ -1,7 +1,7 @@
-{% macro render_field(field, class_="form-control", show_label=True, input_prepend=None) %}
+{% macro render_field(field, class_="form-control", show_label=True, input_prepend=None, label_text=None) %}
   <div class="form-group {% if field.errors %}has-error{% endif %}">
     {% if show_label %}
-    <label for="{{ field.name }}">{{ field.label.text }}
+    <label for="{{ field.name }}">{{ label_text or field.label.text }}
       {% if field.flags.required %}<span>*</span>{% endif %}:
     </label>
     {% endif %}
