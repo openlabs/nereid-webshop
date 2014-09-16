@@ -58,11 +58,11 @@
             <!-- Add new address form -->
             <form role="form" method="POST" autocomplete="off">
               {{ address_form.hidden_tag() }}
-              {{ render_field(address_form.name, placeholder=_('Name'), required=required) }}
-              {{ render_field(address_form.street, placeholder=_('Street'), required=required) }}
-              {{ render_field(address_form.streetbis, placeholder=_('Streetbis')) }}
-              {{ render_field(address_form.zip, placeholder=_('Zip'), required=required) }}
-              {{ render_field(address_form.city, placeholder=_('city'), required=required) }}
+              {{ render_field(address_form.name, required=required) }}
+              {{ render_field(address_form.street, placeholder=_("Street address, P.O. box, company name, c/o"), class_="form-control", label_text= _('Address Line 1'), required=required) }}
+              {{ render_field(address_form.streetbis, placeholder=_("Apartment, suite, unit, building, floor, etc."), class_="form-control", label_text= _('Address Line 2')) }}
+              {{ render_field(address_form.zip, required=required) }}
+              {{ render_field(address_form.city, required=required) }}
               {{ render_field(address_form.country) }}
               <div class="row">
                 <div class="form-group col-md-6">
