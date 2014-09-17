@@ -197,7 +197,7 @@
 {% endblock main %}
 
 {# all this is valid only if nereid-catalog-variants module is installed #}
-{% block script_tags %}
+{% block scripts %}
 {{ super() }}
 {% if product.template.get_product_variation_data %}
 <script type="text/html"  id='product-varying-attrs-tpl'>
@@ -315,4 +315,4 @@
     });
   });
 </script>
-{% endblock script_tags %}
+{% endblock scripts %}
