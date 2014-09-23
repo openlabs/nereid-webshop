@@ -6,6 +6,7 @@
     :license: GPLv3, see LICENSE for more details
 
 '''
+import os
 import logging
 
 from trytond.pool import PoolMeta, Pool
@@ -22,7 +23,7 @@ try:
 except ImportError:
     logging.error("pygeoip is not installed")
 else:
-    path = CONFIG.get('geoip_data_path')
+    path = os.environ.get('GEOIP_DATA_PATH', CONFIG.get('geoip_data_path'))
     if path:
         geoip = GeoIP(path)
 
