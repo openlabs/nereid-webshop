@@ -10,6 +10,7 @@ from webshop import WebShop, BannerCategory, Banner, Article
 from product import Product
 from invoice import Invoice
 from party import Address
+from shipment import ShipmentOut
 
 
 def register():
@@ -21,5 +22,6 @@ def register():
         Product,
         Invoice,
         Address,
+        ShipmentOut,
         module='nereid_webshop', type_='model'
     )
