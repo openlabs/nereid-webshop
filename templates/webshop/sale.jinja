@@ -9,6 +9,14 @@
     <div class="col-md-12">
       <div class="col-md-10 col-md-offset-1">
 
+        {% if confirmation %}
+        <div class="alert alert-success order-confirmation">
+          <i class="fa fa-check-circle"></i>
+          Thank You!<br>
+          <h4>Your Order has been placed successfully.</h4>
+        </div>
+        {% endif %}
+
         {{ account_header(_('My Account / Order #') + sale.reference, 'orders') }}
 
         <!--My Orders-->
