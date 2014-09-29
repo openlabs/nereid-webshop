@@ -12,7 +12,7 @@ import logging
 from trytond.pool import PoolMeta, Pool
 from trytond.modules.nereid.party import AddressForm
 from trytond.config import CONFIG
-from nereid import request
+from nereid import request, current_app
 
 __metaclass__ = PoolMeta
 __all__ = ['Address']
@@ -39,6 +39,9 @@ class WebshopAddressForm(AddressForm):
 
         Country = Pool().get('country.country')
         try:
+            current_app.logger.debug(
+                "GeoIP lookup for remote address: %s" % request.remote_addr
+            )
             country, = Country.search([
                 ('code', '=', geoip.country_code_by_addr(request.remote_addr))
             ])
