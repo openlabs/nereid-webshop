@@ -124,6 +124,7 @@
           <span class="text-danger" id="product-not-for-sale"><i class="fa fa-warning"></i>This product is not for sale</span>
         </div>
       {% endif %}
+      {% if current_user.is_authenticated() %}
       <div class="row">
         <div class="btn-group col-md-6" id="add-to-wishlist">
           <form method="post" action="{{ url_for('wishlist.wishlist.wishlist_product') }}"  autocomplete="off">
@@ -132,7 +133,7 @@
             <input type="hidden" name="product" value="{{ product.id }}" />
             <button type="submit" class="btn btn-default">Add To Wishlist</button>
 
-            {% if current_user.is_authenticated() and current_user.wishlists|length > 0 %}
+            {% if current_user.wishlists|length > 0 %}
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="wishlist-dropdown">
               <i class="fa fa-angle-down"></i>
               <span class="sr-only">Toggle Dropdown</span>
@@ -147,6 +148,7 @@
             </form>
           </div>
         </div>
+      {% endif %}
     </div>
   </div>
   <!--Product Description -->
@@ -201,20 +203,19 @@
 {{ super() }}
 {% if product.template.get_product_variation_data %}
 <script type="text/html"  id='product-varying-attrs-tpl'>
-  <% _.each(attrs, function(attr, index) { %>
-    <% if (attr.widget == 'dropdown') { %>
-      <div class="row">
-        <div class="col-md-3"> Select <%= attr.name %>: <br/>
-          <select class="form-control select-sort attribute" data-attr-name="<%= attr.name %>">
+  <div class="row">
+    <% _.each(attrs, function(attr, index) { %>
+      <% if (attr.widget == 'dropdown') { %>
+        <div class="col-md-6"> Select <%= attr.name %>: <br/>
+          <select class="form-control select-sort attribute btn btn-lg btn-default" data-attr-name="<%= attr.name %>">
             <% _.each(attr.options, function(option, index) { %>
-            <option value="<%= option[0] %>" <% if (option[0] == currentVariantAttrs[attr.name]) { %> selected <% } %> ><%= option[1] %></option>
+            <option value="<%= _.escape(option[0]) %>" <% if (option[0] == currentVariantAttrs[attr.name]) { %> selected <% } %> ><%= _.escape(option[1]) %></option>
             <% }); %>
           </select>
         </div>
-      </div>
-      <br/>
-    <% } %>
-  <% }); %>
+      <% } %>
+    <% }); %>
+  </div>
 </script>
 
 <script type="text/javascript">
@@ -270,6 +271,8 @@
         $('#buy-now-btn').removeAttr('disabled');
         $('.product-price').show();
         $('.product-code').text(product.code);
+        $('.product-price').text(product.price);
+
         // Set only, no removals
         $('.product-name').text(product.rec_name);
         // Set the correct product in all input field
