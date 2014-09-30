@@ -6,15 +6,18 @@ $('.new-offers .fa-times-circle').click(function() {
 
 // Script which keeps the menu bar on the top when the site scrolls down.
 $(function(){ 
+  var isiPad = navigator.userAgent.match(/iPad/i) != null;
   var stickyTop = $('.sticky').offset().top; // returns number
-  $(window).scroll(function(){ // scroll event
-    var windowTop = $(window).scrollTop(); // returns number
-    if (stickyTop < windowTop) {
-      $('.sticky').css({ position: 'fixed', top: 0 });
-    } else {
-      $('.sticky').css('position','static');
-    }
-  });
+  if( != isiPad){
+    $(window).scroll(function(){ // scroll event
+      var windowTop = $(window).scrollTop(); // returns number
+      if (stickyTop < windowTop) {
+        $('.sticky').css({ position: 'fixed', top: 0 });
+      } else {
+        $('.sticky').css('position','static');
+      }
+    });
+  }
 });
 
 $(document).ready(function(){
