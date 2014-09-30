@@ -9,20 +9,20 @@
     <link rel="shortcut icon" href="{{ SHOP_FAVICON or url_for('nereid.webshop.send_static_file', filename='images/favicon.ico') }}" type="image/x-icon">
     {% block link_tags %}
     {# This block adds <link> tags to the head section of the template. #}
-    <link href="{{ url_for('nereid.webshop.send_static_file', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/html5shiv.js') }}"></script>
-      <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/respond.min.js') }}"></script>
+      <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/html5shiv.js') }}"></script>
+      <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/respond.min.js') }}"></script>
     <![endif]-->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/font-awesome.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/jquery.pnotify.default.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/jquery.pnotify.default.css') }}">
     {% endblock link_tags %}
 
     {% block base_stylesheet %}
-      <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/lightbox.css') }}">
-      <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/style.css') }}">
+      <link rel="stylesheet" type="text/css" href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/lightbox.css') }}">
+      <link rel="stylesheet" type="text/css" href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/style.css') }}">
     {% endblock base_stylesheet %}
 
     {% block extra_head %}
@@ -113,7 +113,7 @@
             <div class="col-md-3">
               <div class="main-logo">
                 <a href="{{ url_for('nereid.website.home') }}">
-                  <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/nereid_cart_logo.png') }}">
+                  <img src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='images/nereid_cart_logo.png') }}">
                 </a>
               </div>
             </div>
@@ -241,25 +241,25 @@
             <h4>Payment Gateway</h4>
             <ul class="list-inline">
               <li>
-                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/visa.png') }}">
+                <img src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/visa.png') }}">
               </li>
               <li>
-                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/paypal.png') }}">
+                <img src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/paypal.png') }}">
               </li>
               <li>
-                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/mastercard.png') }}">
+                <img src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/mastercard.png') }}">
               </li>
               <li>
-                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/solo.png') }}">
+                <img src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/solo.png') }}">
               </li>
               <li>
-                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/cirrus.png') }}">
+                <img src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/cirrus.png') }}">
               </li>
               <li>
-                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/western-union.png') }}">
+                <img src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/western-union.png') }}">
               </li>
               <li>
-                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/american-express.png') }}">
+                <img src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/american-express.png') }}">
               </li>
             </ul>
           </div>
@@ -326,10 +326,10 @@
     <!-- javascript section -->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/jquery.min.js') }}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/jquery.pnotify.min.js') }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/jquery.pnotify.min.js') }}"></script>
     <script type="text/javascript">
       var csrftoken = $('meta[name=csrf-token]').attr('content')
 
@@ -379,10 +379,10 @@
     </script>
 
     {% block script_tags %}
-    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/app.js') }}"></script>
-    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/holder.js') }}"></script>
-    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/underscore-min.js') }}"></script>
-    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/lightbox.js') }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/app.js') }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/holder.js') }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/underscore-min.js') }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/lightbox.js') }}"></script>
     {% endblock script_tags %}
 
     {% block scripts %}
