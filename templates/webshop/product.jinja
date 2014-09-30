@@ -206,7 +206,7 @@
   <div class="row">
     <% _.each(attrs, function(attr, index) { %>
       <% if (attr.widget == 'dropdown') { %>
-        <div class="col-md-6"> Select <%= attr.name %>: <br/>
+        <div class="col-md-6"> Select <%= attr.string %>: <br/>
           <select class="form-control select-sort attribute btn btn-lg btn-default" data-attr-name="<%= attr.name %>">
             <% _.each(attr.options, function(option, index) { %>
             <option value="<%= _.escape(option[0]) %>" <% if (option[0] == currentVariantAttrs[attr.name]) { %> selected <% } %> ><%= _.escape(option[1]) %></option>
