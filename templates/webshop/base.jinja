@@ -330,6 +330,19 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/bootstrap.min.js') }}"></script>
     <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/jquery.pnotify.min.js') }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/underscore-min.js') }}"></script>
+
+    {% block script_tags %}
+      {#
+        use this block for additional script tags which can be replaced by downstream modules if they dont use
+        a custom feature like the lightbox provided by webshop. However hard dependencies without which this
+        template wont work are listed outside this block
+      #}
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/app.js') }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/holder.js') }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/lightbox.js') }}"></script>
+    {% endblock script_tags %}
+
     <script type="text/javascript">
       var csrftoken = $('meta[name=csrf-token]').attr('content')
 
@@ -377,13 +390,6 @@
         });
       });
     </script>
-
-    {% block script_tags %}
-    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/app.js') }}"></script>
-    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/holder.js') }}"></script>
-    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/underscore-min.js') }}"></script>
-    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/lightbox.js') }}"></script>
-    {% endblock script_tags %}
 
     {% block scripts %}
     {% endblock scripts %}
