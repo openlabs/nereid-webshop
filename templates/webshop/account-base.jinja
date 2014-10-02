@@ -10,9 +10,9 @@
     <li {% if active == 'orders' %}class="active"{% endif %}>
       <a href="{{ url_for('sale.sale.render_list') }}">{{ _('Orders') }}</a>
     </li>
-    {#<li>
-      <a href="">{{ _('Wishlist') }}</a>
-    </li>#}
+    <li {% if active == 'wishlist' %}class="active"{% endif %}>
+      <a href="{{ url_for('wishlist.wishlist.render_wishlists') }}">{{ _('Wishlist') }}</a>
+    </li>
     <li {% if active == 'address-book' %}class="active"{% endif %}>
       <a href="{{ url_for('party.address.view_address') }}">{{ _('Address Book') }}</a>
     </li>

@@ -9,19 +9,20 @@
     <link rel="shortcut icon" href="{{ SHOP_FAVICON or url_for('nereid.webshop.send_static_file', filename='images/favicon.ico') }}" type="image/x-icon">
     {% block link_tags %}
     {# This block adds <link> tags to the head section of the template. #}
-    <link href="{{ url_for('nereid.webshop.send_static_file', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/html5shiv.js') }}"></script>
-      <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/respond.min.js') }}"></script>
+      <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/html5shiv.js') }}"></script>
+      <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/respond.min.js') }}"></script>
     <![endif]-->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/font-awesome.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/jquery.pnotify.default.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/jquery.pnotify.default.css') }}">
     {% endblock link_tags %}
 
     {% block base_stylesheet %}
-      <link rel="stylesheet" type="text/css" href="{{ url_for('nereid.webshop.send_static_file', filename='css/style.css') }}">
+      <link rel="stylesheet" type="text/css" href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/lightbox.css') }}">
+      <link rel="stylesheet" type="text/css" href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/style.css') }}">
     {% endblock base_stylesheet %}
 
     {% block extra_head %}
@@ -112,7 +113,7 @@
             <div class="col-md-3">
               <div class="main-logo">
                 <a href="{{ url_for('nereid.website.home') }}">
-                  <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/nereid_cart_logo.png') }}">
+                  <img src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='images/nereid_cart_logo.png') }}">
                 </a>
               </div>
             </div>
@@ -164,11 +165,9 @@
         <div class="row main-navigation">
           <div class="col-md-12">
             <ul class="list-inline" id="nav-list">
-              {% from '_helpers.jinja' import nav_from_category, nav_from_tree_node %}
-              {% if request.nereid_website.root_navigation_model == 'product.tree_node' %}
+              {% from '_helpers.jinja' import nav_from_tree_node %}
+              {% if request.nereid_website.root_tree_node %}
                 {{ nav_from_tree_node(request.nereid_website.root_tree_node) }}
-              {% elif request.nereid_website.root_navigation_model == 'product.category' %}
-                {{ nav_from_category(request.nereid_website.root_category) }}
               {% endif %}
               {# add any other navigational elements like probably an article list or custom link here #}
             </ul>
@@ -223,7 +222,7 @@
               <div class="subscribe-block">
                 <h5>Sign Up for the Newsletter</h5>
                 <!--Subscribe form-->
-                <form>
+                <form autocomplete="off">
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="you@mail.com">
                     <span class="input-group-btn">
@@ -242,25 +241,25 @@
             <h4>Payment Gateway</h4>
             <ul class="list-inline">
               <li>
-                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/visa.png') }}">
+                <img src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/visa.png') }}">
               </li>
               <li>
-                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/paypal.png') }}">
+                <img src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/paypal.png') }}">
               </li>
               <li>
-                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/mastercard.png') }}">
+                <img src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/mastercard.png') }}">
               </li>
               <li>
-                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/solo.png') }}">
+                <img src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/solo.png') }}">
               </li>
               <li>
-                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/cirrus.png') }}">
+                <img src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/cirrus.png') }}">
               </li>
               <li>
-                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/western-union.png') }}">
+                <img src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/western-union.png') }}">
               </li>
               <li>
-                <img src="{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/american-express.png') }}">
+                <img src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='images/payment-gateway/american-express.png') }}">
               </li>
             </ul>
           </div>
@@ -305,7 +304,7 @@
                     <span class="text-muted"><%= line.quantity %> x <%= line.amount %></span>
                   </div>
                   <div class="col-xs-2 cart-product-total">
-                    <a href="/cart/delete/" title="{{ _('Remove') }}"><i class="fa fa-trash-o"></i></a>
+                    <span data-url="<%= line.remove_url %>" title="{{ _('Remove') }}" class="remove_product"><i class="fa fa-trash-o"></i></span>
                   </div>
                 </div>
               </div>
@@ -327,10 +326,23 @@
     <!-- javascript section -->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/jquery.min.js') }}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/jquery.pnotify.min.js') }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/jquery.pnotify.min.js') }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/underscore-min.js') }}"></script>
+
+    {% block script_tags %}
+      {#
+        use this block for additional script tags which can be replaced by downstream modules if they dont use
+        a custom feature like the lightbox provided by webshop. However hard dependencies without which this
+        template wont work are listed outside this block
+      #}
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/app.js') }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/holder.js') }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/lightbox.js') }}"></script>
+    {% endblock script_tags %}
+
     <script type="text/javascript">
       var csrftoken = $('meta[name=csrf-token]').attr('content')
 
@@ -354,25 +366,73 @@
             history: false,
             type: '{{ category }}',
             nonblock: true,
-            nonblock_opacity: .4
+            delay:2000,
+            nonblock_opacity: .4,
+            animation: 'show'
           });
         {% endfor %}
       });
     </script>
     <script type="text/javascript">
+      var userDataCallbacks = $.Callbacks("");
       $.getJSON("{{ url_for('nereid.website.user_status') }}", function(data){
         var template = $("#cart-html-append").html();
         $("li.my-cart").html(_.template(template, {'user_status': data.status}));
+        userDataCallbacks.fire(data);
+        $('.remove_product').on('click', function(){
+          $.ajax({
+            type: "DELETE",
+            url: $(this).data("url"),
+          })
+          .success(function(){
+            location.reload();
+          });
+        });
       });
     </script>
 
-    {% block script_tags %}
-    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/app.js') }}"></script>
-    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/holder.js') }}"></script>
-    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/underscore-min.js') }}"></script>
-    {% endblock script_tags %}
-
     {% block scripts %}
     {% endblock scripts %}
+
+    {% if OLARK_SITE_ID %}
+    <!-- begin olark code -->
+    <script data-cfasync="false" type='text/javascript'>/*<![CDATA[*/window.olark||(function(c){var f=window,d=document,l=f.location.protocol=="https:"?"https:":"http:",z=c.name,r="load";var nt=function(){
+    f[z]=function(){
+    (a.s=a.s||[]).push(arguments)};var a=f[z]._={
+    },q=c.methods.length;while(q--){(function(n){f[z][n]=function(){
+    f[z]("call",n,arguments)}})(c.methods[q])}a.l=c.loader;a.i=nt;a.p={
+    0:+new Date};a.P=function(u){
+    a.p[u]=new Date-a.p[0]};function s(){
+    a.P(r);f[z](r)}f.addEventListener?f.addEventListener(r,s,false):f.attachEvent("on"+r,s);var ld=function(){function p(hd){
+    hd="head";return["<",hd,"></",hd,"><",i,' onl' + 'oad="var d=',g,";d.getElementsByTagName('head')[0].",j,"(d.",h,"('script')).",k,"='",l,"//",a.l,"'",'"',"></",i,">"].join("")}var i="body",m=d[i];if(!m){
+    return setTimeout(ld,100)}a.P(1);var j="appendChild",h="createElement",k="src",n=d[h]("div"),v=n[j](d[h](z)),b=d[h]("iframe"),g="document",e="domain",o;n.style.display="none";m.insertBefore(n,m.firstChild).id=z;b.frameBorder="0";b.id=z+"-loader";if(/MSIE[ ]+6/.test(navigator.userAgent)){
+    b.src="javascript:false"}b.allowTransparency="true";v[j](b);try{
+    b.contentWindow[g].open()}catch(w){
+    c[e]=d[e];o="javascript:var d="+g+".open();d.domain='"+d.domain+"';";b[k]=o+"void(0);"}try{
+    var t=b.contentWindow[g];t.write(p());t.close()}catch(x){
+    b[k]=o+'d.write("'+p().replace(/"/g,String.fromCharCode(92)+'"')+'");d.close();'}a.P(2)};ld()};nt()})({
+    loader: "static.olark.com/jsclient/loader0.js",name:"olark",methods:["configure","extend","declare","identify"]});
+    /* custom configuration goes here (www.olark.com/documentation) */
+    olark.identify('{{ OLARK_SITE_ID }}');/*]]>*/</script><noscript><a href="https://www.olark.com/site/2036-772-10-9217/contact" title="Contact us" target="_blank">Questions? Feedback?</a> powered by <a href="http://www.olark.com?welcome" title="Olark live chat software">Olark live chat software</a></noscript>
+    <!-- end olark code -->
+    <!-- Additional olark stuff -->
+    <script type="text/javascript">
+      function updateOlark(userData) {
+        var details = [];
+        if (userData.status.name) {
+          details.push(userData.status.name);
+        } else {
+          details.push('Guest User');
+        }
+        if (userData.status.cart_total_amount) {
+          details.push('Cart Total:' + userData.status.cart_total_amount);
+          details.push('Cart Size: ' + userData.status.cart_size);
+        }
+        olark('api.chat.updateVisitorNickname', {snippet: details});
+      };
+      userDataCallbacks.add(updateOlark);
+    </script>
+    <!-- END: Additional Olark Stuff -->
+    {% endif %}
   </body>
 </html>

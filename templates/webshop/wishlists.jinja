@@ -1,0 +1,56 @@
+{% extends 'account-base.jinja' %}
+
+{% block main %}
+<section class="my-account">
+  <div class="container" id="wishlist">
+    <!-- Checkout Step Indicator -->
+    <div class="col-md-10 col-md-offset-1">
+      {{ account_header(_('My Account / Wishlist'), 'wishlist') }}
+    </div>
+    <div class="col-md-10 col-md-offset-1 margin-top-30">
+      <div class="row">
+        <div class="col-md-3 col-sm-4 col-xs-6">
+          <div id="add-wishlist" data-toggle="modal" data-target="#myModal">
+            <p>
+              <i class="fa fa-plus"></i> Add to wishlist
+            </p>
+          </div>
+        </div>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title center" id="myModalLabel">Add Wishlist</h4>
+              </div>
+              <form method="post" name="new_wishlist" action="" class="form-horizontal" autocomplete="off">
+                <div class="modal-body">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                    <label for="name">Name*:</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        {% for wishlist in current_user.wishlists %}
+        <div class="col-md-3 col-sm-4 col-xs-6">
+          <a href="{{ url_for('wishlist.wishlist.render_wishlist', active_id=wishlist.id) }}">
+            <div class="thumbnail1"
+              style="background: url('{{ CDN }}{{ wishlist.products and wishlist.products[0].get_images() and wishlist.products[0].get_images()[0].transform_command().thumbnail(300, 300, 'a') or url_for('nereid.webshop.send_static_file', filename='images/no-image.jpg') }}') no-repeat">
+              <div class="wishlist-options">
+                <h4> {{ wishlist.name|title }}</h4>
+                <span>( {{ wishlist.products|length }} Products )</span>
+              </div>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main %}

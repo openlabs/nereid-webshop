@@ -1,5 +1,55 @@
 {% extends 'checkout/base.jinja' %}
 
 {% block main %}
-This is yet to be built
-{% endblock %}
+<section>
+  <div class="container" id="email-in-use">
+    <div class="row login-container">
+      <div class="alert alert-warning row" role="alert">
+        <div class="col-md-1 col-sm-1 col-xs-1">
+          <i class="fa fa-exclamation-triangle"></i>
+        </div>
+        <div class="col-md-11 col-sm-11 col-xs-11">
+          <h4>It seems that <span class="text-muted">email id: {{ email }}</span> you provided for guest checkout is tied to an existing account.
+            <a href="{{ url_for('nereid.checkout.sign_in') }}" class="text-primary">Guest Checkout </a>
+             with different email or <a href="{{ url_for('nereid.website.login') }}" class="text-primary">Sign In</a> to continue.
+          </h4>
+        </div>
+      </div>
+      <div class="row email-in-use-header">
+        <h4 class="text-center">
+          <span>Email Address already in use</span>
+        </h4>
+      </div>
+      <div class="row email-in-use-body">
+        <div class="col-md-5 col-md-offset-1">
+          <h4>
+            <span>Want to checkout as logged in user ?</span>
+          </h4>
+          <div class="row">
+            <h5 class="col-md-offset-4 col-md-4">
+              <a href="{{ url_for('nereid.website.login', next=request.args.get('next', url_for('nereid.checkout.shipping_address'))) }}" class="btn btn-default btn-block">Sign In</a>
+            </h5>
+          </div>
+          <h5><a href="{{ url_for('nereid.user.reset_account', next=request.args.get('next', url_for('nereid.website.home'))) }}" class="text-primary">Forgot your password ?</a></h5>
+      	</div>
+        <div class="col-md-5 col-md-offset-1">
+          <h4><span>New to our webshop ?</span></h4>
+          <div class="row">
+            <h5 class="col-md-offset-4 col-md-4">
+              <a href="{{ url_for('nereid.user.registration') }}" class="btn btn-default btn-block">Register Now </a>
+            </h5>
+          </div>
+          <h5><a href="{{ url_for('nereid.checkout.sign_in') }}" class="text-primary">Continue guest checkout with diffrent email address ?</a></h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main %}
+
+{% block script_tags %}
+{{ super() }}
+<script type="text/javascript">
+  $('.container-breadcrumb').hide();
+</script>
+{% endblock script_tags %}

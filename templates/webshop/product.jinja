@@ -21,13 +21,6 @@
 
 {% block breadcrumb %}
 {{ super() }}
-{% if product.category %}
-  {% for url, category in make_crumbs(product.category, 'product.category.render', field_map_changes={'title_field': 'name'}) %}
-    <li>
-      <a href="{{ url }}">{{ category }}</a>
-    </li>
-  {% endfor %}
-{% endif %}
 <li>
   {{ product.name }}
 </li>
@@ -44,7 +37,7 @@
           {% for image in product.get_images() %}
           <li class="{% if loop.first %}active{% endif %}">
             <a href="#tab{{ loop.index }}" data-toggle="tab">
-              <img src="{{ image.transform_command().thumbnail(120, 120) }}" />
+              <img src="{{ image.transform_command().thumbnail(120, 120, 'a') }}" />
             </a>
           </li>
           {% endfor %}
@@ -55,8 +48,8 @@
           {% for image in product.get_images() %}
           <div class="tab-pane {% if loop.first %}active{% endif %}" id="tab{{ loop.index }}">
             <div class="zoom-container">
-              <a id="zoom-target" href="{{ image.url }}" target="new">
-                <img class="zoom-image" src="{{ image.transform_command().thumbnail(500, 500) }}" />
+              <a id="zoom-target" href="{{ image.url }}" data-lightbox="{{ product.rec_name }}" > 
+                <img class="zoom-image" src="{{ image.transform_command().thumbnail(500, 500, 'a') }}" />
               </a>
             </div>
           </div>
@@ -117,7 +110,7 @@
       <span class="text-warning" style="display:none" id="product-not-available"><i class="fa fa-warning"></i> {{ _('This product is not available') }}</span>
       {% if product.salable %}
       <div class="buy-now">
-        <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now">
+        <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now" autocomplete="off">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
           <input type="hidden" name="quantity" value="1"/>
           <input type="hidden" name="size" id="size-id"/>
@@ -131,18 +124,31 @@
           <span class="text-danger" id="product-not-for-sale"><i class="fa fa-warning"></i>This product is not for sale</span>
         </div>
       {% endif %}
-      {#
-        *** Activate this once the wishlist module is done ***
-        <div>
-          <form action="{{ url_for("product.product.add_to_wishlist") }}" id="add-wishlist" method="post">
-            <input type="hidden" name="quantity" value="1"/>
-            <input type="hidden" name="size" id="size-id"/>
-            <input type="hidden" name="product" value="{{ product.id }}"/>
+      {% if current_user.is_authenticated() %}
+      <div class="row">
+        <div class="btn-group col-md-6" id="add-to-wishlist">
+          <form method="post" action="{{ url_for('wishlist.wishlist.wishlist_product') }}"  autocomplete="off">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
             <input type="hidden" name="action" value="add"/>
-            <button type="submit" class="btn btn-link"><i class="fa fa-heart"></i> Add to Wishlist</button>
-          </form>
+            <input type="hidden" name="product" value="{{ product.id }}" />
+            <button type="submit" class="btn btn-default">Add To Wishlist</button>
+
+            {% if current_user.wishlists|length > 0 %}
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="wishlist-dropdown">
+              <i class="fa fa-angle-down"></i>
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            {# Drop down for add to wishlist #}
+              <ul class="dropdown-menu" role="menu" aria-labelledby="wishlist-dropdown">
+              {% for wishlist in current_user.wishlists %}
+                <li name="wishlist" value="{{ wishlist.id }}" class="center">{{ wishlist.name|title }}</li>
+              {% endfor %}
+              </ul>
+              {% endif %}
+            </form>
+          </div>
         </div>
-      #}
+      {% endif %}
     </div>
   </div>
   <!--Product Description -->
@@ -193,24 +199,23 @@
 {% endblock main %}
 
 {# all this is valid only if nereid-catalog-variants module is installed #}
-{% block script_tags %}
+{% block scripts %}
 {{ super() }}
 {% if product.template.get_product_variation_data %}
 <script type="text/html"  id='product-varying-attrs-tpl'>
-  <% _.each(attrs, function(attr, index) { %>
-    <% if (attr.widget == 'dropdown') { %>
-      <div class="row">
-        <div class="col-md-3"> Select <%= attr.name %>: <br/>
-          <select class="form-control select-sort attribute" data-attr-name="<%= attr.name %>">
+  <div class="row">
+    <% _.each(attrs, function(attr, index) { %>
+      <% if (attr.widget == 'dropdown') { %>
+        <div class="col-md-6"> Select <%= attr.string %>: <br/>
+          <select class="form-control select-sort attribute btn btn-lg btn-default" data-attr-name="<%= attr.name %>">
             <% _.each(attr.options, function(option, index) { %>
-            <option value="<%= option[0] %>" <% if (option[0] == currentVariantAttrs[attr.name]) { %> selected <% } %> ><%= option[1] %></option>
+            <option value="<%= _.escape(option[0]) %>" <% if (option[0] == currentVariantAttrs[attr.name]) { %> selected <% } %> ><%= _.escape(option[1]) %></option>
             <% }); %>
           </select>
         </div>
-      </div>
-      <br/>
-    <% } %>
-  <% }); %>
+      <% } %>
+    <% }); %>
+  </div>
 </script>
 
 <script type="text/javascript">
@@ -266,6 +271,8 @@
         $('#buy-now-btn').removeAttr('disabled');
         $('.product-price').show();
         $('.product-code').text(product.code);
+        $('.product-price').text(product.price);
+
         // Set only, no removals
         $('.product-name').text(product.rec_name);
         // Set the correct product in all input field
@@ -291,8 +298,24 @@
     ));
 
     $('.attribute').change(onChangeAttribute);
-
   });
 </script>
 {% endif %}
-{% endblock script_tags %}
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#add-to-wishlist .dropdown-menu li').on('click', function(){
+      var wishlist_id = $(this).val();
+      var product_id = {{ product.id }};
+      var data = {'wishlist': wishlist_id, 'product': product_id, 'action': "add"}
+      console.log(data);
+      $.ajax({
+        type: "POST",
+        url: "{{ url_for('wishlist.wishlist.wishlist_product') }}",
+        data: data,
+      }).done(function(){
+        $(location).attr('href',"{{ url_for('wishlist.wishlist.render_wishlists', _external=True) }}");
+      });
+    });
+  });
+</script>
+{% endblock scripts %}

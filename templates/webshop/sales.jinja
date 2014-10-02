@@ -1,13 +1,30 @@
 {% extends 'account-base.jinja' %}
 
+{% from '_helpers.jinja' import render_pagination %}
+
 {% block main %}
 <!-- My Orders Page starts here -->
 <section class="my-account">
   <div class="container">
-    <div class="row">
+    <div class="col-md-12">
       <div class="col-md-10 col-md-offset-1">
         {{ account_header(_('My Account / Orders'), 'orders') }}
         <!--My Orders-->
+        <div class="row filter-by">
+            <div class="dropdown pull-right">
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                {% if request.args.get('filter_by') %}Filtered by {{ request.args.get('filter_by')|title }} orders {% else %} Filter by orders state {% endif %}
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ url_for('sale.sale.render_list', filter_by="recent") }}">Recent Orders</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ url_for('sale.sale.render_list', filter_by="processing") }}">Processing Orders</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ url_for('sale.sale.render_list', filter_by="done") }}">Done Orders</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ url_for('sale.sale.render_list', filter_by="canceled") }}">Canceled Orders</a></li>
+              </ul>
+            </div>
+          </div>
+        {% if sales %}
         <div class="row cart-table">
           <!--Recent Orders Table starts here -->
           <div class="table-responsive">
@@ -25,7 +42,7 @@
               <tbody>
                 {% for sale in sales %}
                 <tr>
-                  <td><a href="{{ url_for('sale.sale.render', active_id=sale.id) }}">#{{ sale.reference }}</a></td>
+                  <td><a href="{{ url_for('sale.sale.render', active_id=sale.id) }}" class="text-info">#{{ sale.reference }}</a></td>
                   <td class="orderd-products">
                     {% for line in sale.lines %}
                     <a href="{{ url_for('product.product.render', uri=line.product.uri) }}" class="product-name">{{ line.description }}</a><br>
@@ -40,7 +57,13 @@
                     {{ sale.sale_date|dateformat }}
                   </td>
                   <td>
-                    <span class="{% if sale.state ==  "done" %}text-success{% elif sale.state == "confirmed" %}text-info{% elif sale.state == "cancel" %}text-danger{% endif %}">{{ sale.state }}</span>
+                    {% if sale.state ==  "done" %}
+                    <span class="text-success">Done</span>
+                    {% elif sale.state in ("processing", "confirmed") %}
+                      <span class="text-info">Processing</span>
+                    {% elif sale.state == "cancel" %}
+                      <span class="text-danger">Canceled</span>
+                    {% endif %}
                   </td>
                   <td class="action">
                     {% for invoice in sale.invoices %}
@@ -54,11 +77,20 @@
                   </td>
                 </tr>
                 {% endfor %}
+              </div>
+              </div>
               </tbody>
             </table>
+            <div class="col-md-12" class="pagination">
+            {{ render_pagination(sales, endpoint='sale.sale.render_list', filter_by=request.args.get('filter_by')) }}
+            </div>
           </div>
-        </div>
       </div>
+      {% else %}
+      <div class="row">
+          <h4 class="text-muted center">No Orders Available.</h4>
+      </div>
+      {% endif %}
     </div>
   </div>
 </section>

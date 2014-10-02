@@ -6,8 +6,16 @@
 <!-- My Orders Page starts here -->
 <section class="my-account">
   <div class="container">
-    <div class="row">
+    <div class="col-md-12">
       <div class="col-md-10 col-md-offset-1">
+
+        {% if confirmation %}
+        <div class="alert alert-success order-confirmation">
+          <i class="fa fa-check-circle"></i>
+          Thank You!<br>
+          <h4>Your Order has been placed successfully.</h4>
+        </div>
+        {% endif %}
 
         {{ account_header(_('My Account / Order #') + sale.reference, 'orders') }}
 
@@ -84,9 +92,47 @@
             </table>
           </div>
         </div>
+        <div class="row margin-top-30">
+          {% if not sale.comment %}
+            <div class="add-comment">
+              <h5 class="text-muted">{{ _('Add Note') }}</h5>
+              <form name="add-comment"id="add-comment-form">
+                <textarea class="form-control" rows="3"  placeholder="{{ _('You can leave a message here') }}" name="comment"></textarea>
+              </form>
+                <button name="save-comment" class="btn btn-primary col-md-3 pull-right margin-top-30" id="add-comment" data-url="{{ url_for('sale.sale.add_comment_to_sale', active_id=sale.id, access_code=sale.guest_access_code) }}">{{ _('Save') }}</button>
+            </div>
+          {% else %}
+          <h5> <span class="text-muted">Note: </span>&nbsp;{{ _(sale.comment) }}</h5>
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>
 </section>
 {% endblock main %}
 
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#add-comment').on('click', function(){
+      $.ajax({
+        type: "POST",
+        url: $(this).data('url'),
+        data: $('#add-comment-form').serialize(),
+      }).success(function(data) {
+          $.pnotify({
+            title: 'message',
+            text: data.message,
+            history: false,
+            nonblock: true,
+            delay:2000,
+            nonblock_opacity: .4,
+            animation: 'show'
+          });
+        $('.add-comment').html('<h5><span class="text-muted">Note: </span>' + data.comment +'</h5>');
+      });
+    });
+  });
+</script>
+{% endblock scripts %}

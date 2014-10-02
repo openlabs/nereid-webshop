@@ -65,7 +65,7 @@
                 <tr>
                   <td>
                     <a href="{{ url_for('product.product.render', uri=line.product.uri) }}">
-                        <img src="{{ line.product.default_image.transform_command().thumbnail(100, 100) }}" alt="{{ line.product.name }}">
+                        <img src="{{ line.product.default_image.transform_command().thumbnail(100, 100, 'a') }}" alt="{{ line.product.name }}">
                     </td>
                   <td>
                     <a href="{{ url_for('product.product.render', uri=line.product.uri) }}" class="product-name">{{ line.product.name }} </a><br>
@@ -90,7 +90,7 @@
                   </td>
                   <td class="action">
                     <a href="" data-toggle="tooltip" data-placement="top" title="" data-original-title="Move to Wishlist"><i class="fa fa-heart"></i></a>
-                    <a href="{{ url_for('nereid.cart.delete_from_cart', line=line.id) }}" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{ _('Remove Item') }}"><i class="fa fa-trash-o"></i></a>
+                    <span data-url="{{ url_for('nereid.cart.delete_from_cart', line=line.id) }}" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{ _('Remove Item') }}" class="remove_from_cart"><i class="fa fa-trash-o"></i></span>
                   </td>
                 </tr>
                 {% endfor %}
@@ -206,6 +206,15 @@
     });
     $("a.clear-cart").click(function(){
       $(this).button('loading');
+    });
+    $('.remove_from_cart').on('click', function(){
+      $.ajax({
+        type: "DELETE",
+        url: $(this).data("url"),
+      })
+      .success(function(){
+        location.reload();
+      });
     });
   });
 </script>

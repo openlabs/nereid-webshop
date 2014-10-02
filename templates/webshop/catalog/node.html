@@ -3,30 +3,56 @@
 {% from '_helpers.jinja' import render_pagination, render_product_list  %}
 
 {% block breadcrumb %}
-{{ super() }}
 <li>
-  <a href="{{ url_for('product.tree_node.render', active_id=node.id, slug=node.slug) }}">{{ node.name }}</a>
+  <li><a href="{{ url_for('nereid.website.home') }}">Home</a></li>
+  {% for url, node in make_tree_crumbs(node=node, add_home=False)[1:] %}
+    <li><a href="{{ url }}">{{ node }}</a></li>
+  {% endfor %}
 </li>
 {% endblock breadcrumb %}
 
 {% block main %}
 <section>
   <div class="container">
-    <!-- category page -->
-      <!-- Content bar -->
-      <div class="col-md-12 product-list">
-        <div class="row">
-          <div class="col-md-9">
-            <h3 class="list-heading">{{ node.rec_name }}</h3>
+    <div class="col-md-12">
+      <div class="col-md-12">
+       <h4 class="center"> {{ node.name }}</h4>
+      </div>
+      {% if node.description %}
+        <div class="col-md-12 node-description">
+            {{ node.description|safe }}
+        </div>
+      {% endif %}
+      <div class="row">
+        {% if node.children %}
+          <div class="col-md-12">
+            {% for child in node.children %}
+              <div class="product-image col-md-3 col-sm-4 col-xs-6">
+                <a href="{{ url_for('product.tree_node.render', active_id=child.id, slug=child.slug) }}">
+                  <div>
+                    <img src="{{ child.image and child.image.transform_command().thumbnail(500, 500, 'a') or url_for('nereid.webshop.send_static_file', filename='images/no-image.jpg') }}" alt="{{ child.name }}" title="{{ child.name }}">
+                  </div>
+                  <div class="text-center">
+                    <h4>{{ child.name|safe|truncate(50) }}
+                    </h4>
+                  </div>
+                </a>
+              </div>
+            {% endfor %}
           </div>
-        </div>
-        <div class="row">
-        <div class="category-list"></div>
-          {% for product in products %}
-            {{ render_product_list(product) }}
-          {% endfor %}
-        </div>
-        <div class="row">
+        {% endif %}
+        <div class="col-md-12">
+          <div class="node-heading row">
+            <p><b>Items</b><span class="pull-right">Total Products: {{ products.count }}<span></p>
+          </div>
+          <div class="category-list"></div>
+          <div class="row">
+            <div class="category-list"></div>
+            {% for product in products %}
+              {{ render_product_list(product) }}
+            {% endfor %}
+          </div>
+        <div class="col-md-12">
           {{ render_pagination(products, endpoint='product.tree_node.render', active_id=node.id, slug=node.slug) }}
         </div>
       </div>

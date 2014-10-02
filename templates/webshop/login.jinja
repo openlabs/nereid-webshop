@@ -15,7 +15,7 @@
           <h4 class="center login-text"><span>{{ _('Log in to your account') }}</span></h4>
           <div class="row">
             <div class="col-md-5">
-              <form class="login-form" method="POST">
+              <form class="login-form" method="POST" autocomplete="off">
                 {{ login_form.hidden_tag()  }}
                 {{ render_field(login_form.email, placeholder= _('Enter your E-mail'), required=required, type="email") }}
                 {{ render_field(login_form.password, placeholder=_('Your Password'), required=required) }}
