@@ -2,7 +2,8 @@
 
 {% from '_helpers.jinja' import render_product %}
 
-{% block title %}{{ product.name }}{% endblock title %}
+{% block title %}{{ product.name }} {{ super() }}{% endblock title %}
+{% block meta_description %}{{ (product.description or '')|striptags|truncate(300) }}{% endblock %}
 
 {% block extra_head %}
 {{ super() }}
