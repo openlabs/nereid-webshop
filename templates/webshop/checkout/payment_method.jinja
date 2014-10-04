@@ -102,7 +102,8 @@
   </div>
 </section>
 {% endblock main %}
-{% block script_tags %}
+
+{% block scripts %}
 {{ super() }}
 <script type="text/javascript">
 {% if current_user.is_authenticated() and current_user.party.payment_profiles %}
@@ -123,4 +124,4 @@
   });
 {% endif %}
 </script>
-{% endblock script_tags %}
+{% endblock scripts %}
