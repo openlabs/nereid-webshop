@@ -1,6 +1,7 @@
 {% extends 'account-base.jinja' %}
 
 {% from '_helpers.jinja' import render_address %}
+{% from 'checkout/base.jinja' import google_analytics_add_product %}
 
 {% block main %}
 <!-- My Orders Page starts here -->
@@ -135,4 +136,14 @@
     });
   });
 </script>
+{% if confirmation %}
+  {% if GOOGLE_ANALYTICS_PROPERTY_ID %}
+  {# Google enhanced ecommerce analytics #}
+  <script type="text/javascript">
+    // 1. Send product and impression data with pageview.
+    {{ google_analytics_add_product() }}
+    ga('ec:setAction', 'purchase', sale.ga_purchase_data()|tojson|safe);
+  </script>
+  {% endif %}
+{% endif %}
 {% endblock scripts %}
