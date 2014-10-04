@@ -36,3 +36,22 @@ class Product:
             return images[0].id
         else:
             return ModelData.get_id("nereid_webshop", "mystery_box")
+
+    def ga_product_data(self, **kwargs):
+        '''
+        Return a dictionary of the product information as expected by Google
+        Analytics
+
+        Other possible values for kwargs include
+
+        :param list: The name of the list in which this impression is to be
+                     recorded
+        :param position: Integer position of the item on the view
+        '''
+        rv = {
+            'id': self.code or unicode(self.id),
+            'name': self.name,
+            'category': self.category and self.category.name or None,
+        }
+        rv.update(kwargs)
+        return rv

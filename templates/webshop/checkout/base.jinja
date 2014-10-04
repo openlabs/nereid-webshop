@@ -33,6 +33,19 @@
     </div>
 {% endmacro %}
 
+
+{% macro google_analytics_add_product() %}
+  {# This must be called from within a script tag #}
+  {% set cart = get_cart() %}
+
+  // Set tracker currency to sale currency
+  ga('set', '&cu', '{{ cart.sale.currency.code }}');
+
+  {% for line in cart.sale.lines if line.product %}
+    ga('ec:addProduct', {{ line.product.ga_product_data(price=line.unit_price, quantity=line.quantity|string)|tojson|safe }});
+  {% endfor %}
+{% endmacro %}
+
 {% macro cart_summary() %}
 {% set cart = get_cart() %}
 <div class="col-md-4">
