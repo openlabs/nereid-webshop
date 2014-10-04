@@ -1,6 +1,5 @@
 {% extends 'base.jinja' %}
 
-{# TODO: Remove the footer and unnecessary header lines #}
 {% from '_helpers.jinja' import render_address %}
 
 {% macro checkout_breadcrumb(step) %}
@@ -38,7 +37,7 @@
 {% set cart = get_cart() %}
 <div class="col-md-4">
   <div class="row">
-    <div class="panel panel-default">
+    <div class="col-md-12 col-sm-6 pad-nil panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">{{ _('Cart Summary') }}
           <span class="pull-right"><a href="{{ url_for('nereid.cart.view_cart') }}">
@@ -75,16 +74,22 @@
             </span>
           </div>
         </div>
+
         {% if cart.sale.tax_amount %}
         <div class="row">
           <div class="col-xs-8">
-            <strong class="pull-right total">{{ _('Tax') }}</strong>
+            <strong class="pull-right total">{{ _('Estimated Tax') }}</strong>
           </div>
           <div class="col-xs-4">
-            <span class="total text-success">{{ cart.sale.tax_amount|currencyformat(cart.sale.currency.code) }}</span>
+            <span class="price total">{{ cart.sale.tax_amount|currencyformat(cart.sale.currency.code) }}&nbsp;&nbsp;
+              <span data-toggle="tooltip" data-placement="bottom" title="" data-original-title="The sales tax listed on the checkout page is only an estimate. The final total sales tax will be reflected on your invoice and will be included state and local sales taxes, as well as any applicable rebates or fees." class="estimated-tax">
+                [<span class="text-info"><i class="fa fa-question"></i></span>]
+              </span>
+            </span>
           </div>
         </div>
         {% endif %}
+
         <hr>
         <div class="row">
           <div class="col-xs-8">
@@ -98,7 +103,7 @@
     </div><!-- END: panel -->
 
     {% if cart.sale.shipment_address %}
-    <div class="panel panel-default">
+    <div class="col-md-12 col-sm-6 pad-nil panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">Shipping Address
           <span class="pull-right"><a href="{{ url_for('nereid.checkout.shipping_address') }}">
@@ -113,7 +118,7 @@
     {% endif %}
 
     {% if cart.sale.invoice_address %}
-    <div class="panel panel-default">
+    <div class="col-md-12 col-sm-6 pad-nil panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">{{ _('Billing Address') }}
           <span class="pull-right"><a href="{{ url_for('nereid.checkout.billing_address') }}">
