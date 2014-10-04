@@ -319,4 +319,14 @@
     });
   });
 </script>
+
+{% if GOOGLE_ANALYTICS_PROPERTY_ID %}
+{# Google enhanced ecommerce analytics #}
+<script type="text/javascript">
+  // 1. Send product and impression data with pageview.
+  ga('ec:addProduct', {{ product.ga_product_data()|tojson|safe }});
+  ga('ec:setAction', 'detail');
+</script>
+{% endif %}
+
 {% endblock scripts %}
