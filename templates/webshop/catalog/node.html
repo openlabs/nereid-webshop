@@ -70,7 +70,11 @@
   <script type="text/javascript">
     // 1. Send product and impression data with pageview.
     {% for product in products %}
-       ga('ec:addImpression', {{ product.ga_product_data(list=node.name, position=loop.index)|tojson|safe }});
+        {% if product.__name__ == 'product.template' %}
+        {# the product could also template, in which case use the first variant #}
+        {% set product = product.products_displayed_on_eshop[0] %}
+        {% endif %}
+        ga('ec:addImpression', {{ product.ga_product_data(list=node.name, position=loop.index)|tojson|safe }});
     {% endfor %}
   </script>
   {% endif %}
