@@ -82,6 +82,7 @@ class Product:
                  "price": str(sale_price),
                  "priceCurrency": request.nereid_currency.code,
             },
-            "image": self.default_image.transform_command().url(_external=True),
+            "image": self.default_image.transform_command().thumbnail(
+                500, 500, 'a').url(_external=True),
             "url": self.get_absolute_url(_external=True),
         }
