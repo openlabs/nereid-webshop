@@ -18,6 +18,10 @@
 <meta property="og:upc" content="{{ code.code }}"/>
 {% endif %}
 {% endfor %}
+
+<script type="application/ld+json">
+  {{ product.json_ld()|tojson|safe }}
+</script>
 {% endblock extra_head %}
 
 {% block breadcrumb %}
