@@ -1,7 +1,7 @@
 {% extends 'account-base.jinja' %}
 
 {% from '_helpers.jinja' import render_address %}
-{% from 'checkout/base.jinja' import google_analytics_add_product %}
+{% from 'checkout/base.jinja' import google_analytics_add_product with context %}
 
 {% block main %}
 <!-- My Orders Page starts here -->
