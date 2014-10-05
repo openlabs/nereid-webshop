@@ -10,14 +10,18 @@
 <!-- og -->
 <meta property="og:url" content="{{ url_for('product.product.render', uri=product.uri, _external=True) }}"/>
 <meta property="og:title" content="{{ product.name  }}" />
-<meta property="og:description" content="{{ (product.description or '')|truncate(300) }}" />
+<meta property="og:description" content="{{ (product.description or '')|striptags|truncate(300) }}" />
 <meta property="og:type" content="product"/>
-<meta property="og:image" content="http:{{ CDN }}{{ product.default_image.transform_command().thumbnail(1500, 1500, 'a') }}"/>
+<meta property="og:image" content="{{ CDN }}{{ product.default_image.transform_command().thumbnail(1500, 1500, 'a') }}"/>
 {% for code in product.codes %}
 {% if code.code_type == 'upc-a' %}
 <meta property="og:upc" content="{{ code.code }}"/>
 {% endif %}
 {% endfor %}
+
+<script type="application/ld+json">
+  {{ product.json_ld()|tojson|safe }}
+</script>
 {% endblock extra_head %}
 
 {% block breadcrumb %}

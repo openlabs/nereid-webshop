@@ -7,6 +7,8 @@
 
 '''
 from trytond.pool import Pool, PoolMeta
+from jinja2.filters import do_striptags
+from nereid import request
 
 
 __all__ = ['Product']
@@ -55,3 +57,32 @@ class Product:
         }
         rv.update(kwargs)
         return rv
+
+    def json_ld(self, **kwargs):
+        '''
+        Returns a JSON serializable dictionary of the product with the Product
+        schema markup.
+
+        See: http://schema.org/Product
+
+        Any key value pairs passed to kwargs overwrites default information.
+        '''
+        sale_price = self.sale_price(1)
+
+        return {
+            "@context": "http://schema.org",
+            "@type": "Product",
+
+            "name": self.name,
+            "sku": self.code,
+            "description": do_striptags(self.description),
+            "offers": {
+                 "@type": "Offer",
+                 "availability": "http://schema.org/InStock",
+                 "price": str(sale_price),
+                 "priceCurrency": request.nereid_currency.code,
+            },
+            "image": self.default_image.transform_command().thumbnail(
+                500, 500, 'a').url(_external=True),
+            "url": self.get_absolute_url(_external=True),
+        }
