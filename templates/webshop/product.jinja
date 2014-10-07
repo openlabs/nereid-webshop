@@ -5,6 +5,11 @@
 {% block title %}{{ product.name }} {{ super() }}{% endblock title %}
 {% block meta_description %}{{ (product.description or '')|striptags|truncate(300) }}{% endblock %}
 
+{% block base_stylesheet %}
+  <link rel="stylesheet" type="text/css" href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/lightbox.css') }}">
+  {{ super() }}
+{% endblock base_stylesheet %}
+
 {% block extra_head %}
 {{ super() }}
 <!-- og -->
@@ -202,6 +207,11 @@
   </div>
 </div>
 {% endblock main %}
+
+{% block script_tags %}
+  {{ super() }}
+  <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/lightbox.js') }}"></script>
+{% endblock script_tags %}
 
 {# all this is valid only if nereid-catalog-variants module is installed #}
 {% block scripts %}
