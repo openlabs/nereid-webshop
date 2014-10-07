@@ -7,12 +7,15 @@
 {{ super() }}
 <li>
   {% if category %}
-  <a href="{{ url_for('nereid.cms.article.category.render', uri=category.unique_name) }}">{{ category.title }}</a>
+  <a href="{{ url_for('nereid.cms.article.category.render', uri=category.unique_name) }}" itemprop="url">
+    <span itemprop="title">{{ category.title }}</span>
+  </a>
   {% elif article %}
-  <a href="{{ url_for('nereid.cms.article.category.render', uri=article.category.unique_name) }}">{{ article.category.title }}</a>
+  <a href="{{ url_for('nereid.cms.article.category.render', uri=article.category.unique_name) }}" itemprop="url">
+    <span itemprop="title">{{ article.category.title }}</span>
+  </a>
   {% endif %}
 </li>
-something
 {% endblock breadcrumb %}
 
 {% block main %}

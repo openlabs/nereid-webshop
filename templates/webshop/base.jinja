@@ -176,9 +176,14 @@
         {% endblock main_navigation %}
       </div>
     </section>
-    <div class="container container-breadcrumb">
+    <div class="container container-breadcrumb" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
       <ol class="breadcrumb">
         {% block breadcrumb %}
+        <li>
+          <a href="{{ url_for('nereid.website.home') }}" itemprop="url">
+            <span itemprop="title">{{ _('Home') }}</span>
+          </a>
+        </li>          
         {% endblock %}
       </ol>
     </div>
