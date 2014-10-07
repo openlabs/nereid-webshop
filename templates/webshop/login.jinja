@@ -2,6 +2,15 @@
 
 {% from '_helpers.jinja' import render_field %}
 
+{% block breadcrumb %}
+{{ super() }}
+<li>
+  <a href="{{ url_for('nereid.website.login') }}" itemprop="url">
+    <span itemprop="title">{{ _('Login') }}</span>
+  </a>
+</li>
+{% endblock breadcrumb %}
+
 {% block main %}
 <section>
   <div class="container">

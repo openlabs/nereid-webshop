@@ -6,12 +6,14 @@
 {% block meta_description %}{{ (node.description or '')|striptags|truncate(300) }}{% endblock %}
 
 {% block breadcrumb %}
-<li>
-  <li><a href="{{ url_for('nereid.website.home') }}">Home</a></li>
+  {{ super() }}
   {% for url, node in make_tree_crumbs(node=node, add_home=False)[1:] %}
-    <li><a href="{{ url }}">{{ node }}</a></li>
+    <li>
+      <a href="{{ url }}" itemprop="url">
+        <span itemprop="title">{{ node }}</span>
+      </a>
+    </li>
   {% endfor %}
-</li>
 {% endblock breadcrumb %}
 
 {% block main %}

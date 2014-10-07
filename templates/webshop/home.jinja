@@ -18,7 +18,9 @@
 
 {% block breadcrumb %}
 <li>
-  <a href="{{ url_for('nereid.website.home') }}">{{ _('Home') }}</a>
+  <a href="{{ url_for('nereid.website.home') }}" itemprop="url">
+    <span itemprop="title">{{ _('Home') }}</span>
+  </a>
 </li>
 {% endblock breadcrumb %}
 
