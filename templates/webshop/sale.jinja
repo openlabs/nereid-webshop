@@ -143,6 +143,6 @@
     {% for line in sale.lines if line.product %}
       ga('ec:addProduct', {{ line.product.ga_product_data(price=line.unit_price, quantity=line.quantity|string)|tojson|safe }});
     {% endfor %}
-    ga('ec:setAction', 'purchase', sale.ga_purchase_data()|tojson|safe);
+    ga('ec:setAction', 'purchase', {{ sale.ga_purchase_data()|tojson|safe }});
 {% endif %}
 {% endblock ga_page_view %}
