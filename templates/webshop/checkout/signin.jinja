@@ -58,13 +58,10 @@
       }).change();
     });
   </script>
+{% endblock scripts %}
 
-  {% if GOOGLE_ANALYTICS_PROPERTY_ID %}
-  {# Google enhanced ecommerce analytics #}
-  <script type="text/javascript">
-    // 1. Send product and impression data with pageview.
+
+{% block ga_page_view %}
     {{ google_analytics_add_product() }}
     ga('ec:setAction', 'checkout', {'step': 1});
-  </script>
-  {% endif %}
-{% endblock scripts %}
+{% endblock ga_page_view %}
