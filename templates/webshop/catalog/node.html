@@ -64,10 +64,8 @@
 </section>
 {% endblock main%}
 
-{% block scripts %}
-  {{ super() }}
-  {% if GOOGLE_ANALYTICS_PROPERTY_ID %}
-  <script type="text/javascript">
+
+{% block ga_page_view %}
     // 1. Send product and impression data with pageview.
     {% for product in products %}
         {% if product.__name__ == 'product.template' %}
@@ -76,6 +74,4 @@
         {% endif %}
         ga('ec:addImpression', {{ product.ga_product_data(list=node.name, position=loop.index)|tojson|safe }});
     {% endfor %}
-  </script>
-  {% endif %}
-{% endblock scripts %}
+{% endblock ga_page_view %}
