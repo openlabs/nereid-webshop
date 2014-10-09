@@ -400,6 +400,11 @@
       ga('create', '{{ GOOGLE_ANALYTICS_PROPERTY_ID }}', 'auto');
       ga('require', 'displayfeatures');
       ga('require', 'ec');
+
+      {% block ga_page_view %}
+        {# In downstream pages add calls to be made before send here #}
+      {% endblock ga_page_view %}
+
       ga('send', 'pageview');
 
     </script>
