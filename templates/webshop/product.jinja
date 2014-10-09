@@ -31,8 +31,11 @@
 
 {% block breadcrumb %}
 {{ super() }}
+{# TODO: Guess the tree node or category from URL and then display that on breadcrumb #}
 <li>
-  {{ product.name }}
+  <a href="{{ url_for('product.product.render', uri=product.uri) }}" itemprop="url">
+    <span itemprop="title">{{ product.name }}</span>
+  </a>
 </li>
 {% endblock breadcrumb %}
 
