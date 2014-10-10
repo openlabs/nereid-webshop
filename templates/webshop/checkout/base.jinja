@@ -68,7 +68,7 @@
             {% endif %}
           </div>
           <div class="col-xs-6">
-            <a href="" class="product-name">{{ line.description }}</a><br>
+            <a href="{{ url_for('product.product.render', uri=line.product.uri) }}" class="product-name">{{ line.description }}</a><br>
             <strong class="text-muted">{{ _('Qty') }} :</strong> {{ line.quantity }}
           </div>
           <div class="col-xs-3">
