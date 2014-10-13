@@ -17,8 +17,22 @@
         </div>
         {% endif %}
 
+        <div class="row margin-top-30">
+          {% if not sale.comment %}
+            <div class="add-comment">
+              <h5 class="text-muted">{{ _('Add Note') }}</h5>
+              <form name="add-comment"id="add-comment-form">
+                <textarea class="form-control" rows="3"  placeholder="{{ _('You can leave a message here') }}" name="comment"></textarea>
+              </form>
+                <button name="save-comment" class="btn btn-primary col-md-3 pull-right margin-top-30" id="add-comment" data-url="{{ url_for('sale.sale.add_comment_to_sale', active_id=sale.id, access_code=sale.guest_access_code) }}">{{ _('Save') }}</button>
+            </div>
+          {% else %}
+          <h5> <span class="text-muted">Note: </span>&nbsp;{{ _(sale.comment) }}</h5>
+          {% endif %}
+        </div>
+        
         {{ account_header(_('My Account / Order #') + sale.reference, 'orders') }}
-
+        
         <!--My Orders-->
         <div class="row cart-table">
           <div class="row-fluid">
@@ -91,19 +105,6 @@
               </tr>
             </table>
           </div>
-        </div>
-        <div class="row margin-top-30">
-          {% if not sale.comment %}
-            <div class="add-comment">
-              <h5 class="text-muted">{{ _('Add Note') }}</h5>
-              <form name="add-comment"id="add-comment-form">
-                <textarea class="form-control" rows="3"  placeholder="{{ _('You can leave a message here') }}" name="comment"></textarea>
-              </form>
-                <button name="save-comment" class="btn btn-primary col-md-3 pull-right margin-top-30" id="add-comment" data-url="{{ url_for('sale.sale.add_comment_to_sale', active_id=sale.id, access_code=sale.guest_access_code) }}">{{ _('Save') }}</button>
-            </div>
-          {% else %}
-          <h5> <span class="text-muted">Note: </span>&nbsp;{{ _(sale.comment) }}</h5>
-          {% endif %}
         </div>
       </div>
     </div>
