@@ -102,7 +102,7 @@
                 <button name="save-comment" class="btn btn-primary col-md-3 pull-right margin-top-30" id="add-comment" data-url="{{ url_for('sale.sale.add_comment_to_sale', active_id=sale.id, access_code=sale.guest_access_code) }}">{{ _('Save') }}</button>
             </div>
           {% else %}
-          <h5> <span class="text-muted">Note: </span>&nbsp;{{ _(sale.comment) }}</h5>
+          <h5> <span class="text-muted">Note: </span>&nbsp;{{ sale.comment }}</h5>
           {% endif %}
         </div>
       </div>
