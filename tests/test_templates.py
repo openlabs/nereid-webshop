@@ -608,7 +608,9 @@ class TestTemplates(BaseTestCase):
                 self.assertTrue(
                     rv.location.endswith('/checkout/payment')
                 )
-                self._create_auth_net_gateway_for_site()
+
+                with Transaction().set_context(company=self.company.id):
+                    self._create_auth_net_gateway_for_site()
 
                 # Try to pay using credit card
                 rv = c.post(
@@ -631,7 +633,7 @@ class TestTemplates(BaseTestCase):
                 self.assertEqual(payment_transaction.amount, sale.total_amount)
 
                 rv = c.get('/order/{0}'.format(sale.id))
-                self.assertEqual(rv.status_code, 403)  # Orders page forbidden
+                self.assertEqual(rv.status_code, 302)  # Orders page redirect
 
     def test_0060_registered_checkout(self):
         """
@@ -713,7 +715,9 @@ class TestTemplates(BaseTestCase):
                 self.assertTrue(
                     rv.location.endswith('/checkout/payment')
                 )
-                self._create_auth_net_gateway_for_site()
+
+                with Transaction().set_context(company=self.company.id):
+                    self._create_auth_net_gateway_for_site()
 
                 # Try to pay using credit card
                 rv = c.post(

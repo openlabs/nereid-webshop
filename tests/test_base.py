@@ -22,6 +22,9 @@ class BaseTestCase(NereidTestCase):
     """
     def setUp(self):
         trytond.tests.test_tryton.install_module('nereid_webshop')
+        trytond.tests.test_tryton.install_module(
+            'payment_gateway_authorize_net'
+        )
 
         self.FiscalYear = POOL.get('account.fiscalyear')
         self.Account = POOL.get('account.account')
