@@ -1,20 +1,17 @@
-#!/usr/bin/env python
-# -*- coding: UTF-8 -*-
 '''
 
     Test Base Case
 
-    :copyright: (c) 2010-2014 by Openlabs Technologies & Consulting (P) LTD
+    :copyright: (c) 2014 by Openlabs Technologies & Consulting (P) LTD
     :license: GPLv3, see LICENSE for more details
 '''
-import unittest
 import datetime
 from decimal import Decimal
 from dateutil.relativedelta import relativedelta
 
 import pycountry
 import trytond.tests.test_tryton
-from trytond.tests.test_tryton import POOL, USER, DB_NAME, CONTEXT
+from trytond.tests.test_tryton import POOL, USER, CONTEXT
 from nereid.testing import NereidTestCase
 from trytond.transaction import Transaction
 
@@ -26,17 +23,34 @@ class BaseTestCase(NereidTestCase):
     def setUp(self):
         trytond.tests.test_tryton.install_module('nereid_webshop')
 
-        self.Product = POOL.get('product.product')
-        self.ProductTemplate = POOL.get('product.template')
-        self.Uom = POOL.get('product.uom')
         self.FiscalYear = POOL.get('account.fiscalyear')
-        self.Company = POOL.get('company.company')
         self.Account = POOL.get('account.account')
         self.PaymentTerm = POOL.get('account.invoice.payment_term')
-        self.PriceList = POOL.get('product.price_list')
+        self.Currency = POOL.get('currency.currency')
+        self.Company = POOL.get('company.company')
+        self.Party = POOL.get('party.party')
+        self.Sale = POOL.get('sale.sale')
+        self.Cart = POOL.get('nereid.cart')
+        self.Product = POOL.get('product.product')
+        self.ProductTemplate = POOL.get('product.template')
+        self.Language = POOL.get('ir.lang')
+        self.NereidWebsite = POOL.get('nereid.website')
+        self.SaleShop = POOL.get('sale.shop')
+        self.Uom = POOL.get('product.uom')
         self.Country = POOL.get('country.country')
         self.Subdivision = POOL.get('country.subdivision')
         self.Currency = POOL.get('currency.currency')
+        self.NereidUser = POOL.get('nereid.user')
+        self.User = POOL.get('res.user')
+        self.PriceList = POOL.get('product.price_list')
+        self.Location = POOL.get('stock.location')
+        self.Party = POOL.get('party.party')
+        self.Locale = POOL.get('nereid.website.locale')
+        self.Tax = POOL.get('account.tax')
+        self.Node = POOL.get('product.tree_node')
+        self.ArticleCategory = POOL.get('nereid.cms.article.category')
+        self.Article = POOL.get('nereid.cms.article')
+        self.Category = POOL.get('product.category')
 
     def _get_account_by_kind(self, kind, company=None, silent=True):
         """Returns an account with given spec
@@ -56,6 +70,20 @@ class BaseTestCase(NereidTestCase):
             raise Exception("Account not found")
         return accounts[0] if accounts else False
 
+    def _create_product_category(self, name, vlist):
+        """
+        Creates a product category
+
+        Name is mandatory while other value may be provided as keyword
+        arguments
+
+        :param name: Name of the product category
+        :param vlist: List of dictionaries of values to create
+        """
+        for values in vlist:
+            values['name'] = name
+        return self.Category.create(vlist)
+
     def _create_product_template(
         self, name, vlist, uri, uom=u'Unit', displayed_on_eshop=True
     ):
@@ -69,10 +97,14 @@ class BaseTestCase(NereidTestCase):
         :param displayed_on_eshop: Boolean field to display product
                                    on shop or not
         """
-        
         for values in vlist:
             values['name'] = name
-            values['default_uom'], = self.Uom.search([('name', '=', uom)], limit=1)
+            values['default_uom'], = self.Uom.search(
+                [('name', '=', uom)], limit=1
+            )
+            values['sale_uom'], = self.Uom.search(
+                [('name', '=', uom)], limit=1
+            )
             values['products'] = [
                 ('create', [{
                     'uri': uri,
@@ -86,8 +118,9 @@ class BaseTestCase(NereidTestCase):
         self._create_product_template(
             'product 1',
             [{
-                'category': self.category,
+                'category': self.category.id,
                 'type': 'goods',
+                'salable': True,
                 'list_price': Decimal('10'),
                 'cost_price': Decimal('5'),
                 'account_expense': self._get_account_by_kind('expense').id,
@@ -98,8 +131,9 @@ class BaseTestCase(NereidTestCase):
         self._create_product_template(
             'product 2',
             [{
-                'category': self.category2,
+                'category': self.category2.id,
                 'type': 'goods',
+                'salable': True,
                 'list_price': Decimal('20'),
                 'cost_price': Decimal('5'),
                 'account_expense': self._get_account_by_kind('expense').id,
@@ -110,7 +144,7 @@ class BaseTestCase(NereidTestCase):
         self._create_product_template(
             'product 3',
             [{
-                'category': self.category3,
+                'category': self.category3.id,
                 'type': 'goods',
                 'list_price': Decimal('30'),
                 'cost_price': Decimal('5'),
@@ -122,7 +156,7 @@ class BaseTestCase(NereidTestCase):
         self._create_product_template(
             'product 4',
             [{
-                'category': self.category,
+                'category': self.category3.id,
                 'type': 'goods',
                 'list_price': Decimal('30'),
                 'cost_price': Decimal('5'),
@@ -132,6 +166,36 @@ class BaseTestCase(NereidTestCase):
             uri='product-4',
             displayed_on_eshop=False
         )
+
+    def _create_auth_net_gateway_for_site(self):
+        """
+        A helper function that creates the authorize.net gateway and assigns
+        it to the websites.
+        """
+        PaymentGateway = POOL.get('payment_gateway.gateway')
+        NereidWebsite = POOL.get('nereid.website')
+        Journal = POOL.get('account.journal')
+
+        cash_journal, = Journal.search([
+            ('name', '=', 'Cash')
+        ])
+
+        gatway = PaymentGateway(
+            name='Authorize.net',
+            journal=cash_journal,
+            provider='authorize_net',
+            method='credit_card',
+            authorize_net_login='327deWY74422',
+            authorize_net_transaction_key='32jF65cTxja88ZA2',
+        )
+        gatway.save()
+
+        websites = NereidWebsite.search([])
+        NereidWebsite.write(websites, {
+            'accept_credit_card': True,
+            'save_payment_profile': True,
+            'credit_card_gateway': gatway.id,
+        })
 
     def _create_fiscal_year(self, date=None, company=None):
         """
@@ -173,7 +237,6 @@ class BaseTestCase(NereidTestCase):
         """Create a minimal chart of accounts
         """
         AccountTemplate = POOL.get('account.account.template')
-        
         account_create_chart = POOL.get(
             'account.create_chart', type="wizard")
 
@@ -294,12 +357,16 @@ class BaseTestCase(NereidTestCase):
         payment_term, = self._create_payment_term()
 
         shop_price_list, user_price_list = self._create_pricelists()
-        
+        party1, = self.Party.create([{
+            'name': 'Guest User',
+        }])
 
         party2, = self.Party.create([{
             'name': 'Registered User',
             'sale_price_list': user_price_list,
         }])
+
+        self.party2 = party2
 
         party3, = self.Party.create([{
             'name': 'Registered User 2',
@@ -365,7 +432,7 @@ class BaseTestCase(NereidTestCase):
         }])
         self.User.set_preferences({'shop': self.shop})
 
-        self.default_node, = Node.create([{
+        self.default_node, = self.Node.create([{
             'name': 'root',
             'slug': 'root',
         }])
@@ -380,5 +447,50 @@ class BaseTestCase(NereidTestCase):
             'currencies': [('add', [self.usd.id])],
             'root_tree_node': self.default_node,
         }])
-        
-        
+
+        # Create an article category
+        article_categ, = self.ArticleCategory.create([{
+            'title': 'Test Categ',
+            'unique_name': 'test-categ',
+        }])
+
+        self.Article.create([{
+            'title': 'Test Article',
+            'uri': 'test-article',
+            'content': 'Test Content',
+            'sequence': 10,
+            'category': [('add', [article_categ.id])],
+        }])
+
+        # Product categories
+        self.category, = self._create_product_category(
+            'categ1', [{'uri': 'category1   '}]
+        )
+        self.category2, = self._create_product_category(
+            'categ2', [{'uri': 'category2'}]
+        )
+        self.category3, = self._create_product_category(
+            'categ3', [{'uri': 'category3'}]
+        )
+
+    def login(self, client, username, password, assert_=True):
+        """
+        Login method.
+
+        :param client: Instance of the test client
+        :param username: The username, usually email
+        :param password: The password to login
+        :param assert_: Boolean value to indicate if the login has to be
+                        ensured. If the login failed an assertion error would
+                        be raised
+        """
+        rv = client.post(
+            '/login', data={
+                'email': username,
+                'password': password,
+            }
+        )
+
+        if assert_:
+            self.assertEquals(rv.status_code, 302)
+        return rv

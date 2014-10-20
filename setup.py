@@ -124,6 +124,7 @@ setup(
     test_loader='trytond.test_loader:Loader',
     tests_require=[
         'pycountry',
+        'openlabs_payment_gateway_authorize_net'
     ],
     cmdclass={
         'test': SQLiteTest,
