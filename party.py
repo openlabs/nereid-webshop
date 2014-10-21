@@ -8,11 +8,14 @@
 '''
 import os
 import logging
+from wtforms import TextField, validators
 
 from trytond.pool import PoolMeta, Pool
 from trytond.modules.nereid.party import AddressForm
 from trytond.config import CONFIG
 from nereid import request, current_app
+
+from trytond.modules.nereid_checkout.i18n import _
 
 __metaclass__ = PoolMeta
 __all__ = ['Address']
@@ -31,6 +34,9 @@ else:
 class WebshopAddressForm(AddressForm):
     """Custom address form for webshop
     """
+
+    phone = TextField(_('Phone'), [validators.Required(), ])
+
     def get_default_country(self):
         """Get the default country based on geoip data.
         """
@@ -88,7 +94,7 @@ class Address:
                 country=address.country and address.country.id,
                 subdivision=address.subdivision and address.subdivision.id,
                 email=address.party.email,
-                phone=address.party.phone
+                phone=address.phone_number and address.phone_number.value
             )
         else:
             address_name = "" if request.nereid_user.is_anonymous() else \
