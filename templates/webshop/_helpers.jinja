@@ -43,11 +43,9 @@
       {{ line }}<br/>
     {% endif %}
   {% endfor %}
-  {# Note: Commenting until phone numbers are associated with addresses
-  {% if address.phone %}
-  <abbr title="Phone"><i class="fa fa-phone"></i></abbr>: {{ address.phone }}<br/>
+  {% if address.phone_number %}
+    <abbr title="Phone"><i class="fa fa-phone"></i></abbr>: {{ address.phone_number.value }}<br/>
   {% endif %}
-  #}
 </address>
 {%- endmacro %}
 
