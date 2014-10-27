@@ -2,13 +2,18 @@
 
 {% from '_helpers.jinja' import render_pagination, render_product_list  %}
 
+{% block title %}{{ node.name }} {{ super() }}{% endblock %}
+{% block meta_description %}{{ (node.description or '')|striptags|truncate(300) }}{% endblock %}
+
 {% block breadcrumb %}
-<li>
-  <li><a href="{{ url_for('nereid.website.home') }}">Home</a></li>
+  {{ super() }}
   {% for url, node in make_tree_crumbs(node=node, add_home=False)[1:] %}
-    <li><a href="{{ url }}">{{ node }}</a></li>
+    <li>
+      <a href="{{ url }}" itemprop="url">
+        <span itemprop="title">{{ node }}</span>
+      </a>
+    </li>
   {% endfor %}
-</li>
 {% endblock breadcrumb %}
 
 {% block main %}
@@ -60,3 +65,15 @@
   </div>
 </section>
 {% endblock main%}
+
+
+{% block ga_page_view %}
+    // 1. Send product and impression data with pageview.
+    {% for product in products %}
+        {% if product.__name__ == 'product.template' %}
+        {# the product could also template, in which case use the first variant #}
+        {% set product = product.products_displayed_on_eshop[0] %}
+        {% endif %}
+        ga('ec:addImpression', {{ product.ga_product_data(list=node.name, position=loop.index)|tojson|safe }});
+    {% endfor %}
+{% endblock ga_page_view %}

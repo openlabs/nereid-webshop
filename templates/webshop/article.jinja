@@ -1,8 +1,14 @@
 {% extends 'article-category.jinja' %}
 
+{% block title %}{{ article.title }} {{ super() }}{% endblock title %}
+{% block meta_description %}{{ (article.description or '')|striptags|truncate(300) }}{% endblock %}
+
 {% block breadcrumb %}
+{{ super() }}
 <li>
-  {{ article.title }}
+  <a href="{{ url_for('nereid.cms.article.render', uri=article.uri) }}" itemprop="url">
+    <span itemprop="title">{{ article.title }}</span>
+  </a>
 </li>
 {% endblock breadcrumb %}
 

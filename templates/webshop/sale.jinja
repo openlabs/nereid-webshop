@@ -102,7 +102,7 @@
                 <button name="save-comment" class="btn btn-primary col-md-3 pull-right margin-top-30" id="add-comment" data-url="{{ url_for('sale.sale.add_comment_to_sale', active_id=sale.id, access_code=sale.guest_access_code) }}">{{ _('Save') }}</button>
             </div>
           {% else %}
-          <h5> <span class="text-muted">Note: </span>&nbsp;{{ _(sale.comment) }}</h5>
+          <h5> <span class="text-muted">Note: </span>&nbsp;{{ sale.comment }}</h5>
           {% endif %}
         </div>
       </div>
@@ -136,3 +136,13 @@
   });
 </script>
 {% endblock scripts %}
+
+
+{% block ga_page_view %}
+{% if confirmation %}
+    {% for line in sale.lines if line.product %}
+      ga('ec:addProduct', {{ line.product.ga_product_data(price=line.unit_price, quantity=line.quantity|string)|tojson|safe }});
+    {% endfor %}
+    ga('ec:setAction', 'purchase', {{ sale.ga_purchase_data()|tojson|safe }});
+{% endif %}
+{% endblock ga_page_view %}

@@ -1098,7 +1098,7 @@ dl.dl-horizontal dd{
 .delivery-address li:hover,
 .delivery-address li:focus{
   border-color: #ddd transparent #ddd #ddd;
-  *border-right-color: #ffffff;
+  border-right-color: #ffffff;
 }
 .delivery-address .form-horizontal .form-group label{
   font-weight: 600;

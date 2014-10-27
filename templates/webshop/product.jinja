@@ -2,27 +2,40 @@
 
 {% from '_helpers.jinja' import render_product %}
 
-{% block title %}{{ product.name }}{% endblock title %}
+{% block title %}{{ product.name }} {{ super() }}{% endblock title %}
+{% block meta_description %}{{ (product.description or '')|striptags|truncate(300) }}{% endblock %}
+
+{% block base_stylesheet %}
+  <link rel="stylesheet" type="text/css" href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/lightbox.css') }}">
+  {{ super() }}
+{% endblock base_stylesheet %}
 
 {% block extra_head %}
 {{ super() }}
 <!-- og -->
 <meta property="og:url" content="{{ url_for('product.product.render', uri=product.uri, _external=True) }}"/>
 <meta property="og:title" content="{{ product.name  }}" />
-<meta property="og:description" content="{{ (product.description or '')|truncate(300) }}" />
+<meta property="og:description" content="{{ (product.description or '')|striptags|truncate(300) }}" />
 <meta property="og:type" content="product"/>
-<meta property="og:image" content="http:{{ CDN }}{{ product.default_image.transform_command().thumbnail(1500, 1500, 'a') }}"/>
+<meta property="og:image" content="{{ CDN }}{{ product.default_image.transform_command().thumbnail(1500, 1500, 'a') }}"/>
 {% for code in product.codes %}
 {% if code.code_type == 'upc-a' %}
 <meta property="og:upc" content="{{ code.code }}"/>
 {% endif %}
 {% endfor %}
+
+<script type="application/ld+json">
+  {{ product.json_ld()|tojson|safe }}
+</script>
 {% endblock extra_head %}
 
 {% block breadcrumb %}
 {{ super() }}
+{# TODO: Guess the tree node or category from URL and then display that on breadcrumb #}
 <li>
-  {{ product.name }}
+  <a href="{{ url_for('product.product.render', uri=product.uri) }}" itemprop="url">
+    <span itemprop="title">{{ product.name }}</span>
+  </a>
 </li>
 {% endblock breadcrumb %}
 
@@ -198,6 +211,11 @@
 </div>
 {% endblock main %}
 
+{% block script_tags %}
+  {{ super() }}
+  <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/lightbox.js') }}"></script>
+{% endblock script_tags %}
+
 {# all this is valid only if nereid-catalog-variants module is installed #}
 {% block scripts %}
 {{ super() }}
@@ -318,4 +336,12 @@
     });
   });
 </script>
+
 {% endblock scripts %}
+
+
+{% block ga_page_view %}
+    // 1. Send product and impression data with pageview.
+    ga('ec:addProduct', {{ product.ga_product_data()|tojson|safe }});
+    ga('ec:setAction', 'detail');
+{% endblock ga_page_view %}

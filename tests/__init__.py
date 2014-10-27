@@ -13,6 +13,7 @@ import trytond.tests.test_tryton
 
 from tests.test_views_depends import TestViewsDepends
 from tests.test_invoice import TestDownloadInvoice
+from tests.test_css import CSSTest
 
 
 def suite():
@@ -21,6 +22,7 @@ def suite():
     """
     test_suite = trytond.tests.test_tryton.suite()
     test_suite.addTests([
+        unittest.TestLoader().loadTestsFromTestCase(CSSTest),
         unittest.TestLoader().loadTestsFromTestCase(TestViewsDepends),
         unittest.TestLoader().loadTestsFromTestCase(TestDownloadInvoice),
     ])

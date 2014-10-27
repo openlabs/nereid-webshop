@@ -2,7 +2,8 @@
 <html lang="{{ request.nereid_language.code }}">
   <head>
     <title>{% block title %}{% trans %}Nereid Webshop{% endtrans %}{% endblock title %}</title>  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=9">
     <link rel="icon" href="{{ SHOP_FAVICON or url_for('nereid.webshop.send_static_file', filename='images/favicon.ico') }}" type="image/x-icon">
@@ -21,7 +22,6 @@
     {% endblock link_tags %}
 
     {% block base_stylesheet %}
-      <link rel="stylesheet" type="text/css" href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/lightbox.css') }}">
       <link rel="stylesheet" type="text/css" href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/style.css') }}">
     {% endblock base_stylesheet %}
 
@@ -176,9 +176,14 @@
         {% endblock main_navigation %}
       </div>
     </section>
-    <div class="container container-breadcrumb">
+    <div class="container container-breadcrumb" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
       <ol class="breadcrumb">
         {% block breadcrumb %}
+        <li>
+          <a href="{{ url_for('nereid.website.home') }}" itemprop="url">
+            <span itemprop="title">{{ _('Home') }}</span>
+          </a>
+        </li>          
         {% endblock %}
       </ol>
     </div>
@@ -340,7 +345,6 @@
       #}
     <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/app.js') }}"></script>
     <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/holder.js') }}"></script>
-    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/lightbox.js') }}"></script>
     {% endblock script_tags %}
 
     <script type="text/javascript">
@@ -390,6 +394,26 @@
         });
       });
     </script>
+
+    {% if GOOGLE_ANALYTICS_PROPERTY_ID %}
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', '{{ GOOGLE_ANALYTICS_PROPERTY_ID }}', 'auto');
+      ga('require', 'displayfeatures');
+      ga('require', 'ec');
+
+      {% block ga_page_view %}
+        {# In downstream pages add calls to be made before send here #}
+      {% endblock ga_page_view %}
+
+      ga('send', 'pageview');
+
+    </script>
+    {% endif %}
 
     {% block scripts %}
     {% endblock scripts %}

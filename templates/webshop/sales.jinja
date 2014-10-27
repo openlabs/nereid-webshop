@@ -45,7 +45,11 @@
                   <td><a href="{{ url_for('sale.sale.render', active_id=sale.id) }}" class="text-info">#{{ sale.reference }}</a></td>
                   <td class="orderd-products">
                     {% for line in sale.lines %}
-                    <a href="{{ url_for('product.product.render', uri=line.product.uri) }}" class="product-name">{{ line.description }}</a><br>
+                    {% if line.product and line.product.displayed_on_eshop %}
+                      <a href="{{ url_for('product.product.render', uri=line.product.uri) }}" class="product-name">{{ line.description }}</a><br>
+                    {% else %}
+                      <a class="product-name">{{ line.description }}</a>
+                    {% endif %}
                     {#<span class="text-muted">Size : </span> L#}
                     <span class="text-muted">{{ _('Qty') }} : </span> {{ line.quantity }}<br>
                     {% endfor %}
