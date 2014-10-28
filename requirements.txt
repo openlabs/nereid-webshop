@@ -1,9 +1,9 @@
 # Install zikzakmedia's sale shop module from bitbucket.
-https://bitbucket.org/zikzakmedia/trytond-sale_shop/get/default.tar.gz
+# Depend on a commit as in further commit migration in sqlit is broken
+https://bitbucket.org/zikzakmedia/trytond-sale_shop/get/c08a55a96f605e96c72253ce22a24251c86c5bb9.tar.gz
 
 # Install cssutils
 cssutils
 
 # Install this package itself
 .
-
