@@ -582,6 +582,7 @@ class TestTemplates(BaseTestCase):
                         'streetbis': 'Apt. 1906, Biscayne Park',
                         'zip': 'FL33137',
                         'city': 'Miami',
+                        'phone': '1234567890',
                         'country': country.id,
                         'subdivision': subdivision.id,
                     }
@@ -600,6 +601,7 @@ class TestTemplates(BaseTestCase):
                         'streetbis': 'Apt. 1906, Biscayne Park',
                         'zip': 'FL33137',
                         'city': 'Miami',
+                        'phone': '1234567890',
                         'country': country.id,
                         'subdivision': subdivision.id,
                     }
@@ -689,6 +691,7 @@ class TestTemplates(BaseTestCase):
                         'streetbis': 'Apt. 1906, Biscayne Park',
                         'zip': 'FL33137',
                         'city': 'Miami',
+                        'phone': '1234567890',
                         'country': country.id,
                         'subdivision': subdivision.id,
                     }
@@ -707,6 +710,7 @@ class TestTemplates(BaseTestCase):
                         'streetbis': 'Apt. 1906, Biscayne Park',
                         'zip': 'FL33137',
                         'city': 'Miami',
+                        'phone': '1234567890',
                         'country': country.id,
                         'subdivision': subdivision.id,
                     }
@@ -733,7 +737,7 @@ class TestTemplates(BaseTestCase):
                 )
                 self.assertEqual(rv.status_code, 302)
                 self.assertTrue('/order/' in rv.location)
-                self.assertFalse('access_code' in rv.location)
+                self.assertTrue('access_code' in rv.location)
 
                 sale, = self.Sale.search([('state', '=', 'confirmed')])
                 payment_transaction, = sale.gateway_transactions
