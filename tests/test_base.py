@@ -448,7 +448,6 @@ class BaseTestCase(NereidTestCase):
             'guest_user': self.guest_user,
             'countries': [('add', self.available_countries)],
             'currencies': [('add', [self.usd.id])],
-            'root_tree_node': self.default_node,
         }])
 
         # Create an article category
