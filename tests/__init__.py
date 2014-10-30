@@ -14,7 +14,7 @@ import trytond.tests.test_tryton
 from .test_views_depends import TestViewsDepends
 from .test_invoice import TestDownloadInvoice
 from .test_css import CSSTest
-from tests.test_templates import TestTemplates
+from .test_templates import TestTemplates
 
 
 def suite():
