@@ -9,12 +9,12 @@
 import os
 
 from flask.helpers import send_from_directory
-from trytond.model import ModelSQL
+from trytond.model import ModelSQL, fields
 from trytond.pool import PoolMeta
 from nereid import current_app, route
 
 __metaclass__ = PoolMeta
-__all__ = ['WebShop', 'BannerCategory', 'Banner', 'Article']
+__all__ = ['WebShop', 'BannerCategory', 'Banner', 'Article', 'Website']
 
 #: Get the static folder. The static folder also
 #: goes into the site packages
@@ -72,3 +72,13 @@ class Article:
         created by the module.
         """
         return True
+
+
+class Website:
+    "Nereid Website"
+    __name__ = 'nereid.website'
+
+    cms_root_menu = fields.Many2One(
+        'nereid.cms.menuitem', "CMS root menu", ondelete='RESTRICT',
+        select=True,
+    )

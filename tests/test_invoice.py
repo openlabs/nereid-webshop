@@ -47,7 +47,6 @@ class TestDownloadInvoice(BaseTestCase):
             'application_user': USER,
             'default_locale': self.locale_en_us.id,
             'guest_user': self.guest_user,
-            'root_tree_node': node,
             'countries': [('add', self.available_countries)],
             'currencies': [('add', [self.usd.id])],
         }])
