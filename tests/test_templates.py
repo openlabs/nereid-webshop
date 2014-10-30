@@ -172,7 +172,7 @@ class TestTemplates(BaseTestCase):
                 'products': [
                     ('create', [{
                         'uri': 'product-3',
-                        'displayed_on_eshop': False
+                        'displayed_on_eshop': True
                     }])
                 ]
             }
@@ -180,11 +180,11 @@ class TestTemplates(BaseTestCase):
             template1, template2, template3, = self.ProductTemplate.create([
                 values1, values2, values3
             ])
+
             node1, = self.Node.create([{
                 'name': 'Node1',
                 'type_': 'catalog',
                 'slug': 'node1',
-                'products': [('add', template1.products)]
             }])
 
             self.assert_(node1)
@@ -194,7 +194,6 @@ class TestTemplates(BaseTestCase):
                 'type_': 'catalog',
                 'slug': 'node2',
                 'display': 'product.template',
-                'products': [('add', template2.products)]
             }])
 
             node3, = self.Node.create([{
@@ -210,6 +209,20 @@ class TestTemplates(BaseTestCase):
             self.Node.write([node3], {
                 'parent': node2
             })
+
+            # Create Product-Node relationships.
+            self.ProductNodeRelationship.create([{
+                'product': pro,
+                'node': node1,
+            } for pro in template1.products])
+            self.ProductNodeRelationship.create([{
+                'product': pro,
+                'node': node2,
+            } for pro in template2.products])
+            self.ProductNodeRelationship.create([{
+                'product': pro,
+                'node': node3,
+            } for pro in template3.products])
 
             app = self.get_app()
 

@@ -54,6 +54,9 @@ class BaseTestCase(NereidTestCase):
         self.ArticleCategory = POOL.get('nereid.cms.article.category')
         self.Article = POOL.get('nereid.cms.article')
         self.Category = POOL.get('product.category')
+        self.ProductNodeRelationship = POOL.get(
+            'product.product-product.tree_node'
+        )
 
     def _get_account_by_kind(self, kind, company=None, silent=True):
         """Returns an account with given spec
@@ -448,7 +451,6 @@ class BaseTestCase(NereidTestCase):
             'guest_user': self.guest_user,
             'countries': [('add', self.available_countries)],
             'currencies': [('add', [self.usd.id])],
-            'root_tree_node': self.default_node,
         }])
 
         # Create an article category
