@@ -1,7 +1,7 @@
 {% extends 'home.jinja' %}
 
 {% block title %}{{ category and category.title }} {{ super() }}{% endblock title %}
-{% block meta_description %}{{ (category.description or '')|striptags|truncate(300) }}{% endblock %}
+{% block meta_description %}{{ (category and category.description or '')|striptags|truncate(300) }}{% endblock %}
 
 {% block breadcrumb %}
 {{ super() }}
