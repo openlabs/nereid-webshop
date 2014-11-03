@@ -11,9 +11,10 @@ import unittest
 
 import trytond.tests.test_tryton
 
-from tests.test_views_depends import TestViewsDepends
-from tests.test_invoice import TestDownloadInvoice
-from tests.test_css import CSSTest
+from .test_views_depends import TestViewsDepends
+from .test_invoice import TestDownloadInvoice
+from .test_css import CSSTest
+from .test_templates import TestTemplates
 
 
 def suite():
@@ -25,6 +26,7 @@ def suite():
         unittest.TestLoader().loadTestsFromTestCase(CSSTest),
         unittest.TestLoader().loadTestsFromTestCase(TestViewsDepends),
         unittest.TestLoader().loadTestsFromTestCase(TestDownloadInvoice),
+        unittest.TestLoader().loadTestsFromTestCase(TestTemplates)
     ])
     return test_suite
 

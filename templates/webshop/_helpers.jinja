@@ -131,24 +131,26 @@
 </ul>
 {% endmacro %}
 
-{% macro nav_from_tree_node(root_node) %}
+{% macro render_cms_root_menu(root_menu) -%}
   {# render the children of the given node as menu #}
-  {% for node in root_node.children %}
+  {% for menuitem in root_menu.get_menu_item(max_depth=10).children %}
     <li>
-      <a class="main-link" href="{{ url_for('product.tree_node.render', active_id=node.id, slug=node.slug) }}">{{ node.name }}</a>
-      {% if node.children %}
+      <a class="main-link" href="{{ menuitem.link }}" target="{{ menuitem.target }}">{{ menuitem.title }}</a>
+      {% if menuitem.children %}
       <!-- Dropdown Menu Starts-->
       <div class="container menbg">
         <div class="row">
-          {% for child in node.children %}
-          <div class="col-md-2">
-            <ul class="list-unstyled">
-              <li><a href="{{ url_for('product.tree_node.render', active_id=child.id, slug=child.slug) }}"><strong>{{ child.name }}</strong></a></li>
-              {% for grandchild in child.children %}
-              <li><a href="{{ url_for('product.tree_node.render', active_id=grandchild.id, slug=grandchild.slug) }}">{{ grandchild.name }}</a></li>
-              {% endfor %}
-            </ul>
-          </div>
+          {% for child in menuitem.children %}
+            <div class="col-md-2">
+              <ul class="list-unstyled">
+                <li>
+                  <a href="{{ child.link }}"><strong>{{ child.title }}</strong></a>
+                </li>
+                {% for grandchild in child.children %}
+                  <li><a href="{{ grandchild.link }}" target="{{ grandchild.target }}">{{ grandchild.title }}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
           {% endfor %}
         </div>
       </div>

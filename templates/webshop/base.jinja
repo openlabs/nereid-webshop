@@ -118,31 +118,34 @@
               </div>
             </div>
           {% endblock logo %}
-          {% block search %}
-            <div class="col-md-5 top-search">
-              <form action="{{ url_for('product.product.quick_search') }}" id="search_form">
-              <div class="input-group">
-                <input type="text" class="form-control" name="q">
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-                </span>
-              </div><!-- /input-group -->
-              </form>
-            </div>
-          {% endblock search %}
           {% block header_user %}
-            <div class="col-md-4 my-account">
+            <div class="col-md-4 col-md-push-5 my-account">
               <ul class="list-inline pull-right">
                 <li>
                   <div class="btn-group">
                     <a type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-user"></i> {{ _('My Account') }} <span class="caret"></span>
+                      <i class="fa fa-user"></i> <span class="hidden-xs hidden-sm">{{ _('My Account') }}</span> <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                       {% if not current_user.is_anonymous() %}
-                        <li><a href="{{ url_for('nereid.website.account') }}">{{ _('Profile') }}</a></li>
-                        <li><a href="">{{ _('My Orders') }}</a></li>
-                        <li><a href="{{ url_for('nereid.website.logout') }}"><i class="fa fa-sign-out"></i>{{ _('Logout') }}</a></li>
+                        <li><a href="{{ url_for('nereid.website.account') }}">
+                          <i class="fa fa-user"></i>&nbsp;&nbsp;{{ _('Profile') }}
+                        </a></li>
+                        <li><a href="{{ url_for('sale.sale.render_list') }}">
+                          <i class="fa fa-cubes"></i>&nbsp;&nbsp;{{ _('My Orders') }}
+                        </a></li>
+                        <li><a href="{{ url_for('party.address.view_address') }}">
+                          <i class="fa fa-book"></i>&nbsp;&nbsp;{{ _('Address Book') }}
+                        </a></li>
+                        <li><a href="{{ url_for('wishlist.wishlist.render_wishlists') }}">
+                          <i class="fa fa-heart"></i>&nbsp;&nbsp;{{ _('My Wishlist') }}
+                        </a></li>
+                        <li><a href="{{ url_for('party.party.view_payment_profiles') }}">
+                          <i class="fa fa-credit-card"></i>&nbsp;&nbsp;{{ _('My Cards') }}
+                        </a></li>
+                        <li><a href="{{ url_for('nereid.website.logout') }}">
+                          <i class="fa fa-sign-out"></i>&nbsp;&nbsp;{{ _('Logout') }}
+                        </a></li>
                       {% else %}
                         <li><a class="register-buttons" href="{{ url_for('nereid.website.login') }}">{{ _('Login / SignUp') }}</a></li>
                       {% endif %}
@@ -155,6 +158,18 @@
               </ul>
             </div>
           {% endblock header_user %}
+          {% block search %}
+            <div class="col-md-5 col-sm-12 col-xs-12 col-md-pull-4 top-search">
+              <form action="{{ url_for('product.product.quick_search') }}" id="search_form">
+              <div class="input-group">
+                <input type="text" class="form-control" name="q">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                </span>
+              </div><!-- /input-group -->
+              </form>
+            </div>
+          {% endblock search %}
         </div>
       </div>
       {% endblock header_row_2 %}
@@ -165,9 +180,9 @@
         <div class="row main-navigation">
           <div class="col-md-12">
             <ul class="list-inline" id="nav-list">
-              {% from '_helpers.jinja' import nav_from_tree_node %}
-              {% if request.nereid_website.root_tree_node %}
-                {{ nav_from_tree_node(request.nereid_website.root_tree_node) }}
+              {% from '_helpers.jinja' import render_cms_root_menu %}
+              {% if request.nereid_website.cms_root_menu %}
+                {{ render_cms_root_menu(request.nereid_website.cms_root_menu) }}
               {% endif %}
               {# add any other navigational elements like probably an article list or custom link here #}
             </ul>
