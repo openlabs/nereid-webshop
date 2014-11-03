@@ -6,16 +6,17 @@
 
 '''
 from trytond.pool import Pool
+from party import Party, Address
 from webshop import WebShop, BannerCategory, Banner, Article, Website
 from product import Product
 from invoice import Invoice
 from sale import Sale
-from party import Address
 from shipment import ShipmentOut
 
 
 def register():
     Pool.register(
+        Party,
         WebShop,
         BannerCategory,
         Banner,
