@@ -2,63 +2,72 @@
 
 {% from '_helpers.jinja' import render_field %}
 
+{% block breadcrumb %}
+    <h3 class="breadcrumb-page-title">
+      {{ _('Please Sign In') }}
+      {% if request.is_secure %}
+      <small class="pull-right"><i class="fa fa-lock"></i> {{ _('This is a secure transaction') }}</small>
+      {% endif %}
+    </h3>
+
+{% endblock breadcrumb %}
+
 {% block main %}
 <section>
-  <div class="container">
-    <!--Login Container-->
-    <div class="row login-container">
-      <div class="account-auth col-md-10 col-md-offset-1">
-        <div class="login-header center">
-          <div class="login-body">
-            <h4 class="center login-text"><span>{{ _('Sign In') }}</span></h4>
-            <div class="row">
-              <div class="col-md-6 col-md-offset-3">
-                <form class="login-form" method="POST" id="checkout-signin" autocomplete="off">
-                  {{ form.hidden_tag() }}
-                  {{ render_field(form.email, placeholder=_('Enter your E-mail'), required=required, type="email") }}
-                  {% if not current_user.is_anonymous() %}
-                    <small>({{ _('Not') }} {{ request.nereid_user.display_name }} ? <a href="{{ url_for('nereid.website.logout') }}">{{ _('Logout') }}</a>)</small> 
-                  {% endif %}
-                  <div id="password_field" {% if form.checkout_mode.data == "guest" %}style="display:none"{% endif %}>
-                    {{ render_field(form.password, placeholder=_('Your Password')) }}
-                  </div>
-                  {{ form.checkout_mode }}
-                  <button type="submit" class="btn btn-lg btn-block">{{ _('Login') }}</button>
-                  <div id="forgot-password">
-                  <a href="{{ url_for('nereid.user.reset_account', next=request.args.get('next', url_for('nereid.website.home'))) }}" class="text-muted"><strong>{{ _('Forgot Password ?') }}</strong></a>
-                </div>  
-              </form>
+  <div class="container login-container">
+    <div class="row">
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="login-box">
+          <h4>{{ _('Returning Customers') }}</h4>
+          <h4><small>{{ _('Sign in below to checkout with an existing account') }}</small></h4>
+          <div class="clearfix"></div>
+          <div class="row">
+            <form class="form col-md-8 col-sm-10 col-xs-12" method="POST" id="checkout-signin" autocomplete="off">
+              {{ form.hidden_tag() }}
+              {{ render_field(form.email, placeholder=_('Enter your E-mail'), required=True, type="email") }}
+              {{ render_field(form.password, placeholder=_('Password'), required=True) }}
+              <input id="checkout_mode-1" name="checkout_mode" type="hidden" value="account">
+              <div class="forgot-password pull-right">
+                <a
+                  href="{{ url_for('nereid.user.reset_account', next=request.args.get('next', url_for('nereid.website.home'))) }}" 
+                  class="text-muted">
+                  <strong>{{ _('Forgot Password ?') }}</strong>
+                </a>
               </div>
+              <button type="submit" class="btn btn-lg btn-warning">
+                <i class="fa fa-lock"></i> {{ _('Sign In') }}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="login-box">
+          <h4>{{ _('New Customers') }}</h4>
+          <h4><small>{{ _('Enter the email where you would like to receive order information.') }}</small></h4>
+          <div class="clearfix"></div>
+          <div class="row">
+            <form class="login-form col-md-8 col-sm-10 col-xs-12" method="POST" id="checkout-signin" autocomplete="off">
+              {{ form.hidden_tag() }}
+              {{ render_field(form.email, placeholder=_('Enter your E-mail'), required=required, type="email") }}
+              <input id="checkout_mode-1" name="checkout_mode" type="hidden" value="guest">
+              <button type="submit" class="btn btn-lg btn-warning">{{ _('Continue as Guest') }} <i class="fa fa-arrow-right"></i></button>
+            </form>
+          </div>
+          <div class="row want-to-register">
+            <div class="col-md-12 text-muted">
+              {% trans %}Want to create an account first ?{% endtrans %}
+              <a href="{{ url_for('nereid.user.registration') }}">
+                <strong>{{ _('Register Now') }}</strong>
+              </a>
             </div>
           </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 {% endblock main %}
-
-{% block scripts %}
-  {{ super() }}
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $("input[name='checkout_mode']").change(function(){
-        var checkout_method = $("input[name='checkout_mode']:checked").val();
-        if(checkout_method == 'account'){
-          $('#forgot-password').show();
-          $("#password_field").show();
-          $('.login-form button').text('Login');
-          $('#password_field input[type=password]').attr('required', 'required');
-        }else{
-          $('#forgot-password').hide();
-          $("#password_field").hide();
-          $('.login-form button').text('{{ _("Proceed to checkout") }}');
-          $('#password_field input[type=password]').removeAttr('required');
-        }
-      }).change();
-    });
-  </script>
-{% endblock scripts %}
 
 
 {% block ga_page_view %}
