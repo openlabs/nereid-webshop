@@ -594,13 +594,21 @@ section.products{
   height: 80px;
 }
 .login-container{
-  padding: 3em 0;
+  padding-bottom: 25px;
 }
-.login-container .login-header{
-  padding: 1em 0;
+.login-container > div.row > div {
+  padding-top: 10px;
+}
+.login-box {
+  background-color: #eee;
+  border-radius: 5px;
+  padding: 10px;
 }
 .account-auth .social-login a:hover{
   color: #fff;
+}
+.want-to-register {
+  padding-top: 20px;
 }
 ul.social-login li a{
   display: inline-block;
@@ -1652,4 +1660,7 @@ border-top: 1px solid rgba(248, 248, 248, 0.2);
   background-color: #eee;
   border-radius: 5px;
   padding: 10px 10px 20px;
+}
+.breadcrumb-page-title {
+  margin-left: -15px;
 }
