@@ -1029,7 +1029,6 @@ dl.dl-horizontal dd{
   margin: 0;
   padding: 1px 5px;
   vertical-align: middle;
-  width: 30px;
 }
 .action i{
   margin-right: 5px;
@@ -1639,4 +1638,18 @@ border-top: 1px solid rgba(248, 248, 248, 0.2);
 }
 .my-account .filter-by{
   padding-bottom: 20px;
+}
+.cart-line-action-block {
+  padding-top: 10px;
+}
+.cart-line-action-block a {
+  color: none;
+}
+.table-borderless td {
+    border: none;
+}
+.order-summary {
+  background-color: #eee;
+  border-radius: 5px;
+  padding: 10px 10px 20px;
 }
