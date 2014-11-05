@@ -2,6 +2,22 @@
 
 {% block breadcrumb %}{% endblock %}
 
+
+{% macro render_quantity_selector(line) %}
+<div class="form-group">
+  {% if not line.unit.digits %}
+    <select class="form-control qty" data-product="{{ line.product.id }}">
+    {% for q in range(1, 100) %}
+      <option {% if line.quantity == q %}selected{% endif %}>{{ q }}</option>
+    {% endfor %}
+    </select>
+  {% else %}
+  <input class="form-control text-right qty" type="number" data-product="{{ line.product.id }}" title="Qty" value="{{ line.quantity|int }}" name="quantity">
+  {% endif %}
+</div>
+{% endmacro %}
+
+
 {% block main %}
 <section class="checkout-container">
   {% if not (cart.sale and cart.sale.lines) %}
@@ -32,22 +48,22 @@
             </div>
             <div class="col-sm-4 col-xs-6 pull-right visible-xs-block visible-sm-inline">
               <a class="btn btn-warning btn-block" href="{{ url_for('nereid.checkout.sign_in') }}">
-                <i class="fa fa-lock"></i>&nbsp;&nbsp; {{ _('Proceed to Checkout') }}
+                <i class="fa fa-lock"></i>&nbsp;&nbsp; {{ _('Checkout') }}
               </a>
             </div>
           </div>
           <!--Cart table starts here -->
           <div class="row">
             {% block shopping_cart_table scoped %}
-            <div class="col-md-12 table-responsive">
+            <div class="col-md-12">
               <table class="table">
                 <thead>
                   <tr>
                     <th></th>
                     <th>{{ _('Product') }}</th>
-                    <th class="text-right">{{ _('Unit Price') }}</th>
+                    <th class="text-right hidden-xs">{{ _('Price') }}</th>
                     <th>{{ _('Quantity') }}</th>
-                    <th class="text-right">{{ _('Unit Total') }}</th>
+                    <th class="text-right hidden-xs">{{ _('SubTotal') }}</th>
                   </tr>
                 </thead>
                 {% block lines scoped %}
@@ -56,8 +72,9 @@
                   <tr>
                     <td>
                       <a href="{{ url_for('product.product.render', uri=line.product.uri) }}">
-                          <img src="{{ line.product.default_image.transform_command().thumbnail(100, 100, 'a') }}" alt="{{ line.product.name }}">
-                      </td>
+                        <img src="{{ line.product.default_image.transform_command().thumbnail(100, 100, 'a') }}" alt="{{ line.product.name }}">
+                      </a>
+                    </td>
                     <td>
                       <a href="{{ url_for('product.product.render', uri=line.product.uri) }}" class="product-name">
                         <strong>{{ line.product.name }}</strong>
@@ -68,38 +85,45 @@
                         <br/><strong class="text-muted"> {{ key }} : </strong> {{ value }}
                       {% endfor %}
                       {% endif %}
-                      <br/><br/>
-                      <span class="cart-line-action-block">
-                        <a href="{{ url_for('nereid.cart.delete_from_cart', line=line.id) }}" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{ _('Remove Item') }}" class="remove_from_cart">
-                          Delete
-                        </a>
-                        {% if current_user.is_authenticated() %}
-                          |
-                          <span data-toggle="tooltip" data-placement="top" title="" data-product="{{ line.product.id }}" data-original-title="Add to Default Wishlist" class="add-to-wishlist">
-                            Add to wishlist
+                      <div class="row">
+                        <div class="col-xs-12 visible-xs-block">
+                          <span>
+                            <strong>{{ line.amount|currencyformat(currency) }}</strong>
+                            {% if (line.unit.digits != 0) or (line.quantity > 1) %}
+                            ({{ line.unit_price|currencyformat(currency) }}/{{ line.unit.name }})
+                            {% endif %}
                           </span>
-                        {% endif %}
-                      </span>
+                        </div>
+                      </div>
+                      <div class="cart-line-action-block">
+                        <span class="text-muted">
+                          <a href="{{ url_for('nereid.cart.delete_from_cart', line=line.id) }}" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{ _('Remove Item') }}" class="remove_from_cart">
+                            <i class="fa fa-times"></i> Delete
+                          </a>
+                          {% if current_user.is_authenticated() %}
+                            |
+                            <span data-toggle="tooltip" data-placement="top" title="" data-product="{{ line.product.id }}" data-original-title="Add to Default Wishlist" class="add-to-wishlist">
+                              <i class="fa fa-heart"></i> Add to wishlist
+                            </span>
+                          {% endif %}
+                        </span>
+                      </div>
                     </td>
-                    <td class="text-right">
+                    <td class="text-right hidden-xs">
                       {{ line.unit_price|currencyformat(currency) }}
                     </td>
                     <td>
                       <div class="quantity buttons_added">
                         <form class="form-inline">
-                          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                           <div class="row">
                             <div class="col-md-4">
-                              <div class="form-group">
-                                <input class="form-control text-right qty" type="number" title="Qty" value="{{ line.quantity|int }}" name="quantity">
-                              </div>
+                              {{ render_quantity_selector(line) }}
                             </div>
                           </div>
-                          <input class="product" type="hidden" value="{{ line.product.id }}">
                         </form>
                       </div>
                     </td>
-                    <td class="text-right">
+                    <td class="text-right hidden-xs">
                       {{ line.amount|currencyformat(currency) }}
                     </td>
                   </tr>
@@ -119,54 +143,55 @@
         </div>
         <div class="col-md-4 col-sm-6 col-xs-12 pull-right">
           <div class="order-summary">
-          <h4> {{ _('Order Summary') }}</h4>
-          <!--Coupon row-->
-          <div class="row coupon-row">
-            <div class="col-md-12">
-              {% if cart.sale.coupon %}
-              {# if the promotions module is installed #}
-              <form autocomplete="off">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-                <div class="col-xs-4">
-                  <label for="" class="">Have a Coupon ?</label>
-                </div>
-                <div class="col-xs-6">
-                  <input type="text" class="form-control input-sm" id="" placeholder="Enter your coupon code">
-                </div>
-                <div class="col-xs-2">
-                <a class="btn btn-default btn-sm" data-original-title="" title="">Apply</a>
-                </div>
-              </form>
-              {% endif %}
-            </div>
-          </div>
-          <!--Item Total-->
-          <div class="row">
-            <div class="col-md-12">
-              <div class="table-responsive">
-                <table class="table text-right table-borderless">
-                  <tr>
-                    <td>{{ _('Subtotal') }}</td>
-                    <td>{{ cart.sale.untaxed_amount|currencyformat(currency) }}</td>
-                  </tr>
-                  <tr>
-                    <td>{{ _('Estimated Tax') }}</td>
-                    <td>{{ cart.sale.tax_amount|currencyformat(currency) }}</td>
-                  </tr>
-                  <tr>
-                    <td class="cart-total-sum">{{ _('Grand Total') }}</td>
-                    <td class="cart-total-sum">{{ cart.sale.total_amount|currencyformat(currency) }}</td>
-                  </tr>
-                </table>
+            <h4> {{ _('Order Summary') }}</h4>
+            {% if cart.sale.coupon %}
+            <!--Coupon row-->
+            <div class="row coupon-row">
+              <div class="col-md-12">
+                {# if the promotions module is installed #}
+                <form autocomplete="off">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                  <div class="col-xs-4">
+                    <label for="" class="">Have a Coupon ?</label>
+                  </div>
+                  <div class="col-xs-6">
+                    <input type="text" class="form-control input-sm" id="" placeholder="Enter your coupon code">
+                  </div>
+                  <div class="col-xs-2">
+                  <a class="btn btn-default btn-sm" data-original-title="" title="">Apply</a>
+                  </div>
+                </form>
               </div>
             </div>
-            <div class="col-md-12">
-              <a class="btn btn-warning btn-block btn-lg" href="{{ url_for('nereid.checkout.sign_in') }}">
-                <i class="fa fa-lock"></i>&nbsp;&nbsp; {{ _('Proceed to Checkout') }}
-              </a>
+            {% endif %}
+
+            <!--Item Total-->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table class="table text-right table-borderless">
+                    <tr>
+                      <td>{{ _('Subtotal') }}</td>
+                      <td>{{ cart.sale.untaxed_amount|currencyformat(currency) }}</td>
+                    </tr>
+                    <tr>
+                      <td>{{ _('Estimated Tax') }}</td>
+                      <td>{{ cart.sale.tax_amount|currencyformat(currency) }}</td>
+                    </tr>
+                    <tr>
+                      <td class="cart-total-sum">{{ _('Grand Total') }}</td>
+                      <td class="cart-total-sum">{{ cart.sale.total_amount|currencyformat(currency) }}</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <a class="btn btn-warning btn-block btn-lg" href="{{ url_for('nereid.checkout.sign_in') }}">
+                  <i class="fa fa-lock"></i>&nbsp;&nbsp; {{ _('Proceed to Checkout') }}
+                </a>
+              </div>
+              </div>
             </div>
-            </div>
-          </div>
           </div>
         </div>
       </div>
@@ -208,15 +233,15 @@
         $(this).button("reset");
       }
     });
-    $("input.qty").change(function() {
+    $(".qty").change(function() {
       var qty_element = $(this);
-      var product_element = $(this).siblings("input.product");
+      var product = $(this).data("product");
       var new_quantity = parseInt(qty_element.val());
       if (isNaN(new_quantity)) {
         new_quantity = 1;
       }
       $.post('{{ url_for('nereid.cart.add_to_cart')  }}',
-        {'quantity': new_quantity, 'product': product_element.val()},
+        {'quantity': new_quantity, 'product': product},
         function(data){
           window.location.href=window.location.href;
         }
