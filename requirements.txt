@@ -5,5 +5,8 @@ https://bitbucket.org/zikzakmedia/trytond-sale_shop/get/c08a55a96f605e96c72253ce
 # Install cssutils
 cssutils
 
+# Install cssutils
+cssutils
+
 # Install this package itself
 .

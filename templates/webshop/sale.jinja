@@ -93,7 +93,7 @@
           </div>
         </div>
         <div class="row margin-top-30">
-          {% if not sale.comment %}
+          {% if not sale.comment and sale.state == 'confirmed' %}
             <div class="add-comment">
               <h5 class="text-muted">{{ _('Add Note') }}</h5>
               <form name="add-comment"id="add-comment-form">
