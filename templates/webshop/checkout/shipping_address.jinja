@@ -2,33 +2,47 @@
 
 {% from '_helpers.jinja' import render_field, render_address %}
 
+{% block search %}
+    <!-- Checkout Step Indicator -->
+    <div class="col-md-9 col-sm-8 col-xs-12">
+    {{ checkout_breadcrumb(2) }}
+    </div>
+{% endblock %}
+
+{% block breadcrumb %}
+    <h3 class="breadcrumb-page-title">
+      {{ _('Shipping Address') }}
+      {% if request.is_secure %}
+      <small class="pull-right"><i class="fa fa-lock"></i> {{ _('This is a secure transaction') }}</small>
+      {% endif %}
+    </h3>
+{% endblock breadcrumb %}
+
 {% block main %}
 <section class="checkout-container">
   <div class="container">
-
-    <!-- Checkout Step Indicator -->
-    {{ checkout_breadcrumb(2) }}
-
     <!--Delivery Address Selection -->
-    <div class="row delivery-address">
-      <div class="col-md-10 col-md-offset-1">
-        <div class="col-md-8">
+    <div class="row">
+      <div class="delivery-address">
+        <div class="col-md-7 col-sm-7 col-xs-12">
           <div class="address-container">
             {% if not current_user.is_anonymous() and addresses %}
-            <h4><span>{{ _('Choose an existing Shipping Address') }}</span></h4>
+            <h4><span class="underline">{{ _('Choose an existing Shipping Address') }}</span></h4>
             <div class="row">
               {% for address in addresses %}
               <div class="col-md-6">
-                <div class="well" data-address-id="{{ address.id }}">
+                <div class="address">
+                <div class="address-card" data-address-id="{{ address.id }}">
                 {{ render_address(address, edit=False) }}
                 </div>
                 <form role="form" method="POST" autocomplete="off">
                   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                   <input type="hidden" name="address" value="{{ address.id }}"/>
-                  <button type="submit" class="btn btn-primary btn-block">
+                  <button type="submit" class="btn btn-warning btn-block">
                     {{ _('Ship to this address') }}&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
-                </button>
-                </form>
+                  </button>
+                </form> 
+                </div>             
               </div>
               {% if loop.index is divisibleby(2) %}
               </div>
@@ -59,39 +73,48 @@
               <span>{{ _('Enter your shipping address') }}</span>
               {% endif %}
             </h4>
-            <!-- Add new address form -->
-            <form role="form" method="POST" autocomplete="off">
-              {{ address_form.hidden_tag() }}
-              {{ render_field(address_form.name, required=required) }}
-              {{ render_field(address_form.street, placeholder=_("Street address, P.O. box, company name, c/o"), class_="form-control", label_text= _('Address Line 1'), required=required) }}
-              {{ render_field(address_form.streetbis, placeholder=_("Apartment, suite, unit, building, floor, etc."), class_="form-control", label_text= _('Address Line 2')) }}
-              <div class="row">
-                <div class="col-md-6">
-                  {{ render_field(address_form.city, required=required) }}
-                </div>
-                <div class="col-md-6">
-                  {{ render_field(address_form.zip, required=required) }}
-                </div>
-                <div class="col-md-6">
-                  {{ render_field(address_form.country) }}
-                </div>
-                <div class="form-group col-md-6">
-                  <label>{{ _('State') }} *:</label>
-                  <select class="form-control" id="subdivision" name="subdivision" >
-                  </select>
-                </div>
-                <div class="col-md-6">
-                    {{ render_field(address_form.phone, required=required) }}
-                </div>
-                <div class="col-md-offset-3 col-md-6">
-                  <button type="submit" class="btn btn-primary btn-block" id="address-btn">
-                    {{ _('Proceed to Payment') }}&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
-                  </button>
-                </div>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <!-- Add new address form -->
+                <form role="form" method="POST" autocomplete="off">
+                  {{ address_form.hidden_tag() }}
+                  {{ render_field(address_form.name, required=required, class_="input-lg form-control") }}
+
+                  {{ render_field(address_form.street, placeholder=_("Street address, P.O. box, company name, c/o"), label_text= _('Address'), required=required, class_="input-lg form-control") }}
+                  {{ render_field(address_form.streetbis, placeholder=_("Apartment, suite, unit, building, floor, etc."), show_label=False, class_="input-lg form-control") }}
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                      {{ render_field(address_form.city, required=required, class_="input-lg form-control") }}
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                      {{ render_field(address_form.zip, required=required, class_="input-lg form-control") }}
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                      {{ render_field(address_form.country, class_="input-lg form-control") }}
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                      <div class="form-group">
+                        <label for="subdivision">{{ _('State') }} *:</label>
+                        <select id="subdivision" name="subdivision" class="input-lg form-control">
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12">
+                        {{ render_field(address_form.phone, required=required, class_="input-lg form-control", type='tel') }}
+                    </div>
+                    <div class="col-md-12 col-sm-12">
+                      <button type="submit" class="btn btn-warning btn-lg btn-block" id="address-btn">
+                        {{ _('Continue to Delivery Options') }}&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
               </div>
-            </form>
+            </div>
           </div>
         </div>
+      </div>
+      <div class="col-md-5 col-sm-5 col-xs-12">
         <!-- Cart Summary -->
         {{ cart_summary() }}
       </div>

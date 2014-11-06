@@ -2,13 +2,16 @@
 
 {% from '_helpers.jinja' import render_field %}
 
+{% block search %}
+    <!-- Checkout Step Indicator -->
+    <div class="col-md-9 col-sm-8 col-xs-12">
+    {{ checkout_breadcrumb(3) }}
+    </div>
+{% endblock %}
+
 {% block main %}
 <section class="checkout-container">
   <div class="container">
-
-    <!-- Checkout Step Indicator -->
-    {{ checkout_breadcrumb(3) }}
-
     <!--Delivery Address Selection -->
     <div class="row delivery-address">
       <div class="col-md-10 col-md-offset-1">
