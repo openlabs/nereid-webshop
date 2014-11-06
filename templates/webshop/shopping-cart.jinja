@@ -97,7 +97,8 @@
                       </div>
                       <div class="cart-line-action-block">
                         <span class="text-muted">
-                          <a href="{{ url_for('nereid.cart.delete_from_cart', line=line.id) }}" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{ _('Remove Item') }}" class="remove_from_cart">
+                          <a href="" data-url="{{ url_for('nereid.cart.delete_from_cart', line=line.id) }}" data-toggle="tooltip"
+                              data-placement="top" title="" data-original-title="{{ _('Remove Item') }}" class="remove_from_cart">
                             <i class="fa fa-times"></i> Delete
                           </a>
                           {% if current_user.is_authenticated() %}

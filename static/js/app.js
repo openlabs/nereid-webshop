@@ -16,12 +16,3 @@ $(function(){
     }
   });
 });
-
-$(document).ready(function(){
-  $('a').click(function(){
-    var el = $(this).attr('href');
-    var elWrapped = $(el);
-    scrollToDiv(elWrapped,40);
-    return false;
-  });
-});
