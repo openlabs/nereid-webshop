@@ -989,7 +989,6 @@ li.checkout-step {
   color: #fff;
 }
 .checkout-steps > ul {
-  padding-left: 40px;
   margin-left: 0px;
 }
 .checkout-steps > ul > li:not(:last-child) > .checkout-step-number:after {
