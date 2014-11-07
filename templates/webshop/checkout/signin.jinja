@@ -31,8 +31,8 @@
             <div class="col-md-12">
               <form class="form" method="POST" id="checkout-signin" autocomplete="off">
                 {{ form.hidden_tag() }}
-                {{ render_field(form.email, placeholder=_('Enter your E-mail'), required=True, type="email", class="input-lg") }}
-                {{ render_field(form.password, placeholder=_('Password'), required=True, class="input-lg") }}
+                {{ render_field(form.email, placeholder=_('Enter your E-mail'), required=True, type="email", class="input-lg form-control") }}
+                {{ render_field(form.password, placeholder=_('Password'), required=True, class="input-lg form-control") }}
                 <input id="checkout_mode-1" name="checkout_mode" type="hidden" value="account">
                 <div class="forgot-password pull-right">
                   <a
@@ -57,7 +57,7 @@
           <div class="row">
             <form class="login-form col-md-8 col-sm-10 col-xs-12" method="POST" id="checkout-signin" autocomplete="off">
               {{ form.hidden_tag() }}
-              {{ render_field(form.email, placeholder=_('Enter your E-mail'), required=required, type="email", class="input-lg") }}
+              {{ render_field(form.email, placeholder=_('Enter your E-mail'), required=required, type="email", class="input-lg form-control") }}
               <input id="checkout_mode-1" name="checkout_mode" type="hidden" value="guest">
               <button type="submit" class="btn btn-lg btn-warning">{{ _('Continue as Guest') }} <i class="fa fa-arrow-right"></i></button>
             </form>
