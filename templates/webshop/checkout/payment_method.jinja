@@ -37,13 +37,9 @@
               <div class="shipment">
                 {% for card in current_user.party.payment_profiles %}
                 <p class="shipping-method">
-                  <label class="{% if loop.first %}current{% endif %}">
+                  <label>
                     <span class="button">
-                      <input 
-                        type="radio" name="carrier_json"
-                        class="select-card" value="{{ card.id }}" name="payment_profile"
-                        {{ 'checked' if loop.first else '' }}
-                        />
+                      <input type="radio" class="select-card" value="{{ card.id }}" name="payment_profile">
                     </span>
                     <span class="info">
                       <span class="delivery-date">
