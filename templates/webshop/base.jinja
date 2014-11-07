@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% set version = version or '' %}
 <html lang="{{ request.nereid_language.code }}">
   <head>
     <title>{% block title %}{% trans %}Nereid Webshop{% endtrans %}{% endblock title %}</title>  
@@ -22,7 +23,7 @@
     {% endblock link_tags %}
 
     {% block base_stylesheet %}
-      <link rel="stylesheet" type="text/css" href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/style.css') }}">
+      <link rel="stylesheet" type="text/css" href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/style.css') }}?v={{ version }}">
     {% endblock base_stylesheet %}
 
     {% block extra_head %}
@@ -110,7 +111,7 @@
       <div class="container logo-container">
         <div class="row">
           {% block logo %}
-            <div class="col-md-3">
+            <div class="col-md-3 col-sm-3 col-xs-12">
               <div class="main-logo">
                 <a href="{{ url_for('nereid.website.home') }}">
                   <img src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='images/nereid_cart_logo.png') }}">
@@ -119,6 +120,7 @@
             </div>
           {% endblock logo %}
           {% block header_user %}
+            {% if not checkout_page %}
             <div class="col-md-4 col-md-push-5 my-account">
               <ul class="list-inline pull-right">
                 <li>
@@ -157,8 +159,10 @@
                 </li>
               </ul>
             </div>
+            {% endif %}
           {% endblock header_user %}
           {% block search %}
+            {% if not checkout_page %}
             <div class="col-md-5 col-sm-12 col-xs-12 col-md-pull-4 top-search">
               <form action="{{ url_for('product.product.quick_search') }}" id="search_form">
               <div class="input-group">
@@ -169,6 +173,7 @@
               </div><!-- /input-group -->
               </form>
             </div>
+            {% endif %}
           {% endblock search %}
         </div>
       </div>
@@ -177,6 +182,7 @@
       <!--Main Navigation -->
       <div class="container sticky">
         {% block main_navigation %}
+        {% if not checkout_page %}
         <div class="row main-navigation">
           <div class="col-md-12">
             <ul class="list-inline" id="nav-list">
@@ -188,6 +194,7 @@
             </ul>
           </div>
         </div>
+        {% endif %}
         {% endblock main_navigation %}
       </div>
     </section>
@@ -358,8 +365,8 @@
         a custom feature like the lightbox provided by webshop. However hard dependencies without which this
         template wont work are listed outside this block
       #}
-    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/app.js') }}"></script>
-    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/holder.js') }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/app.js') }}?v={{ version }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/holder.js') }}?v={{ version }}"></script>
     {% endblock script_tags %}
 
     <script type="text/javascript">

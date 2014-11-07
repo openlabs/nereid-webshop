@@ -2,6 +2,13 @@
 
 {% from '_helpers.jinja' import render_field %}
 
+{% block search %}
+    <!-- Checkout Step Indicator -->
+    <div class="col-md-9 col-sm-8 col-xs-12">
+    {{ checkout_breadcrumb(1) }}
+    </div>
+{% endblock %}
+
 {% block breadcrumb %}
     <h3 class="breadcrumb-page-title">
       {{ _('Please Sign In') }}
@@ -9,7 +16,6 @@
       <small class="pull-right"><i class="fa fa-lock"></i> {{ _('This is a secure transaction') }}</small>
       {% endif %}
     </h3>
-
 {% endblock breadcrumb %}
 
 {% block main %}
@@ -22,22 +28,24 @@
           <h4><small>{{ _('Sign in below to checkout with an existing account') }}</small></h4>
           <div class="clearfix"></div>
           <div class="row">
-            <form class="form col-md-8 col-sm-10 col-xs-12" method="POST" id="checkout-signin" autocomplete="off">
-              {{ form.hidden_tag() }}
-              {{ render_field(form.email, placeholder=_('Enter your E-mail'), required=True, type="email") }}
-              {{ render_field(form.password, placeholder=_('Password'), required=True) }}
-              <input id="checkout_mode-1" name="checkout_mode" type="hidden" value="account">
-              <div class="forgot-password pull-right">
-                <a
-                  href="{{ url_for('nereid.user.reset_account', next=request.args.get('next', url_for('nereid.website.home'))) }}" 
-                  class="text-muted">
-                  <strong>{{ _('Forgot Password ?') }}</strong>
-                </a>
-              </div>
-              <button type="submit" class="btn btn-lg btn-warning">
-                <i class="fa fa-lock"></i> {{ _('Sign In') }}
-              </button>
-            </form>
+            <div class="col-md-12">
+              <form class="form" method="POST" id="checkout-signin" autocomplete="off">
+                {{ form.hidden_tag() }}
+                {{ render_field(form.email, placeholder=_('Enter your E-mail'), required=True, type="email", class="input-lg") }}
+                {{ render_field(form.password, placeholder=_('Password'), required=True, class="input-lg") }}
+                <input id="checkout_mode-1" name="checkout_mode" type="hidden" value="account">
+                <div class="forgot-password pull-right">
+                  <a
+                    href="{{ url_for('nereid.user.reset_account', next=request.args.get('next', url_for('nereid.website.home'))) }}" 
+                    class="text-muted">
+                    <strong>{{ _('Forgot Password ?') }}</strong>
+                  </a>
+                </div>
+                <button type="submit" class="btn btn-lg btn-warning">
+                  <i class="fa fa-lock"></i> {{ _('Sign In') }}
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -49,7 +57,7 @@
           <div class="row">
             <form class="login-form col-md-8 col-sm-10 col-xs-12" method="POST" id="checkout-signin" autocomplete="off">
               {{ form.hidden_tag() }}
-              {{ render_field(form.email, placeholder=_('Enter your E-mail'), required=required, type="email") }}
+              {{ render_field(form.email, placeholder=_('Enter your E-mail'), required=required, type="email", class="input-lg") }}
               <input id="checkout_mode-1" name="checkout_mode" type="hidden" value="guest">
               <button type="submit" class="btn btn-lg btn-warning">{{ _('Continue as Guest') }} <i class="fa fa-arrow-right"></i></button>
             </form>
