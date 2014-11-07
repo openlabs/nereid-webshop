@@ -120,7 +120,7 @@ class TestTemplates(BaseTestCase):
         """
         qty = 7
 
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
             self.create_test_products()
@@ -161,7 +161,7 @@ class TestTemplates(BaseTestCase):
         """
         Test for home template.
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
@@ -174,7 +174,7 @@ class TestTemplates(BaseTestCase):
         """
         Test for login template.
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
@@ -193,7 +193,7 @@ class TestTemplates(BaseTestCase):
         """
         Test for registration template.
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
@@ -341,7 +341,7 @@ class TestTemplates(BaseTestCase):
         """
         Tests the rendering of an article.
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
@@ -469,7 +469,7 @@ class TestTemplates(BaseTestCase):
         """
         Tests the wishlist.
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             self.create_test_products()
             app = self.get_app()
@@ -589,7 +589,7 @@ class TestTemplates(BaseTestCase):
         """
         Test the profile.
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
@@ -616,7 +616,7 @@ class TestTemplates(BaseTestCase):
         """
         Test for guest checkout.
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             self.create_test_products()
             app = self.get_app()
@@ -747,7 +747,7 @@ class TestTemplates(BaseTestCase):
         """
         Test for registered user checkout.
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             self.create_test_products()
             app = self.get_app()
@@ -862,7 +862,7 @@ class TestTemplates(BaseTestCase):
         """
         Test for password reset.
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
@@ -948,7 +948,7 @@ class TestTemplates(BaseTestCase):
         """
         Test for password change.
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
