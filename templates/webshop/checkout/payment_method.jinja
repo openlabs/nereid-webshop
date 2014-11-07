@@ -2,108 +2,146 @@
 
 {% from '_helpers.jinja' import render_field %}
 
+{% block search %}
+    <!-- Checkout Step Indicator -->
+    <div class="col-md-9 col-sm-8 col-xs-12">
+    {{ checkout_breadcrumb(3) }}
+    </div>
+{% endblock %}
+
+{% block breadcrumb %}
+    <h3 class="breadcrumb-page-title">
+      {{ _('Select a payment method') }}
+      {% if request.is_secure %}
+      <small class="pull-right"><i class="fa fa-lock"></i> {{ _('This is a secure transaction') }}</small>
+      {% endif %}
+    </h3>
+{% endblock breadcrumb %}
+
 {% block main %}
 <section class="checkout-container">
   <div class="container">
-    <!-- Checkout Step Indicator -->
-    {{ checkout_breadcrumb(3) }}
-
     <!--Payment Section-->
-    <div class="row delivery-address">
-      <div class="col-md-10 col-md-offset-1">
-        <div class="col-md-8">
-          <div class="payment-container">
-            <h4><span>{{ _('Choose from a payment method below') }}</span></h4>
-            <div class="table-responsive">
-              <!-- tabs left -->
-              <div class="col-xs-4">
-                <ul class="list-unstyled payment-tab">
-                  {% if request.nereid_website.accept_credit_card %}
-                    <li class="active"><a href="#credit-card" data-togle="tab"> {{ _('Credit Card') }}</a></li>
-                  {% endif %}
-                  {% for method_id, method_name in payment_form.alternate_payment_method.choices %}
-                  <li><a href="#method-{{ method_id }}" data-toggle="tab"> {{ method_name }}</a></li>
-                  {% endfor %}
-                </ul>
+    <div class="row">
+      <div class="delivery-address">
+        <div class="col-md-7 col-sm-7 col-xs-12">
+          {% block saved_cards %}
+          {% if request.nereid_website.accept_credit_card and current_user.is_authenticated() and current_user.party.payment_profiles %}
+          <div class="payment-container">              
+            <h4><span class="underline">{{ _('Your saved credit and debit cards') }}</span></h4>
+
+            <form class="form-horizontal tab-content" 
+              role="form" method="POST"
+              id="pay-from-credit-card" autocomplete="off">
+              {{ credit_card_form.csrf_token }}
+              <div class="shipment">
+                {% for card in current_user.party.payment_profiles %}
+                <p class="shipping-method">
+                  <label class="{% if loop.first %}current{% endif %}">
+                    <span class="button">
+                      <input 
+                        type="radio" name="carrier_json"
+                        class="select-card" value="{{ card.id }}" name="payment_profile"
+                        {{ 'checked' if loop.first else '' }}
+                        />
+                    </span>
+                    <span class="info">
+                      <span class="delivery-date">
+                        XXXX XXXX XXXX {{ card.last_4_digits }}
+                      </span>
+                      <span class="rate">
+                        Expiry: {{ card.expiry_month }}/{{ card.expiry_year }}
+                      </span>
+                    </span>
+                  </label>            
+                </p>
+                {% endfor %}                  
               </div>
-              <div class="col-xs-8">
-                <div class="tab-content">
-                  {% if request.nereid_website.accept_credit_card %}
-                    <form class="form-horizontal tab-content" role="form" method="POST" id="pay-from-credit-card" autocomplete="off">
-                      {{ credit_card_form.csrf_token }}
-                      {% if current_user.is_authenticated() and current_user.party.payment_profiles %}
-                        <div id="select-credit-card">
-                          {% for card in current_user.party.payment_profiles %}
-                          <p class="pad-bottom-15">
-                          <input type="radio" class="select-card" value="{{ card.id }}" name="payment_profile">&nbsp;&nbsp;&nbsp;&nbsp;
-                          XXXX XXXX XXXX {{ card.last_4_digits }} &nbsp; &nbsp; &nbsp; {{ card.expiry_month }}/{{ card.expiry_year }}
-                          </p>
-                          {% endfor %}
-                          <input type="radio" class="select-card" id="pay-using-new" name="payment_profile1" value="pay-from-new-card">&nbsp;&nbsp;&nbsp;&nbsp;{{ _('Pay from new card') }}
-                        </div>
-                      {% endif %}
-                    <!-- Credit card-->
-                      <div class="tab-pane fade in active" id="credit-card">
-                        <span class="text-danger">{{ _('Please enter all details') }} *</span>
-                        {{ render_field(credit_card_form.number) }}
-                        {{ render_field(credit_card_form.owner) }}
-                        <div class="row">
-                          <div class="col-xs-4">
-                            {{ render_field(credit_card_form.expiry_month) }}
-                          </div>
-                          <div class="col-xs-4 col-xs-offset-4">
-                            {{ render_field(credit_card_form.expiry_year) }}
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-xs-4">
-                            {{ render_field(credit_card_form.cvv) }}
-                          </div>
-                        </div>
+              <button type="submit" class="btn btn-warning btn-lg btn-block" id="payment-btn">
+                <i class="fa fa-lock"></i>
+                {{ _('Pay Now') }}
+                <i class="fa fa-spin fa-spinner hidden"></i>
+              </button>                
+            </form>
+          </div>
+          {% endif %}
+          {% endblock saved_cards %}
 
-                        {% if current_user.is_authenticated() and request.nereid_website.save_payment_profile %}
-                        <div class="checkbox">
-                          {{ credit_card_form.add_card_to_profiles }}
-                          <label for="add_card_to_profiles">{{ _('Save Card') }}</label>
-                        </div>
-                        {% endif %}
-                        <div class="checkbox">
-                          {{ payment_form.use_shipment_address }}
-                          <label for="use_shipment_address">{{ _('Use shipping address as billing address') }}</label>
-                        </div>
-                      </div>
-                        <button type="submit" class="btn btn-primary" id="payment-btn">
-                          {{ _('Pay Now') }}
-                          <i class="fa fa-spin fa-spinner hidden"></i>
-                        </button>
-                    </form>
-                  {% endif %}
-
-                  <!-- Alternate payment methods if any -->
-                  {% for method_id, method_name in payment_form.alternate_payment_method.choices %}
-                  <div class="tab-pane fade center" id="method-{{ method_id }}">
-                    {% set method = PaymentMethod(method_id) %}
-                    <p><strong><span class="text-success">{{ method.instructions|safe }}</strong></p>
-                    <form method="post" autocomplete="off">
-                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-                      <input type="hidden" name="alternate_payment_method" value="{{ method.id }}"/>
-                      <button type="submit" class="btn btn-primary">{% trans %}Pay using {% endtrans %}{{ method.name }}</button>
-                    </form>
+          {% block add_card %}
+          {% if request.nereid_website.accept_credit_card %}
+          <div class="payment-container">
+            <h4><span class="underline">{{ _('Add a new card') }}</span></h4>
+            <form class="form-horizontal tab-content" role="form" method="POST" id="pay-from-credit-card" autocomplete="off">
+              {{ credit_card_form.csrf_token }}              
+              <!-- Credit card-->
+              <div class="" id="credit-card">
+                {{ render_field(credit_card_form.number, class_="input-lg form-control", pattern="[0-9]*", maxlength="16", minlength="13") }}
+                {{ render_field(credit_card_form.owner, class_="input-lg form-control") }}
+                <div class="row">
+                  <div class="col-xs-6">
+                    {{ render_field(credit_card_form.expiry_month, class_="input-lg form-control") }}
                   </div>
-                  {% endfor %}
+                  <div class="col-xs-6">
+                    {{ render_field(credit_card_form.expiry_year, class_="input-lg form-control") }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-6">
+                    {{ render_field(credit_card_form.cvv, class_="input-lg form-control", pattern="[0-9]*", minlength="3", maxlength="4") }}
+                  </div>
+                </div>
+                {% if current_user.is_authenticated() and request.nereid_website.save_payment_profile %}
+                <div class="checkbox">
+                  {{ credit_card_form.add_card_to_profiles }}
+                  <label for="add_card_to_profiles">{{ _('Save Card') }}</label>
+                </div>
+                {% endif %}
+                <div class="checkbox">
+                  {{ payment_form.use_shipment_address }}
+                  <label for="use_shipment_address">{{ _('Use shipping address as billing address') }}</label>
                 </div>
               </div>
-            </div>
+              <button type="submit" class="btn btn-warning btn-lg btn-block" id="payment-btn">
+                <i class="fa fa-lock"> 
+                {{ _('Pay Now') }}
+                <i class="fa fa-spin fa-spinner hidden"></i>
+              </button>
+            </form>
           </div>
+          {% endif %}
+          {% endblock add_card %}
+
+          {% block alternate_methods %}
+          {% if payment_form.alternate_payment_method.choices %}
+          <div class="payment-container">
+            <h4><span class="underline">{{ _('More Payment methods') }}</span></h4>
+            {% for method_id, method_name in payment_form.alternate_payment_method.choices %}
+            <div class="tab-pane fade center" id="method-{{ method_id }}">
+              {% set method = PaymentMethod(method_id) %}
+              <p><strong><span class="text-success">{{ method.instructions|safe }}</strong></p>
+              <form method="post" autocomplete="off">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                <input type="hidden" name="alternate_payment_method" value="{{ method.id }}"/>
+                <button type="submit" class="btn btn-primary">{% trans %}Pay using {% endtrans %}{{ method.name }}</button>
+              </form>
+            </div>
+            {% endfor %} 
+          </div>
+          {% endif %}
+          {% endblock alternate_methods %}
+
         </div>
 
-        <!-- Cart Summary -->
-        {{ cart_summary() }}
+        <div class="col-md-5 col-sm-5 col-xs-12">
+          <!-- Cart Summary -->
+          {{ cart_summary() }}
+        </div>
 
       </div>
     </div>
   </div>
 </section>
+
 {% endblock main %}
 
 
@@ -112,20 +150,12 @@
 <script type="text/javascript">
 {% if current_user.is_authenticated() and current_user.party.payment_profiles %}
   $(document).ready(function(){
-    $('#credit-card').removeClass('in active');
-    $('.select-card').on('change', function() {
-        $('.select-card').not(this).prop('checked', false);
-        if($(this).val() == 'pay-from-new-card'){
-          $('#credit-card').addClass('in active');
-          $('#credit-card .checkbox input').val('y');
-      }else{
-        $('#credit-card').removeClass('in active');
-        $('#credit-card input').each(function(){
-          $(this).val('');
-        });
+    $(".select-card").change(function() {
+      $('label.current').removeClass('current');
+      if ($(this).is(':checked')) {
+        $(this).parents('label').addClass('current');
       }
-    });
-    
+    });    
     $('#payment-btn').on('click', function() {
       $('#payment-btn i').removeClass('hidden');
       $(this).prop('disabled', true);

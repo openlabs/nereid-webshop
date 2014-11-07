@@ -1,34 +1,43 @@
 {% extends 'base.jinja' %}
 
+{% set checkout_page = True %}
+
+{% block breadcrumb %}{% endblock %}
+
 {% from '_helpers.jinja' import render_address %}
 
 {% macro checkout_breadcrumb(step) %}
     <!-- Checkout Step Indicator -->
-    <div class="row checkout-steps">
+    <div class="checkout-steps">
       <ul class="list-inline center">
-        <li>
-          <a href="{{ url_for('nereid.checkout.sign_in') }}"
-              class="{% if step == 1 %}active{% elif step > 1 %}done{% endif %}">
-            <span><i class="fa fa-check"></i></span>
-            <div class="text">{{ _('Sign In') }}</div>
-          </a>
+
+        <li class="checkout-step">
+          <div class="checkout-step-number {% if step >= 1 %}done{% endif %}">
+            <a href="{{ url_for('nereid.checkout.sign_in') }}">
+              <span>1</span>
+            </a>
+          </div>
+          <span class="checkout-step-name">{{ _('Sign In') }}</span>
         </li>
-        <li><span class="muted"></span>------------</li>
-        <li>
-          <a href="{{ url_for('nereid.checkout.shipping_address') }}"
-              class="{% if step == 2 %}active{% elif step > 2 %}done{% else %}undone{% endif %}">
-            <span>2</span>
-            <div class="text">{{ _('Delivery') }}</div>
-          </a>
+        
+        <li class="checkout-step">          
+          <div class="checkout-step-number {% if step >= 2 %}done{% endif %}">
+            <a href="{{ url_for('nereid.checkout.shipping_address') }}">
+              <span>2</span>
+            </a>
+          </div>
+          <span class="checkout-step-name">{{ _('Delivery') }}</span>
         </li>
-        <li><span class="muted"></span>------------</li>
-        <li>
-          <a  href="{{ url_for('nereid.checkout.payment_method') }}"
-              class="{% if step == 3 %}active{% elif step > 3 %}done{% else %}undone{% endif %}">
-            <span>3</span>
-            <div class="text">{{ _('Payment') }}</div>
-          </a>
-        </li>
+        
+        <li class="checkout-step">
+          <div class="checkout-step-number {% if step >= 3 %}done{% endif %}">
+            <a href="{{ url_for('nereid.checkout.payment_method') }}">
+              <span>3</span>
+            </a>
+          </div>
+          <span class="checkout-step-name">{{ _('Payment') }}</span>
+        </li>        
+
       </ul>
     </div>
 {% endmacro %}
@@ -47,104 +56,131 @@
 {% endmacro %}
 
 {% macro cart_summary() %}
-{% set cart = get_cart() %}
-<div class="col-md-4">
-  <div class="row">
-    <div class="col-md-12 col-sm-6 pad-nil panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">{{ _('Cart Summary') }}
-          <span class="pull-right"><a href="{{ url_for('nereid.cart.view_cart') }}">
-            <i class="fa fa-pencil"></i> {{ _('Edit') }}</a>
-          </span>
-        </h3>
-      </div>
-      <div class="panel-body">
-        {% for line in cart.sale.lines %}
-        <!-- Product Item 1 -->
-        <div class="row border">
-          <div class="col-xs-3">
-            {% if line.product and line.product.default_image %}
-            <img src="{{ CDN }}{{ line.product.default_image.transform_command().thumbnail(100, 100, 'a') }}" alt="{{ line.product.name }}" title="{{ line.product.name }}"/>
-            {% endif %}
-          </div>
-          <div class="col-xs-6">
-            <a href="{{ url_for('product.product.render', uri=line.product.uri) }}" class="product-name">{{ line.description }}</a><br>
-            <strong class="text-muted">{{ _('Qty') }} :</strong> {{ line.quantity }}
-          </div>
-          <div class="col-xs-3">
-            <span class="price">{{ line.amount|currencyformat(cart.sale.currency.code) }}</span>
-          </div>
-        </div>
-        {% endfor %}
-
-        <div class="row">
-          <div class="col-xs-8">
-            <strong class="pull-right total">{{ _('Cart Total') }}</strong>
-          </div>
-          <div class="col-xs-4">
-            <span class="price total">
-              <strong>{{ cart.sale.untaxed_amount|currencyformat(cart.sale.currency.code) }}</strong>
-            </span>
-          </div>
-        </div>
-
-        {% if cart.sale.tax_amount %}
-        <div class="row">
-          <div class="col-xs-8">
-            <strong class="pull-right total">{{ _('Estimated Tax') }}</strong>
-          </div>
-          <div class="col-xs-4">
-            <span class="price total">{{ cart.sale.tax_amount|currencyformat(cart.sale.currency.code) }}&nbsp;&nbsp;
-              <span data-toggle="tooltip" data-placement="bottom" title="" data-original-title="The sales tax listed on the checkout page is only an estimate. The final total sales tax will be reflected on your invoice and will be included state and local sales taxes, as well as any applicable rebates or fees." class="estimated-tax">
-                [<span class="text-info"><i class="fa fa-question"></i></span>]
-              </span>
-            </span>
-          </div>
-        </div>
-        {% endif %}
-
-        <hr>
-        <div class="row">
-          <div class="col-xs-8">
-            <strong class="pull-right grand-total">{{ _('Total') }}</strong>
-          </div>
-          <div class="col-xs-4">
-            <span class="price grand-total">{{ cart.sale.total_amount|currencyformat(cart.sale.currency.code) }}</span>
-          </div>
-        </div>
-      </div>
-    </div><!-- END: panel -->
-
-    {% if cart.sale.shipment_address %}
-    <div class="col-md-12 col-sm-6 pad-nil panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Shipping Address
-          <span class="pull-right"><a href="{{ url_for('nereid.checkout.shipping_address') }}">
-            <i class="fa fa-pencil"></i> {{ _('Edit') }}</a>
-          </span>
-        </h3>
-      </div>
-      <div class="panel-body">
-        {{ render_address(cart.sale.shipment_address, edit=False) }}
+  {% set cart = get_cart() %}
+  {% set currency = cart.sale.currency.code %}
+  <div class="cart-summary">
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table">
+          <thead>
+            <tr class="active">
+              <td colspan="3">
+                <h4> {{ _('Order Summary') }}
+                  <span class="pull-right small text-muted">
+                    <a href="{{ url_for('nereid.cart.view_cart') }}" class="">
+                      <i class="fa fa-pencil"></i> {{ _('Edit') }}
+                    </a>
+                  </span>
+                </h4>              
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            {% block lines scoped %}
+            {% for line in cart.sale.lines %}
+            <tr>
+              <td class="hidden-xs hidden-sm">
+                <a href="{{ url_for('product.product.render', uri=line.product.uri) }}">
+                  <img src="{{ line.product.default_image.transform_command().thumbnail(100, 100, 'a') }}" alt="{{ line.product.name }}">
+                </a>
+              </td>
+              <td>
+                <a href="{{ url_for('product.product.render', uri=line.product.uri) }}" class="product-name">
+                  <strong>{{ line.product.name }}</strong>
+                </a>
+                <br/><strong class="text-muted">{{ _('Qty') }}: </strong> 
+                {{ line.quantity }} x {{ line.unit_price|currencyformat(currency) }}                
+              </td>
+              <td class="text-right hidden-sm hidden-xs">
+                {{ line.amount|currencyformat(currency) }}
+              </td>
+            </tr>
+            {% endfor %}
+            {% endblock lines %}
+          </tbody>
+        </table> 
+        <table class="table table-striped">
+          <tbody>
+            <tr>
+              <td colspan="2" class="text-right">{{ _('Subtotal') }}</td>
+              <td class="text-right ">{{ cart.sale.untaxed_amount|currencyformat(currency) }}</td>
+            </tr>
+            <tr>
+              <td colspan="2" class="text-right ">{{ _('Estimated Tax') }}</td>
+              <td class="text-right ">
+                {{ cart.sale.tax_amount|currencyformat(currency) }}
+                <span data-toggle="tooltip" data-placement="bottom" title="" data-original-title="The sales tax listed on the checkout page is only an estimate. The final total sales tax will be reflected on your invoice and will be included state and local sales taxes, as well as any applicable rebates or fees." class="estimated-tax">
+                  [<span class="text-info"><i class="fa fa-question"></i></span>]
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="cart-total-sum text-right"><strong>{{ _('Grand Total') }}</strong></td>
+              <td class="cart-total-sum text-right"><strong>{{ cart.sale.total_amount|currencyformat(currency) }}</strong></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-    {% endif %}
+  </div><!-- END: panel -->
 
-    {% if cart.sale.invoice_address %}
-    <div class="col-md-12 col-sm-6 pad-nil panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">{{ _('Billing Address') }}
-          <span class="pull-right"><a href="{{ url_for('nereid.checkout.billing_address') }}">
-            <i class="fa fa-pencil"></i> {{ _('Edit') }}</a>
-          </span>
-        </h3>
-      </div>
-      <div class="panel-body">
-        {{ render_address(cart.sale.invoice_address, edit=False) }}
+  {% if cart.sale.shipment_address %}
+  <div class="cart-summary">
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table">
+          <thead>
+            <tr class="active">
+              <td colspan="3">
+                <h4> {{ _('Shipping Address') }}
+                  <span class="pull-right small text-muted">
+                    <a href="{ url_for('nereid.checkout.shipping_address') }}" class="">
+                      <i class="fa fa-pencil"></i> {{ _('Edit') }}
+                    </a>
+                  </span>
+                </h4>              
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ render_address(cart.sale.shipment_address, edit=False) }}</td>
+            </tr>
+          </tbody>     
+        </table>
       </div>
     </div>
-    {% endif %}
+  </div>
+  {% endif %}
+
+  {% if cart.sale.invoice_address %}
+  <div class="cart-summary">
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table">
+          <thead>
+            <tr class="active">
+              <td colspan="3">
+                <h4> {{ _('Billing Address') }}
+                  <span class="pull-right small text-muted">
+                    <a href="{ url_for('nereid.checkout.billing_address') }}" class="">
+                      <i class="fa fa-pencil"></i> {{ _('Edit') }}
+                    </a>
+                  </span>
+                </h4>              
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ render_address(cart.sale.invoice_address, edit=False) }}</td>
+            </tr>
+          </tbody>     
+        </table>
+      </div>
+    </div>
+  </div>
+  {% endif %}
 
   </div>
-</div>
 {% endmacro %}
