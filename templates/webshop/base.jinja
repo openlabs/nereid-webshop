@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% set version = version or '' %}
 <html lang="{{ request.nereid_language.code }}">
   <head>
     <title>{% block title %}{% trans %}Nereid Webshop{% endtrans %}{% endblock title %}</title>  
@@ -22,7 +23,7 @@
     {% endblock link_tags %}
 
     {% block base_stylesheet %}
-      <link rel="stylesheet" type="text/css" href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/style.css') }}">
+      <link rel="stylesheet" type="text/css" href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/style.css') }}?v={{ version }}">
     {% endblock base_stylesheet %}
 
     {% block extra_head %}
@@ -358,8 +359,8 @@
         a custom feature like the lightbox provided by webshop. However hard dependencies without which this
         template wont work are listed outside this block
       #}
-    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/app.js') }}"></script>
-    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/holder.js') }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/app.js') }}?v={{ version }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/holder.js') }}?v={{ version }}"></script>
     {% endblock script_tags %}
 
     <script type="text/javascript">
