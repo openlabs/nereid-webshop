@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 {% set version = version or '' %}
+{% set CDN = CDN or '' %}
+{% set LOGO = CDN + url_for('nereid.webshop.send_static_file', filename='images/nereid_cart_logo.png') %}
 
 {% macro render_account_menu() %}
   {% if not current_user.is_anonymous() %}
@@ -140,7 +142,7 @@
             <div class="col-md-3 col-sm-3 col-xs-12">
               <div class="main-logo">
                 <a href="{{ url_for('nereid.website.home') }}">
-                  <img src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='images/nereid_cart_logo.png') }}">
+                  <img src="{{ LOGO }}">
                 </a>
               </div>
             </div>
