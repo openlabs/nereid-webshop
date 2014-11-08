@@ -2,21 +2,9 @@
 
 {% from '_helpers.jinja' import render_field %}
 
-{% block search %}
-    <!-- Checkout Step Indicator -->
-    <div class="col-md-9 col-sm-8 col-xs-12">
-    {{ checkout_breadcrumb(1) }}
-    </div>
-{% endblock %}
+{% set checkout_step = 1 %}
+{% set checkout_step_name = _('Please Sign In') %}
 
-{% block breadcrumb %}
-    <h3 class="breadcrumb-page-title">
-      {{ _('Please Sign In') }}
-      {% if request.is_secure %}
-      <small class="pull-right"><i class="fa fa-lock"></i> {{ _('This is a secure transaction') }}</small>
-      {% endif %}
-    </h3>
-{% endblock breadcrumb %}
 
 {% block main %}
 <section>

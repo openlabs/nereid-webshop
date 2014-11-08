@@ -2,12 +2,9 @@
 
 {% from '_helpers.jinja' import render_field %}
 
-{% block search %}
-    <!-- Checkout Step Indicator -->
-    <div class="col-md-9 col-sm-8 col-xs-12">
-    {{ checkout_breadcrumb(3) }}
-    </div>
-{% endblock %}
+{% set checkout_step = 3 %}
+{% set checkout_step_name = _('Billing Address') %}
+
 
 {% block main %}
 <section class="checkout-container">
