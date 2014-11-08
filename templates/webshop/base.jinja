@@ -1,5 +1,33 @@
 <!DOCTYPE html>
 {% set version = version or '' %}
+{% set CDN = CDN or '' %}
+{% set LOGO = CDN + url_for('nereid.webshop.send_static_file', filename='images/nereid_cart_logo.png') %}
+
+{% macro render_account_menu() %}
+  {% if not current_user.is_anonymous() %}
+  <li><a href="{{ url_for('nereid.website.account') }}">
+    <i class="fa fa-user"></i>&nbsp;&nbsp;{{ _('Profile') }}
+  </a></li>
+  <li><a href="{{ url_for('sale.sale.render_list') }}">
+    <i class="fa fa-cubes"></i>&nbsp;&nbsp;{{ _('My Orders') }}
+  </a></li>
+  <li><a href="{{ url_for('party.address.view_address') }}">
+    <i class="fa fa-book"></i>&nbsp;&nbsp;{{ _('Address Book') }}
+  </a></li>
+  <li><a href="{{ url_for('wishlist.wishlist.render_wishlists') }}">
+    <i class="fa fa-heart"></i>&nbsp;&nbsp;{{ _('My Wishlist') }}
+  </a></li>
+  <li><a href="{{ url_for('party.party.view_payment_profiles') }}">
+    <i class="fa fa-credit-card"></i>&nbsp;&nbsp;{{ _('My Cards') }}
+  </a></li>
+  <li><a href="{{ url_for('nereid.website.logout') }}">
+    <i class="fa fa-sign-out"></i>&nbsp;&nbsp;{{ _('Logout') }}
+  </a></li>
+{% else %}
+  <li><a class="register-buttons" href="{{ url_for('nereid.website.login') }}">{{ _('Login / SignUp') }}</a></li>
+{% endif %}
+{% endmacro %}
+
 <html lang="{{ request.nereid_language.code }}">
   <head>
     <title>{% block title %}{% trans %}Nereid Webshop{% endtrans %}{% endblock title %}</title>  
@@ -46,7 +74,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <div  class="top-meta">
+            <div  class="top-meta hidden-xs">
               {% block new_offers %}
                 <!-- New Offers row -->
                 <div class="new-offers">
@@ -114,7 +142,7 @@
             <div class="col-md-3 col-sm-3 col-xs-12">
               <div class="main-logo">
                 <a href="{{ url_for('nereid.website.home') }}">
-                  <img src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='images/nereid_cart_logo.png') }}">
+                  <img src="{{ LOGO }}">
                 </a>
               </div>
             </div>
@@ -129,28 +157,7 @@
                       <i class="fa fa-user"></i> <span class="hidden-xs hidden-sm">{{ _('My Account') }}</span> <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                      {% if not current_user.is_anonymous() %}
-                        <li><a href="{{ url_for('nereid.website.account') }}">
-                          <i class="fa fa-user"></i>&nbsp;&nbsp;{{ _('Profile') }}
-                        </a></li>
-                        <li><a href="{{ url_for('sale.sale.render_list') }}">
-                          <i class="fa fa-cubes"></i>&nbsp;&nbsp;{{ _('My Orders') }}
-                        </a></li>
-                        <li><a href="{{ url_for('party.address.view_address') }}">
-                          <i class="fa fa-book"></i>&nbsp;&nbsp;{{ _('Address Book') }}
-                        </a></li>
-                        <li><a href="{{ url_for('wishlist.wishlist.render_wishlists') }}">
-                          <i class="fa fa-heart"></i>&nbsp;&nbsp;{{ _('My Wishlist') }}
-                        </a></li>
-                        <li><a href="{{ url_for('party.party.view_payment_profiles') }}">
-                          <i class="fa fa-credit-card"></i>&nbsp;&nbsp;{{ _('My Cards') }}
-                        </a></li>
-                        <li><a href="{{ url_for('nereid.website.logout') }}">
-                          <i class="fa fa-sign-out"></i>&nbsp;&nbsp;{{ _('Logout') }}
-                        </a></li>
-                      {% else %}
-                        <li><a class="register-buttons" href="{{ url_for('nereid.website.login') }}">{{ _('Login / SignUp') }}</a></li>
-                      {% endif %}
+                      {{ render_account_menu() }}
                     </ul>
                   </div>
                 </li>
@@ -180,8 +187,8 @@
       {% endblock header_row_2 %}
 
       <!--Main Navigation -->
+      {% block main_navigation %}
       <div class="container sticky">
-        {% block main_navigation %}
         {% if not checkout_page %}
         <div class="row main-navigation">
           <div class="col-md-12">
@@ -195,10 +202,10 @@
           </div>
         </div>
         {% endif %}
-        {% endblock main_navigation %}
       </div>
+      {% endblock main_navigation %}
     </section>
-    <div class="container container-breadcrumb" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+    <div class="container container-breadcrumb hidden-xs" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
       <ol class="breadcrumb">
         {% block breadcrumb %}
         <li>

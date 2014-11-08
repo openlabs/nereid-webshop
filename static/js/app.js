@@ -6,6 +6,9 @@ $('.new-offers .fa-times-circle').click(function() {
 
 // Script which keeps the menu bar on the top when the site scrolls down.
 $(function(){ 
+  if ($('.sticky').length == 0) {
+    return;
+  }
   var stickyTop = $('.sticky').offset().top; // returns number
   $(window).scroll(function(){ // scroll event
     var windowTop = $(window).scrollTop(); // returns number
