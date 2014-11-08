@@ -185,8 +185,8 @@
       {% endblock header_row_2 %}
 
       <!--Main Navigation -->
+      {% block main_navigation %}
       <div class="container sticky">
-        {% block main_navigation %}
         {% if not checkout_page %}
         <div class="row main-navigation">
           <div class="col-md-12">
@@ -200,8 +200,8 @@
           </div>
         </div>
         {% endif %}
-        {% endblock main_navigation %}
       </div>
+      {% endblock main_navigation %}
     </section>
     <div class="container container-breadcrumb hidden-xs" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
       <ol class="breadcrumb">
