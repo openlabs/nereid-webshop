@@ -1,47 +1,78 @@
 {% extends 'base.jinja' %}
 
 {% set checkout_page = True %}
+{% set checkout_step = checkout_step or 0 %}
+{% set checkout_step_name = checkout_step_name or '' %}
 
 {% block breadcrumb %}{% endblock %}
 
+{% block main_navigation %}
+<div class="container logo-container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>
+        {{ checkout_step_name }}
+        {% if request.is_secure %}
+        <br/>
+        <small><i class="fa fa-lock"></i> {{ _('This is a secure transaction') }}</small>
+        {% endif %}
+      </h3>
+    </div>
+  </div>
+</div>
+{% endblock main_navigation %}
+
 {% from '_helpers.jinja' import render_address %}
 
-{% macro checkout_breadcrumb(step) %}
-    <!-- Checkout Step Indicator -->
-    <div class="checkout-steps">
-      <ul class="list-inline center">
+{% block header_row_2 %}
+<div class="container logo-container">
+  <div class="row">
 
-        <li class="checkout-step">
-          <div class="checkout-step-number {% if step >= 1 %}done{% endif %}">
-            <a href="{{ url_for('nereid.checkout.sign_in') }}">
-              <span>1</span>
-            </a>
-          </div>
-          <span class="checkout-step-name">{{ _('Sign In') }}</span>
-        </li>
-        
-        <li class="checkout-step">          
-          <div class="checkout-step-number {% if step >= 2 %}done{% endif %}">
-            <a href="{{ url_for('nereid.checkout.shipping_address') }}">
-              <span>2</span>
-            </a>
-          </div>
-          <span class="checkout-step-name">{{ _('Delivery') }}</span>
-        </li>
-        
-        <li class="checkout-step">
-          <div class="checkout-step-number {% if step >= 3 %}done{% endif %}">
-            <a href="{{ url_for('nereid.checkout.payment_method') }}">
-              <span>3</span>
-            </a>
-          </div>
-          <span class="checkout-step-name">{{ _('Payment') }}</span>
-        </li>        
+    {% block logo %}
+      {{ super() }}
+    {% endblock logo %}
 
-      </ul>
-    </div>
-{% endmacro %}
+    {% block checkout_steps %}
+      <div class="col-md-9 col-sm-9 col-xs-12">
+        <!-- Checkout Step Indicator -->
+        <div class="checkout-steps">
+          <ul class="list-inline center">
 
+            <li class="checkout-step">
+              <div class="checkout-step-number {% if checkout_step >= 1 %}done{% endif %}">
+                <a href="{{ url_for('nereid.checkout.sign_in') }}">
+                  <span>1</span>
+                </a>
+              </div>
+              <span class="checkout-step-name">{{ _('Sign In') }}</span>
+            </li>
+            
+            <li class="checkout-step">          
+              <div class="checkout-step-number {% if checkout_step >= 2 %}done{% endif %}">
+                <a href="{{ url_for('nereid.checkout.shipping_address') }}">
+                  <span>2</span>
+                </a>
+              </div>
+              <span class="checkout-step-name">{{ _('Delivery') }}</span>
+            </li>
+            
+            <li class="checkout-step">
+              <div class="checkout-step-number {% if checkout_step >= 3 %}done{% endif %}">
+                <a href="{{ url_for('nereid.checkout.payment_method') }}">
+                  <span>3</span>
+                </a>
+              </div>
+              <span class="checkout-step-name">{{ _('Payment') }}</span>
+            </li>        
+
+          </ul>
+        </div>
+      </div>
+    {% endblock checkout_steps %}
+
+  </div>
+</div>
+{% endblock header_row_2 %}
 
 {% macro google_analytics_add_product() %}
   {# This must be called from within a script tag #}

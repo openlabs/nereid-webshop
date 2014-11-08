@@ -522,6 +522,7 @@ section.products{
 }
 .logo-container{
   padding-bottom: 10px;
+  border-bottom: 1px solid #DDD;
 }
 /**** Login/Sign Up Modal ****/
 .modal-dialog{
@@ -954,9 +955,7 @@ dl.dl-horizontal dd{
 /***** Checkout page *****/
 /***** Checkout page *****/
 .checkout-steps {
-  height: 100px;
   overflow: hidden;
-  padding-top: 10px;
 }
 
 li.checkout-step { 
