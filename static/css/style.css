@@ -959,10 +959,11 @@ dl.dl-horizontal dd{
 }
 
 li.checkout-step { 
-  margin-left: -4px; 
-  padding-right: 40px;
   padding-left: 0px;
   background: rgb(255,255,255); /* Old browsers */
+}
+.checkout-steps .checkout-step:not(:last-child) {
+  padding-right: 40px;
 }
 .checkout-step-number {
   top: 0;
@@ -990,7 +991,7 @@ li.checkout-step {
 .checkout-steps > ul > li:not(:last-child) > .checkout-step-number:after {
   content: "";
   display: block;
-  width: 118px;
+  width: 97px;
   height: 5px;
   margin-top: -22px;
   margin-left: 43px;
