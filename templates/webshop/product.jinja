@@ -1,6 +1,6 @@
 {% extends 'base.jinja' %}
 
-{% set node = node or product.nodes and product.nodes[0] %}
+{% set node = node or product.nodes and product.nodes[0].node %}
 
 {% from '_helpers.jinja' import render_product %}
 
