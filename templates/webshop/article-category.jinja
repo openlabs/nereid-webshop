@@ -5,17 +5,9 @@
 
 {% block breadcrumb %}
 {{ super() }}
-<li>
-  {% if category %}
-  <a href="{{ url_for('nereid.cms.article.category.render', uri=category.unique_name) }}" itemprop="url">
-    <span itemprop="title">{{ category.title }}</span>
-  </a>
-  {% elif article %}
-  <a href="{{ url_for('nereid.cms.article.category.render', uri=article.category.unique_name) }}" itemprop="url">
-    <span itemprop="title">{{ article.category.title }}</span>
-  </a>
-  {% endif %}
-</li>
+{% if category %}
+  {{ render_breadcrumb_item(category.title, category.get_absolute_url()) }}
+{% endif %}
 {% endblock breadcrumb %}
 
 {% block main %}
