@@ -31,12 +31,12 @@
 
 {% block breadcrumb %}
 {{ super() }}
-{# TODO: Guess the tree node or category from URL and then display that on breadcrumb #}
-<li>
-  <a href="{{ url_for('product.product.render', uri=product.uri) }}" itemprop="url">
-    <span itemprop="title">{{ product.name }}</span>
-  </a>
-</li>
+{% if node %}
+  {% for url, title in make_tree_crumbs(node=node, add_home=False)[1:] %}
+    {{ render_breadcrumb_item(title, url) }}
+  {% endfor %}
+{% endif %}
+{{ render_breadcrumb_item(product.name, product.get_absolute_url()) }}
 {% endblock breadcrumb %}
 
 {% block main %}

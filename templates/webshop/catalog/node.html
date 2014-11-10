@@ -7,12 +7,8 @@
 
 {% block breadcrumb %}
   {{ super() }}
-  {% for url, node in make_tree_crumbs(node=node, add_home=False)[1:] %}
-    <li>
-      <a href="{{ url }}" itemprop="url">
-        <span itemprop="title">{{ node }}</span>
-      </a>
-    </li>
+  {% for url, title in make_tree_crumbs(node=node, add_home=False)[1:] %}
+    {{ render_breadcrumb_item(title, url) }}
   {% endfor %}
 {% endblock breadcrumb %}
 

@@ -4,11 +4,7 @@
 
 {% block breadcrumb %}
 {{ super() }}
-<li>
-  <a href="{{ url_for('nereid.user.registration') }}" itemprop="url">
-    <span itemprop="title">{{ _('Registration') }}</span>
-  </a>
-</li>
+{{ render_breadcrumb_item(_('Registration'), url_for('nereid.user.registration')) }}
 {% endblock breadcrumb %}
 
 {% block main %}

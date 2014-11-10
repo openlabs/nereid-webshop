@@ -28,6 +28,14 @@
 {% endif %}
 {% endmacro %}
 
+{% macro render_breadcrumb_item(title, url) %}
+  <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+    <a href="{{ url }}" itemprop="url">
+      <span itemprop="title">{{ title }}</span>
+    </a>
+  </li>
+{% endmacro %}
+
 <html lang="{{ request.nereid_language.code }}">
   <head>
     <title>{% block title %}{% trans %}Nereid Webshop{% endtrans %}{% endblock title %}</title>  
@@ -205,14 +213,10 @@
       </div>
       {% endblock main_navigation %}
     </section>
-    <div class="container container-breadcrumb hidden-xs" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+    <div class="container container-breadcrumb hidden-xs">
       <ol class="breadcrumb">
         {% block breadcrumb %}
-        <li>
-          <a href="{{ url_for('nereid.website.home') }}" itemprop="url">
-            <span itemprop="title">{{ _('Home') }}</span>
-          </a>
-        </li>          
+          {{ render_breadcrumb_item(_('Home'), url_for('nereid.website.home')) }}
         {% endblock %}
       </ol>
     </div>
