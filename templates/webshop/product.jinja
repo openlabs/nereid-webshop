@@ -1,5 +1,7 @@
 {% extends 'base.jinja' %}
 
+{% set node = node or product.nodes and product.nodes[0] %}
+
 {% from '_helpers.jinja' import render_product %}
 
 {% block title %}{{ product.name }} {{ super() }}{% endblock title %}
