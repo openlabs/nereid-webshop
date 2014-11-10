@@ -943,7 +943,6 @@ class TestTemplates(BaseTestCase):
 
                 self.login(c, 'email@example.com', 'reset-pass')
 
-    @unittest.skip("No change_password template.")
     def test_0070_change_password(self):
         """
         Test for password change.
@@ -961,12 +960,12 @@ class TestTemplates(BaseTestCase):
             }
 
             with app.test_client() as c:
-                response = c.get('/change-password/')
+                response = c.get('/change-password')
                 # Without login
-                self.assertEqual(response.status_code, 404)
+                self.assertEqual(response.status_code, 302)
 
                 # Try POST, but without login
-                response = c.post('/change-password/', data={
+                response = c.post('/change-password', data={
                     'password': data['password'],
                     'confirm': data['password']
                 })
@@ -977,8 +976,7 @@ class TestTemplates(BaseTestCase):
 
                 # Incorrect password confirmation
                 response = c.post(
-                    '/change-password/{0}'
-                    .format(self.registered_user.id),
+                    '/change-password',
                     data={
                         'password': 'new-password',
                         'confirm': 'oh-no-you-dont'
@@ -989,8 +987,7 @@ class TestTemplates(BaseTestCase):
 
                 # Send proper confirmation but without old password.
                 response = c.post(
-                    '/change-password/{0}'
-                    .format(self.registered_user.id),
+                    '/change-password',
                     data={
                         'password': 'new-pass',
                         'confirm': 'new-pass'
@@ -1000,8 +997,7 @@ class TestTemplates(BaseTestCase):
 
                 # Send proper confirmation with wrong old password
                 response = c.post(
-                    '/change-password/{0}'
-                    .format(self.registered_user.id),
+                    '/change-password',
                     data={
                         'old_password': 'passw',
                         'password': 'new-pass',
@@ -1015,8 +1011,7 @@ class TestTemplates(BaseTestCase):
 
                 # Do it right
                 response = c.post(
-                    '/change-password/{0}'
-                    .format(self.registered_user.id),
+                    '/change-password',
                     data={
                         'old_password': data['password'],
                         'password': 'new-pass',
@@ -1026,7 +1021,8 @@ class TestTemplates(BaseTestCase):
                 self.assertEqual(response.status_code, 302)
 
                 # Check login with new pass
-                self.login(c, data['email'], data['password'])
+                c.get('/logout')
+                self.login(c, data['email'], 'new-pass')
 
     def test_0075_products(self):
         """
