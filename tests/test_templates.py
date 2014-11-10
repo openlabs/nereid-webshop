@@ -1052,3 +1052,22 @@ class TestTemplates(BaseTestCase):
 
                 rv = c.get('/product/product-1')
                 self.assertEqual(rv.status_code, 404)
+
+    def test_0080_search_results(self):
+        """
+        Test the search results template.
+        """
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
+            self.setup_defaults()
+            app = self.get_app()
+
+            with app.test_client() as c:
+                self.create_test_products()
+
+                rv = c.get('/search?q=product')
+                self.assertIn('product 1', rv.data)
+                self.assertIn('product-1', rv.data)
+                self.assertIn('product 2', rv.data)
+                self.assertIn('product-2', rv.data)
+                self.assertIn('product 3', rv.data)
+                self.assertIn('product-3', rv.data)
