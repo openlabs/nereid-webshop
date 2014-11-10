@@ -4,9 +4,7 @@
 
 {% block breadcrumb %}
 {{ super() }}
-<li>
-  <a href="{{ url_for('product.product.quick_search', q=request.args.get('q', '')) }}">{% trans %}Search Results{% endtrans %}</a>
-</li>
+{{ render_breadcrumb_item(_('Search Results'), url_for('product.product.quick_search', q=request.args.get('q', '')) }}
 {% endblock breadcrumb %}
 
 {% block main %}
