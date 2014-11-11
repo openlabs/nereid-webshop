@@ -28,7 +28,7 @@
     </div>
 
     {% if node.children %}
-    <div class="row">
+    <div class="row" id="subcategories">
       {% for child in node.children %}
       <div class="col-md-3 col-sm-4 col-xs-6">
         <div class="thumbnail subcategory">
@@ -88,7 +88,9 @@
       }
 
       // Resize on load
-      resize_categories();
+      $('#subcategories').imagesLoaded(function() {
+        resize_categories();
+      });
 
       $(window).on('resize', resize_categories);
   });
