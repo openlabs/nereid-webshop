@@ -12,6 +12,7 @@ from flask.helpers import send_from_directory
 from trytond.model import ModelSQL, fields
 from trytond.pool import PoolMeta
 from nereid import current_app, route
+from trytond.pyson import Eval, Not
 
 __metaclass__ = PoolMeta
 __all__ = ['WebShop', 'BannerCategory', 'Banner', 'Article', 'Website']
@@ -81,4 +82,14 @@ class Website:
     cms_root_menu = fields.Many2One(
         'nereid.cms.menuitem', "CMS root menu", ondelete='RESTRICT',
         select=True,
+    )
+
+    show_site_message = fields.Boolean('Show Site Message')
+    site_message = fields.Char(
+        'Site Message',
+        states={
+            'readonly': Not(Eval('show_site_message', False)),
+            'required': Eval('show_site_message', False)
+        },
+        depends=['show_site_message']
     )
