@@ -109,7 +109,7 @@ setup(
     package_data={
         'trytond.modules.nereid_webshop': info.get('xml', [])
         + ['tryton.cfg', 'locale/*.po', 'tests/*.rst']
-        + ['i18n/*.pot', 'i18n/pt_BR/LC_MESSAGES/*']
+        + ['i18n/*.pot', 'i18n/pt_BR/LC_MESSAGES/*', 'view/*.xml']
         + list(get_files("templates/"))
         + list(get_files("static/")),
     },

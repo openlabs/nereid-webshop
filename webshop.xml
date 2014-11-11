@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tryton>
+    <data>
+        <record model="ir.ui.view" id="website_view_form">
+            <field name="model">nereid.website</field>
+            <field name="inherit" ref="nereid.website_view_form" />
+            <field name="name">website_form</field>
+        </record>
+    </data>
+</tryton>
