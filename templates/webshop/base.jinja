@@ -5,11 +5,9 @@
 
 {% block notification_bar %}
 {% if request.nereid_website.show_site_message %}
-<div class="container">
-  <div class="alert alert-info hidden" id="site-message">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    {{ request.nereid_website.site_message }}
-  </div>
+<div align="center" class="alert alert-warning hidden" id="site-message">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  {{ request.nereid_website.site_message }}
 </div>
 {% endif %}
 {% endblock %}
