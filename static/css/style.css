@@ -903,25 +903,6 @@ div.product-size{
 .btn-size.disabled{
   background: url(../images/sold-out.png) no-repeat 50% 50%;
 }
-.buy-now button.btn-danger{
-  font-size: 18px;
-  margin-top:30px;
-  background: #c0392b;
-  color: #fff;
-  text-decoration: none;
-  padding: 6px 40px;
-  border-color: #ac2925;
-  border-radius: 3px;
-}
-div.buy-now button.btn-link{
-  margin: 10px 0 0 10px;
-  font-size: 13px;
-  color: #5C5C5C;
-  text-decoration: none;
-}
-.buy-now button.btn-danger:hover,.buy-now button.btn-danger:active{
-  background: #e74c3c;
-}
 .product-desc{
   margin: 20px 0;
 }
@@ -1532,13 +1513,6 @@ border-top: 1px solid rgba(248, 248, 248, 0.2);
   padding-right: 17px;
 }
 #wishlist-settings{
-  padding-top: 20px;
-}
-#add-to-wishlist #wishlist-dropdown{
-  margin-left: -6px;
-  padding: 6px 10px;
-}
-#add-to-wishlist{
   padding-top: 20px;
 }
 #rename-form .form-group{
