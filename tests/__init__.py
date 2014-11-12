@@ -15,6 +15,7 @@ from .test_views_depends import TestViewsDepends
 from .test_invoice import TestDownloadInvoice
 from .test_css import CSSTest
 from .test_templates import TestTemplates
+from .test_gift_card import TestGiftCard
 
 
 def suite():
@@ -26,7 +27,8 @@ def suite():
         unittest.TestLoader().loadTestsFromTestCase(CSSTest),
         unittest.TestLoader().loadTestsFromTestCase(TestViewsDepends),
         unittest.TestLoader().loadTestsFromTestCase(TestDownloadInvoice),
-        unittest.TestLoader().loadTestsFromTestCase(TestTemplates)
+        unittest.TestLoader().loadTestsFromTestCase(TestTemplates),
+        unittest.TestLoader().loadTestsFromTestCase(TestGiftCard)
     ])
     return test_suite
 

@@ -6,9 +6,19 @@
     :license: GPLv3, see LICENSE for more details
 
 '''
+from decimal import Decimal
+
 from trytond.pool import Pool, PoolMeta
 from jinja2.filters import do_striptags
-from nereid import request
+from werkzeug.exceptions import NotFound
+
+from nereid import jsonify, flash, request, url_for, route, redirect, \
+    render_template, abort
+from nereid.contrib.locale import make_lazy_gettext
+
+_ = make_lazy_gettext('gift_card')
+
+from forms import GiftCardForm
 
 
 __all__ = ['Product']
@@ -86,3 +96,84 @@ class Product:
                 500, 500, 'a').url(_external=True),
             "url": self.get_absolute_url(_external=True),
         }
+
+    @classmethod
+    @route('/product/<uri>')
+    @route('/product/<path:path>/<uri>')
+    def render(cls, uri, path=None):
+        """
+        Render gift card template if product is of type gift card
+        """
+        render_obj = super(Product, cls).render(uri, path)
+
+        if not isinstance(render_obj, NotFound) \
+                and render_obj.context['product'].is_gift_card:
+            # Render gift card
+            return redirect(
+                url_for('product.product.render_gift_card', uri=uri)
+            )
+        return render_obj
+
+    @classmethod
+    @route('/gift-card/<uri>', methods=['GET', 'POST'])
+    def render_gift_card(cls, uri):
+        """
+        Add gift card as a new line in cart
+        Request:
+            'GET': Renders gift card page
+            'POST': Buy Gift Card
+        Response:
+            'OK' if X-HTTPRequest
+            Redirect to shopping cart if normal request
+        """
+        SaleLine = Pool().get('sale.line')
+        Cart = Pool().get('nereid.cart')
+
+        try:
+            product, = cls.search([
+                ('displayed_on_eshop', '=', True),
+                ('uri', '=', uri),
+                ('template.active', '=', True),
+                ('template.is_gift_card', '=', True)
+            ], limit=1)
+        except ValueError:
+            abort(404)
+
+        form = GiftCardForm(product)
+
+        if form.validate_on_submit():
+            cart = Cart.open_cart(create_order=True)
+
+            # Code to add gift card as a line to cart
+            values = {
+                'product': product.id,
+                'sale': cart.sale.id,
+                'type': 'line',
+                'sequence': 10,
+                'quantity': 1,
+                'unit': None,
+                'description': None,
+                'recipient_email': form.recipient_email.data,
+                'recipient_name': form.recipient_name.data,
+                'message': form.message.data,
+            }
+            values.update(SaleLine(**values).on_change_product())
+            if not product.allow_open_amount:
+                values.update({'gc_price': form.selected_amount.data})
+                values.update(SaleLine(**values).on_change_gc_price())
+            else:
+                values.update({'unit_price': Decimal(form.open_amount.data)})
+
+            order_line = SaleLine(**values)
+            order_line.save()
+
+            message = 'Gift Card has been added to your cart'
+            if request.is_xhr:  # pragma: no cover
+                return jsonify(message=message)
+
+            flash(_(message), 'info')
+            return redirect(url_for('nereid.cart.view_cart'))
+
+        return render_template(
+            'catalog/gift-card.html', product=product, form=form
+        )
