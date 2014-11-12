@@ -456,7 +456,7 @@
       $(document).ready(function(){
         function resize_products () {
           var tallest_el_height = 0;
-          $('.product-list .product-list-item')
+          $('.product-list').children()
             .height('auto')
             .each(function() {
               if ($(this).height() > tallest_el_height){
