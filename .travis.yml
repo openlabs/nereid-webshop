@@ -6,7 +6,6 @@ install:
   - pip install -r dev_requirements.txt
 script:
   - coverage run setup.py test
-  - python setup.py test
   - flake8 .
 after_success:
   coveralls
