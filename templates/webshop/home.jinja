@@ -31,7 +31,7 @@
       <div class="col-md-12">
         <div id="homepage-banner-carousel" class="carousel slide homepage-carousel" data-ride="carousel">
           <!-- Indicators -->
-          <ol class="carousel-indicators">
+          <ol class="carousel-indicators hidden-xs">
             {% for banner in home_page_banners %}
             <li data-target="#homepage-banner-carousel" data-slide-to="{{ loop.index0 }}" {% if loop.first %}class="active"{% endif %}></li>
             {% endfor %}
