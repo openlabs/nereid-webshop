@@ -48,8 +48,7 @@
             </select>
           </div>
         </div>
-        <div class="masonry js-masonry"  data-masonry-options='{ "columnWidth": ".category-list", "itemSelector": ".product-item", "isFitWidth": true }'>
-          <div class="category-list"></div>
+        <div class="product-list">
           {% for product in products %}
             {{ render_product_list(product) }}
           {% endfor %}
@@ -60,8 +59,3 @@
   </div>
 </section>
 {% endblock main%}
-
-{% block script_tags %}
-{{ super() }}
-<script src="{{ url_for('nereid.webshop.send_static_file', filename='js/masonry.pkgd.min.js') }}" ></script>
-{% endblock script_tags %}

@@ -370,9 +370,40 @@
     <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/app.js') }}"></script>
     <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/holder.js') }}"></script>
     <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/underscore-min.js') }}"></script>
+    <script src="{{ url_for('nereid.webshop.send_static_file', filename='js/imagesloaded.pkgd.min.js') }}"></script>
     {% endblock script_tags %}
 
     {% block scripts %}
+      <script>
+        $(document).ready(function(){
+          $.fn.equalize_height = function(){
+            /*
+               equailize height of all childrens
+             */
+            this.each(function() {
+              var tallest_el_height = 0;
+              $(this).children()
+                .height('auto')
+                .each(function() {
+                  if ($(this).height() > tallest_el_height) {
+                    tallest_el_height=$(this).height()
+                  }
+                })
+                .height(tallest_el_height);
+            });
+          };
+
+          $('.product-list').each(function(){
+            var items = $(this);
+            items.imagesLoaded(function() {  // equalize on Image load
+              items.equalize_height();
+            });
+            $(window).on('resize', function () {
+              items.equalize_height()
+            });
+          });
+        });
+      </script>
     {% endblock scripts %}
   </body>
 </html>
