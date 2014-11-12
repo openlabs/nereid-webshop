@@ -3,6 +3,17 @@
 {% set CDN = CDN or '' %}
 {% set LOGO = CDN + url_for('nereid.webshop.send_static_file', filename='images/nereid_cart_logo.png') %}
 
+{% block notification_bar %}
+{% if request.nereid_website.show_site_message %}
+<div class="container">
+  <div class="alert alert-info hidden" id="site-message">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ request.nereid_website.site_message }}
+  </div>
+</div>
+{% endif %}
+{% endblock %}
+
 {% macro render_account_menu() %}
   {% if not current_user.is_anonymous() %}
   <li><a href="{{ url_for('nereid.website.account') }}">
@@ -370,6 +381,7 @@
     <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/jquery.pnotify.min.js') }}"></script>
     <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/underscore-min.js') }}"></script>
     <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/jquery.touchSwipe.min.js') }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/imagesloaded.pkgd.min.js') }}"></script>
 
     {% block script_tags %}
       {#
@@ -426,6 +438,18 @@
             location.reload();
           });
         });
+      });
+    </script>
+    <script type="text/javascript">
+      $(function () {
+        if (!sessionStorage.hide_site_message)
+        {
+          $("#site-message").removeClass("hidden");
+        }
+        $("#site-message .close").on("click", function(){
+          $("#site-message").addClass("hidden");
+          sessionStorage.hide_site_message = true;
+        })
       });
     </script>
 
