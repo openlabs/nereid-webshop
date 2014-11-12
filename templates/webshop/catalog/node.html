@@ -15,53 +15,87 @@
 {% block main %}
 <section>
   <div class="container">
-    <div class="col-md-12">
+
+    <div class="row">
       <div class="col-md-12">
-       <h4 class="center"> {{ node.name }}</h4>
-      </div>
-      {% if node.description %}
-        <div class="col-md-12 node-description">
+        <h3 class="center">{{ node.name }}</h3>
+        {% if node.description %}
+        <p class="node-description">
             {{ node.description|safe }}
-        </div>
-      {% endif %}
-      <div class="row">
-        {% if node.children %}
-          <div class="col-md-12">
-            {% for child in node.children %}
-              <div class="product-image col-md-3 col-sm-4 col-xs-6">
-                <a href="{{ url_for('product.tree_node.render', active_id=child.id, slug=child.slug) }}">
-                  <div>
-                    <img src="{{ child.image and child.image.transform_command().thumbnail(500, 500, 'a') or url_for('nereid.webshop.send_static_file', filename='images/no-image.jpg') }}" alt="{{ child.name }}" title="{{ child.name }}">
-                  </div>
-                  <div class="text-center">
-                    <h4>{{ child.name|safe|truncate(50) }}
-                    </h4>
-                  </div>
-                </a>
-              </div>
-            {% endfor %}
-          </div>
+        </p>
         {% endif %}
-        <div class="col-md-12">
-          <div class="node-heading row">
-            <p><b>Items</b><span class="pull-right">Total Products: {{ products.count }}<span></p>
-          </div>
-          <div class="category-list"></div>
-          <div class="row">
-            <div class="category-list"></div>
-            {% for product in products %}
-              {{ render_product_list(product) }}
-            {% endfor %}
-          </div>
-        <div class="col-md-12">
-          {{ render_pagination(products, endpoint='product.tree_node.render', active_id=node.id, slug=node.slug) }}
-        </div>
       </div>
     </div>
-  </div>
+
+    {% if node.children %}
+    <div class="row" id="subcategories">
+      {% for child in node.children %}
+      <div class="col-md-3 col-sm-4 col-xs-6">
+        <div class="thumbnail subcategory">
+          <a href="{{ child.get_absolute_url() }}">
+            <img src="{{ child.image and child.image.transform_command().thumbnail(500, 500, 'a') or url_for('nereid.webshop.send_static_file', filename='images/no-image.jpg') }}" alt="{{ child.name|truncate(50) }}" class="img-rounded img-responsive">
+          </a>
+          <div class="caption">
+            <h5 class="center">
+              <a href="{{ child.get_absolute_url() }}">
+                {{ child.name|truncate(50) }}
+              </a>
+            </h5>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="">
+          <p class="text-muted">
+            <b>{{ _('Items') }}</b>
+            <span class="pull-right">{{ _('Total Products:') }} {{ products.count }}<span>
+          </p>
+        </div>
+      </div>
+      <div class="col-md-12">
+        {% for product in products %}
+          {{ render_product_list(product) }}
+        {% endfor %}
+      </div>
+      <div class="col-md-12">
+        {{ render_pagination(products, endpoint='product.tree_node.render', active_id=node.id, slug=node.slug) }}
+      </div>
+    </div>
+
+  </div><!-- END Container -->
 </section>
 {% endblock main%}
 
+
+{% block scripts %}
+{{ super() }}
+<script>
+  $(document).ready(function(){
+    function resize_categories () {
+      var tallest_el_height = 0;
+      $('.subcategory')
+        .height('auto')
+        .each(function() {
+          if ($(this).height() > tallest_el_height){
+            tallest_el_height=$(this).height()
+          }})
+        .height(tallest_el_height);
+      }
+
+      // Resize on load
+      $('#subcategories').imagesLoaded(function() {
+        resize_categories();
+      });
+
+      $(window).on('resize', resize_categories);
+  });
+</script>
+{% endblock scripts %}
 
 {% block ga_page_view %}
     // 1. Send product and impression data with pageview.
