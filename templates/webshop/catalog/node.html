@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    {% if node.children %}
+    {% if products.page==1 and node.children %}
     <div class="row" id="subcategories">
       {% for child in node.children %}
       <div class="col-md-3 col-sm-4 col-xs-6">
@@ -49,19 +49,20 @@
     {% endif %}
 
     <div class="row">
-      <div class="col-md-12">
-        <div class="">
-          <p class="text-muted">
-            <b>{{ _('Items') }}</b>
-            <span class="pull-right">{{ _('Total Products:') }} {{ products.count }}<span>
-          </p>
+      <div class="col-md-12 node-items-block-separator center">
+        <h5 class="text-muted">
+          {{ products.begin_count }} to {{ products.end_count }} of {{ products.count }} results for {{ node.name }}
+        </h5>
+      </div>
+    </div>
+    <div class="row product-list">
+      {% for product in products %}
+        <div class="col-md-3 col-sm-4 col-xs-6 product-list-item">
+        {{ render_product_list(product, node=node) }}
         </div>
-      </div>
-      <div class="col-md-12">
-        {% for product in products %}
-          {{ render_product_list(product) }}
-        {% endfor %}
-      </div>
+      {% endfor %}
+    </div>
+    <div class="row">
       <div class="col-md-12">
         {{ render_pagination(products, endpoint='product.tree_node.render', active_id=node.id, slug=node.slug) }}
       </div>
@@ -85,14 +86,13 @@
             tallest_el_height=$(this).height()
           }})
         .height(tallest_el_height);
-      }
+    }
 
-      // Resize on load
-      $('#subcategories').imagesLoaded(function() {
-        resize_categories();
-      });
+    // Resize on load
+    $('#subcategories').imagesLoaded(resize_categories);
 
-      $(window).on('resize', resize_categories);
+    $(window).on('resize', resize_categories);
+
   });
 </script>
 {% endblock scripts %}
