@@ -61,7 +61,7 @@
 </div>
 {%- endmacro %}
 
-{% macro render_product_list(product, node=None, name=None, description=None) -%}
+{% macro render_product_list(product, node=None, name=None, description=None, product_list_name=None) -%}
 {% set name = name or product.rec_name or product.name %}
 {% set description = description or product.description %}
 {% if product.__name__ == 'product.template' %}
@@ -69,7 +69,7 @@
 {% endif %}
 {% set product_url = product.get_absolute_url(path=(node and node.slug or None), node=(node and node.id or None)) %}
 <div class="thumbnail">
-  <a href="{{ product_url }}">
+  <a href="{{ product_url }}" ga-product-link data-ga-product-list="{{ node and node.name or product_list_name }}">
     <img src="{{ CDN }}{{ product.default_image.transform_command().thumbnail(300, 300, 'a') }}"
           alt="{{ product.name }}"
           title="{{ product.name }}"
@@ -77,7 +77,7 @@
   </a>
   <div class="caption">
     <h5 class="center">
-      <a href="{{ product_url }}">{{ name|safe|truncate(50) }}</a>
+      <a href="{{ product_url }}" ga-product-link data-ga-product-list="{{ node and node.name or product_list_name }}">{{ name|safe|truncate(50) }}</a>
     </h5>
     {% if product.brand %}<div class="brand">by {{ product.brand }}</div>{% endif %}
     <h6 class="text-danger center">{{ product.sale_price()|currencyformat(request.nereid_currency.code) }}</h6>
