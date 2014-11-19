@@ -497,7 +497,9 @@
           var url = $(this).attr('href');
 
           // register safety net timeout:
-          var t = setTimeout('document.location = ' + url, 250);
+          var t = setTimeout(function() {
+            document.location.href = url
+          }, 500);
 
           ga('ec:addProduct', {
             'id': $(this).data('product-id'),
@@ -509,9 +511,8 @@
             'hitCallback': function() {
               clearTimeout(t);
               // redirect anyway:
-              document.location = url;
-            });
-          }
+              document.location.href = url;
+            }});
         });
       });
       ga('send', 'pageview');
