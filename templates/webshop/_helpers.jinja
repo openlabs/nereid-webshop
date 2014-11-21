@@ -62,10 +62,12 @@
 {%- endmacro %}
 
 {% macro render_product_list(product, node=None, name=None, description=None, product_list_name=None) -%}
-{% set name = name or product.rec_name or product.name %}
 {% set description = description or product.description %}
 {% if product.__name__ == 'product.template' %}
   {% set product = product.products_displayed_on_eshop[0] %}
+  {% set name = name or product.name %}
+{% elif product.__name__ == 'product.product' %}
+  {% set name = name or product.template.name %}
 {% endif %}
 {% set product_url = product.get_absolute_url(path=(node and node.slug or None), node=(node and node.id or None)) %}
 <div class="thumbnail">
