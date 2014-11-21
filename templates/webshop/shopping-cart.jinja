@@ -6,13 +6,14 @@
 {% macro render_quantity_selector(line) %}
 <div class="form-group">
   {% if not line.unit.digits %}
-    <select class="form-control qty" data-product="{{ line.product.id }}">
+    <select class="form-control qty" data-product="{{ line.product.id }}" {% if line.product.is_gift_card %}disabled{% endif %}>
     {% for q in range(1, 100) %}
       <option {% if line.quantity == q %}selected{% endif %}>{{ q }}</option>
     {% endfor %}
     </select>
   {% else %}
-  <input class="form-control text-right qty" type="number" data-product="{{ line.product.id }}" title="Qty" value="{{ line.quantity|int }}" name="quantity">
+  <input class="form-control text-right qty" type="number" data-product="{{ line.product.id }}" title="Qty"
+    value="{{ line.quantity|int }}" name="quantity" {% if line.product.is_gift_card %}disabled{% endif %}>
   {% endif %}
 </div>
 {% endmacro %}
@@ -80,6 +81,10 @@
                         <strong>{{ line.product.name }}</strong>
                       </a>
                       <br><strong class="text-muted">SKU: </strong> {{ line.product.code }}
+                      {% if line.product.is_gift_card %}
+                        <br><strong class="text-muted">Recipient Name: </strong> {{ line.recipient_name }}
+                        <br><strong class="text-muted">Recipient E-mail: </strong> {{ line.recipient_email }}
+                      {% endif %}
                       {% if line.product.attributes %}
                       {% for key, value in line.product.attributes.iteritems() %}
                         <br/><strong class="text-muted"> {{ key }} : </strong> {{ value }}

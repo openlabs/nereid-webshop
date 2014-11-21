@@ -1,0 +1,71 @@
+{% extends 'product.jinja' %}
+
+{% from '_helpers.jinja' import render_product, render_field %}
+
+{% block product_name_price %}
+  {# product name/price section #}
+  <h3 class="product-heading product-name">
+    <span itemprop="name">{{ product.name }}</span>
+  </h3>
+  <h4>
+    <small class="product-code" itemprop="identifier" content="sku:{{ product.code }}">{{ product.code }}</small>
+  </h4>
+  {% if product.allow_open_amount %}
+    <div itemprop="offerDetails" itemscope itemtype="http://data-vocabulary.org/Offer">
+      <meta itemprop="priceCurrency" content="{{ request.nereid_currency.code }}" />
+      <h4 class="product-price" itemprop="price">
+        {{ product.gc_min|currencyformat(request.nereid_currency.code) }} - {{ product.gc_max|currencyformat(request.nereid_currency.code) }}
+      </h4>
+    </div>
+  {% endif %}
+{% endblock product_name_price %}
+
+{% block buy_buttons %}
+  <div class="row cart_wish">
+    {% if product.salable %}
+      <div class="col-md-12">
+        <form action="" method="post" id="product-buy-now" autocomplete="off">
+          <div class="form-group">
+            <div class="row margin-top-15">
+              {% if product.allow_open_amount %}
+                  <div class="col-md-6">
+                    {{ render_field(form.open_amount, placeholder="Enter Amount", type="number", required=required) }}
+                  </div>
+              {% else %}
+                  <div class="col-md-6">
+                    {{ render_field(form.selected_amount, required=required) }}
+                  </div>
+              {% endif %}
+            </div>
+
+            <div class="row margin-top-15">
+              <div class="col-md-6">
+                  {{ render_field(form.recipient_name, placeholder="Enter Name", type="text", required=required) }}
+              </div>
+              <div class="col-md-6">
+                  {{ render_field(form.recipient_email, placeholder="Enter Email", type="email", required=required) }}
+              </div>
+            </div>
+
+            <div class="row margin-top-15">
+              <div class="col-md-12">
+                {{ render_field(form.message, placeholder="Enter Message", type="textarea") }}
+              </div>
+            </div>
+            <div class="row margin-top-15">
+                <div class="buy-now col-md-12">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                  <button class="btn btn-buynow btn-block btn-lg" type="submit" id="buy-now-btn">Buy Now</button>
+                </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    {% else %}
+      <div style="padding-top:15px;">
+        <span class="text-danger" id="product-not-for-sale"><i class="fa fa-warning"></i>This product is not for sale</span>
+      </div>
+    {% endif %}
+  </div>
+  <hr/>
+{% endblock buy_buttons %}

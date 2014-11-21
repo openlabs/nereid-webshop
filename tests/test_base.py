@@ -57,6 +57,15 @@ class BaseTestCase(NereidTestCase):
         self.ProductNodeRelationship = POOL.get(
             'product.product-product.tree_node'
         )
+        self.templates = {
+            'shopping-cart.jinja':
+                'Cart:{{ cart.id }},{{get_cart_size()|round|int}},'
+                '{{cart.sale.total_amount}}',
+            'product.jinja':
+                '{{ product.name }}',
+            'catalog/gift-card.html':
+                '{{ product.id }}',
+        }
 
     def _get_account_by_kind(self, kind, company=None, silent=True):
         """Returns an account with given spec
