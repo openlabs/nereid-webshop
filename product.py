@@ -177,3 +177,13 @@ class Product:
         return render_template(
             'catalog/gift-card.html', product=product, form=form
         )
+
+    def get_absolute_url(self, **kwargs):
+        """
+        Return gift card URL if product is a gift card
+        """
+        if self.is_gift_card:
+            return url_for(
+                'product.product.render_gift_card', uri=self.uri, **kwargs
+            )
+        return super(Product, self).get_absolute_url(**kwargs)
