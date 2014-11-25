@@ -39,21 +39,19 @@ class TestGiftCard(BaseTestCase):
             'salable': True,
             'sale_uom': uom.id,
             'account_revenue': self._get_account_by_kind('revenue').id,
-            'products': [
-                ('create', [{
-                    'code': 'Test Product'
-                }])
-            ]
+        }
+        product_values = {
+            'code': 'Test Product'
         }
 
         if is_gift_card:
-            values.update({
+            product_values.update({
                 'is_gift_card': True,
-                'gift_card_delivery_mode': mode,
+                'gift_card_delivery_mode': mode
             })
 
             if not allow_open_amount:
-                values.update({
+                product_values.update({
                     'gift_card_prices': [
                         ('create', [{
                             'price': 500,
@@ -63,11 +61,17 @@ class TestGiftCard(BaseTestCase):
                     ]
                 })
             else:
-                values.update({
+                product_values.update({
                     'allow_open_amount': True,
                     'gc_min': 100,
                     'gc_max': 400
                 })
+
+        values.update({
+            'products': [
+                ('create', [product_values])
+            ]
+        })
 
         return Template.create([values])[0].products[0]
 
@@ -119,6 +123,7 @@ class TestGiftCard(BaseTestCase):
                     'recipient_email': 'rec@ol.in',
                     'recipient_name': 'Recipient',
                     'selected_amount': gift_card_product.gift_card_prices[0].id,
+                    'open_amount': 0.0,
                     'message': 'Test Message',
                 }
                 c.post(
@@ -164,6 +169,7 @@ class TestGiftCard(BaseTestCase):
                 data = {
                     'recipient_email': 'rec@ol.in',
                     'recipient_name': 'Recipient',
+                    'selected_amount': 0,
                     'open_amount': 200,
                     'message': 'Test Message',
                 }
@@ -210,6 +216,7 @@ class TestGiftCard(BaseTestCase):
                 data = {
                     'recipient_email': 'rec@ol.in',
                     'recipient_name': 'Recipient',
+                    'selected_amount': 0,
                     'open_amount': 500,
                     'message': 'Test Message',
                 }
