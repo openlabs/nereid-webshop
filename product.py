@@ -134,7 +134,7 @@ class Product:
                 ('displayed_on_eshop', '=', True),
                 ('uri', '=', uri),
                 ('template.active', '=', True),
-                ('template.is_gift_card', '=', True)
+                ('is_gift_card', '=', True)
             ], limit=1)
         except ValueError:
             abort(404)
@@ -158,7 +158,10 @@ class Product:
                 'message': form.message.data,
             }
             values.update(SaleLine(**values).on_change_product())
-            if not product.allow_open_amount:
+
+            # Here 0 means the default option to enter open amount is
+            # selected
+            if form.selected_amount.data != 0:
                 values.update({'gc_price': form.selected_amount.data})
                 values.update(SaleLine(**values).on_change_gc_price())
             else:
