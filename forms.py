@@ -24,8 +24,8 @@ class GiftCardForm(Form):
         'Recipient Email', [validators.Required(), validators.Email()]
     )
     message = TextAreaField('Message')
-    selected_amount = SelectField('Amount', choices=[], coerce=int)
-    open_amount = DecimalField('Amount')
+    selected_amount = SelectField('Select Amount', choices=[], coerce=int)
+    open_amount = DecimalField('Amount', default=0)
 
     def __init__(self, product, *args, **kwargs):
         super(GiftCardForm, self).__init__(*args, **kwargs)
@@ -37,21 +37,20 @@ class GiftCardForm(Form):
         try:
             self.gc_product, = Product.search([
                 ('id', '=', product.id),
-                ('template.is_gift_card', '=', True)
+                ('is_gift_card', '=', True)
             ], limit=1)
         except ValueError as e:
             e.message = 'Expected Gift Card, Got %s' % (product.rec_name)
             raise
 
-        if not self.gc_product.allow_open_amount:
-            self.selected_amount.validators.append(validators.Required())
-            self.fill_choices()
-        else:
-            self.selected_amount.validators.append(validators.optional())
-            self.open_amount.validators.append(validators.Required())
+        self.fill_choices()
 
     def fill_choices(self):
-        self.selected_amount.choices = [
+        choices = []
+        if self.gc_product.allow_open_amount:
+            choices = [(0, 'Set my Own')]
+
+        self.selected_amount.choices = choices + [
             (p.id, p.price) for p in self.gc_product.gift_card_prices
         ]
 
@@ -59,8 +58,9 @@ class GiftCardForm(Form):
         if not form.gc_product.allow_open_amount:
             return
 
-        if field.data not in range(
-                form.gc_product.gc_min, form.gc_product.gc_max + 1):
+        if (form.selected_amount.data == 0) and not (
+            form.gc_product.gc_min <= field.data <= form.gc_product.gc_max
+        ):
             raise ValidationError(
                 "Amount between %s and %s is allowed." % (
                     form.gc_product.gc_min, form.gc_product.gc_max

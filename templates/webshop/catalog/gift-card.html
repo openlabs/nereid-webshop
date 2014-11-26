@@ -27,15 +27,14 @@
         <form action="" method="post" id="product-buy-now" autocomplete="off">
           <div class="form-group">
             <div class="row margin-top-15">
-              {% if product.allow_open_amount %}
-                  <div class="col-md-6">
-                    {{ render_field(form.open_amount, placeholder="Enter Amount", type="number", required=required) }}
-                  </div>
-              {% else %}
-                  <div class="col-md-6">
-                    {{ render_field(form.selected_amount, required=required) }}
-                  </div>
-              {% endif %}
+                <div class="col-md-6">
+                    {{ render_field(form.selected_amount, required=required, id="selected_amount") }}
+                </div>
+                {% if product.allow_open_amount %}
+                    <div class="col-md-6" id="enter_amount">
+                        {{ render_field(form.open_amount, placeholder="Enter Amount") }}
+                    </div>
+                {% endif %}
             </div>
 
             <div class="row margin-top-15">
@@ -69,3 +68,21 @@
   </div>
   <hr/>
 {% endblock buy_buttons %}
+
+{% block scripts %}
+{{ super() }}
+
+{% if product.allow_open_amount %}
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#selected_amount').change(function(){
+      if ($( "#selected_amount" ).val() != 0) {
+          $( "#enter_amount").hide();
+      } else {
+        $( "#enter_amount").show();
+      }
+    });
+  });
+</script>
+{% endif %}
+{% endblock %}
