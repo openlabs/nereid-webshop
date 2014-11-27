@@ -72,11 +72,11 @@
 
 <section class="products latest">
   <div class="container">
-    {% set node = request.nereid_website.featured_products_node %}
-    {% if node %}
+    {% set featured_products = request.nereid_website.featured_products_node and request.nereid_website.featured_products_node.get_products(per_page=3) %}
+    {% if featured_products %}
     <div class="row" id="featured-node">
       <h3>Featured Products</h3>
-      {% for product in node.products[:3] %}
+      {% for product in featured_products %}
         <a href="{{ url_for('product.product.render', uri=product.uri) }}">
           <div class="col-md-4 thumb">
             <img class="img img-responsive"

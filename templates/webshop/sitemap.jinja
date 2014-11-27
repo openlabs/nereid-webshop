@@ -1,0 +1,22 @@
+{% extends 'base.jinja' %}
+
+{% block main %}
+<div id="sitemap" class="container">
+  <h4>Products Sitemap</h4>
+  <br>
+  {% if nodes %}
+    <ul class="sitemap">
+      {%- for node in nodes recursive %}
+        {% if loop.depth < 3 and node.children %}
+          <li class="has-children">
+            <a href="{{ node.get_absolute_url() }}">{{ node.name }}</a>
+            <ul type="disc">{{ loop(node.children) }}</ul>
+          </li>
+        {% else %}
+          <li><a href="{{ node.get_absolute_url() }}">{{ node.name }}</a></li>
+        {% endif %}
+      {%- endfor %}
+    </ul>
+  {% endif %}
+</div>
+{% endblock %}
