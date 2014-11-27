@@ -10,8 +10,8 @@ import os
 
 from flask.helpers import send_from_directory
 from trytond.model import ModelSQL, fields
-from trytond.pool import PoolMeta
-from nereid import current_app, route
+from trytond.pool import Pool, PoolMeta
+from nereid import current_app, route, render_template
 from trytond.pyson import Eval, Not
 
 __metaclass__ = PoolMeta
@@ -93,3 +93,20 @@ class Website:
         },
         depends=['show_site_message']
     )
+
+    @classmethod
+    @route('/sitemap', methods=["GET"])
+    def render_sitemap(cls):
+        """
+        Return the sitemap.
+        """
+        Node = Pool().get('product.tree_node')
+
+        # Search for nodes, sort by sequence.
+        nodes = Node.search([
+            ('parent', '=', None),
+        ], order=[
+            ('sequence', 'ASC'),
+        ])
+
+        return render_template('sitemap.jinja', nodes=nodes)
