@@ -86,7 +86,7 @@
                 </div>
               </div>
               <button type="submit" class="btn btn-warning btn-lg btn-block" id="payment-btn">
-                <i class="fa fa-lock"> 
+                <i class="fa fa-lock"></i>
                 {{ _('Pay Now') }}
                 <i class="fa fa-spin fa-spinner hidden"></i>
               </button>
@@ -100,7 +100,7 @@
           <div class="payment-container">
             <h4><span class="underline">{{ _('More Payment methods') }}</span></h4>
             {% for method_id, method_name in payment_form.alternate_payment_method.choices %}
-            <div class="tab-pane fade center" id="method-{{ method_id }}">
+            <div class="tab-pane center" id="method-{{ method_id }}">
               {% set method = PaymentMethod(method_id) %}
               <p><strong><span class="text-success">{{ method.instructions|safe }}</strong></p>
               <form method="post" autocomplete="off">
