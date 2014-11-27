@@ -56,7 +56,11 @@
     <h4> {{ product.name }}
       <span class="brand">Black Coffee</span>
     </h4>
-    <span class="product-price">{{ product.sale_price()|currencyformat(request.nereid_currency.code) }}</span>
+    {% if product.is_gift_card %}
+      <span class="product-price">{{ product.gc_min|currencyformat(request.nereid_currency.code) }} - {{ product.gc_max|currencyformat(request.nereid_currency.code) }}</span>
+    {% else %}
+      <span class="product-price">{{ product.sale_price()|currencyformat(request.nereid_currency.code) }}</span>
+    {% endif %}
   </a>
 </div>
 {%- endmacro %}
@@ -82,7 +86,11 @@
       <a href="{{ product_url }}" ga-product-link data-ga-product-list="{{ node and node.name or product_list_name }}">{{ name|safe|truncate(50) }}</a>
     </h5>
     {% if product.brand %}<div class="brand">by {{ product.brand }}</div>{% endif %}
-    <h6 class="text-danger center">{{ product.sale_price()|currencyformat(request.nereid_currency.code) }}</h6>
+    {% if product.is_gift_card %}
+      <h6 class="text-danger center">{{ product.gc_min|currencyformat(request.nereid_currency.code) }} - {{ product.gc_max|currencyformat(request.nereid_currency.code) }}</h6>
+    {% else %}
+      <h6 class="text-danger center">{{ product.sale_price()|currencyformat(request.nereid_currency.code) }}</h6>
+    {% endif %}
   </div>
 </div>
 {% endmacro %}
