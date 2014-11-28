@@ -190,20 +190,3 @@ class Product:
                 'product.product.render_gift_card', uri=self.uri, **kwargs
             )
         return super(Product, self).get_absolute_url(**kwargs)
-
-    @classmethod
-    @route('/sitemap', methods=["GET"])
-    def render_sitemap(cls):
-        """
-        Return the sitemap.
-        """
-        Node = Pool().get('product.tree_node')
-
-        # Search for nodes, sort by sequence.
-        nodes = Node.search([
-            ('parent', '=', None),
-        ], order=[
-            ('sequence', 'ASC'),
-        ])
-
-        return render_template('sitemap.jinja', nodes=nodes)
