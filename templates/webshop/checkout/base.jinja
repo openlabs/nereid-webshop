@@ -87,6 +87,7 @@
 {% endmacro %}
 
 {% macro cart_summary() %}
+{% block cart_summary_macro %}
   {% set cart = get_cart() %}
   {% set currency = cart.sale.currency.code %}
   <div class="cart-summary">
@@ -214,4 +215,5 @@
   {% endif %}
 
   </div>
+{% endblock cart_summary_macro %}
 {% endmacro %}
