@@ -18,9 +18,9 @@
               </button>
               <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ url_for('sale.sale.render_list', filter_by="recent") }}">Recent Orders</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ url_for('sale.sale.render_list', filter_by="processing") }}">Processing Orders</a></li>
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ url_for('sale.sale.render_list', filter_by="done") }}">Done Orders</a></li>
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ url_for('sale.sale.render_list', filter_by="canceled") }}">Canceled Orders</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ url_for('sale.sale.render_list', filter_by="archived") }}">Archived Orders</a></li>
               </ul>
             </div>
           </div>
