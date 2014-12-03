@@ -19,11 +19,9 @@ class GiftCardForm(Form):
     A form for purchasing gift cards
     """
 
-    recipient_name = TextField('Recipient Name', [validators.Required(), ])
-    recipient_email = TextField(
-        'Recipient Email', [validators.Required(), validators.Email()]
-    )
-    message = TextAreaField('Message')
+    recipient_name = TextField('Recipient Name', [validators.Optional()])
+    recipient_email = TextField('Recipient Email')
+    message = TextAreaField('Message', [validators.Optional()])
     selected_amount = SelectField('Select Amount', choices=[], coerce=int)
     open_amount = DecimalField('Amount', default=0)
 
@@ -44,6 +42,15 @@ class GiftCardForm(Form):
             raise
 
         self.fill_choices()
+
+        if self.gc_product.gift_card_delivery_mode in ['virtual', 'combined']:
+            self.recipient_email.validators = [
+                validators.Required(), validators.Email()
+            ]
+        else:
+            self.recipient_email.validators = [
+                validators.Optional(), validators.Email()
+            ]
 
     def fill_choices(self):
         choices = []
