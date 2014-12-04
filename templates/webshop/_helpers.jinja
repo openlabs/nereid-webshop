@@ -75,7 +75,7 @@
 {% endif %}
 {% set product_url = product.get_absolute_url(path=(node and node.slug or None), node=(node and node.id or None)) %}
 <div class="thumbnail">
-  <a href="{{ product_url }}" ga-product-link data-ga-product-list="{{ node and node.name or product_list_name }}">
+  <a href="{{ product_url }}" ga-product-link data-ga-product-list="{{ node and node.name or product_list_name }}" data-ga-event-label="Product Thumbnail" data-ga-product-id="{{ product.id }}" data-ga-product-name="{{ product.name }}" data-ga-product-category="{{ product.category and product.category.name or None }}">
     <img src="{{ CDN }}{{ product.default_image.transform_command().thumbnail(300, 300, 'a') }}"
           alt="{{ product.name }}"
           title="{{ product.name }}"
@@ -83,7 +83,7 @@
   </a>
   <div class="caption">
     <h5 class="center">
-      <a href="{{ product_url }}" ga-product-link data-ga-product-list="{{ node and node.name or product_list_name }}">{{ name|safe|truncate(50) }}</a>
+      <a href="{{ product_url }}" ga-product-link data-ga-product-list="{{ node and node.name or product_list_name }}" data-ga-event-label="Product Name" data-ga-product-id="{{ product.id }}" data-ga-product-name="{{ product.name }}" data-ga-product-category="{{ product.category and product.category.name or None }}">{{ name|safe|truncate(50) }}</a>
     </h5>
     {% if product.brand %}<div class="brand">by {{ product.brand }}</div>{% endif %}
     {% if product.is_gift_card %}
