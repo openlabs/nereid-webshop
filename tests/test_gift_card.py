@@ -112,7 +112,9 @@ class TestGiftCard(BaseTestCase):
             self.setup_defaults()
             app = self.get_app()
 
-            gift_card_product = self.create_product(is_gift_card=True)
+            gift_card_product = self.create_product(
+                is_gift_card=True, type="service", mode="virtual"
+            )
             gift_card_product.displayed_on_eshop = True
             gift_card_product.uri = "gift-card-product"
             gift_card_product.save()
@@ -158,7 +160,8 @@ class TestGiftCard(BaseTestCase):
             app = self.get_app()
 
             gift_card_product = self.create_product(
-                is_gift_card=True, allow_open_amount=True
+                is_gift_card=True, type="service", mode="virtual",
+                allow_open_amount=True
             )
             gift_card_product.displayed_on_eshop = True
             gift_card_product.uri = "gift-card-product"
@@ -205,7 +208,8 @@ class TestGiftCard(BaseTestCase):
             app = self.get_app()
 
             gift_card_product = self.create_product(
-                is_gift_card=True, allow_open_amount=True
+                is_gift_card=True, type="service", mode="virtual",
+                allow_open_amount=True
             )
             gift_card_product.displayed_on_eshop = True
             gift_card_product.uri = "gift-card-product"
@@ -228,7 +232,187 @@ class TestGiftCard(BaseTestCase):
                 )
                 rv = c.get('/cart')
                 self.assertEqual(rv.status_code, 200)
-                self.assertEqual(rv.data, 'Cart:1,0,')
+                self.assertEqual(rv.data, 'Cart:None,0,')
+
+    def test0050_add_physical_gift_card_to_cart_case1(self):
+        """
+        Test adding physical gift card without open amounts
+        """
+        with Transaction().start(DB_NAME, USER, CONTEXT):
+            self.setup_defaults()
+            app = self.get_app()
+
+            gift_card_product = self.create_product(is_gift_card=True)
+            gift_card_product.displayed_on_eshop = True
+            gift_card_product.uri = "gift-card-product"
+            gift_card_product.save()
+
+            with app.test_client() as c:
+
+                data = {
+                    'selected_amount': gift_card_product.gift_card_prices[0].id,
+                    'open_amount': 0.0,
+                    'message': 'Test Message',
+                }
+                c.post(
+                    '/gift-card/%s' % gift_card_product.uri, data=data
+                )
+                rv = c.get('/cart')
+                self.assertEqual(rv.status_code, 200)
+                self.assertEqual(rv.data, 'Cart:1,1,500.00')
+
+                # Test login handler
+                self.login(c, 'email@example.com', 'password')
+
+                rv = c.get('/cart')
+                self.assertEqual(rv.status_code, 200)
+                self.assertEqual(rv.data, 'Cart:2,1,500.00')
+
+                # Test if a new line is added if the same gift card
+                # is added to cart
+                c.post(
+                    '/gift-card/%s' % gift_card_product.uri, data=data
+                )
+                rv = c.get('/cart')
+                self.assertEqual(rv.status_code, 200)
+                self.assertEqual(rv.data, 'Cart:2,2,1000.00')
+
+    def test0060_add_physical_gift_card_to_cart_case2(self):
+        """
+        Test adding physical gift card with open amounts
+        """
+        with Transaction().start(DB_NAME, USER, CONTEXT):
+            self.setup_defaults()
+            app = self.get_app()
+
+            gift_card_product = self.create_product(
+                is_gift_card=True, allow_open_amount=True
+            )
+            gift_card_product.displayed_on_eshop = True
+            gift_card_product.uri = "gift-card-product"
+            gift_card_product.save()
+
+            with app.test_client() as c:
+
+                data = {
+                    'selected_amount': 0,
+                    'open_amount': 200,
+                    'message': 'Test Message',
+                }
+                c.post(
+                    '/gift-card/%s' % gift_card_product.uri, data=data
+                )
+                rv = c.get('/cart')
+                self.assertEqual(rv.status_code, 200)
+                self.assertEqual(rv.data, 'Cart:1,1,200.00')
+
+                # Test login handler
+                self.login(c, 'email@example.com', 'password')
+
+                rv = c.get('/cart')
+                self.assertEqual(rv.status_code, 200)
+                self.assertEqual(rv.data, 'Cart:2,1,200.00')
+
+                # Test if a new line is added if the same gift card
+                # is added to cart
+                c.post(
+                    '/gift-card/%s' % gift_card_product.uri, data=data
+                )
+                rv = c.get('/cart')
+                self.assertEqual(rv.status_code, 200)
+                self.assertEqual(rv.data, 'Cart:2,2,400.00')
+
+    def test0070_add_combined_gift_card_to_cart_case1(self):
+        """
+        Test adding combined gift card without open amounts
+        """
+        with Transaction().start(DB_NAME, USER, CONTEXT):
+            self.setup_defaults()
+            app = self.get_app()
+
+            gift_card_product = self.create_product(
+                is_gift_card=True, mode='combined'
+            )
+            gift_card_product.displayed_on_eshop = True
+            gift_card_product.uri = "gift-card-product"
+            gift_card_product.save()
+
+            with app.test_client() as c:
+
+                data = {
+                    'recipient_email': 'rec@ol.in',
+                    'selected_amount': gift_card_product.gift_card_prices[0].id,
+                    'open_amount': 0.0,
+                    'message': 'Test Message',
+                }
+                c.post(
+                    '/gift-card/%s' % gift_card_product.uri, data=data
+                )
+                rv = c.get('/cart')
+                self.assertEqual(rv.status_code, 200)
+                self.assertEqual(rv.data, 'Cart:1,1,500.00')
+
+                # Test login handler
+                self.login(c, 'email@example.com', 'password')
+
+                rv = c.get('/cart')
+                self.assertEqual(rv.status_code, 200)
+                self.assertEqual(rv.data, 'Cart:2,1,500.00')
+
+                # Test if a new line is added if the same gift card
+                # is added to cart
+                c.post(
+                    '/gift-card/%s' % gift_card_product.uri, data=data
+                )
+                rv = c.get('/cart')
+                self.assertEqual(rv.status_code, 200)
+                self.assertEqual(rv.data, 'Cart:2,2,1000.00')
+
+    def test0080_add_gift_card_to_cart_case2(self):
+        """
+        Test adding combined gift card with open amounts
+        """
+        with Transaction().start(DB_NAME, USER, CONTEXT):
+            self.setup_defaults()
+            app = self.get_app()
+
+            gift_card_product = self.create_product(
+                is_gift_card=True, mode='combined', allow_open_amount=True
+            )
+            gift_card_product.displayed_on_eshop = True
+            gift_card_product.uri = "gift-card-product"
+            gift_card_product.save()
+
+            with app.test_client() as c:
+
+                data = {
+                    'recipient_name': 'Test User',
+                    'recipient_email': 'rec@ol.in',
+                    'selected_amount': 0,
+                    'open_amount': 200,
+                }
+                c.post(
+                    '/gift-card/%s' % gift_card_product.uri, data=data
+                )
+                rv = c.get('/cart')
+                self.assertEqual(rv.status_code, 200)
+                self.assertEqual(rv.data, 'Cart:1,1,200.00')
+
+                # Test login handler
+                self.login(c, 'email@example.com', 'password')
+
+                rv = c.get('/cart')
+                self.assertEqual(rv.status_code, 200)
+                self.assertEqual(rv.data, 'Cart:2,1,200.00')
+
+                # Test if a new line is added if the same gift card
+                # is added to cart
+                c.post(
+                    '/gift-card/%s' % gift_card_product.uri, data=data
+                )
+                rv = c.get('/cart')
+                self.assertEqual(rv.status_code, 200)
+                self.assertEqual(rv.data, 'Cart:2,2,400.00')
 
 
 def suite():
