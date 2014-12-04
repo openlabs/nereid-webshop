@@ -513,12 +513,12 @@
           }, 500);
 
           ga('ec:addProduct', {
-            'id': $(this).data('product-id'),
-            'name': $(this).data('product-name'),
-            'category': $(this).data('product-category')
+            'id': $(this).data('ga-product-id'),
+            'name': $(this).data('ga-product-name'),
+            'category': $(this).data('ga-product-category')
           });
           ga('ec:setAction', 'click', {list: $(this).data('ga-product-list')});
-          ga('send', 'event', 'Product', 'click', 'Results', {
+          ga('send', 'event', 'Product', 'click', $(this).data('ga-event-label') || '', {
             'hitCallback': function() {
               clearTimeout(t);
               // redirect anyway:
