@@ -479,7 +479,13 @@
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-      ga('create', '{{ GOOGLE_ANALYTICS_PROPERTY_ID }}', 'auto');
+      ga('create', {
+        trackingId: '{{ GOOGLE_ANALYTICS_PROPERTY_ID }}',
+        cookieDomain: 'auto'
+        {% if not current_user.is_anonymous() %}
+        ,userId: {{ current_user.id }}
+        {% endif %}
+      });
       ga('require', 'displayfeatures');
       ga('require', 'ec');
 
