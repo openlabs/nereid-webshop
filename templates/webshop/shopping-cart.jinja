@@ -143,7 +143,10 @@
           <div class="row">
             <div class="col-md-12 hidden-xs">
               <a href="{{ url_for('nereid.website.home') }}" class="btn btn-default btn-md" data-original-title="" title=""><i class="fa fa-angle-double-left"></i>&nbsp; {{ _('Continue Shopping') }}</a>
-              <a href="{{ url_for('nereid.cart.clear_cart') }}" class="btn btn-default" data-original-title="" title=""><i class="fa fa-times"></i> {{ _('Clear Cart') }}</a>
+              <form action="{{ url_for('nereid.cart.clear_cart') }}" method="post" id="clear-cart" class="inline-form">
+                <input name="csrf_token" type="hidden" value="{{ csrf_token() }}">
+                <button type="submit" class="btn btn-default"><i class="fa fa-times"></i> {{ _('Clear Cart') }}</button>
+              </form>
             </div>
           </div>
         </div>
