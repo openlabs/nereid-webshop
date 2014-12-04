@@ -1615,3 +1615,6 @@ border-top: 1px solid rgba(248, 248, 248, 0.2);
 .margin-top-15{
   margin-top: 15px;
 }
+.inline-form {
+  display: inline-block;
+}
