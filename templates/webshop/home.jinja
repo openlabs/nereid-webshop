@@ -1,21 +1,5 @@
 {% extends 'base.jinja' %}
 
-{% block extra_head %}
-{{ super() }}
-<script type="application/ld+json">
-{
-   "@context": "http://schema.org",
-   "@type": "WebSite",
-   "url": "{{ url_for('nereid.website.home', _external=True) }}",
-   "potentialAction": {
-     "@type": "SearchAction",
-     "target": "{{ url_for('product.product.quick_search', _external=True)|safe }}?q={search_term_string}",
-     "query-input": "required name=search_term_string"
-   }
-}
-</script>
-{% endblock extra_head %}
-
 {% block breadcrumb %}
 {{ render_breadcrumb_item(_('Home'), url_for('nereid.website.home')) }}
 {% endblock breadcrumb %}
