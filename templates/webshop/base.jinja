@@ -57,6 +57,7 @@
     {% block link_tags %}
     {# This block adds <link> tags to the head section of the template. #}
     <link href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/typeaheadjs.css') }}" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/html5shiv.js') }}"></script>
@@ -193,8 +194,8 @@
               <form action="{{ url_for('product.product.quick_search') }}" id="search_form"
                 itemprop="potentialAction" itemscope itemtype="http://schema.org/SearchAction">
                 <meta itemprop="target" content="{{ url_for('product.product.quick_search', _external=True) }}?q={q}"/>
-                <div class="input-group">
-                  <input type="text" class="form-control" name="q" itemprop="query-input" required>
+                <div class="input-group" id="search-bar">
+                  <input type="text" class="form-control typeahead" data-provide="typeahead" name="q" itemprop="query-input" required>
                   <span class="input-group-btn">
                     <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
                   </span>
@@ -385,6 +386,7 @@
     <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/underscore-min.js') }}"></script>
     <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/jquery.touchSwipe.min.js') }}"></script>
     <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/imagesloaded.pkgd.min.js') }}"></script>
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/typeahead.bundle.min.js') }}"></script>
 
     {% block script_tags %}
       {#
@@ -530,6 +532,35 @@
 
     </script>
     {% endif %}
+    <script type="text/javascript">
+      $(document).ready(function(){
+        var products = new Bloodhound({
+          datumTokenizer: function (datum) {
+            return Bloodhound.tokenizers.whitespace(datum.value);
+          },
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
+          remote: {
+          url: "{{ url_for('nereid.website.search_auto_complete') }}?q=%QUERY",
+            filter: function (products) {
+              return products.results;
+            }
+          }
+        });
+
+        products.initialize();
+
+        $('#search-bar .typeahead').typeahead({
+          hint: true,
+          minLength: 5,
+          highlight: true
+        },
+        {
+          name: 'products',
+          displayKey: 'value',
+          source: products.ttAdapter()
+        });
+      });
+    </script>
 
     {% block scripts %}
     {% endblock scripts %}
