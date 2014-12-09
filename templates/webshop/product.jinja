@@ -1,6 +1,7 @@
 {% extends 'base.jinja' %}
 
 {% set node = node or product.nodes and product.nodes[0].node %}
+{% set cross_sells = product.cross_sells|selectattr("displayed_on_eshop")|list %}
 
 {% from '_helpers.jinja' import render_product %}
 
@@ -215,40 +216,50 @@
 
   {% block related_products %}
   <!-- Related Products -->
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3 center">
-      <ul class="list-inline recommended-tabs">
-        <li class="active"><a href="#recommended-products" data-toggle="tab">Recommended</a></li>
-        <li><a href="#bought-together" data-toggle="tab">Bought Together</a></li>
-        <li><a href="#recently-viewed" data-toggle="tab">Recently Viewed</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="row tab-content center">
-    <div class="tab-pane active" id="recommended-products">
-      <div class="col-md-10 col-md-offset-1">
-        <div id="product-slide">
-          {% for recommended_product in product.recommended_products %}
-          {# FIXME #}
-          <div class="item">
-            <a href="">
-              <img src="{{ STATIC }}images/sample-img/formal-shirts/shirt1.jpg" />
-              <h4> {{ recommended_product.name }}
-                <span class="brand">Black Coffee</span>
-              </h4>
-              <span class="product-price">$ 25.99</span>
-            </a>
-          </div>
-          {% endfor %}
+  <div class="{% if cross_sells %} col-md-5 col-sm-5 {% else %} hidden {% endif %} related-prod">
+    {# heading for column #}
+    <h4>Related Items</h4>
+
+    {% for related_product in cross_sells %}
+    <div class="row related-product-row">
+      <div class="col-md-3">
+        <a class="media-left" href="{{ related_product.get_absolute_url() }}" ga-product-link data-ga-product-list="Related Products" data-ga-event-label="Product Thumbnail" data-ga-product-id="{{ related_product.id }}" data-ga-product-name="{{ related_product.name }}" data-ga-product-category="{{ related_product.category and related_product.category.name or None }}">
+          <img src="{{ CDN }}{{ related_product.default_image.transform_command().thumbnail(100, 100, 'a') }}" class="img" alt="{{ related_product.name }}">
+        </a>
+      </div>
+      <div class="col-md-9">
+        <h5 class="media-heading">
+          <a href="{{ related_product.get_absolute_url() }}" ga-product-link data-ga-product-list="Related Products" data-ga-event-label="Product Name" data-ga-product-id="{{ related_product.id }}" data-ga-product-name="{{ related_product.name }}" data-ga-product-category="{{ related_product.category and related_product.category.name or None }}">
+            {{ related_product.name }}
+          </a>
+        </h5>
+        <span class="text-muted related-cost">
+          <strong>{{ related_product.sale_price(1)|currencyformat(request.nereid_currency.code) }}</strong>
+        </span>
+        <div class="row">
+          <span class="col-md-12">
+          {% if related_product.salable %}
+            {% if related_product.is_gift_card %}
+                <a class="btn btn-related-item-add-cart" href="{{ related_product.get_absolute_url() }}">Add to Cart</a>
+            {% else %}
+                <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now" autocomplete="off" class="form-related-inline">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                  <input type="hidden" name="quantity" value="1"/>
+                  <input type="hidden" name="size" id="size-id"/>
+                  <input type="hidden" name="product" value="{{ related_product.id }}"/>
+                  <input type="hidden" name="action" value="add"/>
+                  <button class="btn btn-related-item-add-cart" type="submit" quantity="1" id="buy-now-btn">Add to Cart</button>
+                </form>
+            {% endif %}
+          {% else %}
+            <span class="text-danger" id="product-not-for-sale"><i class="fa fa-warning"></i>This product is not for sale</span>
+          {% endif %}
+          </span>
         </div>
       </div>
     </div>
-    <div class="tab-pane fade" id="bought-together">
-      <h1>hello world</h1>
-    </div>
-    <div class="tab-pane fade" id="recently-viewed">
-      <h1>hi there</h1>
-    </div>
+    <hr/>
+    {% endfor %}
   </div>
   {% endblock related_products %}
 
