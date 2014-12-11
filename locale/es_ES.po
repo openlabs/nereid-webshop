@@ -390,14 +390,6 @@ msgid "Next"
 msgstr "Siguiente"
 
 msgctxt "nereid_template:webshop/_helpers.jinja:"
-msgid "Next"
-msgstr "Siguiente"
-
-msgctxt "nereid_template:webshop/_helpers.jinja:"
-msgid "Previous"
-msgstr "Anterior"
-
-msgctxt "nereid_template:webshop/_helpers.jinja:"
 msgid "Previous"
 msgstr "Anterior"
 
@@ -426,14 +418,6 @@ msgid "Confirm Password"
 msgstr "Confirmar contraseña"
 
 msgctxt "nereid_template:webshop/account.jinja:"
-msgid "Confirm Password"
-msgstr "Confirmar contraseña"
-
-msgctxt "nereid_template:webshop/account.jinja:"
-msgid "Email"
-msgstr "Email"
-
-msgctxt "nereid_template:webshop/account.jinja:"
 msgid "Email"
 msgstr "Email"
 
@@ -450,28 +434,12 @@ msgid "New Password"
 msgstr "Nueva contraseña"
 
 msgctxt "nereid_template:webshop/account.jinja:"
-msgid "New Password"
-msgstr "Nueva contraseña"
-
-msgctxt "nereid_template:webshop/account.jinja:"
-msgid "Old Password"
-msgstr "Contraseña anterior"
-
-msgctxt "nereid_template:webshop/account.jinja:"
 msgid "Old Password"
 msgstr "Contraseña anterior"
 
 msgctxt "nereid_template:webshop/account.jinja:"
 msgid "Password"
 msgstr "Contraseña"
-
-msgctxt "nereid_template:webshop/account.jinja:"
-msgid "Password"
-msgstr "Contraseña"
-
-msgctxt "nereid_template:webshop/account.jinja:"
-msgid "Your Name"
-msgstr "Tu nombre"
 
 msgctxt "nereid_template:webshop/account.jinja:"
 msgid "Your Name"
@@ -586,20 +554,12 @@ msgid "Login / SignUp"
 msgstr "Entrar / Registrar-se"
 
 msgctxt "nereid_template:webshop/base.jinja:"
-msgid "Login / SignUp"
-msgstr "Entrar / Registrar-se"
-
-msgctxt "nereid_template:webshop/base.jinja:"
 msgid "Logout"
 msgstr "Desconectar-se"
 
 msgctxt "nereid_template:webshop/base.jinja:"
 msgid "My Account"
 msgstr "Mi cuenta"
-
-msgctxt "nereid_template:webshop/base.jinja:"
-msgid "My Cart"
-msgstr "Mi carrito"
 
 msgctxt "nereid_template:webshop/base.jinja:"
 msgid "My Cart"
@@ -644,14 +604,6 @@ msgstr "Total compra"
 msgctxt "nereid_template:webshop/checkout/base.jinja:"
 msgid "Delivery"
 msgstr "Envío"
-
-msgctxt "nereid_template:webshop/checkout/base.jinja:"
-msgid "Edit"
-msgstr "Editar"
-
-msgctxt "nereid_template:webshop/checkout/base.jinja:"
-msgid "Edit"
-msgstr "Editar"
 
 msgctxt "nereid_template:webshop/checkout/base.jinja:"
 msgid "Edit"
