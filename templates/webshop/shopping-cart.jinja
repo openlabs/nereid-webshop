@@ -103,7 +103,7 @@
                       <div class="cart-line-action-block">
                         <span class="text-muted">
                           <a href="" data-url="{{ url_for('nereid.cart.delete_from_cart', line=line.id) }}" data-toggle="tooltip"
-                              data-placement="top" title="" data-original-title="{{ _('Remove Item') }}" class="remove_from_cart">
+                              data-placement="top" title="" data-original-title="{{ _('Remove Item') }}" class="remove_from_cart" data-ga-event-label="Remove From Cart" data-ga-product-name="{{ line.product.name }}" data-ga-product-category="{{ line.product.category and line.product.category.name or None }}" data-ga-product-price="{{ line.product.sale_price()|currencyformat(request.nereid_currency.code) }}" data-ga-product-id="{{ line.product.id }}" data-ga-product-quantity="{{ line.quantity }}">
                             <i class="fa fa-times"></i> Delete
                           </a>
                           {% if current_user.is_authenticated() %}
@@ -258,15 +258,6 @@
     });
     $("a.clear-cart").click(function(){
       $(this).button('loading');
-    });
-    $('.remove_from_cart').on('click', function(){
-      $.ajax({
-        type: "DELETE",
-        url: $(this).data("url"),
-      })
-      .success(function(){
-        location.reload();
-      });
     });
     $('.add-to-wishlist').on('click', function(){
       var product_id = $(this).data('product');
