@@ -81,7 +81,7 @@
                         <strong>{{ line.product.name }}</strong>
                       </a>
                       <br><strong class="text-muted">SKU: </strong> {{ line.product.code }}
-                      {% if line.product.is_gift_card %}
+                      {% if line.product and line.product.is_gift_card and line.product.gift_card_delivery_mode in ['virtual', 'combined'] %}
                         <br><strong class="text-muted">Recipient Name: </strong> {{ line.recipient_name or 'N/A' }}
                         <br><strong class="text-muted">Recipient E-mail: </strong> {{ line.recipient_email or 'N/A' }}
                       {% endif %}

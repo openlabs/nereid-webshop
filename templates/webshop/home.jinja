@@ -61,7 +61,7 @@
     <div class="row" id="featured-node">
       <h3>Featured Products</h3>
       {% for product in featured_products %}
-        <a href="{{ url_for('product.product.render', uri=product.uri) }}">
+        <a href="{{ url_for('product.product.render', uri=product.uri) }}" ga-product-link data-ga-product-list="Featured Products" data-ga-event-label="Product Name" data-ga-product-id="{{ product.id }}" data-ga-product-name="{{ product.name }}" data-ga-product-category="{{ product.category and product.category.name or None }}">
           <div class="col-md-4 thumb">
             <img class="img img-responsive"
               src="{{ CDN }}{{ product.default_image.transform_command().thumbnail(400, 400, 'a') }}"

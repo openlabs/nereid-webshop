@@ -11,7 +11,7 @@ import os
 from flask.helpers import send_from_directory
 from trytond.model import ModelSQL, fields
 from trytond.pool import Pool, PoolMeta
-from nereid import current_app, route, render_template
+from nereid import current_app, route, render_template, request, jsonify
 from trytond.pyson import Eval, Not
 
 __metaclass__ = PoolMeta
@@ -110,3 +110,35 @@ class Website:
         ])
 
         return render_template('sitemap.jinja', nodes=nodes)
+
+    @classmethod
+    def auto_complete(cls, phrase, limit=10):
+        """
+        Customizable method which returns a list of dictionaries
+        according to the search query. The search service used can
+        be modified in downstream modules.
+
+        The front-end expects a jsonified list of dictionaries. For example,
+        a downstream implementation of this method could return -:
+        [
+            ...
+            {
+                "value": "<suggestion string>"
+            }, {
+                "value": "Nexus 6"
+            }
+            ...
+        ]
+        """
+        return []
+
+    @classmethod
+    @route('/search-auto-complete')
+    def search_auto_complete(cls):
+        """
+        Handler for auto-completing search.
+        """
+        return jsonify(results=cls.auto_complete(
+            request.args.get('q', ''),
+            request.args.get('limit', 10, type=int)
+        ))
