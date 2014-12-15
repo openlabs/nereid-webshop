@@ -16,7 +16,7 @@ from .test_invoice import TestDownloadInvoice
 from .test_css import CSSTest
 from .test_templates import TestTemplates
 from .test_gift_card import TestGiftCard
-from .test_product import TestProduct
+from .test_website import TestWebsite
 
 
 def suite():
@@ -30,7 +30,7 @@ def suite():
         unittest.TestLoader().loadTestsFromTestCase(TestDownloadInvoice),
         unittest.TestLoader().loadTestsFromTestCase(TestTemplates),
         unittest.TestLoader().loadTestsFromTestCase(TestGiftCard),
-        unittest.TestLoader().loadTestsFromTestCase(TestProduct),
+        unittest.TestLoader().loadTestsFromTestCase(TestWebsite),
     ])
     return test_suite
 
