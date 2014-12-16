@@ -695,7 +695,7 @@ class TestTemplates(BaseTestCase):
                 )
                 self.assertEqual(rv.status_code, 302)
                 self.assertTrue(
-                    rv.location.endswith('/checkout/delivery-method')
+                    rv.location.endswith('/checkout/validate-address')
                 )
 
                 # Copied from nereid-checkout - adding billing address.
@@ -804,7 +804,7 @@ class TestTemplates(BaseTestCase):
                 )
                 self.assertEqual(rv.status_code, 302)
                 self.assertTrue(
-                    rv.location.endswith('/checkout/delivery-method')
+                    rv.location.endswith('/checkout/validate-address')
                 )
 
                 # Copied from nereid-checkout - adding billing address.
