@@ -37,16 +37,16 @@
                 {% endif %}
             </div>
 
-            {% if product.gift_card_delivery_mode in ['virtual', 'combined'] %}
-              <div class="row margin-top-15">
-                <div class="col-md-6">
-                  {{ render_field(form.recipient_name, placeholder="Enter Name", type="text") }}
-                </div>
+            <div class="row margin-top-15">
+              <div class="col-md-6">
+                {{ render_field(form.recipient_name, placeholder="Enter Name", type="text") }}
+              </div>
+              {% if product.gift_card_delivery_mode in ['virtual', 'combined'] %}
                 <div class="col-md-6">
                     {{ render_field(form.recipient_email, placeholder="Enter Email", type="email", required=required) }}
                 </div>
-              </div>
-            {% endif %}
+              {% endif %}
+            </div>
             <div class="row margin-top-15">
               <div class="col-md-12">
                 {{ render_field(form.message, label_text="Message (max. 100 words)", placeholder="Enter Message", type="textarea", maxlength="100") }}
