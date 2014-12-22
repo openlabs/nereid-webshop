@@ -348,16 +348,16 @@
                 <div class="row">
                   <div class="col-xs-3 cart-product-image">
                     <a href="">
-                      <img src="<%= line.image %>">
+                      <img src="<%= line.product.image %>">
                     </a>
                   </div>
                   <div class="col-xs-7 cart-product-name">
-                    <a href=""><%= line.product %>
+                    <a href=""><%= line.product.name %>
                     </a><br>
                     <span class="text-muted"><%= line.quantity %> x <%= line.amount %></span>
                   </div>
                   <div class="col-xs-2 cart-product-total">
-                    <span data-url="<%= line.remove_url %>" title="{{ _('Remove') }}" class="remove_product"><i class="fa fa-trash-o"></i></span>
+                    <span data-url="<%= line.remove_url %>" title="{{ _('Remove') }}" class="remove_product" data-ga-event-label="Remove From Cart Hover" data-ga-product-name="<%= line.product.name %>" data-ga-product-category="<%= line.product.category %>" data-ga-product-price="<%= line.amount %>" data-ga-product-id="<%= line.product.id %>" data-ga-product-quantity="<%= line.quantity %>"><i class="fa fa-trash-o"></i></span>
                   </div>
                 </div>
               </div>
@@ -430,18 +430,60 @@
     </script>
     <script type="text/javascript">
       var userDataCallbacks = $.Callbacks("");
+      function removeFromCart(url){
+        $.ajax({
+          type: "DELETE",
+          url: url,
+        })
+        .success(function(){
+          location.reload();
+        });
+      }
       $.post("{{ url_for('nereid.website.user_status') }}", function(data){
         var template = $("#cart-html-append").html();
         $("li.my-cart").html(_.template(template, {'user_status': data.status}));
         userDataCallbacks.fire(data);
-        $('.remove_product').on('click', function(){
-          $.ajax({
-            type: "DELETE",
-            url: $(this).data("url"),
-          })
-          .success(function(){
-            location.reload();
+        $('.remove_product, .remove_from_cart').on('click', function(e){
+          var delUrl = $(this).data("url");
+          if(typeof ga == 'undefined'){
+            removeFromCart(delUrl);
+            return true;
+          }
+
+          e.preventDefault();
+
+          var alreadySubmitted = false;
+          var form = this;
+
+          /* The code below registers a timeout which acts
+           * as a safety net. The boolean alreadySubmitted is used
+           * to check whether the form was already submitted or not.
+           * It is used by the callbacks in setTimeout and GA. It is to
+           * avoid the specific cases where both callbacks fire, resulting
+           * in a double form submission.
+           */
+
+          var t = setTimeout(function() {
+            if (alreadySubmitted) return;
+            alreadySubmitted = true;
+            removeFromCart(delUrl);
+          }, 500);
+
+          ga('ec:addProduct', {
+            'id': $(this).data('ga-product-id'),
+            'name': $(this).data('ga-product-name'),
+            'category': $(this).data('ga-product-category'),
+            'price': $(this).data('ga-product-price'),
+            'quantity': $(this).data('ga-product-quantity'),
           });
+          ga('ec:setAction', 'remove');
+          ga('send', 'event', 'CartAnalytics', 'click', $(this).data('ga-event-label') || '', {
+            'hitCallback': function() {
+              if (alreadySubmitted) return;
+              alreadySubmitted = true;
+              // Remove anyway
+              removeFromCart(delUrl);
+          }});
         });
       });
     </script>
@@ -528,6 +570,50 @@
             }});
         });
       });
+
+      //Tracking product add-to-cart.
+      $(function() {
+        $('.add-to-cart').submit(function(e){
+          if(typeof ga == 'undefined'){
+            return true;
+          }
+          e.preventDefault();
+
+          var alreadySubmitted = false;
+          var form = this;
+
+          /* The code below registers a timeout which acts
+           * as a safety net. The boolean alreadySubmitted is used
+           * to check whether the form was already submitted or not.
+           * It is used by the callbacks in setTimeout and GA. It is to
+           * avoid the specific cases where both callbacks fire, resulting
+           * in a double form submission.
+           */
+
+          var t = setTimeout(function() {
+            if (alreadySubmitted) return;
+            alreadySubmitted = true;
+            form.submit();
+          }, 500);
+
+          ga('ec:addProduct', {
+            'id': $(this).children("input[name='product']").attr('value'),
+            'name': $(this).data('ga-product-name'),
+            'category': $(this).data('ga-product-category'),
+            'price': $(this).data('ga-product-price'),
+            'quantity': $(this).children("input[name='quantity']").attr('value'),
+          });
+          ga('ec:setAction', 'add');
+          ga('send', 'event', 'CartAnalytics', 'click', $(this).data('ga-event-label') || '', {
+            'hitCallback': function() {
+              if (alreadySubmitted) return;
+              alreadySubmitted = true;
+              // Submit anyway
+              form.submit();
+            }});
+        });
+      });
+
       ga('send', 'pageview');
 
     </script>

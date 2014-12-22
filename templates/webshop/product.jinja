@@ -128,7 +128,7 @@
       <div class="row">
         {% if product.salable %}
         <div class="col-md-12 col-sm-12 col-xs-12 buy-now">
-          <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now" autocomplete="off">
+          <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now" class="add-to-cart" autocomplete="off" data-ga-event-label="Add To Cart" data-ga-product-name="{{ product.name }}" data-ga-product-category="{{ product.category and product.category.name or None }}" data-ga-product-price="{{ product.sale_price()|currencyformat(request.nereid_currency.code) }}">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
             <input type="hidden" name="quantity" value="1"/>
             <input type="hidden" name="size" id="size-id"/>
@@ -242,7 +242,7 @@
             {% if related_product.is_gift_card %}
                 <a class="btn btn-related-item-add-cart" href="{{ related_product.get_absolute_url() }}">Add to Cart</a>
             {% else %}
-                <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now" autocomplete="off" class="form-related-inline">
+                <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now" autocomplete="off" class="form-related-inline add-to-cart" data-ga-event-label="Add To Cart Related Product" data-ga-product-name="{{ related_product.name }}" data-ga-product-category="{{ related_product.category and related_product.category.name or None }}" data-ga-product-price="{{ related_product.sale_price()|currencyformat(request.nereid_currency.code) }}">
                   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                   <input type="hidden" name="quantity" value="1"/>
                   <input type="hidden" name="size" id="size-id"/>
