@@ -473,7 +473,7 @@ class BaseTestCase(NereidTestCase):
             'uri': 'test-article',
             'content': 'Test Content',
             'sequence': 10,
-            'category': [('add', [article_categ.id])],
+            'categories': [('add', [article_categ.id])],
         }])
 
         # Product categories
