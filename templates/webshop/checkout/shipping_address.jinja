@@ -118,6 +118,7 @@
   // Register on change event
   
   $("select#country").change(function(){
+    $("select#subdivision").html('');  // Clear subdivisions on change
     $.getJSON("{{ url_for('nereid.website.subdivision_list') }}",
       {country: $(this).val()}, function(data){
       var options = '';
