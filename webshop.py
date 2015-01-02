@@ -139,8 +139,7 @@ class Website:
         Handler for auto-completing search.
         """
         return jsonify(results=cls.auto_complete(
-            request.args.get('q', ''),
-            request.args.get('limit', 10, type=int)
+            request.args.get('q', '')
         ))
 
     @classmethod
