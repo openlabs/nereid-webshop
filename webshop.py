@@ -142,3 +142,14 @@ class Website:
             request.args.get('q', ''),
             request.args.get('limit', 10, type=int)
         ))
+
+    @classmethod
+    @route('/search')
+    def quick_search(cls):
+        """
+        Downstream implementation of quick_search().
+
+        TODO:
+            * Add article search.
+        """
+        return super(Website, cls).quick_search()
