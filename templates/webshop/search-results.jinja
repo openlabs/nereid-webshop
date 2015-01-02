@@ -4,7 +4,7 @@
 
 {% block breadcrumb %}
 {{ super() }}
-{{ render_breadcrumb_item(_('Search Results'), url_for('product.product.quick_search', q=request.args.get('q', ''))) }}
+{{ render_breadcrumb_item(_('Search Results'), url_for('nereid.website.quick_search', q=request.args.get('q', ''))) }}
 {% endblock breadcrumb %}
 
 {% block main %}
@@ -49,7 +49,7 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        {{ render_pagination(products, endpoint='product.product.quick_search', q=request.args.get('q', '')) }}
+        {{ render_pagination(products, endpoint='nereid.website.quick_search', q=request.args.get('q', '')) }}
       </div>
     </div>
 

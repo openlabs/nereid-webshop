@@ -191,9 +191,9 @@
             <div class="col-md-5 col-sm-12 col-xs-12 col-md-pull-4 top-search"
                 itemscope itemtype="http://schema.org/WebSite">
               <meta itemprop="url" content="{{ url_for('nereid.website.home', _external=True) }}"/>
-              <form action="{{ url_for('product.product.quick_search') }}" id="search_form"
+              <form action="{{ url_for('nereid.website.quick_search') }}" id="search_form"
                 itemprop="potentialAction" itemscope itemtype="http://schema.org/SearchAction">
-                <meta itemprop="target" content="{{ url_for('product.product.quick_search', _external=True) }}?q={q}"/>
+                <meta itemprop="target" content="{{ url_for('nereid.website.quick_search', _external=True) }}?q={q}"/>
                 <div class="input-group" id="search-bar">
                   <input type="text" class="form-control typeahead" data-provide="typeahead" name="q" itemprop="query-input" required>
                   <span class="input-group-btn">
