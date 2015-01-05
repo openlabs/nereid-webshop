@@ -642,8 +642,11 @@
         },
         {
           name: 'products',
-          displayKey: 'value',
-          source: products.ttAdapter()
+          displayKey: 'display_name',
+          source: products.ttAdapter(),
+          templates: {
+            suggestion: _.template("<a href=<%=url%>><%= display_name %></a>")
+          }
         });
       });
     </script>

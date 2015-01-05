@@ -1618,3 +1618,7 @@ border-top: 1px solid rgba(248, 248, 248, 0.2);
 .inline-form {
   display: inline-block;
 }
+#search-bar .tt-suggestion {
+  padding: 5px;
+  padding-left: 15px;
+}
