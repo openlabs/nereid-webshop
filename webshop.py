@@ -2,7 +2,7 @@
 '''
     website
 
-    :copyright: (c) 2013-2014 by Openlabs Technologies & Consulting (P) Ltd.
+    :copyright: (c) 2013-2015 by Openlabs Technologies & Consulting (P) Ltd.
     :license: GPLv3, see LICENSE for more details
 
 '''
@@ -112,7 +112,7 @@ class Website:
         return render_template('sitemap.jinja', nodes=nodes)
 
     @classmethod
-    def auto_complete(cls, phrase, limit=10):
+    def auto_complete(cls, phrase):
         """
         Customizable method which returns a list of dictionaries
         according to the search query. The search service used can
