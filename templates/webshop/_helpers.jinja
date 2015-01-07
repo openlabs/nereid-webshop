@@ -65,6 +65,12 @@
 </div>
 {%- endmacro %}
 
+{% macro render_search_filter_field(term, facet_checked, key) %}
+<input type="checkbox" name="{{ key }}" value="{{ term['term'] }}"
+  {% if term['term'] in facet_checked %} checked="checked" {% endif %} />
+{{ term['term'] }} {% if term['count'] > 0 %} ({{ term['count'] }}){% endif %}
+{% endmacro %}
+
 {% macro render_product_list(product, node=None, name=None, description=None, product_list_name=None) -%}
 {% set description = description or product.description %}
 {% if product.__name__ == 'product.template' %}
@@ -130,6 +136,53 @@
   {% if pagination.has_next -%}
   <li>
     <a class="" href="{{ url_for(endpoint, uri=uri, page=pagination.next_num, **kwargs) }}">
+      {% trans %}Next{% endtrans %} &raquo;
+    </a>
+  </li>
+  {% else %}
+  <li class="disabled">
+    <a>{% trans %}Next{% endtrans %} &raquo;</a>
+  </li>
+  {% endif %}
+
+</ul>
+{% endmacro %}
+
+{% macro render_es_pagination(pagination) %}
+<ul class="es_pagination pagination pull-right">
+  {% if pagination.has_prev -%}
+  <li>
+    <a href="#" data-page-no="{{pagination.prev_num}}">
+      &laquo; {% trans %}Previous{% endtrans %}
+    </a>
+  </li>
+  {% else %}
+  <li class="disabled">
+    <a>
+    &laquo; {% trans %}Previous{% endtrans %}
+    </a>
+  </li>
+  {% endif %}
+
+  {%- for page in pagination.iter_pages(left_edge=0, left_current=5, right_current=5, right_edge=0) %}
+    {% if loop.first and page !=1 %}
+    <li class="disabled"><a>...</a></li>
+    {% endif %}
+
+    {% if page %}
+    <li {% if page == pagination.page %}class="active"{% endif %}>
+      <a href="#" data-page-no="{{page}}">{{ page }}</a>
+    </li>
+    {% endif %}
+
+    {% if loop.last and page != pagination.pages %}
+    <li class="disabled"><a>...</a></li>
+    {% endif %}
+  {% endfor %}
+
+  {% if pagination.has_next -%}
+  <li>
+    <a href="#" data-page-no="{{pagination.next_num}}">
       {% trans %}Next{% endtrans %} &raquo;
     </a>
   </li>

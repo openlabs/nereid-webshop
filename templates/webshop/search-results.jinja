@@ -1,15 +1,41 @@
 {% extends 'base.jinja' %}
 
-{% from 'webshop/_helpers.jinja' import render_pagination, render_product_list with context %}
+{% from 'webshop/_helpers.jinja' import render_es_pagination, render_pagination, render_search_filter_field, render_product_list with context %}
 
 {% block breadcrumb %}
 {{ super() }}
-{{ render_breadcrumb_item(_('Search Results'), url_for('product.product.quick_search', q=request.args.get('q', ''))) }}
+{{ render_breadcrumb_item(_('Search Results'), url_for('nereid.website.quick_search', q=request.args.get('q', ''))) }}
 {% endblock breadcrumb %}
 
 {% block main %}
+
 <section>
   <div class="container">
+  {% if facets %}
+  {% block sidebar %}
+  <div class="col-md-3">
+    <div class="sidebar">
+      <h4>{% trans %}Refine your search{% endtrans %}</h4>
+      <form id="filter-form-sidebar">
+        <input type="hidden" name="q" value="{{ request.args.get('q') }}" />
+        <input type="hidden" name="page" value="1"/>
+        {% for key, value in facets.iteritems() %}
+        <ul>
+        <lh>{{ key }}</lh>
+        {% set facet_checked = request.args.getlist(key) %}
+        {% for term in value['terms'] %}
+          <li>
+            {{ render_search_filter_field(term, facet_checked, key) }}
+          </li>
+        {% endfor %}
+        </ul>
+        {% endfor %}
+      </form>
+    </div>
+  </div>
+  {% endblock %}
+  {% endif %}
+  <div class="col-md-9">
     <!-- category page -->
     <div class="row">
       <!-- Content bar -->
@@ -49,7 +75,11 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        {{ render_pagination(products, endpoint='product.product.quick_search', q=request.args.get('q', '')) }}
+        {% if facets %}
+        {{ render_es_pagination(products) }}
+        {% else %}
+        {{ render_pagination(products, endpoint='nereid.website.quick_search', q=request.args.get('q', '')) }}
+        {% endif %}
       </div>
     </div>
 
@@ -65,5 +95,22 @@
     {% endif %}
 
   </div>
+  </div>
 </section>
 {% endblock main %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">
+  $(function (){
+    $(".es_pagination a[data-page-no]").click(function (e) {
+      e.preventDefault();
+      $('#filter-form-sidebar input[name="page"]').val($(this).data('page-no')).change();
+    })
+
+    $("#filter-form-sidebar input").on('change', function(){
+      $("#filter-form-sidebar").submit();
+    });
+  });
+</script>
+{% endblock %}
