@@ -2,7 +2,7 @@
 
     Test Templates
 
-    :copyright: (c) 2014 by Openlabs Technologies & Consulting (P) LTD
+    :copyright: (c) 2014-2015 by Openlabs Technologies & Consulting (P) LTD
     :license: GPLv3, see LICENSE for more details
 '''
 import random
@@ -10,11 +10,11 @@ import unittest
 from trytond.tests.test_tryton import USER, DB_NAME, CONTEXT
 from trytond.transaction import Transaction
 from test_base import BaseTestCase
-from trytond.config import CONFIG
+from trytond.config import config
 from decimal import Decimal
 from nereid import request
 
-CONFIG['smtp_from'] = 'from@xyz.com'
+config.set('email', 'from', 'from@xyz.com')
 
 
 class TestTemplates(BaseTestCase):
