@@ -2,116 +2,24 @@
 
     Test Templates
 
-    :copyright: (c) 2014 by Openlabs Technologies & Consulting (P) LTD
+    :copyright: (c) 2014-2015 by Openlabs Technologies & Consulting (P) LTD
     :license: GPLv3, see LICENSE for more details
 '''
-import random
 import unittest
 from trytond.tests.test_tryton import USER, DB_NAME, CONTEXT
 from trytond.transaction import Transaction
 from test_base import BaseTestCase
-from trytond.config import CONFIG
+from trytond.config import config
 from decimal import Decimal
 from nereid import request
 
-CONFIG['smtp_from'] = 'from@xyz.com'
+config.set('email', 'from', 'from@xyz.com')
 
 
 class TestTemplates(BaseTestCase):
     """
     Test case for templates in nereid-webshop.
     """
-
-    def create_test_products(self):
-        # Create product templates with products
-        self._create_product_template(
-            'product 1',
-            [{
-                'category': self.category.id,
-                'type': 'goods',
-                'salable': True,
-                'list_price': Decimal('10'),
-                'cost_price': Decimal('5'),
-                'account_expense': self._get_account_by_kind('expense').id,
-                'account_revenue': self._get_account_by_kind('revenue').id,
-            }],
-            uri='product-1',
-        )
-        self._create_product_template(
-            'product 2',
-            [{
-                'category': self.category2.id,
-                'type': 'goods',
-                'salable': True,
-                'list_price': Decimal('20'),
-                'cost_price': Decimal('5'),
-                'account_expense': self._get_account_by_kind('expense').id,
-                'account_revenue': self._get_account_by_kind('revenue').id,
-            }],
-            uri='product-2',
-        )
-        self._create_product_template(
-            'product 3',
-            [{
-                'category': self.category3.id,
-                'type': 'goods',
-                'list_price': Decimal('30'),
-                'cost_price': Decimal('5'),
-                'account_expense': self._get_account_by_kind('expense').id,
-                'account_revenue': self._get_account_by_kind('revenue').id,
-            }],
-            uri='product-3',
-        )
-        self._create_product_template(
-            'product 4',
-            [{
-                'category': self.category3.id,
-                'type': 'goods',
-                'list_price': Decimal('30'),
-                'cost_price': Decimal('5'),
-                'account_expense': self._get_account_by_kind('expense').id,
-                'account_revenue': self._get_account_by_kind('revenue').id,
-            }],
-            uri='product-4',
-            displayed_on_eshop=False
-        )
-
-    def _create_product_template(
-        self, name, vlist, uri, uom=u'Unit', displayed_on_eshop=True
-    ):
-        """
-        Create a product template with products and return its ID
-
-        :param name: Name of the product
-        :param vlist: List of dictionaries of values to create
-        :param uri: uri of product template
-        :param uom: Note it is the name of UOM (not symbol or code)
-        :param displayed_on_eshop: Boolean field to display product
-                                   on shop or not
-        """
-        _code_list = []
-        code = random.choice('ABCDEFGHIJK')
-        while code in _code_list:
-            code = random.choice('ABCDEFGHIJK')
-        else:
-            _code_list.append(code)
-
-        for values in vlist:
-            values['name'] = name
-            values['default_uom'], = self.Uom.search(
-                [('name', '=', uom)], limit=1
-            )
-            values['sale_uom'], = self.Uom.search(
-                [('name', '=', uom)], limit=1
-            )
-            values['products'] = [
-                ('create', [{
-                    'uri': uri,
-                    'displayed_on_eshop': displayed_on_eshop,
-                    'code': code,
-                }])
-            ]
-        return self.ProductTemplate.create(vlist)
 
     def cart(self, to_login):
         """
@@ -730,7 +638,7 @@ class TestTemplates(BaseTestCase):
                         'expiry_year': '2018',
                         'expiry_month': '01',
                         'cvv': '911',
-                        'add_card_to_profiles': 'y',
+                        'add_card_to_profiles': True,
                     }
                 )
                 self.assertEqual(rv.status_code, 302)
@@ -738,6 +646,8 @@ class TestTemplates(BaseTestCase):
                 self.assertTrue('access_code' in rv.location)
 
                 sale, = self.Sale.search([('state', '=', 'confirmed')])
+                self.Sale.proceed([sale])
+                self.Sale.complete_payments()
                 payment_transaction, = sale.gateway_transactions
                 self.assertEqual(payment_transaction.amount, sale.total_amount)
 
@@ -847,6 +757,8 @@ class TestTemplates(BaseTestCase):
                 self.assertTrue('access_code' in rv.location)
 
                 sale, = self.Sale.search([('state', '=', 'confirmed')])
+                self.Sale.proceed([sale])
+                self.Sale.complete_payments()
                 payment_transaction, = sale.gateway_transactions
                 self.assertEqual(payment_transaction.amount, sale.total_amount)
 
@@ -1035,6 +947,10 @@ class TestTemplates(BaseTestCase):
 
             with app.test_client() as c:
                 self.create_test_products()
+
+                template1, = self.ProductTemplate.search([
+                    ('name', '=', 'product 1')
+                ])
 
                 rv = c.get('/products')
                 self.assertIn('product 1', rv.data)
