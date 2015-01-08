@@ -1,11 +1,16 @@
 """
     Test Gift Card
 
-    :copyright: (c) 2014 by Openlabs Technologies & Consulting (P) LTD
+    :copyright: (c) 2014-2015 by Openlabs Technologies & Consulting (P) LTD
     :license: GPLv3, see LICENSE for more details
 """
+import os
 import unittest
 from decimal import Decimal
+
+if 'DB_NAME' not in os.environ:
+    os.environ['TRYTOND_CONFIG_URI'] = 'sqlite://'
+    os.environ['DB_NAME'] = ':memory:'
 
 import trytond.tests.test_tryton
 from trytond.tests.test_tryton import POOL, USER, DB_NAME, CONTEXT

@@ -5,8 +5,8 @@ from nereid import Nereid
 from werkzeug.contrib.sessions import FilesystemSessionStore
 from nereid.contrib.locale import Babel
 from nereid.sessions import Session
-from trytond.config import CONFIG
-CONFIG.update_etc()
+from trytond.config import config
+config.update_etc()
 
 CWD = os.path.abspath(os.path.dirname(__file__))
 
