@@ -1,8 +1,8 @@
 # Nereid-Webshop
 #
-# VERSION	3.2.0.1
+# VERSION	3.4.0.1
 
-FROM openlabs/tryton:3.2
+FROM openlabs/tryton:3.4
 MAINTAINER Prakash Pandey <prakash.pandey@openlabs.co.in>
 
 RUN apt-get -y update
