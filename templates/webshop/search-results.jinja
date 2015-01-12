@@ -30,6 +30,7 @@
         {% endfor %}
         </ul>
         {% endfor %}
+        <a href="{{ url_for('nereid.website.quick_search', q=request.args.get('q', '')) }}">{% trans %}Clear Filters{% endtrans %}</a>
       </form>
     </div>
   </div>
@@ -87,8 +88,13 @@
     
     <div class="row">
       <div class="col-md-12">
-        <div class="alert alert-warning">
-          {% trans %}Oops! No Products found for your search criteria. Try with something else.{% endtrans %}
+        <div id="not-found" class="alert alert-warning">
+          {% trans %}Oops! No Products found for your search criteria.{% endtrans %}
+          {% if facets %}
+          <br>
+          {% trans %} Try a search without filters, click{% endtrans %}
+          <a href='{{ url_for('nereid.website.quick_search', q=request.args.get('q', '')) }}'>{% trans %}here{% endtrans %}</a>
+          {% endif %}
         </div>
       </div>
     </div>
