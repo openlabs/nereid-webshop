@@ -125,7 +125,8 @@ setup(
     test_loader='trytond.test_loader:Loader',
     tests_require=[
         'pycountry',
-        'openlabs_payment_gateway_authorize_net',
+        'openlabs_payment_gateway_authorize_net  >= %s.%s, < %s.%s' %
+            (major_version, minor_version, major_version, minor_version + 1),
         'cssutils',
     ],
     cmdclass={
