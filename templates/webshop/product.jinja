@@ -150,7 +150,7 @@
       {% block add_to_wishlist %}
       {% if current_user.is_authenticated() %}
       <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12 center">
+        <div class="col-md-12 col-sm-12 col-xs-12 center" id="add-to-wishlist">
           <form method="post" action="{{ url_for('wishlist.wishlist.wishlist_product') }}" 
               autocomplete="off" style="display:inline-block">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
