@@ -92,8 +92,8 @@
           {% trans %}Oops! No Products found for your search criteria.{% endtrans %}
           {% if facets %}
           <br>
-          {% trans %} Try a search without filters, click{% endtrans %}
-          <a href='{{ url_for('nereid.website.quick_search', q=request.args.get('q', '')) }}'>{% trans %}here{% endtrans %}</a>
+          {% trans %} To try a search without filters,{% endtrans %}
+          <a href='{{ url_for('nereid.website.quick_search', q=request.args.get('q', '')) }}'>{% trans %}click here{% endtrans %}</a>
           {% endif %}
         </div>
       </div>
