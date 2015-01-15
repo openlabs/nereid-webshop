@@ -44,9 +44,9 @@
         </div>
       </div>
       {% if wishlist.products %}
-      <div class="row">
+      <div class="row product-list">
         {% for product in wishlist.products %}
-          <div class="product-image col-md-3 col-sm-4 col-xs-6">
+          <div class="product-image col-md-3 col-sm-4 col-xs-6 product-item">
             <form action="{{ url_for('wishlist.wishlist.wishlist_product') }}" method="post" class="pull-right remove-product-icon" style="">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
               <input type="hidden" name="product" value="{{ product.id }}"/>
