@@ -16,12 +16,12 @@
   <div class="col-md-3">
     <div class="sidebar">
       <h4>{% trans %}Refine your search{% endtrans %}</h4>
-      <form id="filter-form-sidebar">
+      <form id="filter-form-sidebar" class="filter-form">
         <input type="hidden" name="q" value="{{ request.args.get('q') }}" />
         <input type="hidden" name="page" value="1"/>
         {% for key, value in facets.iteritems() %}
-        <ul>
-        <lh>{{ key }}</lh>
+        <ul class="list-unstyled">
+        <lh class="text-capitalize"><strong>{{ key }}</strong></lh>
         {% set facet_checked = request.args.getlist(key) %}
         {% for term in value['terms'] %}
           <li>
@@ -30,7 +30,7 @@
         {% endfor %}
         </ul>
         {% endfor %}
-        <a href="{{ url_for('nereid.website.quick_search', q=request.args.get('q', '')) }}">{% trans %}Clear Filters{% endtrans %}</a>
+        <a href="{{ url_for('nereid.website.quick_search', q=request.args.get('q', '')) }}" class="btn btn-block btn-default">{% trans %}Clear Filters{% endtrans %}</a>
       </form>
     </div>
   </div>
