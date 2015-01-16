@@ -1622,3 +1622,16 @@ border-top: 1px solid rgba(248, 248, 248, 0.2);
   padding: 5px;
   padding-left: 15px;
 }
+.filter-form > ul > li {
+  padding-left: 15px;
+}
+.filter-form > ul{
+  padding: 10px 0;
+  border-top: 1px solid #ddd;
+}
+.filter-form {
+  padding-right: 30px;
+}
+.sidebar {
+ border-right: 1px solid #ddd;
+}
