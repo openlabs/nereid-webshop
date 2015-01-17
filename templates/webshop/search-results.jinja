@@ -20,15 +20,17 @@
         <input type="hidden" name="q" value="{{ request.args.get('q') }}" />
         <input type="hidden" name="page" value="1"/>
         {% for key, value in facets.iteritems() %}
-        <ul class="list-unstyled">
-        <lh class="text-capitalize"><strong>{{ key }}</strong></lh>
-        {% set facet_checked = request.args.getlist(key) %}
-        {% for term in value['terms'] %}
-          <li>
-            {{ render_search_filter_field(term, facet_checked, key) }}
-          </li>
-        {% endfor %}
-        </ul>
+          {% if value['total'] %}
+            <ul class="list-unstyled">
+            <lh class="text-capitalize"><strong>{{ key }}</strong></lh>
+            {% set facet_checked = request.args.getlist(key) %}
+            {% for term in value['terms'] %}
+              <li>
+                {{ render_search_filter_field(term, facet_checked, key) }}
+              </li>
+            {% endfor %}
+            </ul>
+          {% endif %}
         {% endfor %}
         <a href="{{ url_for('nereid.website.quick_search', q=request.args.get('q', '')) }}" class="btn btn-block btn-default">{% trans %}Clear Filters{% endtrans %}</a>
       </form>
