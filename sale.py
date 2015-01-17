@@ -37,3 +37,13 @@ class Sale:
             abort(400)
 
         return super(Sale, self)._add_or_update(product_id, quantity, action)
+
+    def _get_email_template_paths(self):
+        """
+        Returns a tuple of the form:
+        (html_template, text_template)
+        """
+        return (
+            'nereid_webshop/templates/emails/sale-confirmation-html.jinja',
+            'nereid_webshop/templates/emails/sale-confirmation-text.jinja'
+        )
