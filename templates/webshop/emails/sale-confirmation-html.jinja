@@ -1,23 +1,25 @@
-{% trans %}
-Dear {% endtrans %} {{ current_user.display_name }}{% trans %},
-<br/>
-<br/>
-Thank you for shopping from our store.{% endtrans %}
-<br/>
-{% trans %}
-To view your order details please 
-{% endtrans %}
-<a href="{{ url_for('sale.sale.render', active_id=sale.id, access_code=sale.guest_access_code, _external=True) }}">{% trans %}click here {% endtrans %}</a>
-{% trans %}
-or copy and paste it to your browser:
-{% endtrans %}
-<br/>
-{{ url_for('sale.sale.render', active_id=sale.id, access_code=sale.guest_access_code, _external=True) }}
-<br/>
-<br/>
-{% trans %}
-Thanks,
-<br/>
+{% extends 'sale_confirmation_email/emails/sale-confirmation-html.html' %}
 
-Team
-{% endtrans %}
+{% block body %}
+    Dear {{ customer_name }},
+    <br />
+    <br />
+    Date: {{ sale.sale_date|dateformat }}
+    <br />
+    Reference: #{{ sale.reference }}
+    <br />
+    Amount: {{ sale.total_amount|currencyformat(sale.currency.code) }}
+    <br />
+    <br />
+    Thank you for shopping from our store.
+    <br /><br />
+
+    {% if has_request_context() %}
+        To view your order details please
+        <a href="{{ url_for('sale.sale.render', active_id=sale.id, access_code=sale.guest_access_code, _external=True) }}">click here </a>
+        or copy and paste it to your browser:
+
+        <br />
+        {{ url_for('sale.sale.render', active_id=sale.id, access_code=sale.guest_access_code, _external=True) }}
+    {% endif %}
+{% endblock %}
