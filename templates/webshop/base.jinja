@@ -409,25 +409,45 @@
           }
       })
     </script>
-    <script type="text/javascript">
-      $(document).ready(function($){
-        {# Message flashin #}
-        $.pnotify.defaults.styling = "bootstrap";
-        $.pnotify.defaults.history = false;
-        {% for category, message in get_flashed_messages(with_categories=True) %}
-          $.pnotify({
-            title: '{{ category }}',
-            text: '{{ message }}',
-            history: false,
-            type: '{{ category }}',
-            nonblock: true,
-            delay:2000,
-            nonblock_opacity: .4,
-            animation: 'show'
-          });
-        {% endfor %}
-      });
-    </script>
+
+    {% block flash_message_script %}
+      {#
+        This block is separate, to change flash message display behaviour on other pages.
+        Like on login page, flash message should not just go away by saying
+        `invalid credentials`, it should stay there somewhere on page.
+      #}
+      <script type="text/javascript">
+        $(document).ready(function($){
+          {# Message flashin #}
+          $.pnotify.defaults.styling = "bootstrap";
+          $.pnotify.defaults.history = false;
+          var msg_elm = $('#flash-messages');
+
+          {% for category, message in get_flashed_messages(with_categories=True) %}
+            if (msg_elm.length) {
+              // If flash-message block is there. append msg to that.
+              msg_elm.append(
+                '<div class="alert alert-warning" role="alert"><strong>{{ category }}</strong> {{ message }}</div>'
+              );
+            }
+            else {
+              // Else fallback to pnotify
+              $.pnotify({
+                title: '{{ category }}',
+                text: '{{ message }}',
+                history: false,
+                type: '{{ category }}',
+                nonblock: true,
+                delay:2000,
+                nonblock_opacity: .4,
+                animation: 'show'
+              });
+            }
+          {% endfor %}
+        });
+      </script>
+    {% endblock flash_message_script %}
+
     <script type="text/javascript">
       var userDataCallbacks = $.Callbacks("");
       function removeFromCart(url){
