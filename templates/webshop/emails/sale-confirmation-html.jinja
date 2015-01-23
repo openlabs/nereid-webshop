@@ -1,5 +1,16 @@
 {% extends 'sale_confirmation_email/emails/sale-confirmation-html.html' %}
 
+{% block header %}
+    {{ super() }}
+    {% block json_ld %}
+        {% if has_request_context() %}
+            <script type="application/ld+json">
+                {{ to_json(sale.as_json_ld())|safe }}
+            </script>
+        {% endif %}
+    {% endblock %}
+{% endblock %}
+
 {% block body %}
     Dear {{ customer_name }},
     <br />
