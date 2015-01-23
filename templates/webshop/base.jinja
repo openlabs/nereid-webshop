@@ -421,17 +421,28 @@
           {# Message flashin #}
           $.pnotify.defaults.styling = "bootstrap";
           $.pnotify.defaults.history = false;
+          var msg_elm = $('#flash-messages');
+
           {% for category, message in get_flashed_messages(with_categories=True) %}
-            $.pnotify({
-              title: '{{ category }}',
-              text: '{{ message }}',
-              history: false,
-              type: '{{ category }}',
-              nonblock: true,
-              delay:2000,
-              nonblock_opacity: .4,
-              animation: 'show'
-            });
+            if (msg_elm.length) {
+              // If flash-message block is there. append msg to that.
+              msg_elm.append(
+                '<div class="alert alert-warning" role="alert"><strong>{{ category }}</strong> {{ message }}</div>'
+              );
+            }
+            else {
+              // Else fallback to pnotify
+              $.pnotify({
+                title: '{{ category }}',
+                text: '{{ message }}',
+                history: false,
+                type: '{{ category }}',
+                nonblock: true,
+                delay:2000,
+                nonblock_opacity: .4,
+                animation: 'show'
+              });
+            }
           {% endfor %}
         });
       </script>
