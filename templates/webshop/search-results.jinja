@@ -33,7 +33,7 @@
                     <li>{{ render_search_filter_field(term, facet_checked, key) }}</li>
                   {% endfor %}
                 </ul>
-              {% if value['terms']|length >= 5 %}
+              {% if value['terms']|length > 5 %}
                   <div class="more btn btn-default btn-sm toggle-show-more">
                     <span class="hide-on-more">
                       {% trans %}Show More{% endtrans %}
