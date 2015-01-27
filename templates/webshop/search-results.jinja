@@ -13,29 +13,46 @@
   <div class="container">
   {% if facets %}
   {% block sidebar %}
-  <div class="col-md-3 hidden-sm hidden-xs">
-    <div class="sidebar">
-      <h4>{% trans %}Refine your search{% endtrans %}</h4>
-      <form id="filter-form-sidebar" class="filter-form">
-        <input type="hidden" name="q" value="{{ request.args.get('q') }}" />
-        <input type="hidden" name="page" value="1"/>
-        {% for key, value in facets.iteritems() %}
-          {% if value['total'] %}
-            <ul class="list-unstyled">
-            <lh class="text-capitalize"><strong>{{ key }}</strong></lh>
-            {% set facet_checked = request.args.getlist(key) %}
-            {% for term in value['terms'] %}
-              <li>
-                {{ render_search_filter_field(term, facet_checked, key) }}
-              </li>
-            {% endfor %}
-            </ul>
-          {% endif %}
-        {% endfor %}
-        <a href="{{ url_for('nereid.website.quick_search', q=request.args.get('q', '')) }}" class="btn btn-block btn-default">{% trans %}Clear Filters{% endtrans %}</a>
-      </form>
+    <div class="col-md-3 hidden-sm hidden-xs">
+      <div class="sidebar">
+        <h4>{% trans %}Refine your search{% endtrans %}</h4>
+        <form id="filter-form-sidebar" class="filter-form">
+          <input type="hidden" name="q" value="{{ request.args.get('q') }}" />
+          <input type="hidden" name="page" value="1"/>
+          {% for key, value in facets.iteritems() %}
+            <div class="row facet-attr">
+              {% set facet_checked = request.args.getlist(key) %}
+                <ul class="list-unstyled">
+                  <li class="text-capitalize list-heading"><strong>{{ key }}</strong></li>
+                  {% for term in value['terms'][:5] %}
+                      <li>{{ render_search_filter_field(term, facet_checked, key) }}</li>
+                  {% endfor %}
+                </ul>
+                <ul class="list-unstyled show-on-more">
+                  {% for term in value['terms'][5:] %}
+                    <li>{{ render_search_filter_field(term, facet_checked, key) }}</li>
+                  {% endfor %}
+                </ul>
+              {% if value['terms']|length >= 5 %}
+                  <div class="more btn btn-default btn-sm toggle-show-more">
+                    <span class="hide-on-more">
+                      {% trans %}Show More{% endtrans %}
+                      <span class="glyphicon glyphicon-plus"></span>
+                    </span>
+                    <span class="show-on-more">
+                      {% trans %}Show Less{% endtrans %}
+                      <span class="glyphicon glyphicon-minus"></span>
+                    </span>
+                  </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+          <br>
+          <a href="{{ url_for('nereid.website.quick_search', q=request.args.get('q', '')) }}" class="btn btn-block btn-default">{% trans %}Clear Filters{% endtrans %}</a>
+          <br>
+        </form>
+      </div>
     </div>
-  </div>
   {% endblock %}
   {% endif %}
   <div class="col-md-9">
@@ -118,6 +135,23 @@
 
     $("#filter-form-sidebar input").on('change', function(){
       $("#filter-form-sidebar").submit();
+    });
+
+    $('.toggle-show-more').click(function(){
+      // This method implements the toggle logic, to show and hide blocks in facet filter.
+      var elm = $(this).closest('.facet-attr');
+      if (!elm.hasClass('show-more')) {
+        elm.addClass('show-more');
+        elm.find('span.hide-on-more').hide();
+        elm.find('span.show-on-more').show();
+        elm.find('ul.show-on-more').slideDown();
+      }
+      else {
+        elm.removeClass('show-more');
+        elm.find('span.hide-on-more').show();
+        elm.find('span.show-on-more').hide();
+        elm.find('ul.show-on-more').slideUp();
+      }
     });
   });
 </script>
