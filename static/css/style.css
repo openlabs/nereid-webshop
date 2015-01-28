@@ -1633,11 +1633,6 @@ border-top: 1px solid rgba(248, 248, 248, 0.2);
 .sidebar {
  border-right: 1px solid #ddd;
 }
-.more .glyphicon-plus {
-  font-size: 15px;
-  color: #000;
-  font-weight: bold;
-}
 .facet-attr .show-on-more {
   display: none;
 }
