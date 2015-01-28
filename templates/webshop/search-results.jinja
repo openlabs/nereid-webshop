@@ -1,5 +1,4 @@
 {% extends 'base.jinja' %}
-
 {% from 'webshop/_helpers.jinja' import render_es_pagination, render_pagination, render_search_filter_field, render_product_list with context %}
 
 {% block breadcrumb %}
@@ -8,11 +7,11 @@
 {% endblock breadcrumb %}
 
 {% block main %}
-
 <section>
   <div class="container">
   {% if facets %}
   {% block sidebar %}
+    {% set facet_show_limit = 5 %}
     <div class="col-md-3 hidden-sm hidden-xs">
       <div class="sidebar">
         <h4>{% trans %}Refine your search{% endtrans %}</h4>
@@ -24,26 +23,24 @@
               {% set facet_checked = request.args.getlist(key) %}
                 <ul class="list-unstyled">
                   <li class="text-capitalize list-heading"><strong>{{ key }}</strong></li>
-                  {% for term in value['terms'][:5] %}
-                      <li>{{ render_search_filter_field(term, facet_checked, key) }}</li>
-                  {% endfor %}
-                </ul>
-                <ul class="list-unstyled show-on-more">
-                  {% for term in value['terms'][5:] %}
+                  {% for term in value['terms'][:facet_show_limit] %}
                     <li>{{ render_search_filter_field(term, facet_checked, key) }}</li>
                   {% endfor %}
                 </ul>
-              {% if value['terms']|length > 5 %}
-                  <div class="more btn btn-default btn-sm toggle-show-more">
-                    <span class="hide-on-more">
-                      {% trans %}Show More{% endtrans %}
-                      <span class="glyphicon glyphicon-plus"></span>
-                    </span>
-                    <span class="show-on-more">
-                      {% trans %}Show Less{% endtrans %}
-                      <span class="glyphicon glyphicon-minus"></span>
-                    </span>
-                  </div>
+                <ul class="list-unstyled show-on-more">
+                  {% for term in value['terms'][facet_show_limit:] %}
+                    <li>{{ render_search_filter_field(term, facet_checked, key) }}</li>
+                  {% endfor %}
+                </ul>
+              {% if value['terms']|length > facet_show_limit %}
+                <div class="more btn btn-default btn-sm toggle-show-more">
+                  <span class="hide-on-more">
+                    +{{ (value['terms'] | length) - facet_show_limit }} {% trans %}More{% endtrans %}
+                  </span>
+                  <span class="show-on-more">
+                    {% trans %}Show less{% endtrans %}
+                  </span>
+                </div>
               {% endif %}
             </div>
           {% endfor %}
