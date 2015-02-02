@@ -52,6 +52,7 @@ class SQLiteTest(Command):
 MODULE2PREFIX = {
     'nereid_wishlist': 'openlabs',
     'gift_card': 'openlabs',
+    'product_variant_name': 'openlabs',
 }
 
 config = ConfigParser.ConfigParser()
