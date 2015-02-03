@@ -50,11 +50,13 @@
   <div class="row">
 
     {% block product_image_gallery %}
-    <div class="col-md-7 col-sm-7 col-xs-12">
+    {% set current_product = product %}
+    {% for product in product.template.products %}
+    <div class="col-md-7 col-sm-7 col-xs-12 {% if product.id != current_product.id %}hidden{% endif %}" id="imageset-{{ product.id }}">
       <div class="col-md-12">
         <div class="tab-content">
           {% for image in product.get_images() %}
-          <div class="tab-pane {% if loop.first %}active{% endif %}" id="tab{{ loop.index }}">
+          <div class="tab-pane {% if loop.first %}active{% endif %}" id="tab{{ product.id }}-{{ loop.index }}">
             <div class="zoom-container">
               <a id="zoom-target" href="{{ image.url }}" data-lightbox="{{ product.rec_name }}" > 
                 <img class="zoom-image" src="{{ image.transform_command().thumbnail(500, 500, 'a') }}" />
@@ -68,7 +70,7 @@
         <ul class="list-inline">
           {% for image in product.get_images() %}
           <li class="{% if loop.first %}active{% endif %}">
-            <a href="#tab{{ loop.index }}" data-toggle="tab">
+            <a href="#tab{{ product.id }}-{{ loop.index }}" data-toggle="tab">
               <img src="{{ image.transform_command().thumbnail(120, 120, 'a') }}" />
             </a>
           </li>
@@ -76,6 +78,7 @@
         </ul>
       </div>
     </div>
+    {% endfor %}
     {% endblock product_image_gallery %}
 
     {% block product_info %}
@@ -321,6 +324,17 @@
       });
     };
 
+    function hideAllImageBlocks() {
+      $('div .col-md-7.col-sm-7.col-xs-12').filter(function(){
+        return this.id.match(/imageset-\d+/);
+      })
+      .addClass('hidden');
+    }
+
+    function showImageBlock(id){
+      $('#imageset-' + id).removeClass('hidden');
+    }
+
     /*
        called when an attribute changes. Based on the selected attributes,
        it tries to identify the product. If it does, then it returns the
@@ -352,12 +366,20 @@
         $('.product-name').text(product.rec_name);
         // Set the correct product in all input field
         $('input[name="product"]').val(product.id);
+
+        // First hide all image blocks.
+        hideAllImageBlocks();
+        // Show the image block with the right ID.
+        showImageBlock(product.id);
       } else {
         // Display that the product is not available
         $('#product-not-available').show();
         $('#buy-now-btn').attr('disabled', 'disabled');
         $('.product-price').hide();
         $('.product-code').text('');
+
+        // Hide all image blocks.
+        hideAllImageBlocks();
       }
     };
 
