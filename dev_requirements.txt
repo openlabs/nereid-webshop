@@ -1,4 +1,6 @@
 # Install requirements
 
+flake8
+
 coveralls
 -r requirements.txt
