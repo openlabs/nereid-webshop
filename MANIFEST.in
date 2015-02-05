@@ -8,6 +8,7 @@ include LICENSE
 include Makefile
 include *.txt
 include Dockerfile
+include tox.ini
 include .coveragerc
 graft templates
 graft static
