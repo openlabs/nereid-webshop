@@ -1,6 +1,6 @@
 # Install requirements
 
+tox
 flake8
-
 coveralls
 -r requirements.txt
