@@ -16,6 +16,13 @@ def get_files(root):
             yield os.path.join(dirname, filename)
 
 
+def get_required_version(name):
+    return '%s >= %s.%s, < %s.%s' % (
+        name, major_version, minor_version,
+        major_version, minor_version + 1
+    )
+
+
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
@@ -38,8 +45,7 @@ class SQLiteTest(Command):
         if self.distribution.tests_require:
             self.distribution.fetch_build_eggs(self.distribution.tests_require)
 
-        from trytond.config import CONFIG
-        CONFIG['db_type'] = 'sqlite'
+        os.environ['TRYTOND_DATABASE_URI'] = 'sqlite://'
         os.environ['DB_NAME'] = ':memory:'
 
         from tests import suite
@@ -54,6 +60,9 @@ MODULE2PREFIX = {
     'gift_card': 'openlabs',
     'product_variant_name': 'openlabs',
 }
+
+MODULE = "nereid_webshop"
+PREFIX = "openlabs"
 
 config = ConfigParser.ConfigParser()
 config.readfp(open('tryton.cfg'))
@@ -83,7 +92,7 @@ requires.append(
 )
 
 setup(
-    name='openlabs_nereid_webshop',
+    name='%s_%s' % (PREFIX, MODULE),
     version=info.get('version'),
     description="Nereid Webshop",
     author="Openlabs Technologies & consulting (P) Limited",
@@ -101,12 +110,12 @@ setup(
         'Topic :: Office/Business',
     ],
     packages=[
-        'trytond.modules.nereid_webshop',
-        'trytond.modules.nereid_webshop.tests',
+        'trytond.modules.%s' % MODULE,
+        'trytond.modules.%s.tests' % MODULE,
     ],
     package_dir={
-        'trytond.modules.nereid_webshop': '.',
-        'trytond.modules.nereid_webshop.tests': 'tests',
+        'trytond.modules.%s' % MODULE: '.',
+        'trytond.modules.%s.tests' % MODULE: 'tests',
     },
     package_data={
         'trytond.modules.nereid_webshop': info.get('xml', [])
@@ -120,14 +129,13 @@ setup(
     zip_safe=False,
     entry_points="""
     [trytond.modules]
-    nereid_webshop = trytond.modules.nereid_webshop
-    """,
+    %s = trytond.modules.%s
+    """ % (MODULE, MODULE),
     test_suite='tests.suite',
     test_loader='trytond.test_loader:Loader',
     tests_require=[
         'pycountry',
-        'openlabs_payment_gateway_authorize_net  >= %s.%s, < %s.%s' %
-            (major_version, minor_version, major_version, minor_version + 1),
+        get_required_version('openlabs_payment_gateway_authorize_net'),
         'cssutils',
     ],
     cmdclass={

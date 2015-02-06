@@ -2,7 +2,7 @@
 '''
     party
 
-    :copyright: (c) 2014 by Openlabs Technologies & Consulting (P) Ltd.
+    :copyright: (c) 2014-2015 by Openlabs Technologies & Consulting (P) Ltd.
     :license: GPLv3, see LICENSE for more details
 
 '''
@@ -12,7 +12,7 @@ from wtforms import TextField, validators
 
 from trytond.pool import PoolMeta, Pool
 from trytond.modules.nereid.party import AddressForm
-from trytond.config import CONFIG
+from trytond.config import config
 from nereid import request, current_app
 
 from trytond.modules.nereid_checkout.i18n import _
@@ -26,7 +26,9 @@ try:
 except ImportError:
     logging.error("pygeoip is not installed")
 else:
-    path = os.environ.get('GEOIP_DATA_PATH', CONFIG.get('geoip_data_path'))
+    path = os.environ.get(
+        'GEOIP_DATA_PATH', config.get('database', 'geoip_data_path')
+    )
     if path:
         geoip = GeoIP(path)
 
