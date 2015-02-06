@@ -52,11 +52,11 @@
     {% block product_image_gallery %}
     <div class="col-md-7 col-sm-7 col-xs-12">
       <div class="col-md-12">
-        <div class="tab-content">
+        <div class="tab-content" id="pane-tab">
           {% for image in product.get_images() %}
           <div class="tab-pane {% if loop.first %}active{% endif %}" id="tab{{ loop.index }}">
             <div class="zoom-container">
-              <a id="zoom-target" href="{{ image.url }}" data-lightbox="{{ product.rec_name }}" > 
+              <a id="zoom-target" href="{{ image.url }}" data-lightbox="{{ product.id }}" >
                 <img class="zoom-image" src="{{ image.transform_command().thumbnail(500, 500, 'a') }}" />
               </a>
             </div>
@@ -65,7 +65,7 @@
         </div>
       </div>
       <div class="col-md-12">
-        <ul class="list-inline">
+        <ul class="list-inline" id="list-tab">
           {% for image in product.get_images() %}
           <li class="{% if loop.first %}active{% endif %}">
             <a href="#tab{{ loop.index }}" data-toggle="tab">
@@ -293,6 +293,36 @@
   </div>
 </script>
 
+<script type="text/html" id="tab-pane-images">
+  <%
+    _.each(variant.image_urls, function(url_collection, index) {
+  %>
+    <div class="tab-pane <% if (index == 0) { %> active <% } %>" id="tab<%= index %>">
+      <div class="zoom-container">
+        <a id="zoom-target" href="<%- url_collection.regular %>" data-lightbox="<%= variant.id %>" >
+          <img class="zoom-image" src="<%- url_collection.large %>" alt="<%= variant.rec_name %>" />
+        </a>
+      </div>
+    </div>
+  <%
+    });
+  %>
+</script>
+
+<script type="text/html" id="tab-list-images">
+  <%
+    _.each(variant.image_urls, function(url_collection, index) {
+  %>
+    <li class="<% if (index == 0) { %> active <% } %>">
+      <a href="#tab<%= index %>" data-toggle="tab">
+        <img src="<%- url_collection.thumbnail %>" alt="<%= variant.rec_name %>" />
+      </a>
+    </li>
+  <%
+    });
+  %>
+</script>
+
 <script type="text/javascript">
   $(document).ready(function() {
 
@@ -352,6 +382,17 @@
         $('.product-name').text(product.rec_name);
         // Set the correct product in all input field
         $('input[name="product"]').val(product.id);
+
+        // Set the images
+        var tab_pane_template = $("#tab-pane-images").html();
+        $('#pane-tab').html(_.template(tab_pane_template,
+          {'variant': product}
+        ));
+        var tab_list_template = $("#tab-list-images").html();
+        $('#list-tab').html(_.template(tab_list_template,
+          {'variant': product}
+        ));
+
       } else {
         // Display that the product is not available
         $('#product-not-available').show();
