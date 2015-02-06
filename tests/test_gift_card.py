@@ -79,7 +79,7 @@ class TestGiftCard(BaseTestCase):
         """
         Test the rendering of gift card on website
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
@@ -108,7 +108,7 @@ class TestGiftCard(BaseTestCase):
         """
         Test adding gift card without open amounts
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
@@ -155,7 +155,7 @@ class TestGiftCard(BaseTestCase):
         """
         Test adding gift card with open amounts
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
@@ -203,7 +203,7 @@ class TestGiftCard(BaseTestCase):
         """
         Test adding gift card with invlid data
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
@@ -238,7 +238,7 @@ class TestGiftCard(BaseTestCase):
         """
         Test adding physical gift card without open amounts
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
@@ -281,7 +281,7 @@ class TestGiftCard(BaseTestCase):
         """
         Test adding physical gift card with open amounts
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
@@ -326,7 +326,7 @@ class TestGiftCard(BaseTestCase):
         """
         Test adding combined gift card without open amounts
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
@@ -372,7 +372,7 @@ class TestGiftCard(BaseTestCase):
         """
         Test adding combined gift card with open amounts
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
