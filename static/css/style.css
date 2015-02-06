@@ -1648,3 +1648,6 @@ border-top: 1px solid rgba(248, 248, 248, 0.2);
 .filter-form > .facet-attr {
   margin-bottom: 20px;
 }
+.zoom-image {
+  width: 100%;
+}
