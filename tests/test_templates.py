@@ -140,7 +140,7 @@ class TestTemplates(BaseTestCase):
                 c.post(
                     '/cart/add',
                     data={
-                        'product': product1.id,
+                        'product': product1.products[0].id,
                         'quantity': qty
                     }
                 )
