@@ -16,10 +16,9 @@ from nereid import jsonify, flash, request, url_for, route, redirect, \
     render_template, abort
 from nereid.contrib.locale import make_lazy_gettext
 
-_ = make_lazy_gettext('gift_card')
-
 from forms import GiftCardForm
 
+_ = make_lazy_gettext('gift_card')
 
 __all__ = ['Product']
 
