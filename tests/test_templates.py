@@ -124,9 +124,10 @@ class TestTemplates(BaseTestCase):
             self.setup_defaults()
             app = self.get_app()
             self.create_test_products()
-            product1, = self.ProductTemplate.search([
+            template1, = self.ProductTemplate.search([
                 ('name', '=', 'product 1')
             ])
+            product1 = template1.products[0]
 
             with app.test_client() as c:
                 if to_login:
