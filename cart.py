@@ -53,7 +53,7 @@ class Cart:
                         'unit_price': from_line.unit_price
                     }
                     to_line = SaleLine(**values)
-                    to_line.save()
+                to_line.save()
 
         # Clear and delete the old cart
         guest_cart._clear_cart()
