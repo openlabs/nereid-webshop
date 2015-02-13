@@ -8,7 +8,7 @@
 from trytond.pool import PoolMeta, Pool
 from nereid import abort
 
-__all__ = ['Sale']
+__all__ = ['Sale', 'SaleLine']
 __metaclass__ = PoolMeta
 
 
@@ -47,3 +47,32 @@ class Sale:
             'nereid_webshop/templates/emails/sale-confirmation-html.jinja',
             'nereid_webshop/templates/emails/sale-confirmation-text.jinja'
         )
+
+
+class SaleLine:
+    __name__ = 'sale.line'
+
+    def add_to(self, sale):
+        """
+        Copy sale line to new sale. and handle case of gift_card
+        """
+        SaleLine_ = Pool().get('sale.line')
+
+        if not self.product.is_gift_card:
+            return super(SaleLine, self).add_to(sale)
+
+        values = {
+            'product': self.product.id,
+            'sale': sale.id,
+            'type': self.type,
+            'unit': self.unit.id,
+            'quantity': self.quantity,
+            'sequence': self.sequence,
+            'description': self.description,
+            'recipient_email': self.recipient_email,
+            'recipient_name': self.recipient_name,
+            'message': self.message,
+            'gc_price': self.gc_price,
+            'unit_price': self.unit_price
+        }
+        return SaleLine_(**values)
