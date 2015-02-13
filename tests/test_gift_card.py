@@ -79,7 +79,7 @@ class TestGiftCard(BaseTestCase):
         """
         Test the rendering of gift card on website
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
@@ -108,7 +108,7 @@ class TestGiftCard(BaseTestCase):
         """
         Test adding gift card without open amounts
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
@@ -120,7 +120,6 @@ class TestGiftCard(BaseTestCase):
             gift_card_product.save()
 
             with app.test_client() as c:
-
                 data = {
                     'recipient_email': 'rec@ol.in',
                     'recipient_name': 'Recipient',
@@ -133,14 +132,19 @@ class TestGiftCard(BaseTestCase):
                 )
                 rv = c.get('/cart')
                 self.assertEqual(rv.status_code, 200)
-                self.assertEqual(rv.data, 'Cart:1,1,500.00')
+                self.assertEqual(
+                    rv.data, 'Cart:%d,1,500.00' % self.Cart.find_cart().id
+                )
 
                 # Test login handler
                 self.login(c, 'email@example.com', 'password')
+                cart = self.Cart.find_cart(user=self.registered_user.id)
 
                 rv = c.get('/cart')
                 self.assertEqual(rv.status_code, 200)
-                self.assertEqual(rv.data, 'Cart:2,1,500.00')
+                self.assertEqual(
+                    rv.data, 'Cart:%d,1,500.00' % cart.id
+                )
 
                 # Test if a new line is added if the same gift card
                 # is added to cart
@@ -149,13 +153,13 @@ class TestGiftCard(BaseTestCase):
                 )
                 rv = c.get('/cart')
                 self.assertEqual(rv.status_code, 200)
-                self.assertEqual(rv.data, 'Cart:2,2,1000.00')
+                self.assertEqual(rv.data, 'Cart:%d,2,1000.00' % cart.id)
 
     def test0030_add_gift_card_to_cart_case2(self):
         """
         Test adding gift card with open amounts
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
@@ -181,14 +185,17 @@ class TestGiftCard(BaseTestCase):
                 )
                 rv = c.get('/cart')
                 self.assertEqual(rv.status_code, 200)
-                self.assertEqual(rv.data, 'Cart:1,1,200.00')
+                self.assertEqual(
+                    rv.data, 'Cart:%d,1,200.00' % self.Cart.find_cart().id
+                )
 
                 # Test login handler
                 self.login(c, 'email@example.com', 'password')
+                cart = self.Cart.find_cart(user=self.registered_user.id)
 
                 rv = c.get('/cart')
                 self.assertEqual(rv.status_code, 200)
-                self.assertEqual(rv.data, 'Cart:2,1,200.00')
+                self.assertEqual(rv.data, 'Cart:%d,1,200.00' % cart.id)
 
                 # Test if a new line is added if the same gift card
                 # is added to cart
@@ -197,13 +204,13 @@ class TestGiftCard(BaseTestCase):
                 )
                 rv = c.get('/cart')
                 self.assertEqual(rv.status_code, 200)
-                self.assertEqual(rv.data, 'Cart:2,2,400.00')
+                self.assertEqual(rv.data, 'Cart:%d,2,400.00' % cart.id)
 
     def test0040_add_gift_card_to_cart_case3(self):
         """
         Test adding gift card with invlid data
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
@@ -232,13 +239,13 @@ class TestGiftCard(BaseTestCase):
                 )
                 rv = c.get('/cart')
                 self.assertEqual(rv.status_code, 200)
-                self.assertEqual(rv.data, 'Cart:None,0,')
+                self.assertTrue(self.Cart.find_cart() is None)
 
     def test0050_add_physical_gift_card_to_cart_case1(self):
         """
         Test adding physical gift card without open amounts
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
@@ -259,14 +266,17 @@ class TestGiftCard(BaseTestCase):
                 )
                 rv = c.get('/cart')
                 self.assertEqual(rv.status_code, 200)
-                self.assertEqual(rv.data, 'Cart:1,1,500.00')
+                self.assertEqual(
+                    rv.data, 'Cart:%d,1,500.00' % self.Cart.find_cart().id
+                )
 
                 # Test login handler
                 self.login(c, 'email@example.com', 'password')
+                cart = self.Cart.find_cart(user=self.registered_user.id)
 
                 rv = c.get('/cart')
                 self.assertEqual(rv.status_code, 200)
-                self.assertEqual(rv.data, 'Cart:2,1,500.00')
+                self.assertEqual(rv.data, 'Cart:%d,1,500.00' % cart.id)
 
                 # Test if a new line is added if the same gift card
                 # is added to cart
@@ -275,13 +285,13 @@ class TestGiftCard(BaseTestCase):
                 )
                 rv = c.get('/cart')
                 self.assertEqual(rv.status_code, 200)
-                self.assertEqual(rv.data, 'Cart:2,2,1000.00')
+                self.assertEqual(rv.data, 'Cart:%d,2,1000.00' % cart.id)
 
     def test0060_add_physical_gift_card_to_cart_case2(self):
         """
         Test adding physical gift card with open amounts
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
@@ -304,14 +314,17 @@ class TestGiftCard(BaseTestCase):
                 )
                 rv = c.get('/cart')
                 self.assertEqual(rv.status_code, 200)
-                self.assertEqual(rv.data, 'Cart:1,1,200.00')
+                self.assertEqual(
+                    rv.data, 'Cart:%d,1,200.00' % self.Cart.find_cart().id
+                )
 
                 # Test login handler
                 self.login(c, 'email@example.com', 'password')
+                cart = self.Cart.find_cart(user=self.registered_user.id)
 
                 rv = c.get('/cart')
                 self.assertEqual(rv.status_code, 200)
-                self.assertEqual(rv.data, 'Cart:2,1,200.00')
+                self.assertEqual(rv.data, 'Cart:%d,1,200.00' % cart.id)
 
                 # Test if a new line is added if the same gift card
                 # is added to cart
@@ -320,13 +333,13 @@ class TestGiftCard(BaseTestCase):
                 )
                 rv = c.get('/cart')
                 self.assertEqual(rv.status_code, 200)
-                self.assertEqual(rv.data, 'Cart:2,2,400.00')
+                self.assertEqual(rv.data, 'Cart:%d,2,400.00' % cart.id)
 
     def test0070_add_combined_gift_card_to_cart_case1(self):
         """
         Test adding combined gift card without open amounts
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
@@ -350,14 +363,17 @@ class TestGiftCard(BaseTestCase):
                 )
                 rv = c.get('/cart')
                 self.assertEqual(rv.status_code, 200)
-                self.assertEqual(rv.data, 'Cart:1,1,500.00')
+                self.assertEqual(
+                    rv.data, 'Cart:%d,1,500.00' % self.Cart.find_cart().id
+                )
 
                 # Test login handler
                 self.login(c, 'email@example.com', 'password')
+                cart = self.Cart.find_cart(user=self.registered_user.id)
 
                 rv = c.get('/cart')
                 self.assertEqual(rv.status_code, 200)
-                self.assertEqual(rv.data, 'Cart:2,1,500.00')
+                self.assertEqual(rv.data, 'Cart:%d,1,500.00' % cart.id)
 
                 # Test if a new line is added if the same gift card
                 # is added to cart
@@ -366,13 +382,13 @@ class TestGiftCard(BaseTestCase):
                 )
                 rv = c.get('/cart')
                 self.assertEqual(rv.status_code, 200)
-                self.assertEqual(rv.data, 'Cart:2,2,1000.00')
+                self.assertEqual(rv.data, 'Cart:%d,2,1000.00' % cart.id)
 
     def test0080_add_gift_card_to_cart_case2(self):
         """
         Test adding combined gift card with open amounts
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
             self.setup_defaults()
             app = self.get_app()
 
@@ -396,14 +412,17 @@ class TestGiftCard(BaseTestCase):
                 )
                 rv = c.get('/cart')
                 self.assertEqual(rv.status_code, 200)
-                self.assertEqual(rv.data, 'Cart:1,1,200.00')
+                self.assertEqual(
+                    rv.data, 'Cart:%d,1,200.00' % self.Cart.find_cart().id
+                )
 
                 # Test login handler
                 self.login(c, 'email@example.com', 'password')
+                cart = self.Cart.find_cart(user=self.registered_user.id)
 
                 rv = c.get('/cart')
                 self.assertEqual(rv.status_code, 200)
-                self.assertEqual(rv.data, 'Cart:2,1,200.00')
+                self.assertEqual(rv.data, 'Cart:%d,1,200.00' % cart.id)
 
                 # Test if a new line is added if the same gift card
                 # is added to cart
@@ -412,7 +431,7 @@ class TestGiftCard(BaseTestCase):
                 )
                 rv = c.get('/cart')
                 self.assertEqual(rv.status_code, 200)
-                self.assertEqual(rv.data, 'Cart:2,2,400.00')
+                self.assertEqual(rv.data, 'Cart:%d,2,400.00' % cart.id)
 
 
 def suite():

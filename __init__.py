@@ -9,10 +9,9 @@ from trytond.pool import Pool
 from webshop import WebShop, BannerCategory, Banner, Article, Website
 from product import Product
 from invoice import Invoice
-from sale import Sale
+from sale import Sale, SaleLine
 from party import Address
 from shipment import ShipmentOut
-from cart import Cart
 
 
 def register():
@@ -26,7 +25,7 @@ def register():
         Address,
         ShipmentOut,
         Sale,
+        SaleLine,
         Website,
-        Cart,
         module='nereid_webshop', type_='model'
     )
