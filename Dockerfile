@@ -23,4 +23,4 @@ VOLUME /var/lib/trytond
 
 EXPOSE 	9000
 CMD ["-b", "0.0.0.0:9000", "--error-logfile", "-", "-k", "gevent", "-w", "4", "application_example:app"]
-ENTRYPOINT ["/usr/bin/gunicorn"]
+ENTRYPOINT ["gunicorn"]
