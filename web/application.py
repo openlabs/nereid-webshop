@@ -5,19 +5,18 @@ from nereid import Nereid
 from werkzeug.contrib.sessions import FilesystemSessionStore
 from nereid.contrib.locale import Babel
 from nereid.sessions import Session
+from trytond.config import CONFIG
+CONFIG.update_etc()
 
 CWD = os.path.abspath(os.path.dirname(__file__))
 
 CONFIG = dict(
 
     # The name of database
-    DATABASE_NAME='webshop',
-
-    # Tryton Config file path
-    TRYTON_CONFIG='../../etc/trytond.conf',
+    DATABASE_NAME=os.environ.get('TRYTOND_DB_NAME'),
 
     # If the application is to be configured in the debug mode
-    DEBUG=False,
+    DEBUG=True,
 
     # The location where the translations of this template are stored
     TRANSLATIONS_PATH='i18n',

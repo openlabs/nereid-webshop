@@ -16,49 +16,23 @@
         <div class="login-header center">
           <h5 class="modal-title register-text">{{ _('Already registered ?') }} <a href="{{ url_for('nereid.website.login') }}"><span>{{ _('Login here') }} </span></a></h5>
         </div>
-          <div class="login-body">
-            <h4 class="center"><span>{{ _('Create new account') }}</span></h4>
-            <div class="row">
-              <div class="col-md-5">
-                <form class="register-form" method="POST" action="{{ url_for('nereid.user.registration') }}" autocomplete="off">
-                  {{ form.hidden_tag() }}
-                  {{ render_field(form.name, placeholder=_('Name'), required=required) }}
-                  {{ render_field(form.email, placeholder=_('E-mail'), required=required, type="email") }}
-                  {{ render_field(form.password, placeholder=_('Password'), required=required) }}
-                  {{ render_field(form.confirm, placeholder=_('Confirm Password'), required=required) }}
-                  <button type="submit" class="btn btn-lg btn-block"> {{ _('Register') }}</button>
-                </form>
-              </div>
-              <div class="col-md-2 ">
-                <div class="dotted-line"></div>
-                <div class="or-circle center">or</div>
-                <div class="dotted-line"></div>
-              </div>
-              <div class="col-md-5">
-                <h5>Register with</h5>
-                <ul class="list-inline social-login">
-                  <li class="facebook">
-                    <a href="">
-                      <i class="fa fa-facebook"></i>&nbsp;&nbsp; facebook
-                    </a>
-                  </li>
-                  <li class="twitter">
-                    <a href="">
-                      <i class="fa fa-twitter"></i>&nbsp;&nbsp; twitter
-                    </a>
-                  </li>
-                  <li class="google-plus">
-                    <a href="">
-                      <i class="fa fa-google-plus"></i>&nbsp;&nbsp; google+
-                    </a>
-                  </li>
-                </ul>
-              </div>
+        <div class="login-body">
+          <h4 class="center"><span>{{ _('Create new account') }}</span></h4>
+          <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+              <form class="register-form" method="POST" action="{{ url_for('nereid.user.registration') }}" autocomplete="off">
+                {{ form.hidden_tag() }}
+                {{ render_field(form.name, placeholder=_('Name'), required=required) }}
+                {{ render_field(form.email, placeholder=_('E-mail'), required=required, type="email") }}
+                {{ render_field(form.password, placeholder=_('Password'), required=required) }}
+                {{ render_field(form.confirm, placeholder=_('Confirm Password'), required=required) }}
+                <button type="submit" class="btn btn-lg btn-block"> {{ _('Register') }}</button>
+              </form>
             </div>
           </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-  </div>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
 </section>
 {% endblock main %}
