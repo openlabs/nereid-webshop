@@ -19,7 +19,7 @@
         <div class="login-body">
           <h4 class="center login-text"><span>{{ _('Log in to your account') }}</span></h4>
           <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-6 col-md-offset-3">
               <form class="login-form" method="POST" autocomplete="off">
                 {{ login_form.hidden_tag()  }}
                 {{ render_field(login_form.email, placeholder= _('Enter your E-mail'), required=required, type="email") }}
@@ -31,31 +31,6 @@
                 <button type="submit" class="btn btn-lg btn-block">{{ _('Login') }}</button>
                 <a href="{{ url_for('nereid.user.reset_account', next=request.args.get('next', url_for('nereid.website.home'))) }}" class="text-muted"><strong>{{ _('Forgot Password ?') }}</strong></a>
               </form>
-            </div>
-            <div class="col-md-2 ">
-              <div class="dotted-line"></div>
-              <div class="or-circle center">or</div>
-              <div class="dotted-line"></div>
-            </div>
-            <div class="col-md-5">
-              <h5>Login with</h5>
-              <ul class="list-inline social-login">
-                <li class="facebook">
-                  <a href="">
-                    <i class="fa fa-facebook"></i>&nbsp;&nbsp; facebook
-                  </a>
-                </li>
-                <li class="twitter">
-                  <a href="">
-                    <i class="fa fa-twitter"></i>&nbsp;&nbsp; twitter
-                  </a>
-                </li>
-                <li class="google-plus">
-                  <a href="">
-                    <i class="fa fa-google-plus"></i>&nbsp;&nbsp; google+
-                  </a>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
