@@ -19,30 +19,32 @@
           <input type="hidden" name="q" value="{{ request.args.get('q') }}" />
           <input type="hidden" name="page" value="1"/>
           {% for key, value in facets.iteritems() %}
-            <div class="row facet-attr">
-              {% set facet_checked = request.args.getlist(key) %}
-                <ul class="list-unstyled">
-                  <li class="text-capitalize list-heading"><strong>{{ key }}</strong></li>
-                  {% for term in value['terms'][:facet_show_limit] %}
-                    <li>{{ render_search_filter_field(term, facet_checked, key) }}</li>
-                  {% endfor %}
-                </ul>
-                <ul class="list-unstyled show-on-more">
-                  {% for term in value['terms'][facet_show_limit:] %}
-                    <li>{{ render_search_filter_field(term, facet_checked, key) }}</li>
-                  {% endfor %}
-                </ul>
-              {% if value['terms']|length > facet_show_limit %}
-                <div class="more btn btn-default btn-sm toggle-show-more">
-                  <span class="hide-on-more">
-                    +{{ (value['terms'] | length) - facet_show_limit }} {% trans %}More{% endtrans %}
-                  </span>
-                  <span class="show-on-more">
-                    {% trans %}Show less{% endtrans %}
-                  </span>
-                </div>
-              {% endif %}
-            </div>
+            {% if value['total'] %}
+              <div class="row facet-attr">
+                {% set facet_checked = request.args.getlist(key) %}
+                  <ul class="list-unstyled">
+                    <li class="text-capitalize list-heading"><strong>{{ key }}</strong></li>
+                    {% for term in value['terms'][:facet_show_limit] %}
+                      <li>{{ render_search_filter_field(term, facet_checked, key) }}</li>
+                    {% endfor %}
+                  </ul>
+                  <ul class="list-unstyled show-on-more">
+                    {% for term in value['terms'][facet_show_limit:] %}
+                      <li>{{ render_search_filter_field(term, facet_checked, key) }}</li>
+                    {% endfor %}
+                  </ul>
+                {% if value['terms']|length > facet_show_limit %}
+                  <div class="more btn btn-default btn-sm toggle-show-more">
+                    <span class="hide-on-more">
+                      +{{ (value['terms'] | length) - facet_show_limit }} {% trans %}More{% endtrans %}
+                    </span>
+                    <span class="show-on-more">
+                      {% trans %}Show less{% endtrans %}
+                    </span>
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
           {% endfor %}
           <br>
           <a href="{{ url_for('nereid.website.quick_search', q=request.args.get('q', '')) }}" class="btn btn-block btn-default">{% trans %}Clear Filters{% endtrans %}</a>
