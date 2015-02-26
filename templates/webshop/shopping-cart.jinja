@@ -72,7 +72,7 @@
                   {% for line in cart.sale.lines %}
                   <tr>
                     <td>
-                      <a href="{{ url_for('product.product.render', uri=line.product.uri) }}">
+                      <a href="{{ line.get_absolute_url() }}">
                         <img src="{{ line.product.default_image.transform_command().thumbnail(100, 100, 'a') }}" alt="{{ line.product.name }}">
                       </a>
                     </td>
