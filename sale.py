@@ -6,7 +6,7 @@
     :license: GPLv3, see LICENSE for more details.
 """
 from trytond.pool import PoolMeta, Pool
-from nereid import abort
+from nereid import abort, Markup, render_template
 
 __all__ = ['Sale', 'SaleLine']
 __metaclass__ = PoolMeta
@@ -76,3 +76,9 @@ class SaleLine:
             'unit_price': self.unit_price
         }
         return SaleLine_(**values)
+
+    def render_line(self):
+        """
+        Render the line
+        """
+        return Markup(render_template('cart/sale-line.jinja', line=self))
