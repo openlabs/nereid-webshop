@@ -77,8 +77,9 @@ class SaleLine:
         }
         return SaleLine_(**values)
 
-    def render(self):
+    def render(self, purpose=None):
         """
         Render the line
         """
-        return Markup(render_template('cart/sale-line.jinja', line=self))
+        return Markup(render_template('cart/sale-line.jinja',
+                    line=self, purpose=purpose))

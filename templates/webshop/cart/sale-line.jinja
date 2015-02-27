@@ -1,5 +1,24 @@
 {% set currency = line.sale.currency.code %}
 
+{% if purpose == 'summary' %}
+<tr>
+  <td class="hidden-xs hidden-sm">
+    <a href="{{ url_for('product.product.render', uri=line.product.uri) }}">
+      <img src="{{ line.product.default_image.transform_command().thumbnail(100, 100, 'a') }}" alt="{{ line.product.name }}">
+    </a>
+  </td>
+  <td>
+    <a href="{{ url_for('product.product.render', uri=line.product.uri) }}" class="product-name">
+      <strong>{{ line.product.name }}</strong>
+    </a>
+    <br/><strong class="text-muted">{{ _('Qty') }}: </strong>
+    {{ line.quantity }} x {{ line.unit_price|currencyformat(currency) }}
+  </td>
+      <td class="text-right hidden-sm hidden-xs">
+      {{ line.amount|currencyformat(currency) }}
+    </td>
+</tr>
+{% else %}
 <tr>
   <td>
     <a href="{{ url_for('product.product.render', uri=line.product.uri) }}">
@@ -74,3 +93,4 @@
     {{ line.amount|currencyformat(currency) }}
   </td>
 </tr>
+{% endif %}
