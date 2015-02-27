@@ -1,0 +1,76 @@
+{% set currency = line.sale.currency.code %}
+
+<tr>
+  <td>
+    <a href="{{ url_for('product.product.render', uri=line.product.uri) }}">
+      <img src="{{ line.product.default_image.transform_command().thumbnail(100, 100, 'a') }}" alt="{{ line.product.name }}">
+    </a>
+  </td>
+  <td>
+    <a href="{{ url_for('product.product.render', uri=line.product.uri) }}" class="product-name">
+      <strong>{{ line.product.name }}</strong>
+    </a>
+    <br><strong class="text-muted">SKU: </strong> {{ line.product.code }}
+      {% if line.product and line.product.is_gift_card and line.product.gift_card_delivery_mode in ['virtual', 'combined'] %}
+        <br><strong class="text-muted">Recipient Name: </strong> {{ line.recipient_name or 'N/A' }}
+        <br><strong class="text-muted">Recipient E-mail: </strong> {{ line.recipient_email or 'N/A' }}
+      {% endif %}
+      {% if line.product.attributes %}
+        {% for key, value in line.product.attributes.iteritems() %}
+          <br/><strong class="text-muted"> {{ key }} : </strong> {{ value }}
+        {% endfor %}
+      {% endif %}
+      <div class="row">
+        <div class="col-xs-12 visible-xs-block">
+          <span>
+            <strong>{{ line.amount|currencyformat(currency) }}</strong>
+            {% if (line.unit.digits != 0) or (line.quantity > 1) %}
+              ({{ line.unit_price|currencyformat(currency) }}/{{ line.unit.name }})
+            {% endif %}
+          </span>
+        </div>
+      </div>
+      <div class="cart-line-action-block">
+        <span class="text-muted">
+          <a href="" data-url="{{ url_for('nereid.cart.delete_from_cart', line=line.id) }}" data-toggle="tooltip"
+            data-placement="top" title="" data-original-title="{{ _('Remove Item') }}" class="remove_from_cart" data-ga-event-label="Remove From Cart" data-ga-product-name="{{ line.product.name }}" data-ga-product-category="{{ line.product.category and line.product.category.name or None }}" data-ga-product-price="{{ line.product.sale_price()|currencyformat(request.nereid_currency.code) }}" data-ga-product-id="{{ line.product.id }}" data-ga-product-quantity="{{ line.quantity }}">
+            <i class="fa fa-times"></i> Delete
+          </a>
+          {% if current_user.is_authenticated() %}
+            |
+            <span data-toggle="tooltip" data-placement="top" title="" data-product="{{ line.product.id }}" data-original-title="Add to Default Wishlist" class="add-to-wishlist">
+              <i class="fa fa-heart"></i> Add to wishlist
+            </span>
+          {% endif %}
+        </span>
+      </div>
+  </td>
+  <td class="text-right hidden-xs">
+    {{ line.unit_price|currencyformat(currency) }}
+  </td>
+  <td>
+    <div class="quantity buttons_added">
+      <form class="form-inline">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              {% if not line.unit.digits %}
+                <select class="form-control qty" data-product="{{ line.product.id }}" {% if line.product.is_gift_card %}disabled{% endif %}>
+                {% for q in range(1, 100) %}
+                  <option {% if line.quantity == q %}selected{% endif %}>{{ q }}</option>
+                {% endfor %}
+                </select>
+              {% else %}
+              <input class="form-control text-right qty" type="number" data-product="{{ line.product.id }}" title="Qty"
+                value="{{ line.quantity|int }}" name="quantity" {% if line.product.is_gift_card %}disabled{% endif %}>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </td>
+  <td class="text-right hidden-xs">
+    {{ line.amount|currencyformat(currency) }}
+  </td>
+</tr>
