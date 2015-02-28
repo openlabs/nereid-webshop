@@ -46,8 +46,8 @@
               </div>
               <span class="checkout-step-name">{{ _('Sign In') }}</span>
             </li>
-            
-            <li class="checkout-step">          
+
+            <li class="checkout-step">
               <div class="checkout-step-number {% if checkout_step >= 2 %}done{% endif %}">
                 <a href="{{ url_for('nereid.checkout.shipping_address') }}">
                   <span>2</span>
@@ -55,7 +55,7 @@
               </div>
               <span class="checkout-step-name">{{ _('Delivery') }}</span>
             </li>
-            
+
             <li class="checkout-step">
               <div class="checkout-step-number {% if checkout_step >= 3 %}done{% endif %}">
                 <a href="{{ url_for('nereid.checkout.payment_method') }}">
@@ -63,7 +63,7 @@
                 </a>
               </div>
               <span class="checkout-step-name">{{ _('Payment') }}</span>
-            </li>        
+            </li>
 
           </ul>
         </div>
@@ -103,34 +103,18 @@
                       <i class="fa fa-pencil"></i> {{ _('Edit') }}
                     </a>
                   </span>
-                </h4>              
+                </h4>
               </td>
             </tr>
           </thead>
           <tbody>
             {% block lines scoped %}
             {% for line in cart.sale.lines %}
-            <tr>
-              <td class="hidden-xs hidden-sm">
-                <a href="{{ url_for('product.product.render', uri=line.product.uri) }}">
-                  <img src="{{ line.product.default_image.transform_command().thumbnail(100, 100, 'a') }}" alt="{{ line.product.name }}">
-                </a>
-              </td>
-              <td>
-                <a href="{{ url_for('product.product.render', uri=line.product.uri) }}" class="product-name">
-                  <strong>{{ line.product.name }}</strong>
-                </a>
-                <br/><strong class="text-muted">{{ _('Qty') }}: </strong> 
-                {{ line.quantity }} x {{ line.unit_price|currencyformat(currency) }}                
-              </td>
-              <td class="text-right hidden-sm hidden-xs">
-                {{ line.amount|currencyformat(currency) }}
-              </td>
-            </tr>
+              {{ line.render(purpose='summary') }}
             {% endfor %}
             {% endblock lines %}
           </tbody>
-        </table> 
+        </table>
         <table class="table table-striped">
           <tbody>
             <tr>
@@ -170,7 +154,7 @@
                       <i class="fa fa-pencil"></i> {{ _('Edit') }}
                     </a>
                   </span>
-                </h4>              
+                </h4>
               </td>
             </tr>
           </thead>
@@ -178,7 +162,7 @@
             <tr>
               <td>{{ render_address(cart.sale.shipment_address, edit=False) }}</td>
             </tr>
-          </tbody>     
+          </tbody>
         </table>
       </div>
     </div>
@@ -199,7 +183,7 @@
                       <i class="fa fa-pencil"></i> {{ _('Edit') }}
                     </a>
                   </span>
-                </h4>              
+                </h4>
               </td>
             </tr>
           </thead>
@@ -207,7 +191,7 @@
             <tr>
               <td>{{ render_address(cart.sale.invoice_address, edit=False) }}</td>
             </tr>
-          </tbody>     
+          </tbody>
         </table>
       </div>
     </div>
