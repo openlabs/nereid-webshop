@@ -54,7 +54,7 @@
               <input type="hidden" name="action" value="remove" />
               <button type="submit" class=" btn btn-link text-muted"><i class="fa fa-times"></i></button>
             </form>
-            <a href="{{ url_for('product.product.render', uri=product.uri, tree_node=(tree_node and tree_node.uri + ',' + tree_node.name or None)) }}">
+            <a {% if product.active %}href="{{ url_for('product.product.render', uri=product.uri, tree_node=(tree_node and tree_node.uri + ',' + tree_node.name or None)) }}"{% endif %}>
               <div>
                 <img src="{{ CDN }}{{ product.default_image.transform_command().thumbnail(300, 300, 'a') }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive img-rounded"/>
               </div>
@@ -68,7 +68,7 @@
                 <h5 class="text-danger">{{ product.sale_price()|currencyformat(request.nereid_currency.code) }}</h5>
               </div>
             </a>
-             {% if product.salable %}
+            {% if product.active and product.salable %}
               <div class="btn-block">
                 <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now" class="add-to-cart" data-ga-event-label="Add To Cart Wishlist Product" data-ga-product-name="{{ product.name }}" data-ga-product-category="{{ product.category and product.category.name or None }}" data-ga-product-price="{{ product.sale_price()|currencyformat(request.nereid_currency.code) }}">
                   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
@@ -78,6 +78,10 @@
                   <input type="hidden" name="action" value="add"/>
                   <button class="btn btn-danger btn-block" type="submit" quantity="1" id="buy-now-btn"><i class="fa fa-shopping-cart"></i> Add to cart</button>
                 </form>
+              </div>
+            {% elif not product.active %}
+              <div style="padding-top:15px;">
+                <span class="text-danger" id="product-not-for-sale"><i class="fa fa-warning"></i>This product has been discontinued</span>
               </div>
             {% else %}
               <div style="padding-top:15px;">
