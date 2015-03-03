@@ -165,20 +165,26 @@
         $(this).button("reset");
       }
     });
+
     $(".qty").change(function() {
       var qty_element = $(this);
-      var product = $(this).data("product");
-      var new_quantity = parseInt(qty_element.val());
-      if (isNaN(new_quantity)) {
-        new_quantity = 1;
+      var qty_change_form = qty_element.closest('form.qty_change_form');
+
+      if (!qty_change_form.length) {
+        return;
       }
-      $.post('{{ url_for('nereid.cart.add_to_cart')  }}',
-        {'quantity': new_quantity, 'product': product},
-        function(data){
-          window.location.href=window.location.href;
+      if (isNaN(parseInt(qty_element.val()))) {
+        qty_element.val('1');
+      }
+      $.post(
+        qty_change_form.attr('action'),
+        qty_change_form.serialize(),
+        function () {
+          window.location.reload();
         }
       );
     });
+
     $("a.clear-cart").click(function(){
       $(this).button('loading');
     });
