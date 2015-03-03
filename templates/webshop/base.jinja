@@ -347,12 +347,12 @@
               <div class="product-details">
                 <div class="row">
                   <div class="col-xs-3 cart-product-image">
-                    <a href="">
+                    <a href="<%= line.product.url %>">
                       <img src="<%= line.product.image %>">
                     </a>
                   </div>
                   <div class="col-xs-7 cart-product-name">
-                    <a href=""><%= line.product.name %>
+                    <a href="<%= line.product.url %>"><%= line.product.name %>
                     </a><br>
                     <span class="text-muted"><%= line.quantity %> x <%= line.amount %></span>
                   </div>
