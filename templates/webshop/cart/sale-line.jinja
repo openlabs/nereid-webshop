@@ -69,18 +69,19 @@
   </td>
   <td>
     <div class="quantity buttons_added">
-      <form class="form-inline">
+      <form class="form-inline qty_change_form" action="{{ url_for('nereid.cart.add_to_cart') }}" method="post">
+        <input type="hidden" name="product" value="{{ line.product.id }}" />
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
               {% if not line.unit.digits %}
-                <select class="form-control qty" data-product="{{ line.product.id }}" {% if line.product.is_gift_card %}disabled{% endif %}>
+                <select class="form-control qty" {% if line.product.is_gift_card %}disabled{% endif %}>
                 {% for q in range(1, 100) %}
                   <option {% if line.quantity == q %}selected{% endif %}>{{ q }}</option>
                 {% endfor %}
                 </select>
               {% else %}
-              <input class="form-control text-right qty" type="number" data-product="{{ line.product.id }}" title="Qty"
+              <input class="form-control text-right qty" type="number" title="Qty"
                 value="{{ line.quantity|int }}" name="quantity" {% if line.product.is_gift_card %}disabled{% endif %}>
               {% endif %}
             </div>
