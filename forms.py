@@ -45,7 +45,7 @@ class GiftCardForm(Form):
 
         if self.gc_product.gift_card_delivery_mode in ['virtual', 'combined']:
             self.recipient_email.validators = [
-                validators.Required(), validators.Email()
+                validators.DataRequired(), validators.Email()
             ]
         else:
             self.recipient_email.validators = [
