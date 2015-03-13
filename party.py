@@ -35,7 +35,7 @@ class WebshopAddressForm(AddressForm):
     """Custom address form for webshop
     """
 
-    phone = TextField(_('Phone'), [validators.Required(), ])
+    phone = TextField(_('Phone'), [validators.DataRequired(), ])
 
     def get_default_country(self):
         """Get the default country based on geoip data.
