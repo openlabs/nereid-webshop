@@ -94,6 +94,8 @@ class Website:
         depends=['show_site_message']
     )
 
+    copyright_year_range = fields.Char('Copyright Year Range')
+
     @classmethod
     @route('/sitemap', methods=["GET"])
     def render_sitemap(cls):
