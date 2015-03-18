@@ -133,7 +133,12 @@
                 <div class="col-xs-9 pull-right">
                   <ul class="list-inline pull-right links">
                     {% block header_links %}
-                    <li><a href="tel:+91 120 6455161">&nbsp;<i class="fa fa-phone"></i> &nbsp; +91 120 6455161</a></li>
+                    {% set company = request.nereid_website.company %}
+                    <li>
+                      {% if company.party.phone %}
+                        <a href="tel:{{ company.party.phone }}">&nbsp;<i class="fa fa-phone"></i> &nbsp; {{ company.party.phone }}</a>
+                      {% endif %}
+                    </li>
                     <li>
                       {% if not current_user.is_anonymous() %}
                       <span class="text-muted">Welcome, </span> <span >{{ request.nereid_user.display_name }}</span>
@@ -321,7 +326,7 @@
         <div class="row copyright-footer">
           <ul class="list-inline center">
             <li>
-              &copy; Openlabs&nbsp;&nbsp;&nbsp;/
+              &copy; {{ request.nereid_website.copyright_year_range or '' }} {{ request.nereid_website.company.rec_name }} &nbsp;&nbsp;&nbsp;/
             </li>
             <li><a href=""> All Rights Reserved</a>&nbsp;&nbsp;&nbsp;/</li>
             <li><a href=""> Privacy Policy</a>&nbsp;&nbsp;&nbsp;/</li>

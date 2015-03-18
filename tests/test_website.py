@@ -2,11 +2,9 @@
 
     Test Website
 
-    :copyright: (c) 2014 by Openlabs Technologies & Consulting (P) LTD
+    :copyright: (c) 2014-2015 by Openlabs Technologies & Consulting (P) LTD
     :license: GPLv3, see LICENSE for more details
 '''
-from decimal import Decimal
-from random import choice
 import json
 
 from trytond.tests.test_tryton import USER, DB_NAME, CONTEXT
@@ -18,96 +16,6 @@ class TestWebsite(BaseTestCase):
     """
     Test case for website.
     """
-
-    def create_test_products(self):
-        # Create product templates with products
-        self._create_product_template(
-            'product 1',
-            [{
-                'category': self.category.id,
-                'type': 'goods',
-                'salable': True,
-                'list_price': Decimal('10'),
-                'cost_price': Decimal('5'),
-                'account_expense': self._get_account_by_kind('expense').id,
-                'account_revenue': self._get_account_by_kind('revenue').id,
-            }],
-            uri='product-1',
-        )
-        self._create_product_template(
-            'product 2',
-            [{
-                'category': self.category2.id,
-                'type': 'goods',
-                'salable': True,
-                'list_price': Decimal('20'),
-                'cost_price': Decimal('5'),
-                'account_expense': self._get_account_by_kind('expense').id,
-                'account_revenue': self._get_account_by_kind('revenue').id,
-            }],
-            uri='product-2',
-        )
-        self._create_product_template(
-            'product 3',
-            [{
-                'category': self.category3.id,
-                'type': 'goods',
-                'list_price': Decimal('30'),
-                'cost_price': Decimal('5'),
-                'account_expense': self._get_account_by_kind('expense').id,
-                'account_revenue': self._get_account_by_kind('revenue').id,
-            }],
-            uri='product-3',
-        )
-        self._create_product_template(
-            'product 4',
-            [{
-                'category': self.category3.id,
-                'type': 'goods',
-                'list_price': Decimal('30'),
-                'cost_price': Decimal('5'),
-                'account_expense': self._get_account_by_kind('expense').id,
-                'account_revenue': self._get_account_by_kind('revenue').id,
-            }],
-            uri='product-4',
-        )
-
-    def _create_product_template(
-        self, name, vlist, uri, uom=u'Unit', displayed_on_eshop=True
-    ):
-        """
-        Create a product template with products and return its ID
-
-        :param name: Name of the product
-        :param vlist: List of dictionaries of values to create
-        :param uri: uri of product template
-        :param uom: Note it is the name of UOM (not symbol or code)
-        :param displayed_on_eshop: Boolean field to display product
-                                   on shop or not
-        """
-        _code_list = []
-        code = choice('ABCDEFGHIJK')
-        while code in _code_list:
-            code = choice('ABCDEFGHIJK')
-        else:
-            _code_list.append(code)
-
-        for values in vlist:
-            values['name'] = name
-            values['default_uom'], = self.Uom.search(
-                [('name', '=', uom)], limit=1
-            )
-            values['sale_uom'], = self.Uom.search(
-                [('name', '=', uom)], limit=1
-            )
-            values['products'] = [
-                ('create', [{
-                    'uri': uri,
-                    'displayed_on_eshop': displayed_on_eshop,
-                    'code': code,
-                }])
-            ]
-        return self.ProductTemplate.create(vlist)
 
     def test_0010_sitemap(self):
         """

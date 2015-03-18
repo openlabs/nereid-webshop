@@ -9,4 +9,11 @@
             <field name="site_message" colspan="3" />
         </page>
     </xpath>
+    <xpath
+      expr="/form/notebook/page[@id='general']/field[@name='cms_static_folder']"
+      position="after"
+    >
+      <label name="copyright_year_range" />
+      <field name="copyright_year_range" />
+    </xpath>
 </data>
