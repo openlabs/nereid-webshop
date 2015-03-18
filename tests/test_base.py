@@ -2,9 +2,10 @@
 
     Test Base Case
 
-    :copyright: (c) 2014 by Openlabs Technologies & Consulting (P) LTD
+    :copyright: (c) 2014-2015 by Openlabs Technologies & Consulting (P) LTD
     :license: GPLv3, see LICENSE for more details
 '''
+import random
 import datetime
 from decimal import Decimal
 from dateutil.relativedelta import relativedelta
@@ -14,6 +15,9 @@ import trytond.tests.test_tryton
 from trytond.tests.test_tryton import POOL, USER, CONTEXT
 from nereid.testing import NereidTestCase
 from trytond.transaction import Transaction
+from trytond.config import config
+
+config.set('database', 'path', '/tmp')
 
 
 class BaseTestCase(NereidTestCase):
@@ -22,9 +26,6 @@ class BaseTestCase(NereidTestCase):
     """
     def setUp(self):
         trytond.tests.test_tryton.install_module('nereid_webshop')
-        trytond.tests.test_tryton.install_module(
-            'payment_gateway_authorize_net'
-        )
 
         self.FiscalYear = POOL.get('account.fiscalyear')
         self.Account = POOL.get('account.account')
@@ -112,6 +113,13 @@ class BaseTestCase(NereidTestCase):
         :param displayed_on_eshop: Boolean field to display product
                                    on shop or not
         """
+        _code_list = []
+        code = random.choice('ABCDEFGHIJK')
+        while code in _code_list:
+            code = random.choice('ABCDEFGHIJK')
+        else:
+            _code_list.append(code)
+
         for values in vlist:
             values['name'] = name
             values['default_uom'], = self.Uom.search(
@@ -124,9 +132,10 @@ class BaseTestCase(NereidTestCase):
                 ('create', [{
                     'uri': uri,
                     'displayed_on_eshop': displayed_on_eshop,
+                    'code': code,
                 }])
             ]
-        return self.ProductTemplate.create(vlist)
+        return self.ProductTemplate.create(vlist)[0]
 
     def create_test_products(self):
         # Create product templates with products
@@ -182,7 +191,7 @@ class BaseTestCase(NereidTestCase):
             displayed_on_eshop=False
         )
 
-    def _create_auth_net_gateway_for_site(self):
+    def _create_auth_net_gateway_for_site(self, method='credit_card'):
         """
         A helper function that creates the authorize.net gateway and assigns
         it to the websites.
@@ -194,16 +203,25 @@ class BaseTestCase(NereidTestCase):
         cash_journal, = Journal.search([
             ('name', '=', 'Cash')
         ])
+        self.account_cash, = self.Account.search([
+            ('kind', '=', 'other'),
+            ('name', '=', 'Main Cash'),
+            ('company', '=', self.company.id)
+        ])
+        cash_journal.debit_account = self.account_cash
+        cash_journal.credit_account = self.account_cash
+        cash_journal.save()
 
-        gatway = PaymentGateway(
-            name='Authorize.net',
-            journal=cash_journal,
-            provider='authorize_net',
-            method='credit_card',
-            authorize_net_login='327deWY74422',
-            authorize_net_transaction_key='32jF65cTxja88ZA2',
-        )
-        gatway.save()
+        with Transaction().set_context({'use_dummy': True}):
+            gatway = PaymentGateway(
+                name='Authorize.net',
+                journal=cash_journal,
+                provider='dummy',
+                method=method,
+                authorize_net_login='327deWY74422',
+                authorize_net_transaction_key='32jF65cTxja88ZA2',
+            )
+            gatway.save()
 
         websites = NereidWebsite.search([])
         NereidWebsite.write(websites, {
@@ -443,6 +461,7 @@ class BaseTestCase(NereidTestCase):
             'warehouse': warehouse,
             'payment_term': payment_term,
             'company': self.company.id,
+            'currency': self.company.currency.id,
             'users': [('add', [USER])]
         }])
         self.User.set_preferences({'shop': self.shop})
@@ -477,14 +496,12 @@ class BaseTestCase(NereidTestCase):
         }])
 
         # Product categories
-        self.category, = self._create_product_category(
-            'categ1', [{'uri': 'category1   '}]
-        )
-        self.category2, = self._create_product_category(
-            'categ2', [{'uri': 'category2'}]
-        )
-        self.category3, = self._create_product_category(
-            'categ3', [{'uri': 'category3'}]
+        self.category, = self._create_product_category('categ1', [{}])
+        self.category2, = self._create_product_category('categ2', [{}])
+        self.category3, = self._create_product_category('categ3', [{}])
+
+        self.Account.write(
+            self.Account.search([]), {'party_required': True}
         )
 
     def login(self, client, username, password, assert_=True):

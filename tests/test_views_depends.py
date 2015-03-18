@@ -4,7 +4,7 @@
 
     Test tryton views and fields dependency.
 
-    :copyright: (C) 2013 by Openlabs Technologies & Consulting (P) Limited
+    :copyright: (C) 2013-2015 by Openlabs Technologies & Consulting (P) Limited
     :license: BSD, see LICENSE for more details.
 """
 import sys
@@ -33,7 +33,6 @@ class TestViewsDepends(unittest.TestCase):
         """
         trytond.tests.test_tryton.install_module('nereid_webshop')
 
-    @unittest.skip("Skipping since there is no views")
     def test0005views(self):
         '''
         Test views.
