@@ -62,6 +62,9 @@ class TestDownloadInvoice(BaseTestCase):
         Test to download invoice from a sale
         """
         Address = POOL.get('party.address')
+        SalePayment = POOL.get('sale.payment')
+        PaymentGateway = POOL.get('payment_gateway.gateway')
+        Journal = POOL.get('account.journal')
 
         with Transaction().start(DB_NAME, USER, CONTEXT):
             self.setup_defaults()
@@ -108,9 +111,27 @@ class TestDownloadInvoice(BaseTestCase):
                     }])]
             }])
             self.Sale.quote([sale])
+
+            cash_journal, = Journal.search([
+                ('name', '=', 'Cash')
+            ])
+
+            gateway = PaymentGateway(
+                name='Manual',
+                journal=cash_journal,
+                provider='self',
+                method='manual',
+            )
+            gateway.save()
+
+            # Create a sale payment
+            SalePayment.create([{
+                'sale': sale.id,
+                'amount': sale.total_amount,
+                'gateway': gateway,
+            }])
             self.Sale.confirm([sale])
             with Transaction().set_context(company=self.company.id):
-
                 self.Sale.process([sale])
                 self.Account.post(sale.invoices)
             with app.test_client() as c:
