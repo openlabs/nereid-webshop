@@ -6,28 +6,22 @@
 <section class="my-account">
   <div class="container">
     <div class="row">
-      <div class="col-md-10 col-md-offset-1">
+      <div class="col-md-12">
         {{ account_header(_('My Account / Add Card'), 'my-cards') }}
-      </div>
-        <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-10">
             <form action="" method="post" id="add-card" autocomplete="off">
                 {{ form.hidden_tag() }}
-
-              <div class="col-md-5 col-md-offset-1">
-                <div class="row">
-                    <h4 class="account-heading col-md-7"> {{ _('Add Card ') }}</h4>
-                </div>
-                 <div class="col-md-11">
+              <div class="col-md-12">
+                <div class="col-md-12">
                 {{ render_field(form.owner,  placeholder=_("Full Name on Card"), class_="form-control", required=required) }}
                 </div>
-                <div class="col-md-11">
+                <div class="col-md-12">
                 {{ render_field(form.number,  placeholder=_("Card Number"), class_="form-control", required=required) }}
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-6">
                 {{ render_field(form.expiry_month, class_="form-control") }}
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-6">
                 {{ render_field(form.expiry_year, class_="form-control") }}
                 </div>
                 <div class="col-md-10">
@@ -37,29 +31,26 @@
                 <button class="btn btn-warning btn-sm col-md-2" type="submit" id="save-card-btn">{{ _('Save Card') }}</button>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="col-md-12 center" >
-                    <h4>Select Your billing address or <a href="{{ url_for('party.address.create_address') }}" class="btn btn-info btn-xs"title=""><i class="fa fa-plus"></i> &nbsp;{{ _('Add new address') }}</a></h4>
+              <div class="col-md-12 center" >
+                <h4>Select Your billing address or <a href="{{ url_for('party.address.create_address') }}" class="btn btn-info btn-xs"title=""><i class="fa fa-plus"></i> &nbsp;{{ _('Add new address') }}</a>
+                </h4>
                 {% for error in form.address.errors %}
-                  <p class="text-warning"><i class="fa fa-warning"></i> {{ _('error') }}</p>
-                {% endfor %}
-                </div>
-                <br>
-                {% for address in current_user.party.addresses %}
-                <div class="col-md-6">
-                  <div class="well well-small address_panel">
-                    {{ render_address(address, edit=False) }}
-                    <input type="checkbox" class="select-address" value="{{ address.id }}" name="address">
-                      Use this address
-                    </input>
-                  </div>
-                </div>
+                <p class="text-warning"><i class="fa fa-warning"></i> {{ _('error') }}</p>
                 {% endfor %}
               </div>
+              <br>
+              {% for address in current_user.party.addresses %}
+              <div class="col-md-6">
+                <div class="well well-small address_panel">
+                  {{ render_address(address, edit=False) }}
+                  <input type="checkbox" class="select-address" value="{{ address.id }}" name="address">
+                    Use this address
+                  </input>
+                </div>
+              </div>
+              {% endfor %}
             </form>
           </div>
-        </div>
-        </div>
       </div>
     </div>
   </div>

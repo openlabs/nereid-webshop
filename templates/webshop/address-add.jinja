@@ -5,18 +5,15 @@
 {% block main %}
 <section class="my-account">
   <div class="container">
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1">
-          {{ account_header(_('My Account / Add Address'), 'address-book') }}
-      </div>
-      <h4 class="account-heading col-md-7 col-md-offset-1"> {{ _('Add a new Address') }} &nbsp;&nbsp;<small>[ {{ _('Fields marked with (<span>*</span>) are requried.') }}]</small></h4>
-    </div>
-    <div class="row">
-      <div class="col-md-7 col-md-offset-1">
+    <div class="col-md-12">
+      {{ account_header(_('My Account / Add Address'), 'address-book') }}
+      <div class="col-md-10">
+        <h4 class="account-heading text-center"> {{ _('Add a new Address') }} &nbsp;&nbsp;<small>[ {{ _('Fields marked with (<span>*</span>) are requried.') }}]</small>
+        </h4>
         <form method="post" id="address" autocomplete="off">
-  	{{ form.hidden_tag() }}
+          {{ form.hidden_tag() }}
           {{ render_field(form.name, class_="form-control") }}
-          
+
           {{ render_field(form.street, placeholder=_("Street address, P.O. box, company name, c/o"), class_="form-control", label_text= _('Address Line 1')) }}
 
           {{ render_field(form.streetbis, placeholder=_("Apartment, suite, unit, building, floor, etc."), class_="form-control", label_text= _('Address Line 2')) }}

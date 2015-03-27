@@ -6,17 +6,16 @@
 <section class="my-account">
   <div class="container">
     <div class="col-md-12">
-      <div class="col-md-10 col-md-offset-1">
-        {{ account_header(_('MyAccount / My Cards'), 'my-cards') }}
-      </div>
+      {{ account_header(_('MyAccount / My Cards'), 'my-cards') }}
       <!-- Account Information -->
-        <div class="row">
-          <h4 class="account-heading col-md-7 col-md-offset-1">{{ _('Cards') }}
+      <div class="col-md-10">
+        <div class="col-md-8">
+          <h4 class="account-heading">{{ _('Cards') }}
             <a href="{{ url_for('party.party.nereid_add_payment_profile') }}" class="btn btn-info pull-right btn-xs"title=""><i class="fa fa-plus"></i> &nbsp;{{ _('Add new card') }}</a>
           </h4>
         </div>
         <div class="tab-content row">
-          <div class="col-md-7 tab-pane active col-md-offset-1" id="payment-profile">
+          <div class="col-md-8 tab-pane active" id="payment-profile">
             {% for card in current_user.party.payment_profiles %}
             <div class="well well-small">
               <form name="remove-payment-profile" action="{{ url_for('party.party.remove_payment_profile') }}" method="post" autocomplete="off">
@@ -30,6 +29,7 @@
           </div>
         </div>
       </div>
+    </div>
   </div>
 </section>
 {% endblock main %}

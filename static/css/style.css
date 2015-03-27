@@ -1222,14 +1222,14 @@ span.price{
 .recommended-tabs li,.account-links li {
   margin: 10px 0;
 }
-.recommended-tabs li a,.account-links li a{
+.recommended-tabs li a{
   padding: 5px 25px;
   background: #E4E4E4;
   border-radius: 2px;
   color: #373435;
   text-decoration: none;
 }
-.recommended-tabs li.active a,.account-links li.active a, .recommended-tabs li:hover a, .account-links li a:hover{
+.recommended-tabs li.active a, .recommended-tabs li:hover a{
   background: #373435;
   color: #fff
 }
@@ -1366,6 +1366,7 @@ span.text-success, span.text-warning, span.text-danger, span.text-info{
   border-radius: 5px; /* future proofing */
   -khtml-border-radius: 5px; /* for old Konqueror browsers */
   margin-bottom: 30px;
+  margin-top: 30px;
 }
 #add-wishlist p{
   color: rgba(121, 119, 128, 0.8);
@@ -1396,6 +1397,7 @@ span.text-success, span.text-warning, span.text-danger, span.text-info{
   border-radius: 5px; /* future proofing */
   -khtml-border-radius: 5px; /* for old Konqueror browsers */
   margin-bottom: 30px;
+  margin-top: 30px;
 }
 #wishlist .thumbnail1 a h4{
   margin-bottom: 5px;
@@ -1566,9 +1568,6 @@ border-top: 1px solid rgba(248, 248, 248, 0.2);
   font-size: 2em;
   text-align: center;
 }
-.my-account .filter-by{
-  padding-bottom: 20px;
-}
 .cart-line-action-block {
   padding-top: 10px;
 }
@@ -1650,4 +1649,29 @@ border-top: 1px solid rgba(248, 248, 248, 0.2);
 }
 .zoom-image {
   width: 100%;
+}
+.account-sidebar {
+  border: 1px solid #dfdfdf;
+}
+.account-sidebar  li  a:hover {
+  text-decoration: none;
+}
+.account-sidebar  li  a:active {
+  font-weight: bold;
+}
+.account-links .orders {
+  border-bottom: 1px solid #dfdfdf;
+  padding: 20px;
+  padding-right: 0;
+  margin: 0;
+}
+.account-links li {
+  padding-left: 15px;
+}
+.account-links li.active a{
+  color: #31708f;
+  account-sidebar-weight: bold;
+}
+.account-border{
+  padding: 15px;
 }
