@@ -1,29 +1,40 @@
 {% extends 'base.jinja' %}
 
 {% macro account_header(title='My Account', active='') %}
-<div class="row">
-  <h3>{{ title }}</h3>
-  <ul class="list-inline account-links">
-    <li {% if active == 'profile' %}class="active"{% endif %}>
-      <a href="{{ url_for('nereid.website.account') }}">{{ _('Profile') }}</a>
-    </li>
-    <li {% if active == 'orders' %}class="active"{% endif %}>
-      <a href="{{ url_for('sale.sale.render_list') }}">{{ _('Orders') }}</a>
-    </li>
-    <li {% if active == 'wishlist' %}class="active"{% endif %}>
-      <a href="{{ url_for('wishlist.wishlist.render_wishlists') }}">{{ _('Wishlist') }}</a>
-    </li>
-    <li {% if active == 'address-book' %}class="active"{% endif %}>
-      <a href="{{ url_for('party.address.view_address') }}">{{ _('Address Book') }}</a>
-    </li>
-    {% if current_user.is_authenticated() and request.nereid_website.save_payment_profile %}
-    <li {% if active == 'my-cards' %}class="active"{% endif %}>
-      <a href="{{ url_for('party.party.view_payment_profiles') }}">{{ _('My Cards') }}</a>
-    </li>
-    {% endif %}
-    {#<li>
-      <a href="">{{ _('My Credits') }}</a>
-    </li>#}
-  </ul>
+<h4 class="text-center">{{ title }}</h4>
+<br>
+<br>
+<div class="col-md-2">
+  <div class="row">
+    <ul class="list-inline account-links account-sidebar">
+      <div class="orders">
+        <h4>Orders</h4>
+        <div class="myorders">
+        <li {% if active == 'orders' %}class="active"{% endif %}>
+          <a href="{{ url_for('sale.sale.render_list') }}">My {{ _('Orders') }}</a>
+        </li>
+        <li {% if active == 'wishlist' %}class="active"{% endif %}>
+          <a href="{{ url_for('wishlist.wishlist.render_wishlists') }}">{{ _('Wishlist') }}</a>
+        </li>
+        </div>
+      </div>
+      <div class="orders">
+        <h4>Account</h4>
+        <div class="myorders">
+          <li {% if active == 'profile' %}class="active"{% endif %}>
+              <a href="{{ url_for('nereid.website.account') }}">{{ _('Profile') }}</a>
+          </li>
+          <li {% if active == 'address-book' %}class="active"{% endif %}>
+            <a href="{{ url_for('party.address.view_address') }}">{{ _('Address Book') }}</a>
+          </li>
+        </div>
+        {% if current_user.is_authenticated() and request.nereid_website.save_payment_profile %}
+        <li {% if active == 'my-cards' %}class="active"{% endif %}>
+          <a href="{{ url_for('party.party.view_payment_profiles') }}">{{ _('My Cards') }}</a>
+        </li>
+        {% endif %}
+      </div>
+    </ul>
+  </div>
 </div>
 {% endmacro %}
