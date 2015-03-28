@@ -6,19 +6,19 @@
 <!-- My Orders Page starts here -->
 <section class="my-account">
   <div class="container">
-      <div class="col-md-12">
+    <div class="col-md-12">
 
-        {% if confirmation %}
+      {% if confirmation %}
         <div class="alert alert-success order-confirmation">
           <i class="fa fa-check-circle"></i>
           Thank You!<br>
           <h4>Your Order has been placed successfully.</h4>
         </div>
-        {% endif %}
+      {% endif %}
 
-        {% if not current_user.is_anonymous() %}
-          {{ account_header(_('My Account / Order #') + sale.reference, 'orders') }}
-        {% endif %}
+      {% if not current_user.is_anonymous() %}
+        {{ account_header(_('My Account / Order #') + sale.reference, 'orders') }}
+      {% endif %}
       <div class="col-md-10">
         <!--My Orders-->
         <div class="row cart-table">
@@ -38,62 +38,62 @@
           </div>
 
           <div class="row-fluid">
-          <div class="col-md-12">
-            <div class="page-header">
-              <h4>{{ _('Order Details') }}</h4>
-            </div>
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>{{ _('Description') }}</th>
-                  <th>{{ _('Ordered Quantity') }}</th>
-                  <th>{{ _('Shipments') }}</th>
-                  <th>{{ _('Unit Price') }}</th>
-                  <th>{{ _('Sub Total') }}</th>
-		  <th></th>
-                </tr>
-              </thead>
+            <div class="col-md-12">
+              <div class="page-header">
+                <h4>{{ _('Order Details') }}</h4>
+              </div>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>{{ _('Description') }}</th>
+                    <th>{{ _('Ordered Quantity') }}</th>
+                    <th>{{ _('Shipments') }}</th>
+                    <th>{{ _('Unit Price') }}</th>
+                    <th>{{ _('Sub Total') }}</th>
+                    <th></th>
+                  </tr>
+                </thead>
               {% for line in sale.lines %}
-              <tr>
-                <td>{{ loop.index }}</td>
-                <td>
-                  {% if line.product and line.product.displayed_on_eshop %}
-                  <a href="{{ url_for('product.product.render', uri=line.product.uri) }}">{{ line.description }}</a>
-                  {% else %}
-                  {{ line.description }}
-                  {% endif %}
-                </td>
-                <td>{{ line.quantity|int }} {{ line.unit.name }}</td>
-                <td>
-                  {% for move in line.moves if move.state == 'done' and move.to_location.type == 'customer' %}
-                  {{ move.quantity }} x {{ move.lot and move.lot.number or  _('<No Serial #>') }}<br>
-                  {% endfor %}
-                </td>
-                <td>{{ line.unit_price|currencyformat(sale.currency.code) }}</td>
-                <td>{{ line.amount|currencyformat(sale.currency.code) }}</td>
-		<td>{% if line.is_returnable_under_any_term %}<a class="btn btn-primary" href="{{ url_for('sale.line.return_line', active_id=line.id) }}">Return Item</a>{% endif %}</td>
-              </tr>
+                <tr>
+                  <td>{{ loop.index }}</td>
+                  <td>
+                    {% if line.product and line.product.displayed_on_eshop %}
+                    <a href="{{ url_for('product.product.render', uri=line.product.uri) }}">{{ line.description }}</a>
+                    {% else %}
+                    {{ line.description }}
+                    {% endif %}
+                  </td>
+                  <td>{{ line.quantity|int }} {{ line.unit.name }}</td>
+                  <td>
+                    {% for move in line.moves if move.state == 'done' and move.to_location.type == 'customer' %}
+                    {{ move.quantity }} x {{ move.lot and move.lot.number or  _('<No Serial #>') }}<br>
+                    {% endfor %}
+                  </td>
+                  <td>{{ line.unit_price|currencyformat(sale.currency.code) }}</td>
+                  <td>{{ line.amount|currencyformat(sale.currency.code) }}</td>
+                  <td>{% if line.is_returnable_under_any_term %}<a class="btn btn-primary" href="{{ url_for('sale.line.return_line', active_id=line.id) }}">Return Item</a>{% endif %}</td>
+                </tr>
               {% endfor %}
-              <tr>
-                <td colspan="5">
-                  <strong class="pull-right">Sub Total</strong>
-                </td>
-                <td><strong>{{ sale.untaxed_amount|currencyformat(sale.currency.code) }}</strong></td>
-              </tr>
-              <tr>
-                <td colspan="5">
-                  <strong class="pull-right">Tax Amount</strong>
-                </td>
-                <td><strong>{{ sale.tax_amount|currencyformat(sale.currency.code) }}</strong></td>
-              </tr>
-              <tr>
-                <td colspan="5">
-                  <strong class="pull-right">Total Amount</strong>
-                </td>
-                <td><strong>{{ sale.total_amount|currencyformat(sale.currency.code) }}</strong></td>
-              </tr>
-            </table>
+                <tr>
+                  <td colspan="5">
+                    <strong class="pull-right">Sub Total</strong>
+                  </td>
+                  <td><strong>{{ sale.untaxed_amount|currencyformat(sale.currency.code) }}</strong></td>
+                </tr>
+                <tr>
+                  <td colspan="5">
+                    <strong class="pull-right">Tax Amount</strong>
+                  </td>
+                  <td><strong>{{ sale.tax_amount|currencyformat(sale.currency.code) }}</strong></td>
+                </tr>
+                <tr>
+                  <td colspan="5">
+                    <strong class="pull-right">Total Amount</strong>
+                  </td>
+                  <td><strong>{{ sale.total_amount|currencyformat(sale.currency.code) }}</strong></td>
+                </tr>
+              </table>
             </div>
           </div>
         </div>
@@ -108,12 +108,12 @@
                 <button name="save-comment" class="btn btn-primary col-md-3 pull-right margin-top-30" id="add-comment" data-url="{{ url_for('sale.sale.add_comment_to_sale', active_id=sale.id, access_code=sale.guest_access_code) }}">{{ _('Save') }}</button>
             </div>
           {% else %}
-          <h5> <span class="text-muted">Note: </span>&nbsp;{{ sale.comment }}</h5>
+            <h5> <span class="text-muted">Note: </span>&nbsp;{{ sale.comment }}</h5>
           {% endif %}
-        </div>
+          </div>
         </div>
       </div>
-      </div>
+    </div>
   </div>
 </section>
 {% endblock main %}
