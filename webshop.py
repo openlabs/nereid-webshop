@@ -86,8 +86,8 @@ class ArticleCategory:
     def check_xml_record(records, values):
         """The webshop module creates a bunch of commonly used article category on
         webshops. Since tryton does not allow records created via XML to be
-        edited, this method explicitly allows users to modify the article category
-        created by the module.
+        edited, this method explicitly allows users to modify the article
+        category created by the module.
         """
         return True
 
