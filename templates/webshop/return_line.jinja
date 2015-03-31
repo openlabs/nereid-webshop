@@ -1,0 +1,134 @@
+{% extends 'base.jinja' %}
+
+{% block title %}Return Item {{ super() }}{% endblock %}
+
+{% block main %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Return Item</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <img
+        src="{{ CDN }}{{ line.product.default_image.transform_command().thumbnail(200, 200, 'a') }}"
+        alt="{{ line.product.name }}"
+        title="{{ line.product.name }}"
+        class="img-responsive img-rounded"
+      />
+    </div>
+    <div class="col-md-6">
+      <h4>{{ line.product.name }}</h4>
+      {% if line.product.code %}
+        <strong>SKU:</strong>{{ line.product.code }}
+      {% endif %}
+      <br />
+      <h4>{{ line.unit_price|currencyformat(line.sale.currency.code) }}</h4>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <strong>Order No.:</strong>
+        </div>
+        <div class="col-md-8">
+          {{ line.sale.reference }}
+        </div>
+        <div class="col-md-4">
+          <strong>Date:</strong>
+        </div>
+        <div class="col-md-8">
+          {{ line.sale.sale_date|dateformat }}
+        </div>
+        <div class="col-md-4">
+          <strong>Total Refund:</strong>
+        </div>
+        <div class="col-md-8">
+          {{ line.amount|currencyformat(line.sale.currency.code) }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <form action={{ url_for('sale.line.return_line', active_id=line.id) }} method="post" id="return-line" class="form-group">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-12">
+              <h4>Why do you want to return this item?</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 ">
+              <select name="reason" class="form-control" id="return-reason" required>
+                <option value="0">Choose a reason</option>
+                {% for reason in reasons %}
+                  <option value={{ reason.id }}>{{ reason.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="row margin-top-15" id="no-return-alert" hidden>
+            <div class="col-md-6">
+              <div class="alert alert-danger" role="alert">
+                <span id="no-return-alert-message"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row" id="comment-section" hidden>
+            <div class="col-md-12">
+              <h4>Comment</h4>
+            </div>
+            <div class="col-md-6">
+              <textarea
+                name="comment" class="form-control" maxlength="200" rows="3"
+                id="return-comment" placeholder="Please enter your comment."
+              ></textarea>
+            </div>
+          </div>
+          <div class="row margin-top-15">
+            <div class="col-md-3">
+              <button class="btn btn-primary btn-block" type="submit" id="return-btn" disabled>
+                Return
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#return-reason').change(function(){
+      var reason_id = $("#return-reason").val();
+      $.ajax({
+        type: "POST",
+        url: "{{ url_for('sale.line.is_returnable_for_reason', active_id=line.id) }}",
+        data: {'reason': reason_id}
+      })
+      .success(function (result) {
+        if (result.result) {
+          $('#comment-section').show();
+          $('#return-btn').attr('disabled' , false);
+          $('#no-return-alert').hide();
+        }
+        else if (!result.result) {
+          $('#comment-section').hide();
+          $('#return-btn').attr('disabled' , true);
+          if (reason_id != 0) {
+            $('#no-return-alert-message')[0].innerText = result.message;
+            $('#no-return-alert').show();
+          }
+        }
+      });
+    });
+  });
+</script>
+{% endblock %}
