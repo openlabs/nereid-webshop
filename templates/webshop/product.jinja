@@ -281,10 +281,10 @@
   <div class="col-md-12">
     <% _.each(attrs, function(attr, index) { %>
       <% if (attr.widget == 'dropdown') { %>
-        <div class="form-group"> Select <%= attr.string %>: <br/>
-          <select class="form-control select-sort attribute input-lg" data-attr-name="<%= attr.name %>">
+        <div class="form-group"> Select <%= attr.display_name %>: <br/>
+          <select class="form-control select-sort attribute input-lg" data-attr-id="<%= attr.attribute_id %>">
             <% _.each(attr.options, function(option, index) { %>
-            <option value="<%= _.escape(option[0]) %>" <% if (option[0] == currentVariantAttrs[attr.name]) { %> selected <% } %> ><%= _.escape(option[1]) %></option>
+            <option value="<%= _.escape(option[0]) %>" <% if (option[0] == currentVariantAttrs[attr.id]) { %> selected <% } %> ><%= _.escape(option[1]) %></option>
             <% }); %>
           </select>
         </div>
@@ -326,7 +326,7 @@
 <script type="text/javascript">
   $(document).ready(function() {
 
-    var productObj = {{ product.template.get_product_variation_data(as_json=True)|safe }}
+    var productObj = {{ product.template.get_product_variation_data()|safe }};
 
     var currentVariantId = {{ product.id }}; // on page load this is the product ID
 
@@ -361,7 +361,7 @@
         $(".attribute"),  // Selector for the attribute fields.
         function(memo, attrEl) {
           // Append the attribute name and value to the map
-          memo[attrEl.getAttribute('data-attr-name')] = attrEl.value;
+          memo[attrEl.getAttribute('data-attr-id')] = attrEl.value;
           return memo;
         },
         {} // Initial empty attribute set
@@ -408,7 +408,7 @@
        */
     $("#product-varying-attrs").html(_.template(
       $("#product-varying-attrs-tpl").html(), {
-        'attrs': productObj.varying_attributes,
+        'attrs': productObj.variation_attributes,
         'currentVariantAttrs': getVariantInfo({{ product.id }}).attributes
       }
     ));
