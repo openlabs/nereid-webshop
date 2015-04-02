@@ -42,7 +42,7 @@ class TestDownloadInvoice(BaseTestCase):
 
         return self.NereidWebsite.create([{
             'name': 'localhost',
-            'shop': self.shop,
+            'channel': self.channel,
             'company': self.company.id,
             'application_user': USER,
             'default_locale': self.locale_en_us.id,

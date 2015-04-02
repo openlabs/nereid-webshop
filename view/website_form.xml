@@ -9,6 +9,10 @@
             <field name="site_message" colspan="3" />
         </page>
     </xpath>
+    <xpath expr="/form/notebook/page[@id='catalog']" position="inside">
+        <label name="cms_root_menu" />
+        <field name="cms_root_menu" />
+    </xpath> 
     <xpath
       expr="/form/notebook/page[@id='general']/field[@name='cms_static_folder']"
       position="after"

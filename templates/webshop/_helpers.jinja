@@ -75,9 +75,13 @@
 {% set description = description or product.description %}
 {% if product.__name__ == 'product.template' %}
   {% set product = product.products_displayed_on_eshop[0] %}
-  {% set name = name or product.name %}
-{% elif product.__name__ == 'product.product' %}
-  {% set name = name or product.template.name %}
+{% endif %}
+{% if not name %}
+  {% if node and node.display == 'product.template' %}
+    {% set name = product.template.name %}
+  {% else %}
+    {% set name = product.name %}
+  {% endif %}
 {% endif %}
 {% set product_url = product.get_absolute_url(path=(node and node.slug or None), node=(node and node.id or None)) %}
 <div class="thumbnail">

@@ -6,7 +6,8 @@
 
 '''
 from trytond.pool import Pool
-from webshop import WebShop, BannerCategory, Banner, Article, Website
+from webshop import WebShop, BannerCategory, Banner, Article, \
+    Website, ArticleCategory
 from product import Product
 from invoice import Invoice
 from sale import Sale, SaleLine
@@ -27,5 +28,6 @@ def register():
         Sale,
         SaleLine,
         Website,
+        ArticleCategory,
         module='nereid_webshop', type_='model'
     )

@@ -647,7 +647,7 @@ class TestTemplates(BaseTestCase):
 
                 sale, = self.Sale.search([('state', '=', 'confirmed')])
                 self.Sale.proceed([sale])
-                self.Sale.complete_payments()
+                self.Sale.process_all_pending_payments()
                 payment_transaction, = sale.gateway_transactions
                 self.assertEqual(payment_transaction.amount, sale.total_amount)
 
@@ -758,7 +758,7 @@ class TestTemplates(BaseTestCase):
 
                 sale, = self.Sale.search([('state', '=', 'confirmed')])
                 self.Sale.proceed([sale])
-                self.Sale.complete_payments()
+                self.Sale.process_all_pending_payments()
                 payment_transaction, = sale.gateway_transactions
                 self.assertEqual(payment_transaction.amount, sale.total_amount)
 

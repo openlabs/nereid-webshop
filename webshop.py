@@ -15,7 +15,10 @@ from nereid import current_app, route, render_template, request, jsonify
 from trytond.pyson import Eval, Not
 
 __metaclass__ = PoolMeta
-__all__ = ['WebShop', 'BannerCategory', 'Banner', 'Article', 'Website']
+__all__ = [
+    'WebShop', 'BannerCategory', 'Banner', 'Article',
+    'Website', 'ArticleCategory'
+]
 
 #: Get the static folder. The static folder also
 #: goes into the site packages
@@ -71,6 +74,20 @@ class Article:
         webshops. Since tryton does not allow records created via XML to be
         edited, this method explicitly allows users to modify the articles
         created by the module.
+        """
+        return True
+
+
+class ArticleCategory:
+    "CMS Article Category"
+    __name__ = 'nereid.cms.article.category'
+
+    @staticmethod
+    def check_xml_record(records, values):
+        """The webshop module creates a bunch of commonly used article category on
+        webshops. Since tryton does not allow records created via XML to be
+        edited, this method explicitly allows users to modify the article
+        category created by the module.
         """
         return True
 
