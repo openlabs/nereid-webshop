@@ -6,13 +6,10 @@
 <section class="my-account">
   <div class="container">
     <div class="row">
-      <div class="col-md-10 col-md-offset-1">
+      <div class="col-md-12">
         {{ account_header(_('My Account / Edit Address'), 'address-book') }}
-      </div>
+      <div class="col-md-10">
       <div class="row">
-        <div class="row">
-          <h4 class="account-heading col-md-7 col-md-offset-1"> {{ _('Edit Address ') }}</h4>
-        </div>
         <div class="row">
           <div class="col-md-7 col-md-offset-1">
             <form action="{{ url_for('party.address.edit_address', address=address) }}"
@@ -59,6 +56,8 @@
           </div>
         </div>
       </div>
+      </div>
+    </div>
     </div>
   </div>
 </section>
