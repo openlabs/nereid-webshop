@@ -24,65 +24,96 @@
       {{ account_header(_('My Account / Orders'), 'orders') }}
         <!--My Orders-->
         {% if sales %}
-        <div class="col-md-10">
+        <div class="col-md-10 no-pad-xs">
           <div class="cart-table">
             <!--Recent Orders Table starts here -->
-            <div class="table-responsive">
-              <table class="table">
-                <thead class="col-heading">
-                  <tr>
-                    <th>{{ _('Order No.') }}</th>
-                    <th>{{ _('Ordered Products') }}</th>
-                    <th>{{ _('Total Amount') }} </th>
-                    <th>{{ _('Date Placed') }}</th>
-                    <th>{{ _('Status') }}</th>
-                    <th>{{ _('Action') }}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for sale in sales %}
-                  <tr>
-                    <td><a href="{{ url_for('sale.sale.render', active_id=sale.id) }}" class="text-info">#{{ sale.reference }}</a></td>
-                    <td class="orderd-products">
-                      {% for line in sale.lines %}
-                      {% if line.product and line.product.displayed_on_eshop %}
-                        <a href="{{ url_for('product.product.render', uri=line.product.uri) }}" class="product-name">{{ line.description }}</a><br>
-                      {% else %}
-                        <a class="product-name">{{ line.description }}</a>
-                      {% endif %}
-                      <span class="text-muted">{{ _('Qty') }} : </span> {{ line.quantity }}<br>
-                      {% endfor %}
-                    </td>
-                    <td>
-                      {{ sale.total_amount|currencyformat(sale.currency.code) }}
-                    </td>
-                    <td>
-                      {{ sale.sale_date|dateformat }}
-                    </td>
-                    <td>
-                      {% if sale.state ==  "done" %}
-                      <span class="text-success">Done</span>
-                      {% elif sale.state in ("processing", "confirmed") %}
+            {% for sale in sales %}
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-md-12 col-xs-12 text-center-xs">
+                      <div class="primary row">
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                          {{ _('Date Placed') }}
+                        </div> 
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                          {{ sale.sale_date|dateformat }}
+                        </div>
+                      </div>
+                      <div class="secondry row">
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                          {{ _('Order No.') }}
+                        </div>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                          <a href="{{ url_for('sale.sale.render', active_id=sale.id) }}" class="text-info">#{{ sale.reference }}</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xs-12 text-center">
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                      <div class="primary">
+                        {{ _('Status') }}
+                      </div>
+                      <div class="secondry">
+                        {% if sale.state ==  "done" %}
+                        <span class="text-success">Done</span>
+                        {% elif sale.state in ("processing", "confirmed") %}
                         <span class="text-info">Processing</span>
-                      {% elif sale.state == "cancel" %}
+                        {% elif sale.state == "cancel" %}
                         <span class="text-danger">Canceled</span>
-                      {% endif %}
-                    </td>
-                    <td class="action">
-                      {% for invoice in sale.invoices %}
-                        {% if invoice.state == "paid" %}
-                          <a href="{{ url_for('account.invoice.download_invoice', active_id=invoice.id) }}" class="text-muted download-invoice">
-                            <i class="fa fa-cloud-download"></i> {{ _('Download invoice') }}
-                          </a>
-                          <br>
                         {% endif %}
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                      <div class="primary">
+                        {{ _('Total Amount') }}
+                      </div>
+                      <div class="secondry">
+                        {{ sale.total_amount|currencyformat(sale.currency.code) }}
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                      {{ _('Action') }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-body">
+                <div class="col-md-8">
+                  <div class="orderd-products">
+                      {% for line in sale.lines %}
+                      <div class="row margin-bottom-10">
+                      {% if line.product and line.product.displayed_on_eshop %}
+                        <div class="col-md-7 col-xs-8">
+                          <a href="{{ url_for('product.product.render', uri=line.product.uri) }}" class="product-name">{{ line.description }}</a>
+                        </div>
+                      {% else %}
+                        <div class="col-md-6">
+                          <a class="product-name">{{ line.description }}</a>
+                        </div>
+                      {% endif %}
+                        <div class="text-muted col-md-4 col-xs-4">
+                          {{ _('Qty') }} :  {{ line.quantity }}
+                        </div>
+                      </div>
                       {% endfor %}
-                    </td>
-                  </tr>
+                  </div>
+                </div>
+                <div class="col-md-4 text-right">
+                  {% for invoice in sale.invoices %}
+                  {% if invoice.state == "paid" %}
+                  <a href="{{ url_for('account.invoice.download_invoice', active_id=invoice.id) }}" class="text-muted download-invoice">
+                    <i class="fa fa-cloud-download"></i> {{ _('Download invoice') }}
+                  </a>
+                  <br>
+                  {% endif %}
                   {% endfor %}
-                </tbody>
-              </table>
+                </div>
+              </div>
             </div>
+            {% endfor %}
           </div>
         </div>
         <div class="col-md-12" class="pagination">
