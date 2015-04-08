@@ -6,22 +6,18 @@
 <section class="my-account">
   <div class="container">
     <div class="row">
-      <div class="col-md-10 col-md-offset-1">
+      <div class="col-md-12">
         {{ account_header(_('My Account / Edit Address'), 'address-book') }}
-      </div>
-      <div class="row">
-        <div class="row">
-          <h4 class="account-heading col-md-7 col-md-offset-1"> {{ _('Edit Address ') }}</h4>
-        </div>
-        <div class="row">
-          <div class="col-md-7 col-md-offset-1">
-            <form action="{{ url_for('party.address.edit_address', address=address) }}"
+        <div class="col-md-10">
+          <div class="row">
+            <div class="col-md-7 col-md-offset-1">
+              <form action="{{ url_for('party.address.edit_address', address=address) }}"
               method="post" id="address" autocomplete="off">
-	            {{ form.hidden_tag() }}
+              {{ form.hidden_tag() }}
               {{ render_field(form.name, class_="form-control") }}
-              
+
               {{ render_field(form.street, placeholder=_("Street address, P.O. box, company name, c/o"), class_="form-control", label_text= _('Address Line 1')) }}
-              
+
               {{ render_field(form.streetbis, placeholder=_("Apartment, suite, unit, building, floor, etc."), class_="form-control", label_text= _('Address Line 2')) }}
               <div class="row">
                 <div class="col-md-6">
@@ -55,7 +51,8 @@
                 </div>
               </div>
               <button href="" class="btn btn-warning btn-sm" type="submit">{{ _('Save Address') }}</button>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>

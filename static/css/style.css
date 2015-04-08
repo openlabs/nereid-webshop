@@ -1460,7 +1460,6 @@ border-top: 1px solid rgba(248, 248, 248, 0.2);
 }
 #specific-wishlist .wishlist-heading{
   font-size: 20px;
-  padding-top: 22px;
 }
 #dropdownMenu1{
   margin-right: 11px;
@@ -1476,9 +1475,6 @@ border-top: 1px solid rgba(248, 248, 248, 0.2);
 }
 .pull-right .dropdown{
   padding-right: 17px;
-}
-#wishlist-settings{
-  padding-top: 20px;
 }
 #rename-form .form-group{
   float: none;
