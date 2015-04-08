@@ -35,8 +35,8 @@
         <br><strong class="text-muted">Recipient E-mail: </strong> {{ line.recipient_email or 'N/A' }}
       {% endif %}
       {% if line.product.attributes %}
-        {% for key, value in line.product.attributes.iteritems() %}
-          <br/><strong class="text-muted"> {{ key }} : </strong> {{ value }}
+        {% for attr in line.product.attributes %}
+          <br/><strong class="text-muted"> {{ attr.attribute.display_name }} : </strong> {{ attr.value }}
         {% endfor %}
       {% endif %}
       <div class="row">
