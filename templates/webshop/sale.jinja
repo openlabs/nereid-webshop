@@ -51,7 +51,7 @@
                     <th>{{ _('Shipments') }}</th>
                     <th>{{ _('Unit Price') }}</th>
                     <th>{{ _('Sub Total') }}</th>
-                    <th></th>
+                    <th>{{ _('Action') }}</th>
                   </tr>
                 </thead>
               {% for line in sale.lines %}
@@ -72,23 +72,23 @@
                   </td>
                   <td>{{ line.unit_price|currencyformat(sale.currency.code) }}</td>
                   <td>{{ line.amount|currencyformat(sale.currency.code) }}</td>
-                  <td>{% if line.is_returnable_under_any_term %}<a class="btn btn-primary" href="{{ url_for('sale.line.return_line', active_id=line.id) }}">Return Item</a>{% endif %}</td>
+                  <td class="action">{% block line_actions %}{% endblock %}</td>
                 </tr>
               {% endfor %}
                 <tr>
-                  <td colspan="5">
+                  <td colspan="6">
                     <strong class="pull-right">Sub Total</strong>
                   </td>
                   <td><strong>{{ sale.untaxed_amount|currencyformat(sale.currency.code) }}</strong></td>
                 </tr>
                 <tr>
-                  <td colspan="5">
+                  <td colspan="6">
                     <strong class="pull-right">Tax Amount</strong>
                   </td>
                   <td><strong>{{ sale.tax_amount|currencyformat(sale.currency.code) }}</strong></td>
                 </tr>
                 <tr>
-                  <td colspan="5">
+                  <td colspan="6">
                     <strong class="pull-right">Total Amount</strong>
                   </td>
                   <td><strong>{{ sale.total_amount|currencyformat(sale.currency.code) }}</strong></td>

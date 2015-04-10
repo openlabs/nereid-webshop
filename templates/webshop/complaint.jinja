@@ -1,1 +1,84 @@
 {% extends 'base.jinja' %}
+
+{% block title %}Return #{{ complaint.reference }}{{ super() }}{% endblock %}
+
+{% block main %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Return #{{ complaint.reference }}</h3>
+    </div>
+  </div>
+  {% set line = complaint.origin %}
+  <div class="row margin-top-15">
+    <div class="col-md-2">
+      <img
+        src="{{ CDN }}{{ line.product.default_image.transform_command().thumbnail(200, 200, 'a') }}"
+        alt="{{ line.product.name }}"
+        title="{{ line.product.name }}"
+        class="img-responsive img-rounded"
+      />
+    </div>
+    <div class="col-md-6">
+      <h4>{{ line.product.name }}</h4>
+      {% if line.product.code %}
+        <strong>SKU:</strong>{{ line.product.code }}
+      {% endif %}
+      <br />
+      <h4>{{ line.unit_price|currencyformat(line.sale.currency.code) }}</h4>
+    </div>
+    <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4">
+          <strong>Order No.:</strong>
+        </div>
+        <div class="col-md-8">
+          <a href="{{ url_for('sale.sale.render', active_id=line.sale.id) }}" class="text-info">#{{ line.sale.reference }}</a>
+        </div>
+        <div class="col-md-4">
+          <strong>Return Date:</strong>
+        </div>
+        <div class="col-md-8">
+          {{ complaint.date|dateformat }}
+        </div>
+        <div class="col-md-4">
+          <strong>Total Refund:</strong>
+        </div>
+        <div class="col-md-8">
+          {{ line.amount|currencyformat(line.sale.currency.code) }}
+        </div>
+        <div class="col-md-4">
+          <strong>Return State:</strong>
+        </div>
+        <div class="col-md-8 text-capitalize">
+          {{ complaint.state }}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% if complaint.return_reason %}
+    <div class="row margin-top-15">
+      <div class="col-md-12">
+        <h4>Reason for Return</h4>
+      </div>
+      <div class="col-md-8 margin-top-15">
+        {{ complaint.return_reason.name }}
+        {% if complaint.return_reason.description %}
+          <br /><br />
+          {{ complaint.return_reason.description }}
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+  {% if complaint.description %}
+    <div class="row margin-top-15">
+      <div class="col-md-12">
+        <h4>Comments</h4>
+      </div>
+      <div class="col-md-8 margin-top-15">
+        {{ complaint.description }}
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
