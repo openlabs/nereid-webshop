@@ -432,9 +432,7 @@ li.my-cart:hover .cart-item{
   display: block;
 }
 /** Cart **/
-.cart-product-image img{
-  max-width: 150px;
-}
+
 .some-pad{
   margin-left: 4em;
 }
