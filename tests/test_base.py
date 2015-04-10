@@ -57,6 +57,7 @@ class BaseTestCase(NereidTestCase):
         self.Category = POOL.get('product.category')
         self.StaticFolder = POOL.get('nereid.static.folder')
         self.StaticFile = POOL.get('nereid.static.file')
+        self.SaleConfig = POOL.get('sale.configuration')
         self.ProductNodeRelationship = POOL.get(
             'product.product-product.tree_node'
         )
@@ -406,6 +407,12 @@ class BaseTestCase(NereidTestCase):
         party3, = self.Party.create([{
             'name': 'Registered User 2',
         }])
+
+        sale_config = self.SaleConfig(1)
+        sale_config.payment_authorize_on = 'manual'
+        sale_config.payment_capture_on = 'sale_process'
+        sale_config.gift_card_method = 'order'
+        sale_config.save()
 
         # Create users and assign the pricelists to them
         self.guest_user, = self.NereidUser.create([{

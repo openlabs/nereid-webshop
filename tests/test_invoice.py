@@ -65,6 +65,7 @@ class TestDownloadInvoice(BaseTestCase):
         SalePayment = POOL.get('sale.payment')
         PaymentGateway = POOL.get('payment_gateway.gateway')
         Journal = POOL.get('account.journal')
+        SaleConfig = POOL.get('sale.configuration')
 
         with Transaction().start(DB_NAME, USER, CONTEXT):
             self.setup_defaults()
@@ -95,6 +96,13 @@ class TestDownloadInvoice(BaseTestCase):
                 'subdivision':
                     self.available_countries[0].subdivisions[0].id,
             }])
+
+            sale_config = SaleConfig(1)
+            sale_config.payment_authorize_on = 'manual'
+            sale_config.payment_capture_on = 'sale_process'
+            sale_config.gift_card_method = 'order'
+            sale_config.save()
+
             sale, = self.Sale.create([{
                 'party': party2,
                 'company': self.company.id,
