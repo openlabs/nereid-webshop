@@ -9,7 +9,7 @@
       <h3>Return Item</h3>
     </div>
   </div>
-  <div class="row">
+  <div class="row margin-top-15">
     <div class="col-md-2">
       <img
         src="{{ CDN }}{{ line.product.default_image.transform_command().thumbnail(200, 200, 'a') }}"
@@ -32,7 +32,7 @@
           <strong>Order No.:</strong>
         </div>
         <div class="col-md-8">
-          {{ line.sale.reference }}
+          <a href="{{ url_for('sale.sale.render', active_id=line.sale.id) }}" class="text-info">#{{ line.sale.reference }}</a>
         </div>
         <div class="col-md-4">
           <strong>Date:</strong>

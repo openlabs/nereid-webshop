@@ -432,9 +432,7 @@ li.my-cart:hover .cart-item{
   display: block;
 }
 /** Cart **/
-.cart-product-image img{
-  max-width: 150px;
-}
+
 .some-pad{
   margin-left: 4em;
 }
@@ -1035,7 +1033,6 @@ li.checkout-step {
 }
 .cart-table  .table-responsive{
   border: 1px solid #D1D1D1;
-  margin-bottom: 30px;
 }
 .cart-table td{
   max-width: 180px;
@@ -1670,4 +1667,8 @@ border-top: 1px solid rgba(248, 248, 248, 0.2);
 }
 .account-border{
   padding: 15px;
+}
+.invoice-shipment-address{
+  padding: 0 20px;
+  border: 1px solid #dfdfdf;
 }
