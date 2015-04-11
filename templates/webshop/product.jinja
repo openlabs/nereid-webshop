@@ -105,11 +105,11 @@
       {% if product.template.get_product_variation_data %}
       <div class="row" id="product-varying-attrs"></div>
       {% else %}
-      {% if product.template.products|length > 1 %}
+      {% if product.template.products_displayed_on_eshop|length > 1 %}
       {# show if there are more variants than the one being displayed #}
       <div class="product-size row"> Select Variation : <br>
         <div class="size-buttons">
-          {% for variant in product.template.products %}
+          {% for variant in product.template.products_displayed_on_eshop %}
           <a class="btn btn-size"
             href="{{ url_for('product.product.render', uri=variant.uri) }}"
             type="radio" value="{{ variant.id }}">{{ variant.code }}</a>
