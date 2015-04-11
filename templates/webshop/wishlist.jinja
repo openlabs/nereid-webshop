@@ -6,7 +6,7 @@
     <div class="col-md-12">
       {{ account_header(_('My Account / Wishlist'), 'wishlist') }}
       <div class="col-md-10">
-        <div class="row">
+        <div class="row margin-left-0">
           <div class="col-md-10">
             <h4 class="wishlist-heading">{{ wishlist.name|title }}</h4>
           </div>
@@ -41,7 +41,7 @@
           </div>
         </div>
         {% if wishlist.products %}
-        <div class="row product-list">
+        <div class="row product-list margin-left-0">
           {% for product in wishlist.products %}
             <div class="product-image col-md-3 col-sm-4 col-xs-6 product-item">
               <form action="{{ url_for('wishlist.wishlist.wishlist_product') }}" method="post" class="pull-right remove-product-icon" style="">

@@ -50,8 +50,8 @@
   <div class="row">
 
     {% block product_image_gallery %}
-    <div class="col-md-7 col-sm-7 col-xs-12">
-      <div class="col-md-12">
+    <div class="col-md-5 col-sm-4 col-xs-12">
+      <div class="col-md-12 product-img-gallery">
         <div class="tab-content" id="pane-tab">
           {% for image in product.get_images() %}
           <div class="tab-pane {% if loop.first %}active{% endif %}" id="tab{{ loop.index }}">
@@ -64,10 +64,10 @@
           {% endfor %}
         </div>
       </div>
-      <div class="col-md-12">
+      <div class="col-md-12 related-products">
         <ul class="list-inline" id="list-tab">
           {% for image in product.get_images() %}
-          <li class="{% if loop.first %}active{% endif %}">
+          <li class="{% if loop.first %}active{% endif %} sub-products">
             <a href="#tab{{ loop.index }}" data-toggle="tab">
               <img src="{{ image.transform_command().thumbnail(120, 120, 'a') }}" />
             </a>
@@ -79,27 +79,19 @@
     {% endblock product_image_gallery %}
 
     {% block product_info %}
-    <div class="col-md-5 col-sm-5 col-xs-12">
+    <div class="col-md-4 col-sm-5 col-xs-12">
 
       {% block product_name_price %}
       <h3 class="product-heading product-name">
-        <span itemprop="name">{{ product.name }}</span>
+        <span itemprop="name" class="heading-500">{{ product.name }}</span>
       </h3>
+      {% if product.code %}
       <h4>
         <small class="product-code" itemprop="identifier" content="sku:{{ product.code }}">{{ product.code }}</small>
       </h4>
-      <div itemprop="offerDetails" itemscope itemtype="http://data-vocabulary.org/Offer">
-        <meta itemprop="priceCurrency" content="{{ request.nereid_currency.code }}" />
-        {% set sale_price = product.sale_price(1) %}
-        {% if sale_price < product.list_price %}
-        <h4 class="product-price">
-          <span class="not">{{ product.list_price|currencyformat(request.nereid_currency.code) }}</span>
-          <span itemprop="price">{{ sale_price|currencyformat(request.nereid_currency.code) }}</span>
-        </h4>
-        {% else %}
-        <h4 class="product-price" itemprop="price">{{ sale_price|currencyformat(request.nereid_currency.code) }}</h4>
-        {% endif %}
-      </div>
+      {% endif %}
+      <p itemprop="description" class="product-short-description">{{ product.get_description() }}</p>
+      
       {% endblock product_name_price %}
 
       {% if product.template.get_product_variation_data %}
@@ -123,65 +115,78 @@
       <span class="text-warning" style="display:none" id="product-not-available">
         <i class="fa fa-warning"></i> {{ _('This product is not available') }}
       </span>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <div class="buy-box">
+        <div itemprop="offerDetails" itemscope itemtype="http://data-vocabulary.org/Offer">
+          <meta itemprop="priceCurrency" content="{{ request.nereid_currency.code }}" />
+          {% set sale_price = product.sale_price(1) %}
+          {% if sale_price < product.list_price %}
+          <h4 class="product-price heading-500">
+            <span class="not">{{ product.list_price|currencyformat(request.nereid_currency.code) }}</span>
+            <span itemprop="price">{{ sale_price|currencyformat(request.nereid_currency.code) }}</span>
+          </h4>
+          {% else %}
+          <h4 class="product-price product-list-price" itemprop="price">{{ sale_price|currencyformat(request.nereid_currency.code) }}</h4>
+          {% endif %}
+        </div>
+        {% block buy_buttons %}
+        <div class="row">
+          {% if product.salable %}
+          <div class="col-md-12 col-sm-12 col-xs-12 buy-now">
+            <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now" class="add-to-cart" autocomplete="off" data-ga-event-label="Add To Cart" data-ga-product-name="{{ product.name }}" data-ga-product-category="{{ product.category and product.category.name or None }}" data-ga-product-price="{{ product.sale_price()|currencyformat(request.nereid_currency.code) }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+              <input type="hidden" name="quantity" value="1"/>
+              <input type="hidden" name="size" id="size-id"/>
+              <input type="hidden" name="product" value="{{ product.id }}"/>
+              <input type="hidden" name="action" value="add"/>
+              <button class="btn btn-primary btn-buynow btn-block btn-lg" type="submit" quantity="1" id="buy-now-btn">Buy Now</button>
+            </form>
+          </div>
+          {% else %}
+          <div style="padding-top:15px;">
+            <span class="text-danger" id="product-not-for-sale"><i class="fa fa-warning"></i>This product is not for sale</span>
+          </div>
+          {% endif %}
+        </div>
+        <hr/>
+        {% endblock buy_buttons %}
 
-      {% block buy_buttons %}
-      <div class="row">
-        {% if product.salable %}
-        <div class="col-md-12 col-sm-12 col-xs-12 buy-now">
-          <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now" class="add-to-cart" autocomplete="off" data-ga-event-label="Add To Cart" data-ga-product-name="{{ product.name }}" data-ga-product-category="{{ product.category and product.category.name or None }}" data-ga-product-price="{{ product.sale_price()|currencyformat(request.nereid_currency.code) }}">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-            <input type="hidden" name="quantity" value="1"/>
-            <input type="hidden" name="size" id="size-id"/>
-            <input type="hidden" name="product" value="{{ product.id }}"/>
-            <input type="hidden" name="action" value="add"/>
-            <button class="btn btn-buynow btn-block btn-lg" type="submit" quantity="1" id="buy-now-btn">Buy Now</button>
-          </form>
+        {% block add_to_wishlist %}
+        {% if current_user.is_authenticated() %}
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12 center" id="add-to-wishlist">
+            <form method="post" action="{{ url_for('wishlist.wishlist.wishlist_product') }}" 
+            autocomplete="off" style="display:inline-block">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+              <input type="hidden" name="action" value="add"/>
+              <input type="hidden" name="product" value="{{ product.id }}" />
+              <div class="btn-group btn-block ">
+                <button type="submit" class="btn btn-link wishlist_button_nopop">Add To Wishlist</button>
+
+                {% if current_user.wishlists|length > 0 %}
+                <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" id="wishlist-dropdown">
+                  <i class="fa fa-angle-down"></i>
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                {# Drop down for add to wishlist #}
+                <ul class="dropdown-menu" role="menu" aria-labelledby="wishlist-dropdown">
+                  {% for wishlist in current_user.wishlists %}
+                  <li name="wishlist" value="{{ wishlist.id }}" class="center">{{ wishlist.name|title }}</li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
+              </div>
+            </form>
+          </div>
         </div>
-        {% else %}
-        <div style="padding-top:15px;">
-          <span class="text-danger" id="product-not-for-sale"><i class="fa fa-warning"></i>This product is not for sale</span>
-        </div>
+        <hr/>
         {% endif %}
+        {% endblock add_to_wishlist %}
       </div>
-      <hr/>
-      {% endblock buy_buttons %}
-
-
-      {% block add_to_wishlist %}
-      {% if current_user.is_authenticated() %}
-      <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12 center" id="add-to-wishlist">
-          <form method="post" action="{{ url_for('wishlist.wishlist.wishlist_product') }}" 
-              autocomplete="off" style="display:inline-block">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-            <input type="hidden" name="action" value="add"/>
-            <input type="hidden" name="product" value="{{ product.id }}" />
-            <div class="btn-group btn-block ">
-              <button type="submit" class="btn btn-link">Add To Wishlist</button>
-
-              {% if current_user.wishlists|length > 0 %}
-              <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" id="wishlist-dropdown">
-                <i class="fa fa-angle-down"></i>
-                <span class="sr-only">Toggle Dropdown</span>
-              </button>
-              {# Drop down for add to wishlist #}
-              <ul class="dropdown-menu" role="menu" aria-labelledby="wishlist-dropdown">
-              {% for wishlist in current_user.wishlists %}
-                <li name="wishlist" value="{{ wishlist.id }}" class="center">{{ wishlist.name|title }}</li>
-              {% endfor %}
-              </ul>
-              {% endif %}
-            </div>
-          </form>
-        </div>
-      </div>
-      <hr/>
-      {% endif %}
-      {% endblock add_to_wishlist %}
-
       {% block social_sharing %}
       <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12 margin-top-15">
           <iframe src="//www.facebook.com/plugins/like.php?href={{ request.url }}&amp;width=100&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21" scrolling="no" frameborder="0" class="social-share-size fb-share" allowTransparency="true"></iframe>
 
           <iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" src="https://platform.twitter.com/widgets/tweet_button.1409790579.html#_=1410386437422&amp;count=horizontal&amp;id=twitter-widget-0&amp;lang=en&amp;original_referer={{ request.url }}&amp;size=m&amp;text={{ product.name }}&amp;url={{ request.url }}&amp;via=lienielsen" class="twitter-share-button twitter-tweet-button twitter-share-button twitter-count-horizontal social-share-size" title="Twitter Tweet Button" data-twttr-rendered="true"></iframe>
@@ -199,7 +204,6 @@
   {% endblock product_top %}
 
   <hr/>
-
 
   {% block product_bottom %}
 
