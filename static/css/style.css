@@ -652,6 +652,12 @@ li.google-plus a:hover, li.google a:active{
   .modal-dialog{
     width: 100%;
   }
+  .text-center-xs{
+    text-align: center;
+  }
+  .no-pad-xs{
+    padding: 0;
+  }
 }
 
 
@@ -1730,4 +1736,47 @@ h3.product-name{
 }
 .margin-left-0{
   margin-left: 0;
+}
+.shipping-method label {
+    display: block;
+    padding: 10px 15px;
+    border: 1px solid #fff;
+    color: #404040;
+    line-height: 160%;
+    border-radius: 5px;
+    cursor: pointer
+}
+
+.shipping-method label:hover, .shipping-method label.current {
+    border: 1px solid #f2c68b
+}
+
+.shipping-method label:hover {
+    background: #fef3df
+}
+
+.shipping-method label.current {
+    background: #ffe4c0
+}
+
+.shipping-method label .info .delivery-date {
+    display: block;
+    font-weight: bold
+}
+
+.shipping-method label span.rate {
+    font-weight: normal
+}
+
+.shipping-method label .button {
+    display: block;
+    float: left;
+    margin-right: 15px;
+    padding-top: 4px;
+    height: 50px
+}
+.checkout-step-number.done {
+  background-color: #f0ad4e;
+}.no-pad{
+  padding: 0;
 }
