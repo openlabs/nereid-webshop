@@ -1,0 +1,85 @@
+{% extends 'checkout/base.jinja' %}
+
+{% set checkout_step = 2 %}
+{% set checkout_step_name = _('Delivery Options') %}
+
+{% block main %}
+<section class="checkout-container">
+  <div class="container">
+    <!-- Shipping Method -->
+    <div class="row">
+      <div class="delivery-address">
+        <div class="col-md-6 col-sm-7 col-xs-12">
+          <div class="clearfix col-md-12 margin-bottom-25">
+            <form method="post">
+              <h4><span>{{ _('Choose your Shipping Method') }}</span></h4>              
+              {% if delivery_rates %}
+                <div id="methods" data-field="shipping_method">
+                  <div class="shipment">
+                    {% for method_name, rate, currency, metadata, write_vals in delivery_rates %}
+                    <p class="shipping-method">
+                      <label class="{% if loop.first %}current{% endif %}">
+                        <span class="button">
+                          <input 
+                            type="radio" name="carrier_json" 
+                            value='{{ write_vals|tojson|safe }}'
+                            {{ 'checked' if loop.first else '' }}
+                            />
+                        </span>
+                        <span class="info">
+                          <span class="delivery-date">
+                            {{ method_name }}
+                          </span>
+                          <span class="rate">
+                            {{ rate|currencyformat(currency.code) }}
+                            {% if metadata.get('duration') %}
+                            {{ metadata['duration'] }}
+                            {% endif %}
+                          </span>
+                        </span>
+                      </label>            
+                    </p>
+                    {% endfor %}
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-warning btn-lg btn-block" id="payment-btn">
+                  Continue to Payment <i class="fa fa-angle-double-right"></i>
+                </button>
+                <br>
+              {% else %}
+                <div class="alert alert-warning">
+                  No shipping method found for this shipment Address,
+                  <a href="{{ url_for('nereid.checkout.shipping_address') }}">click here</a> to change.
+                </div>
+              {% endif %}
+              <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+            </form>
+          </div>
+      </div>
+      <div class="col-md-6 col-sm-5 col-xs-12">
+        <!-- Cart Summary -->
+        {{ cart_summary() }}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main %}
+
+{% block scripts %}
+  {{ super() }}
+  <script>
+    $(document).ready(function() {
+      $("input[name='carrier_json']").change(function() {
+        $('label.current').removeClass('current');
+        if ($(this).is(':checked')) {
+          $(this).parents('label').addClass('current');
+        }
+      });
+    });
+  </script>
+{% endblock %}
+
+{% block ga_page_view %}
+  {{ google_analytics_add_product() }}
+  ga('ec:setAction', 'checkout', {'step': 3});
+{% endblock ga_page_view %}
