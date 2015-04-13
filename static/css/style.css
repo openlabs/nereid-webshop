@@ -652,6 +652,12 @@ li.google-plus a:hover, li.google a:active{
   .modal-dialog{
     width: 100%;
   }
+  .text-center-xs{
+    text-align: center;
+  }
+  .no-pad-xs{
+    padding: 0;
+  }
 }
 
 
@@ -1730,4 +1736,7 @@ h3.product-name{
 }
 .margin-left-0{
   margin-left: 0;
+}
+.no-pad{
+  padding: 0;
 }
