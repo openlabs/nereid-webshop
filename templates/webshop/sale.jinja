@@ -7,7 +7,7 @@
 <section class="my-account">
   <div class="container">
     <div class="col-md-12">
-
+    {% block sale_confirmation %}
       {% if confirmation %}
         <div class="alert alert-success order-confirmation">
           <i class="fa fa-check-circle"></i>
@@ -15,6 +15,7 @@
           <h4>Your Order has been placed successfully.</h4>
         </div>
       {% endif %}
+    {% endblock sale_confirmation %}
 
       {% if not current_user.is_anonymous() %}
         {{ account_header(_('My Account / Order #') + sale.reference, 'orders') }}
@@ -51,14 +52,17 @@
                   <table class="table table-bordered">
                     <thead>
                       <tr>
+                      {% block sale_lines_header %}
                         <th>#</th>
                         <th>{{ _('Description') }}</th>
                         <th>{{ _('Ordered Quantity') }}</th>
                         <th>{{ _('Unit Price') }}</th>
                         <th>{{ _('Sub Total') }}</th>
                         <th>{{ _('Action') }}</th>
+                      {% endblock sale_lines_header %}
                       </tr>
                     </thead>
+                    {% block sale_lines_content %}
                     {% for line in sale.lines %}
                     <tr>
                       <td>{{ loop.index }}</td>
@@ -75,6 +79,7 @@
                       <td class="action">{% block line_actions %}{% endblock %}</td>
                     </tr>
                     {% endfor %}
+                    {% endblock sale_lines_content %}
                     <tr>
                       <td colspan="5">
                         <strong class="pull-right">Sub Total</strong>
@@ -98,6 +103,7 @@
               </div>
             </div>
           </div>
+          {% block add_note %}
           <div class="row margin-top-30">
             <div class="col-md-12">
             {% if not sale.comment and sale.state == 'confirmed' %}
@@ -113,6 +119,7 @@
             {% endif %}
             </div>
           </div>
+          {% endblock add_note %}
         </div>
       </div>
     </div>
