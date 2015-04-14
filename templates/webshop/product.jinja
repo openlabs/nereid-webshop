@@ -53,15 +53,21 @@
     <div class="col-md-5 col-sm-4 col-xs-12">
       <div class="col-md-12 product-img-gallery">
         <div class="tab-content" id="pane-tab">
+          {% if product.get_images() %}
           {% for image in product.get_images() %}
           <div class="tab-pane {% if loop.first %}active{% endif %}" id="tab{{ loop.index }}">
             <div class="zoom-container">
               <a id="zoom-target" href="{{ image.url }}" data-lightbox="{{ product.id }}" >
-                <img class="zoom-image" src="{{ image.transform_command().thumbnail(500, 500, 'a') }}" />
+                <img class="zoom-image" src="{{ image.transform_command().thumbnail(500, 500, 'a') }}"/>
               </a>
             </div>
           </div>
           {% endfor %}
+          {% else %}
+          <img class="img img-responsive margin-auto"
+              src="{{ CDN }}{{ product.default_image.transform_command().thumbnail(400, 400, 'a') }}"
+              alt="{{ product.name }}" title="{{ product.name }}"/>
+          {% endif %}
         </div>
       </div>
       <div class="col-md-12 related-products">
