@@ -7,6 +7,7 @@
       {{ account_header(_('My Account'), 'profile') }}
       <!-- Account Information -->
       <div class="col-md-10">
+        {% block profile_form %}
         <form class="form-horizontal" role="form" autocomplete="off">
           <div class="form-group">
             <label for="" class="col-sm-2 control-label">{{ _('Your Name') }}</label>
@@ -70,6 +71,7 @@
             </div>
           </div>
         </form>
+        {% endblock profile_form %}
       </div>
     </div>
   </div>
