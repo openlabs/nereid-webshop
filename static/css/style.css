@@ -1782,3 +1782,6 @@ h3.product-name{
 #product-varying-attrs{
   padding-top: 15px;
 }
+.margin-auto{
+  margin: auto;
+}
