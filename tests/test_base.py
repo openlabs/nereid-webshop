@@ -473,7 +473,7 @@ class BaseTestCase(NereidTestCase):
             'currency': self.company.currency.id,
             'invoice_method': 'order',
             'shipment_method': 'order',
-            'source': 'manual',
+            'source': 'webshop',
             'create_users': [('add', [USER])]
         }])
 
