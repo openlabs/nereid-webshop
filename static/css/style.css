@@ -878,6 +878,8 @@ h3.product-price{
 div.product-size{
   font-size: 12px;
   margin-top: 30px;
+  margin-bottom: 10px;
+  text-align: center;
 }
 .error .size-buttons{
   display: inline-block;
@@ -1686,10 +1688,6 @@ border-top: 1px solid rgba(248, 248, 248, 0.2);
   padding-bottom: 5px;
   border: 1px solid #dbdbdb; 
 }
-.product-img-gallery img{
-  max-height: 458px;
-  max-width: 458px;
-}
 .heading-500{
   font-weight: 500;
 }
@@ -1738,45 +1736,49 @@ h3.product-name{
   margin-left: 0;
 }
 .shipping-method label {
-    display: block;
-    padding: 10px 15px;
-    border: 1px solid #fff;
-    color: #404040;
-    line-height: 160%;
-    border-radius: 5px;
-    cursor: pointer
+  display: block;
+  padding: 10px 15px;
+  border: 1px solid #fff;
+  color: #404040;
+  line-height: 160%;
+  border-radius: 5px;
+  cursor: pointer
 }
 
 .shipping-method label:hover, .shipping-method label.current {
-    border: 1px solid #f2c68b
+  border: 1px solid #f2c68b
 }
 
 .shipping-method label:hover {
-    background: #fef3df
+  background: #fef3df
 }
 
 .shipping-method label.current {
-    background: #ffe4c0
+  background: #ffe4c0
 }
 
 .shipping-method label .info .delivery-date {
-    display: block;
-    font-weight: bold
+  display: block;
+  font-weight: bold
 }
 
 .shipping-method label span.rate {
-    font-weight: normal
+  font-weight: normal
 }
 
 .shipping-method label .button {
-    display: block;
-    float: left;
-    margin-right: 15px;
-    padding-top: 4px;
-    height: 50px
+  display: block;
+  float: left;
+  margin-right: 15px;
+  padding-top: 4px;
+  height: 50px
 }
 .checkout-step-number.done {
   background-color: #f0ad4e;
-}.no-pad{
+}
+.no-pad{
   padding: 0;
+}
+#product-varying-attrs{
+  padding-top: 15px;
 }

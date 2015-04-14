@@ -90,28 +90,15 @@
         <small class="product-code" itemprop="identifier" content="sku:{{ product.code }}">{{ product.code }}</small>
       </h4>
       {% endif %}
-      <p itemprop="description" class="product-short-description">{{ product.get_description() }}</p>
-      
       {% endblock product_name_price %}
-
-      {% if product.template.get_product_variation_data %}
-      <div class="row" id="product-varying-attrs"></div>
-      {% else %}
-      {% if product.template.products_displayed_on_eshop|length > 1 %}
-      {# show if there are more variants than the one being displayed #}
-      <div class="product-size row"> Select Variation : <br>
-        <div class="size-buttons">
-          {% for variant in product.template.products_displayed_on_eshop %}
-          <a class="btn btn-size"
-            href="{{ url_for('product.product.render', uri=variant.uri) }}"
-            type="radio" value="{{ variant.id }}">{{ variant.code }}</a>
-          {% endfor %}
+      {% block product_description %}
+      <!--Product Description -->
+      <div class="row">
+        <div class="col-md-12 product-desc">
+          <p itemprop="description">{{ product.get_description() }}</p>
         </div>
-        <span class="error-text text-danger"> Please select an option</span>
       </div>
-      {% endif %}
-      {% endif %}
-
+      {% endblock product_description %}
       <span class="text-warning" style="display:none" id="product-not-available">
         <i class="fa fa-warning"></i> {{ _('This product is not available') }}
       </span>
@@ -128,6 +115,23 @@
           </h4>
           {% else %}
           <h4 class="product-price product-list-price" itemprop="price">{{ sale_price|currencyformat(request.nereid_currency.code) }}</h4>
+          {% endif %}
+          {% if product.template.get_product_variation_data %}
+            <div class="row" id="product-varying-attrs"></div>
+          {% else %}
+            {% if product.template.products_displayed_on_eshop|length > 1 %}
+            {# show if there are more variants than the one being displayed #}
+            <div class="product-size row"> Select Variation : <br>
+              <div class="size-buttons">
+                {% for variant in product.template.products_displayed_on_eshop %}
+                <a class="btn btn-size"
+                  href="{{ url_for('product.product.render', uri=variant.uri) }}"
+                  type="radio" value="{{ variant.id }}">{{ variant.code }}</a>
+                {% endfor %}
+              </div>
+              <span class="error-text text-danger"> Please select an option</span>
+            </div>
+            {% endif %}
           {% endif %}
         </div>
         {% block buy_buttons %}
@@ -206,17 +210,6 @@
   <hr/>
 
   {% block product_bottom %}
-
-  {% block product_description %}
-  <!--Product Description -->
-  <div class="row">
-    <div class="col-md-12 product-desc">
-      <h4 class="main-heading">Product Description</h4>
-      <p itemprop="description">{{ product.get_description() }}</p>
-    </div>
-  </div>
-  <hr>
-  {% endblock product_description %}
 
   {% block related_products %}
   <!-- Related Products -->
