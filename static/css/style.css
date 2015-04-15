@@ -1702,7 +1702,7 @@ border-top: 1px solid rgba(248, 248, 248, 0.2);
   font-size: 13px;
   line-height: 21px;
 }
-h3.product-name{
+h3.product-item-name{
   font-size: 20px;
   padding-bottom: 16px;
 }
@@ -1722,7 +1722,7 @@ h3.product-name{
   content: "\f08a";
   font: 400 15px/31px "FontAwesome";
   color: #fff;
-  background: #181D15;
+  background: #d9534f;
   width: 30px;
   text-align: center;
   display: inline-block;
