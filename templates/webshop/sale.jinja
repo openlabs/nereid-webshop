@@ -19,8 +19,12 @@
 
       {% if not current_user.is_anonymous() %}
         {{ account_header(_('My Account / Order #') + sale.reference, 'orders') }}
+        <div class="col-md-10">
+      {% else %}
+        <h4 class="text-center">{{ _('Order #') + sale.reference }}</h4>
+        <br>
+        <div class="col-md-12">
       {% endif %}
-      <div class="col-md-10">
         <!--My Orders-->
         <div class="cart-table">
           <div class="row-fluid">
