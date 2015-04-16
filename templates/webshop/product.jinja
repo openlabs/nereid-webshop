@@ -287,7 +287,7 @@
         <div class="form-group"> Select <%= attr.display_name %>: <br/>
           <select class="form-control select-sort attribute input-lg" data-attr-id="<%= attr.attribute_id %>">
             <% _.each(attr.options, function(option, index) { %>
-            <option value="<%= _.escape(option[0]) %>" <% if (option[0] == currentVariantAttrs[attr.id]) { %> selected <% } %> ><%= _.escape(option[1]) %></option>
+            <option value="<%= _.escape(option[0]) %>" <% if (option[0] == currentVariantAttrs[attr.attribute_id]) { %> selected <% } %> ><%= _.escape(option[1]) %></option>
             <% }); %>
           </select>
         </div>
