@@ -647,11 +647,6 @@ li.google-plus a:hover, li.google a:active{
  padding: 10px 0 10px 20px !important;
 
 }
-.filter-by{
-  margin-bottom: -34px;
-  float: right;
-  margin-right: 20px;
-}
 @media(max-width: 768px){
   .modal-dialog{
     width: 100%;
@@ -661,11 +656,6 @@ li.google-plus a:hover, li.google a:active{
   }
   .no-pad-xs{
     padding: 0;
-  }
-  .filter-by{
-    margin-bottom: 0;
-    float: none;
-    margin-right: 0;
   }
 }
 
@@ -1793,7 +1783,4 @@ h3.product-item-name{
 }
 .margin-auto{
   margin: auto;
-}
-.my-account-order > h4{
-  margin-top: 0;
 }
