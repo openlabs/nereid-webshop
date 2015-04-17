@@ -81,7 +81,7 @@
                 </div>
               </div>
               <div class="panel-body">
-                <div class="col-md-8">
+                <div class="col-md-8 col-xs-8">
                   <div class="orderd-products">
                       {% for line in sale.lines %}
                       <div class="row margin-bottom-10">
@@ -90,7 +90,7 @@
                           <a href="{{ url_for('product.product.render', uri=line.product.uri) }}" class="product-name">{{ line.description }}</a>
                         </div>
                       {% else %}
-                        <div class="col-md-6">
+                        <div class="col-md-7 col-xs-8">
                           <a class="product-name">{{ line.description }}</a>
                         </div>
                       {% endif %}
@@ -101,7 +101,7 @@
                       {% endfor %}
                   </div>
                 </div>
-                <div class="col-md-4 text-right">
+                <div class="col-md-4 col-xs-4 text-right">
                   {% for invoice in sale.invoices %}
                   {% if invoice.state == "paid" %}
                   <a href="{{ url_for('account.invoice.download_invoice', active_id=invoice.id) }}" class="text-muted download-invoice">
