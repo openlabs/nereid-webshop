@@ -6,7 +6,7 @@
 <!-- My Orders Page starts here -->
 <section class="my-account">
   <div class="container">
-    <div class="filter-by">
+    <div class="filter-by hidden-sm hidden-xs">
       <div class="dropdown pull-right">
         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
           {% if request.args.get('filter_by') %}Filtered by {{ request.args.get('filter_by')|title }} orders {% else %} Filter by orders state {% endif %}
@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="col-md-12 my-account-order">
-      {{ account_header(_('My Account '), 'orders') }}
+      {{ account_header(_('My Account'), 'orders') }}
         <!--My Orders-->
         {% if sales %}
         <div class="col-md-10 no-pad-xs">
