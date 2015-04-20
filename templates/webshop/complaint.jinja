@@ -6,77 +6,93 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <h3>Return #{{ complaint.reference }}</h3>
+      <h4>Return #{{ complaint.reference }}</h4>
     </div>
   </div>
   {% set line = complaint.origin %}
   <div class="row margin-top-15">
-    <div class="col-md-2">
-      <img
-        src="{{ CDN }}{{ line.product.default_image.transform_command().thumbnail(200, 200, 'a') }}"
-        alt="{{ line.product.name }}"
-        title="{{ line.product.name }}"
-        class="img-responsive img-rounded"
-      />
-    </div>
-    <div class="col-md-6">
-      <h4>{{ line.product.name }}</h4>
-      {% if line.product.code %}
-        <strong>SKU:</strong>{{ line.product.code }}
-      {% endif %}
-      <br />
-      <h4>{{ line.unit_price|currencyformat(line.sale.currency.code) }}</h4>
+    <div class="col-md-8">
+      <table class="table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>SubTotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <img src="{{ CDN }}{{ line.product.default_image.transform_command().thumbnail(200, 200, 'a') }}"
+              alt="{{ line.product.name }}"
+              title="{{ line.product.name }}"
+              class="img-responsive img-rounded margin-auto"
+              />
+            </td>
+            <td>
+              {{ line.product.name }}
+              <br>
+              {% if line.product.code %}
+              <strong>SKU:</strong>{{ line.product.code }}
+              {% endif %}
+            </td>
+            <td>{{ line.unit_price|currencyformat(line.sale.currency.code) }}</td>
+            <td>{{ line.quantity }}</td>
+            <td>{{ line.amount|currencyformat(line.sale.currency.code) }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <div class="col-md-4">
-      <div class="row">
-        <div class="col-md-4">
-          <strong>Order No.:</strong>
-        </div>
-        <div class="col-md-8">
-          <a href="{{ url_for('sale.sale.render', active_id=line.sale.id) }}" class="text-info">#{{ line.sale.reference }}</a>
-        </div>
-        <div class="col-md-4">
-          <strong>Return Date:</strong>
-        </div>
-        <div class="col-md-8">
-          {{ complaint.date|dateformat }}
-        </div>
-        <div class="col-md-4">
-          <strong>Total Refund:</strong>
-        </div>
-        <div class="col-md-8">
-          {{ line.amount|currencyformat(line.sale.currency.code) }}
-        </div>
-        <div class="col-md-4">
-          <strong>Return State:</strong>
-        </div>
-        <div class="col-md-8 text-capitalize">
-          {{ complaint.state }}
+      <div class="order-summary">
+        <h4>{{ _('Order Summary') }}</h4>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table text-right table-borderless">
+                <tbody>
+                  <tr>
+                    <td>Order No.</td>
+                    <td><a href="{{ url_for('sale.sale.render', active_id=line.sale.id) }}" class="text-info">#{{ line.sale.reference }}</a></td>
+                  </tr>
+                  <tr>
+                    <td>Return Date</td>
+                    <td>{{ complaint.date|dateformat }}</td>
+                  </tr>
+                  <tr>
+                  <td>Total Refund</td>
+                    <td>{{ line.amount|currencyformat(line.sale.currency.code) }}</td>
+                  </tr>
+                  <tr>
+                    <td>Return State:</td>
+                    <td>{{ complaint.state }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  <hr>
   {% if complaint.return_reason %}
     <div class="row margin-top-15">
       <div class="col-md-12">
-        <h4>Reason for Return</h4>
-      </div>
-      <div class="col-md-8 margin-top-15">
-        {{ complaint.return_reason.name }}
+        <h4>Reason for Return:<small> {{ complaint.return_reason.name }}
         {% if complaint.return_reason.description %}
           <br /><br />
           {{ complaint.return_reason.description }}
-        {% endif %}
+        {% endif %}</small></h4>
       </div>
     </div>
   {% endif %}
   {% if complaint.description %}
-    <div class="row margin-top-15">
+    <div class="row margin-bottom-10">
       <div class="col-md-12">
-        <h4>Comments</h4>
-      </div>
-      <div class="col-md-8 margin-top-15">
-        {{ complaint.description }}
+        <h4>Comments: <small>{{ complaint.description }}</small></h4>
       </div>
     </div>
   {% endif %}
