@@ -150,7 +150,7 @@
               <input type="hidden" name="size" id="size-id"/>
               <input type="hidden" name="product" value="{{ product.id }}"/>
               <input type="hidden" name="action" value="add"/>
-              <button class="btn btn-primary btn-buynow btn-block btn-lg" type="submit" {% if not product.can_buy %}disabled{% endif %}
+              <button class="btn btn-primary btn-buynow btn-block btn-lg" type="submit" {% if not product.can_buy_from_eshop() %}disabled{% endif %}
               quantity="1" id="buy-now-btn">Buy Now</button>
             </form>
           </div>
