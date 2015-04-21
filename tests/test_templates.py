@@ -6,7 +6,8 @@
     :license: GPLv3, see LICENSE for more details
 '''
 import unittest
-from trytond.tests.test_tryton import USER, DB_NAME, CONTEXT
+import datetime
+from trytond.tests.test_tryton import USER, DB_NAME, CONTEXT, POOL
 from trytond.transaction import Transaction
 from test_base import BaseTestCase
 from trytond.config import config
@@ -988,3 +989,102 @@ class TestTemplates(BaseTestCase):
                 self.assertIn('product-2', rv.data)
                 self.assertIn('product 3', rv.data)
                 self.assertIn('product-3', rv.data)
+
+    def test_0090_product_inventory(self):
+        """
+        Tests the product template for cases of 'In Stock', 'Out Of Stock' and
+        'X <uom>s available'.
+        """
+        StockMove = POOL.get('stock.move')
+
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
+            self.setup_defaults()
+            del self.templates['product.jinja']
+
+            app = self.get_app()
+
+            self.create_test_products()
+            template1, = self.ProductTemplate.search([
+                ('name', '=', 'product 1')
+            ])
+            product1 = template1.products[0]
+
+            with app.test_client() as c:
+                rv = c.get('/product/product-1')
+
+                # No inventory made yet, and product is goods type
+                self.assertIn('In stock', rv.data)
+
+            # Let's create inventory
+            website, = self.NereidWebsite.search([])
+            supplier, = self.Location.search([('code', '=', 'SUP')])
+            stock1, = StockMove.create([{
+                'product': product1.id,
+                'uom': template1.sale_uom.id,
+                'quantity': 10,
+                'from_location': supplier,
+                'to_location': website.stock_location.id,
+                'company': website.company.id,
+                'unit_price': Decimal('1'),
+                'currency': website.currencies[0].id,
+                'planned_date': datetime.date.today(),
+                'effective_date': datetime.date.today(),
+                'state': 'draft',
+            }])
+            StockMove.write([stock1], {
+                'state': 'done'
+            })
+
+            product1.display_available_quantity = True
+            product1.start_displaying_available_quantity = 10
+            product1.min_warehouse_quantity = 5
+            product1.save()
+
+            # min_warehouse_quantity < quantity <= start_displaying
+            with app.test_client() as c:
+                rv = c.get('/product/product-1')
+
+                # X <uom> available
+                self.assertIn(
+                    str(product1.get_availability().get('quantity')) +
+                    ' ' + product1.default_uom.name,
+                    rv.data
+                )
+
+            product1.start_displaying_available_quantity = 3
+            product1.save()
+
+            # min_warehouse_quantity < quantity
+            with app.test_client() as c:
+                rv = c.get('/product/product-1')
+
+                # In Stock
+                self.assertIn('In stock', rv.data)
+
+            product1.min_warehouse_quantity = 11
+            product1.save()
+
+            # min_warehouse_quantity > quantity
+            with app.test_client() as c:
+                rv = c.get('/product/product-1')
+
+                # Out Of Stock
+                self.assertIn('Out of stock', rv.data)
+
+            product1.min_warehouse_quantity = 0
+            product1.save()
+
+            with app.test_client() as c:
+                rv = c.get('/product/product-1')
+
+                # Only in stock and out of stock cases
+                self.assertIn('In stock', rv.data)
+
+            product1.min_warehouse_quantity = -1
+            product1.save()
+
+            with app.test_client() as c:
+                rv = c.get('/product/product-1')
+
+                # Always in stock
+                self.assertIn('In stock', rv.data)
