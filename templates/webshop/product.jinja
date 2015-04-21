@@ -150,9 +150,18 @@
               <input type="hidden" name="size" id="size-id"/>
               <input type="hidden" name="product" value="{{ product.id }}"/>
               <input type="hidden" name="action" value="add"/>
-              <button class="btn btn-primary btn-buynow btn-block btn-lg" type="submit" quantity="1" id="buy-now-btn">Buy Now</button>
+              <button class="btn btn-primary btn-buynow btn-block btn-lg" type="submit" {% if not product.can_buy %}disabled{% endif %}
+              quantity="1" id="buy-now-btn">Buy Now</button>
             </form>
           </div>
+            {% if product.type == 'goods' %}
+              <div class="clearfix"></div>
+              <div style="padding-top:15px;" class="text-center">
+                <span class="text-info"><i class="fa fa-info"></i>
+                  {{ product.inventory_status()[1] }}
+                </span>
+              </div>
+            {% endif %}
           {% else %}
           <div style="padding-top:15px;">
             <span class="text-danger" id="product-not-for-sale"><i class="fa fa-warning"></i>This product is not for sale</span>
