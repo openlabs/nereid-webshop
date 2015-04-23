@@ -1013,6 +1013,17 @@ class TestTemplates(BaseTestCase):
                 rv = c.get('/product/product-1')
 
                 # No inventory made yet, and product is goods type
+                # But show_on_website is False
+                self.assertNotIn('In stock', rv.data)
+                self.assertNotIn('Out of stock', rv.data)
+
+            product1.show_availability_message = True
+            product1.save()
+
+            with app.test_client() as c:
+                rv = c.get('/product/product-1')
+
+                # No inventory made yet, and product is goods type
                 self.assertIn('In stock', rv.data)
 
             # Let's create inventory
