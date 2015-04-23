@@ -154,7 +154,7 @@
               quantity="1" id="buy-now-btn">Buy Now</button>
             </form>
           </div>
-            {% if product.type == 'goods' %}
+            {% if product.show_availability_message and product.type == 'goods' %}
               <div class="clearfix"></div>
               <div style="padding-top:15px;" class="text-center">
                 <span class="text-info"><i class="fa fa-info"></i>
