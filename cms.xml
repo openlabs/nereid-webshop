@@ -10,6 +10,14 @@
             <field name="target">_self</field>
         </record>
 
+        <!-- webshop root footer navigation -->
+        <record id="cms_root_footer" model="nereid.cms.menuitem">
+            <field name="title">Footer</field>
+            <field name="sequence" eval="10"/>
+            <field name="type_">view</field>
+            <field name="target">_self</field>
+        </record>
+
         <!-- Create article category: Customer Service -->
         <record id="ac_customer_service" model="nereid.cms.article.category">
             <field name="title">Customer Service</field>
