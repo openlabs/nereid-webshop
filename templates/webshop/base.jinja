@@ -244,54 +244,56 @@
     {% block main %}
     {% endblock main %}
 
-    {% set bottom_article_categories = ['customer-service', 'about-us', 'contact-us', 'press', 'help'] %}
-
     {% block footer %}
     <!--Footer Links blocks Starts-->
     <footer>
       <div class="container">
         <hr>
         <!--First Row-->
-        <div class="row">
-          <!-- Site Navigation and root links -->
-          {% for category_name in bottom_article_categories %}
-          <div class="col-md-2">
-            {% set category = get_article_category(category_name) %}
-            <h4>{{ category.title }}</h4>
-            <ul class="list-unstyled">
-              {% for article in category.articles %}
-              <li><a href="{{ url_for('nereid.cms.article.render', uri=article.uri) }}">{{ article.title }}</a></li>
-              {% endfor %}
-            </ul>
-          </div>
-          {% endfor %}
-          <!-- Social Links and Subscribe -->
-          <div class="col-md-{{ 12 - 2 * (bottom_article_categories|length) }} social-block">
-            <div class="row">
-              <h4>Social</h4>
-              <a href="" class="social-links facebook"><i></i></a>
-              <a href="" class="social-links twitter"><i></i></a>
-              <a href="" class="social-links googleplus"><i></i></a>
-              <a href="" class="social-links pinterest"><i></i></a>
-              <a href="" class="social-links youtube"><i></i></a>
-            </div>
-            <div class="row">
-              <div class="subscribe-block">
-                <h5>Sign Up for the Newsletter</h5>
-                <!--Subscribe form-->
-                <form autocomplete="off">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="you@mail.com">
-                    <span class="input-group-btn">
-                      <button class="btn btn-danger" type="button"><i class="fa fa-plus"></i></button>
-                    </span>
-                  </div>
-                </form>
+        {% if request.nereid_website.cms_root_footer %}
+          <div class="row">
+            <!-- Site Navigation and root links -->
+            {% set footer_menuitem = request.nereid_website.cms_root_footer.get_menu_item(max_depth=10) %}
+            {% for child in footer_menuitem.children %}
+              <div class="col-md-2">
+                <h4>{{ child.title }}</h4>
+                <ul class="list-unstyled">
+                  {% for sub_child in child.children recursive %}
+                  <li>
+                    <a href="{{ sub_child.link }}">{{ sub_child.title }}</a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endfor %}
+            <!-- Social Links and Subscribe -->
+            <div class="col-md-{{ 12 - 2 * (footer_menuitem.children|length) }} social-block">
+              <div class="row">
+                <h4>Social</h4>
+                <a href="" class="social-links facebook"><i></i></a>
+                <a href="" class="social-links twitter"><i></i></a>
+                <a href="" class="social-links googleplus"><i></i></a>
+                <a href="" class="social-links pinterest"><i></i></a>
+                <a href="" class="social-links youtube"><i></i></a>
+              </div>
+              <div class="row">
+                <div class="subscribe-block">
+                  <h5>Sign Up for the Newsletter</h5>
+                  <!--Subscribe form-->
+                  <form autocomplete="off">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="you@mail.com">
+                      <span class="input-group-btn">
+                        <button class="btn btn-danger" type="button"><i class="fa fa-plus"></i></button>
+                      </span>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <hr>
+          <hr>
+        {% endif %}
         <!-- Second Row -->
         <div class="row">
           <div class="col-md-8 payment-gateway">

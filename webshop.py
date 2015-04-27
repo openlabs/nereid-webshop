@@ -17,7 +17,7 @@ from trytond.pyson import Eval, Not
 __metaclass__ = PoolMeta
 __all__ = [
     'WebShop', 'BannerCategory', 'Banner', 'Article',
-    'Website', 'ArticleCategory'
+    'Website', 'ArticleCategory', 'MenuItem'
 ]
 
 #: Get the static folder. The static folder also
@@ -113,6 +113,11 @@ class Website:
 
     copyright_year_range = fields.Char('Copyright Year Range')
 
+    cms_root_footer = fields.Many2One(
+        'nereid.cms.menuitem', "CMS root Footer", ondelete='RESTRICT',
+        select=True,
+    )
+
     @classmethod
     @route('/sitemap', methods=["GET"])
     def render_sitemap(cls):
@@ -171,3 +176,21 @@ class Website:
             * Add article search.
         """
         return super(Website, cls).quick_search()
+
+    @staticmethod
+    def default_cms_root_footer():
+        """
+        Get default record from xml
+        """
+        ModelData = Pool().get('ir.model.data')
+
+        menu_item_id = ModelData.get_id("nereid_webshop", "cms_root_footer")
+        return menu_item_id
+
+
+class MenuItem:
+    __name__ = 'nereid.cms.menuitem'
+
+    @staticmethod
+    def check_xml_record(records, values):
+        return True

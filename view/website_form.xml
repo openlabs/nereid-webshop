@@ -12,6 +12,8 @@
     <xpath expr="/form/notebook/page[@id='catalog']" position="inside">
         <label name="cms_root_menu" />
         <field name="cms_root_menu" />
+        <label name="cms_root_footer" />
+        <field name="cms_root_footer" />
     </xpath> 
     <xpath
       expr="/form/notebook/page[@id='general']/field[@name='cms_static_folder']"
