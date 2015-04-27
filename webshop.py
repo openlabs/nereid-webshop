@@ -194,3 +194,11 @@ class MenuItem:
     @staticmethod
     def check_xml_record(records, values):
         return True
+
+    @classmethod
+    def allowed_models(cls):
+        res = super(MenuItem, cls).allowed_models()
+
+        if ('product.tree_node', 'Tree Node') not in res:
+            res.append(('product.tree_node', 'Tree Node'))
+        return res
