@@ -228,23 +228,23 @@
 
   {% block related_products %}
   <!-- Related Products -->
-  <div class="{% if cross_sells %} col-md-5 col-sm-5 {% else %} hidden {% endif %} related-prod">
+  <div class="{% if cross_sells %} col-md-12 col-sm-12 {% else %} hidden {% endif %} related-prod">
     {# heading for column #}
     <h4>Related Items</h4>
-
+    <div class="row related-product-row text-center">
     {% for related_product in cross_sells %}
-    <div class="row related-product-row">
+    
       <div class="col-md-3">
-        <a class="media-left" href="{{ related_product.get_absolute_url() }}" ga-product-link data-ga-product-list="Related Products" data-ga-event-label="Product Thumbnail" data-ga-product-id="{{ related_product.id }}" data-ga-product-name="{{ related_product.name }}" data-ga-product-category="{{ related_product.category and related_product.category.name or None }}">
-          <img src="{{ CDN }}{{ related_product.default_image.transform_command().thumbnail(100, 100, 'a') }}" class="img" alt="{{ related_product.name }}">
-        </a>
-      </div>
-      <div class="col-md-9">
-        <h5 class="media-heading">
+        <div class="related-product-images">
+          <a href="{{ related_product.get_absolute_url() }}" ga-product-link data-ga-product-list="Related Products" data-ga-event-label="Product Thumbnail" data-ga-product-id="{{ related_product.id }}" data-ga-product-name="{{ related_product.name }}" data-ga-product-category="{{ related_product.category and related_product.category.name or None }}">
+          <img src="{{ CDN }}{{ related_product.default_image.transform_command().thumbnail(200, 200, 'a') }}" class="img margin-auto" alt="{{ related_product.name }}">
+          </a>
+        </div>
+        <h4>
           <a href="{{ related_product.get_absolute_url() }}" ga-product-link data-ga-product-list="Related Products" data-ga-event-label="Product Name" data-ga-product-id="{{ related_product.id }}" data-ga-product-name="{{ related_product.name }}" data-ga-product-category="{{ related_product.category and related_product.category.name or None }}">
             {{ related_product.name }}
           </a>
-        </h5>
+        </h4>
         <span class="text-muted related-cost">
           <strong>{{ related_product.sale_price(1)|currencyformat(request.nereid_currency.code) }}</strong>
         </span>
@@ -252,16 +252,16 @@
           <span class="col-md-12">
           {% if related_product.salable %}
             {% if related_product.is_gift_card %}
-                <a class="btn btn-related-item-add-cart" href="{{ related_product.get_absolute_url() }}">Add to Cart</a>
+              <a class="btn btn-related-item-add-cart" href="{{ related_product.get_absolute_url() }}">Add to Cart</a>
             {% else %}
-                <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now" autocomplete="off" class="form-related-inline add-to-cart" data-ga-event-label="Add To Cart Related Product" data-ga-product-name="{{ related_product.name }}" data-ga-product-category="{{ related_product.category and related_product.category.name or None }}" data-ga-product-price="{{ related_product.sale_price()|currencyformat(request.nereid_currency.code) }}">
-                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-                  <input type="hidden" name="quantity" value="1"/>
-                  <input type="hidden" name="size" id="size-id"/>
-                  <input type="hidden" name="product" value="{{ related_product.id }}"/>
-                  <input type="hidden" name="action" value="add"/>
-                  <button class="btn btn-related-item-add-cart" type="submit" quantity="1" id="buy-now-btn">Add to Cart</button>
-                </form>
+              <form action="{{ url_for("nereid.cart.add_to_cart") }}" method="post" id="product-buy-now" autocomplete="off" class="form-related-inline related-products add-to-cart" data-ga-event-label="Add To Cart Related Product" data-ga-product-name="{{ related_product.name }}" data-ga-product-category="{{ related_product.category and related_product.category.name or None }}" data-ga-product-price="{{ related_product.sale_price()|currencyformat(request.nereid_currency.code) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                <input type="hidden" name="quantity" value="1"/>
+                <input type="hidden" name="size" id="size-id"/>
+                <input type="hidden" name="product" value="{{ related_product.id }}"/>
+                <input type="hidden" name="action" value="add"/>
+                <button class="btn btn-related-item-add-cart" type="submit" quantity="1" id="buy-now-btn">Add to Cart</button>
+              </form>
             {% endif %}
           {% else %}
             <span class="text-danger" id="product-not-for-sale"><i class="fa fa-warning"></i>This product is not for sale</span>
@@ -269,9 +269,8 @@
           </span>
         </div>
       </div>
-    </div>
-    <hr/>
     {% endfor %}
+    </div>
   </div>
   {% endblock related_products %}
 
