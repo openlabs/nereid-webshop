@@ -1753,7 +1753,7 @@ h3.product-item-name{
   height: 50px
 }
 .checkout-step-number.done {
-  background-color: #f0ad4e;
+  background-color: #06A1DA;
 }
 .no-pad{
   padding: 0;
@@ -1778,4 +1778,10 @@ h3.product-item-name{
 }
 .order-payment-panel .panel-heading{
   padding: 10px 0px;
+}
+.checkout-step a:hover{
+  color: #06A1DA;
+}
+.checkout-step-number.done:hover > a{
+  color: #fff;
 }

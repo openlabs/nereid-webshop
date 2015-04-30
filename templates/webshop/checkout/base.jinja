@@ -41,7 +41,7 @@
             <li class="checkout-step">
               <div class="checkout-step-number {% if checkout_step >= 1 %}done{% endif %}">
                 <a href="{{ url_for('nereid.checkout.sign_in') }}">
-                  <span>1</span>
+                  <span><i class="fa fa-shopping-cart"></i></span>
                 </a>
               </div>
               <span class="checkout-step-name">{{ _('Sign In') }}</span>
@@ -50,7 +50,7 @@
             <li class="checkout-step">
               <div class="checkout-step-number {% if checkout_step >= 2 %}done{% endif %}">
                 <a href="{{ url_for('nereid.checkout.shipping_address') }}">
-                  <span>2</span>
+                  <span><i class="fa fa-truck"></i></span>
                 </a>
               </div>
               <span class="checkout-step-name">{{ _('Delivery') }}</span>
@@ -59,7 +59,7 @@
             <li class="checkout-step">
               <div class="checkout-step-number {% if checkout_step >= 3 %}done{% endif %}">
                 <a href="{{ url_for('nereid.checkout.payment_method') }}">
-                  <span>3</span>
+                  <span><i class="fa fa-credit-card"></i></span>
                 </a>
               </div>
               <span class="checkout-step-name">{{ _('Payment') }}</span>
