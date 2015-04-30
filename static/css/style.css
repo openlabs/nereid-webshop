@@ -1769,7 +1769,19 @@ h3.product-item-name{
 }
 .news-letter-section .input-group-btn .btn {
   background-color: #3397DA;
-}.order-detail-description .panel-default > .panel-heading{
+}
+.related-product-images{
+  height: 200px;
+  position: relative;
+  line-height: 200px;
+}
+.related-product-images img{
+  vertical-align: middle;
+}
+.btn-related-item-add-cart{
+  margin: 10px 0 20px 0;
+}
+.order-detail-description .panel-default > .panel-heading{
   background: transparent;
 }
 .order-payment-panel{
