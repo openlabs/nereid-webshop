@@ -751,45 +751,29 @@ a.social-links{
 }
 a.social-links i {
   display: block;
-  width: 42px;
-  height: 42px;
-  border: 1px solid  #B4B4B4;
-  border-radius: 3px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
   margin: 0 auto 20px auto;
-  background:#373435 url(../images/social.png) no-repeat 0 0;
   -webkit-transition: all ease 0.3s;
   -moz-transition: all ease 0.3s;
   transition: all ease 0.3s;
+  background-color: #2e2f33;
+  line-height: 38px;
+  font-size: 20px;
+  color: #fff;
 }
 a.social-links.facebook i {
-  background-position: 0 0;
-}
-a.social-links.facebook i:hover{
   background-color: #3B5998;
 }
-a.social-links.twitter i:hover{
+a.social-links.twitter i {
   background-color: #4099FF;
 }
-a.social-links.twitter i {
-  background-position: 0 -42px;
-}
 a.social-links.googleplus i {
-  background-position: 0 -84px;
-}
-a.social-links.googleplus i:hover {
-  background-color: #FF5C00;
+  background-color: #dd4b39;
 }
 a.social-links.pinterest i {
-  background-position: 0 -126px;
-}
-a.social-links.pinterest i:hover {
   background-color: #C92228;
-}
-a.social-links.youtube i{
-  background-position: 0 -164px;
-}
-a.social-links.youtube i:hover{
-  background-color: #da2720;
 }
 .payment-gateway img{
   max-width: 50px;
@@ -1780,7 +1764,12 @@ h3.product-item-name{
 .margin-auto{
   margin: auto;
 }
-.order-detail-description .panel-default > .panel-heading{
+.news-letter-section{
+  padding: 15px 0;
+}
+.news-letter-section .input-group-btn .btn {
+  background-color: #3397DA;
+}.order-detail-description .panel-default > .panel-heading{
   background: transparent;
 }
 .order-payment-panel{
