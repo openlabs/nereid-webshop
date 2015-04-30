@@ -985,10 +985,6 @@ li.checkout-step {
   background: #cfcfcf;
   z-index: -2;
 }
-
-.cart-table img{
-  max-width: 60px;
-}
 .cart-table .product-name{
   font-weight: 600;
   font-size: 16px;
@@ -1783,4 +1779,14 @@ h3.product-item-name{
 }
 .margin-auto{
   margin: auto;
+}
+.order-detail-description .panel-default > .panel-heading{
+  background: transparent;
+}
+.order-payment-panel{
+  min-height: 176px;
+  padding: 0 20px;
+}
+.order-payment-panel .panel-heading{
+  padding: 10px 0px;
 }
