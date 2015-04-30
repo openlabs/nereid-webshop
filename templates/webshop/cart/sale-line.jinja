@@ -75,7 +75,7 @@
           <div class="col-md-4">
             <div class="form-group">
               {% if not line.unit.digits %}
-                <select class="form-control qty" {% if line.product.is_gift_card %}disabled{% endif %}>
+                <select class="form-control qty" name="quantity" {% if line.product.is_gift_card %}disabled{% endif %}>
                 {% for q in range(1, 100) %}
                   <option {% if line.quantity == q %}selected{% endif %}>{{ q }}</option>
                 {% endfor %}
