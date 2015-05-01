@@ -7,6 +7,7 @@
 '''
 import unittest
 import datetime
+import trytond
 from trytond.tests.test_tryton import USER, DB_NAME, CONTEXT, POOL
 from trytond.transaction import Transaction
 from test_base import BaseTestCase
@@ -21,6 +22,14 @@ class TestTemplates(BaseTestCase):
     """
     Test case for templates in nereid-webshop.
     """
+
+    def setUp(self):
+        """
+        setUp method
+        """
+        trytond.tests.test_tryton.install_module('nereid_catalog_variants')
+
+        super(TestTemplates, self).setUp()
 
     def cart(self, to_login):
         """
@@ -1008,6 +1017,11 @@ class TestTemplates(BaseTestCase):
                 ('name', '=', 'product 1')
             ])
             product1 = template1.products[0]
+
+            with app.test_request_context('/'):
+                # Check serialize method
+                res = product1.serialize(purpose='variant_selection')
+                self.assertIn('inventory_status', res)
 
             with app.test_client() as c:
                 rv = c.get('/product/product-1')

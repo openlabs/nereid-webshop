@@ -105,9 +105,6 @@
         </div>
       </div>
       {% endblock product_description %}
-      <span class="text-warning" style="display:none" id="product-not-available">
-        <i class="fa fa-warning"></i> {{ _('This product is not available') }}
-      </span>
     </div>
     <div class="col-md-3 col-sm-3 col-xs-12">
       <div class="buy-box">
@@ -155,10 +152,12 @@
             </form>
           </div>
             {% if product.type == 'goods' %}
+            {% set status = product.inventory_status() %}
               <div class="clearfix"></div>
-              <div style="padding-top:15px;" class="text-center">
-                <span class="text-info"><i class="fa fa-info"></i>
-                  {{ product.inventory_status()[1] }}
+              <div style="padding-top:15px;" class="text-center" id="product-inventory">
+                <span class="text-{% if status[0] == 'in_stock' %}info{% else %}danger{% endif %}">
+                  <i class="fa fa-{% if status[0] == 'in_stock' %}info{% else %}warning{% endif %}"></i>
+                  {{ status[1] }}
                 </span>
               </div>
             {% endif %}
@@ -304,6 +303,12 @@
   </div>
 </script>
 
+<script type="text/html" id='product-inventory-tpl'>
+  <span class="text-<%= statusClass %>"><i class="fa fa-<%= iconClass %>"></i>
+    <%= message %>
+  </span>
+</script>
+
 <script type="text/html" id="tab-pane-images">
   <%
     _.each(variant.image_urls, function(url_collection, index) {
@@ -381,10 +386,10 @@
       // Find a product which matches the attributes
       product = findVariantMatching(attributeSelection);
 
+      var statusClass, iconClass, message;
+
       if (product) {
         // Set this product's assets as the current product
-        $('#product-not-available').hide();
-        $('#buy-now-btn').removeAttr('disabled');
         $('.product-price').show();
         $('.product-code').text(product.code);
         $('.product-price').text(product.price);
@@ -404,13 +409,39 @@
           {'variant': product}
         ));
 
+        // Product inventory
+        if(product.inventory_status[0] == 'in_stock'){
+          statusClass = iconClass ='info';
+          // Remove the disabled attribute from the buy now button.
+          $('#buy-now-btn').removeAttr('disabled');
+        } else {
+          statusClass = 'danger';
+          iconClass = 'warning';
+          $('#buy-now-btn').attr('disabled', 'disabled');
+        }
+
+        message = product.inventory_status[1];
+
       } else {
         // Display that the product is not available
-        $('#product-not-available').show();
         $('#buy-now-btn').attr('disabled', 'disabled');
         $('.product-price').hide();
         $('.product-code').text('');
+
+        // Product inventory
+        statusClass = 'danger';
+        iconClass = 'warning';
+        message = 'Product not available';
       }
+
+      // Set the inventory attributes of the product
+      $('#product-inventory').html(_.template(
+        $('#product-inventory-tpl').html(), {
+          'statusClass': statusClass,
+          'iconClass': iconClass,
+          'message': message
+        }
+      ));
     };
 
     /* Use _ templates to render the attribute options
