@@ -29,6 +29,22 @@ class Product:
     "Product extension for Nereid"
     __name__ = "product.product"
 
+    def serialize(self, purpose=None):
+        """
+        Downstream implementation which adds a key called inventory_status
+        to the dictionary if purpose is 'variant_selection'.
+
+        :param purpose: String which decides structure of dictionary
+        """
+        res = super(Product, self).serialize(purpose=purpose)
+
+        if purpose == 'variant_selection':
+            res.update({
+                'inventory_status': self.inventory_status(),
+            })
+
+        return res
+
     def get_default_image(self, name):
         "Returns default product image"
         ModelData = Pool().get('ir.model.data')
