@@ -147,8 +147,9 @@
               <input type="hidden" name="size" id="size-id"/>
               <input type="hidden" name="product" value="{{ product.id }}"/>
               <input type="hidden" name="action" value="add"/>
-              <button class="btn btn-primary btn-buynow btn-block btn-lg" type="submit" {% if not product.can_buy_from_eshop() %}disabled{% endif %}
-              quantity="1" id="buy-now-btn">Buy Now</button>
+              <button class="btn btn-primary btn-buynow btn-block btn-lg product-buy-now product-{{ product.id }}-buy-now-btn" type="button" {% if not product.can_buy_from_eshop() %}disabled{% endif %}
+              quantity="1" id="buy-now-btn">Add to Cart</button>
+
             </form>
           </div>
             {% if product.type == 'goods' %}
@@ -262,7 +263,7 @@
                 <input type="hidden" name="size" id="size-id"/>
                 <input type="hidden" name="product" value="{{ related_product.id }}"/>
                 <input type="hidden" name="action" value="add"/>
-                <button class="btn btn-related-item-add-cart" type="submit" quantity="1" id="buy-now-btn">Add to Cart</button>
+                <button class="btn btn-related-item-add-cart product-buy-now product-{{ related_product.id }}-buy-now-btn" type="button" quantity="1" id="buy-now-btn">Add to Cart</button>
               </form>
             {% endif %}
           {% else %}
@@ -479,9 +480,7 @@
     });
   });
 </script>
-
 {% endblock scripts %}
-
 
 {% block ga_page_view %}
     // 1. Send product and impression data with pageview.
