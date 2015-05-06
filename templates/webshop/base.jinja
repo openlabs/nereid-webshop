@@ -200,11 +200,9 @@
               <form action="{{ url_for('nereid.website.quick_search') }}" id="search_form"
                 itemprop="potentialAction" itemscope itemtype="http://schema.org/SearchAction">
                 <meta itemprop="target" content="{{ url_for('nereid.website.quick_search', _external=True) }}?q={q}"/>
-                <div class="input-group" id="search-bar">
-                  <input type="text" class="form-control typeahead" data-provide="typeahead" name="q" itemprop="query-input" required>
-                  <span class="input-group-btn">
-                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-                  </span>
+                <div id="search-bar">
+                  <input type="text" class="typeahead input-text typeahead search" data-provide="typeahead" name="q" itemprop="query-input" placeholder="Search" required>
+                    <button class="button fa-search" type="submit"></button>
                 </div><!-- /input-group -->
               </form>
             </div>
