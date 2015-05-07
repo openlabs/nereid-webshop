@@ -171,7 +171,6 @@
         {% endblock buy_buttons %}
 
         {% block add_to_wishlist %}
-        {% if current_user.is_authenticated() %}
         <div class="row">
           <div class="col-md-12 col-sm-12 col-xs-12 center" id="add-to-wishlist">
             <form method="post" action="{{ url_for('wishlist.wishlist.wishlist_product') }}" 
@@ -180,8 +179,12 @@
               <input type="hidden" name="action" value="add"/>
               <input type="hidden" name="product" value="{{ product.id }}" />
               <div class="btn-group btn-block ">
+                {% if current_user.is_authenticated() %}
                 <button type="submit" class="btn btn-link wishlist_button_nopop">Add To Wishlist</button>
-
+                {% else %}
+                {# Guest user can't add any product to a wishlist, so asking user for login and redirecting back to same page #}
+                <a href="{{ url_for('nereid.website.login', next=request.path) }}" class="btn btn-link wishlist_button_nopop">Add To Wishlist</a>
+                {% endif %}
                 {% if current_user.wishlists|length > 0 %}
                 <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" id="wishlist-dropdown">
                   <i class="fa fa-angle-down"></i>
@@ -199,7 +202,7 @@
           </div>
         </div>
         <hr/>
-        {% endif %}
+        
         {% endblock add_to_wishlist %}
       </div>
       {% block social_sharing %}
