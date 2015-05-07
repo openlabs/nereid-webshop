@@ -4,7 +4,10 @@
 {{ render_breadcrumb_item(_('Home'), url_for('nereid.website.home')) }}
 {% endblock breadcrumb %}
 
+{% set latest_products = request.nereid_website.latest_products_node and request.nereid_website.latest_products_node.get_products(per_page=24) %}
+
 {% block main %}
+
 {% block banner %}
 {% set home_page_banners = get_banner_category('Home Page Banners') and get_banner_category('Home Page Banners').published_banners %}
 {% if home_page_banners %}
@@ -60,6 +63,7 @@
     {% if featured_products %}
     <div class="row" id="featured-node">
       <h3>Featured Products</h3>
+      <br>
       {% for product in featured_products %}
         <a href="{{ url_for('product.product.render', uri=product.uri) }}" ga-product-link data-ga-product-list="Featured Products" data-ga-event-label="Product Name" data-ga-product-id="{{ product.id }}" data-ga-product-name="{{ product.name }}" data-ga-product-category="{{ product.category and product.category.name or None }}">
           <div class="col-md-4 thumb">
@@ -77,6 +81,30 @@
     {% endif %}
   </div>
 </section>
+<div class="container">
+  <hr class="margin-0">
+</div>
+{% if latest_products %}
+<section class="section-spaces">
+  <div class="container">
+    <h3 class="text-center mrt-0">Most Popular Item</h3>
+    <br>
+    <div class="col-md-12 product-data">
+      <div class="client-slider">
+        {% for product in latest_products %}
+        <div class="slide">
+          <img src="{{ CDN }}{{ product.default_image.transform_command().thumbnail(150, 150, 'a') }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive img-rounded">
+        </div>
+        {% endfor %}
+      </div>
+      <div class="bx-controls-direction">
+        <a class="bx-prev" href="#"></a>
+        <a class="bx-next" href="#"></a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
 <section>
   <div class="container">
     <div class="col-md-12 shop-assurance">
@@ -137,6 +165,18 @@ $(document).ready(function() {
       $(this).parent().carousel('prev');
     },
     excludedElements: ""
+  });
+  
+  $('.client-slider').bxSlider({
+    slideWidth: 180,
+    minSlides: 2,
+    maxSlides: 5,
+    slideMargin: 10,
+    infiniteLoop: true,
+    pager:false,
+    auto:false,
+    autoControls: true,
+    moveSlides: 1,
   });
 });
 </script>
