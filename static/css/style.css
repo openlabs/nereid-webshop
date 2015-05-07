@@ -1797,3 +1797,26 @@ h3.product-item-name{
 .checkout-step-number.done:hover > a{
   color: #fff;
 }
+.bx-wrapper img{
+  margin: auto;
+}
+.bx-wrapper {
+  border: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+}
+.section-spaces{
+  padding: 60px 0;
+}
+.mrt-0{
+  margin-top: 0;
+}
+.margin-0{
+  margin: 0; 
+}
+.bx-wrapper .bx-prev{
+  left: -30px;
+}
+.bx-wrapper .bx-next{
+  right: -30px;
+}

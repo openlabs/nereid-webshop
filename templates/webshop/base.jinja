@@ -41,6 +41,7 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/font-awesome.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/jquery.pnotify.default.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/jquery.bxslider.css') }}">
     {% endblock link_tags %}
 
     {% block base_stylesheet %}
@@ -398,7 +399,7 @@
     <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/jquery.touchSwipe.min.js') }}"></script>
     <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/imagesloaded.pkgd.min.js') }}"></script>
     <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/typeahead.bundle.min.js') }}"></script>
-
+    <script src="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='js/jquery.bxslider.min.js') }}"></script>
     {% block script_tags %}
       {#
         use this block for additional script tags which can be replaced by downstream modules if they dont use
