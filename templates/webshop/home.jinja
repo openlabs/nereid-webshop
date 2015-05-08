@@ -31,9 +31,9 @@
               {% else %}
                 <a href="{% if banner.click_url %}{{ banner.click_url }} {% endif%}">
                   {% if banner.type == 'image' %}
-                  <img src="{{ banner.file.url }}" alt="{{ banner.alternative_text }}">
+                  <img src="{{ banner.file.url }}" class="margin-auto" alt="{{ banner.alternative_text }}">
                   {% elif banner.type == 'remote_image' %}
-                  <img src="{{ banner.remote_image_url }}" alt="{{ banner.alternative_text }}">
+                  <img src="{{ banner.remote_image_url }}" class="margin-auto" alt="{{ banner.alternative_text }}">
                   {% endif %}
                   <div class="carousel-caption">
                     <h4>{{ banner.name }}</h4>
@@ -93,7 +93,9 @@
       <div class="client-slider">
         {% for product in latest_products %}
         <div class="slide">
-          <img src="{{ CDN }}{{ product.default_image.transform_command().thumbnail(150, 150, 'a') }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive img-rounded">
+          <a href="{{ url_for('product.product.render', uri=product.uri) }}" ga-product-link data-ga-product-list="Most Popular Item" data-ga-event-label="Product Name" data-ga-product-id="{{ product.id }}" data-ga-product-name="{{ product.name }}" data-ga-product-category="{{ product.category and product.category.name or None }}">
+            <img src="{{ CDN }}{{ product.default_image.transform_command().thumbnail(150, 150, 'a') }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive img-rounded">
+          </a>
         </div>
         {% endfor %}
       </div>
@@ -178,6 +180,9 @@ $(document).ready(function() {
     autoControls: true,
     moveSlides: 1,
   });
+  $('.carousel').carousel({
+    interval: 5000
+  })
 });
 </script>
 {% endblock scripts %}
