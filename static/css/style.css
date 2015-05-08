@@ -344,18 +344,8 @@ a,.item a{
   width: auto;
   max-height: 80px;
 }
-.top-search .btn{
-  min-height: 35px;
-}
-.top-search input{
-  min-height: 35px;
-  border-radius: 2px;
-  -webkit-box-shadow: 0 1px 5px #bdc3c7 inset;
-  -moz-box-shadow: 0 1px 5px #bdc3c7 inset;
-  box-shadow: 0 1px 5px #bdc3c7 inset;
-}
 .top-search{
-  margin-top: 15px;
+  margin-top: 5px;
 }
 .my-account  a.dropdown-toggle{
   border-color: #fff;
@@ -1819,4 +1809,59 @@ h3.product-item-name{
 }
 .bx-wrapper .bx-next{
   right: -30px;
+}
+#homepage-banner-carousel .carousel-control.right, #homepage-banner-carousel .carousel-control.left{
+  background-image: none;
+}
+.search-form{
+  position: relative;
+}
+.top-search .search{
+  background: #fff;
+  width: 100%;
+  border: 6px solid rgba(0, 0, 0, 0.1);
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  color: #a1a1a1;
+  font-weight: 300;
+  font-size: 14px;
+  padding: 8px 105px 8px 10px;
+  -moz-border-radius: 34px;
+  -webkit-border-radius: 34px;
+  border-radius: 34px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+.top-search button{
+  background-color: #06A2DC;
+  position: absolute;
+  right: 5px;
+  top: 6px;
+  -webkit-border-top-right-radius: 34px;
+  -webkit-border-bottom-right-radius: 34px;
+  -moz-border-radius-topright: 34px;
+  -moz-border-radius-bottomright: 34px;
+  border-top-right-radius: 34px;
+  border-bottom-right-radius: 34px;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  width: 85px;
+  height: 36px;
+  border: 0;
+}
+.top-search button:before{
+  color: #fff;
+  font-family: "FontAwesome";
+  font-size: 14px;
+  content: "\f002";
+}
+.top-search button:hover{
+  background: #83b7e6;
+}
+.banner-image .top-search button{
+  border: 0;
+}
+#search_form{
+  position: relative;
 }
