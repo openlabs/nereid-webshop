@@ -212,7 +212,7 @@
             <div class="col-md-2">
               <ul class="list-unstyled">
                 <li>
-                  <a href="{{ child.link }}"><strong>{{ child.title }}</strong></a>
+                  <a href="{{ child.link }}">{{ child.title }}</a>
                 </li>
                 {% for grandchild in child.children %}
                   <li><a href="{{ grandchild.link }}" target="{{ grandchild.target }}">{{ grandchild.title }}</a></li>
