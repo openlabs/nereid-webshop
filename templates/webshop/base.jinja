@@ -202,7 +202,7 @@
                 <meta itemprop="target" content="{{ url_for('nereid.website.quick_search', _external=True) }}?q={q}"/>
                 <div id="search-bar">
                   <input type="text" class="typeahead input-text typeahead search" data-provide="typeahead" name="q" itemprop="query-input" placeholder="Search" required>
-                    <button class="button fa-search" type="submit"></button>
+                    <button class="button fa-search search-btn" type="submit"></button>
                 </div><!-- /input-group -->
               </form>
             </div>
@@ -342,6 +342,7 @@
       </div>
     </footer>
     <script type="text/html"  id='cart-html-append'>
+
       <a href="{{ url_for('nereid.cart.view_cart') }}" class="my-cart-show">{{ _('My Cart') }} <span class="quantity"><%= parseInt(user_status.cart_size) %></span></a>
       <!-- Drop down cart -->
       <div class="cart-item">
@@ -459,6 +460,65 @@
     {% endblock flash_message_script %}
 
     <script type="text/javascript">
+      function disableBuyNow (lines) {
+        // Disable buy now button for already bought items from cart lines
+        // TODO: Handle case same way when product is removed from cart.
+        $.each(lines, function(index, line) {
+          $(".product-" + line.product.id + "-buy-now-btn")
+            .attr('disabled', 'disabled');
+        });
+      }
+      function updatedCart(){
+        $.post("{{ url_for('nereid.website.user_status') }}", function(data){
+          var template = $("#cart-html-append").html();
+          $("li.my-cart").html(_.template(template, {'user_status': data.status}));
+          userDataCallbacks.fire(data);
+          var cart_items=data.status.cart.lines;
+          disableBuyNow(cart_items);
+          $('.remove_product, .remove_from_cart').on('click', function(e){
+            var delUrl = $(this).data("url");
+            if(typeof ga == 'undefined'){
+              removeFromCart(delUrl);
+              return true;
+            }
+
+            e.preventDefault();
+
+            var alreadySubmitted = false;
+            var form = this;
+
+            /* The code below registers a timeout which acts
+             * as a safety net. The boolean alreadySubmitted is used
+             * to check whether the form was already submitted or not.
+             * It is used by the callbacks in setTimeout and GA. It is to
+             * avoid the specific cases where both callbacks fire, resulting
+             * in a double form submission.
+             */
+
+            var t = setTimeout(function() {
+              if (alreadySubmitted) return;
+              alreadySubmitted = true;
+              removeFromCart(delUrl);
+            }, 500);
+
+            ga('ec:addProduct', {
+              'id': $(this).data('ga-product-id'),
+              'name': $(this).data('ga-product-name'),
+              'category': $(this).data('ga-product-category'),
+              'price': $(this).data('ga-product-price'),
+              'quantity': $(this).data('ga-product-quantity'),
+            });
+            ga('ec:setAction', 'remove');
+            ga('send', 'event', 'CartAnalytics', 'click', $(this).data('ga-event-label') || '', {
+              'hitCallback': function() {
+                if (alreadySubmitted) return;
+                alreadySubmitted = true;
+                // Remove anyway
+                removeFromCart(delUrl);
+            }});
+          });
+        });
+      };
       var userDataCallbacks = $.Callbacks("");
       function removeFromCart(url){
         $.ajax({
@@ -469,56 +529,10 @@
           location.reload();
         });
       }
-      $.post("{{ url_for('nereid.website.user_status') }}", function(data){
-        var template = $("#cart-html-append").html();
-        $("li.my-cart").html(_.template(template, {'user_status': data.status}));
-        userDataCallbacks.fire(data);
-        $('.remove_product, .remove_from_cart').on('click', function(e){
-          var delUrl = $(this).data("url");
-          if(typeof ga == 'undefined'){
-            removeFromCart(delUrl);
-            return true;
-          }
-
-          e.preventDefault();
-
-          var alreadySubmitted = false;
-          var form = this;
-
-          /* The code below registers a timeout which acts
-           * as a safety net. The boolean alreadySubmitted is used
-           * to check whether the form was already submitted or not.
-           * It is used by the callbacks in setTimeout and GA. It is to
-           * avoid the specific cases where both callbacks fire, resulting
-           * in a double form submission.
-           */
-
-          var t = setTimeout(function() {
-            if (alreadySubmitted) return;
-            alreadySubmitted = true;
-            removeFromCart(delUrl);
-          }, 500);
-
-          ga('ec:addProduct', {
-            'id': $(this).data('ga-product-id'),
-            'name': $(this).data('ga-product-name'),
-            'category': $(this).data('ga-product-category'),
-            'price': $(this).data('ga-product-price'),
-            'quantity': $(this).data('ga-product-quantity'),
-          });
-          ga('ec:setAction', 'remove');
-          ga('send', 'event', 'CartAnalytics', 'click', $(this).data('ga-event-label') || '', {
-            'hitCallback': function() {
-              if (alreadySubmitted) return;
-              alreadySubmitted = true;
-              // Remove anyway
-              removeFromCart(delUrl);
-          }});
-        });
-      });
     </script>
     <script type="text/javascript">
       $(function () {
+        updatedCart();
         if (!sessionStorage.hide_site_message)
         {
           $("#site-message").removeClass("hidden");
@@ -527,6 +541,34 @@
           $("#site-message").addClass("hidden");
           sessionStorage.hide_site_message = true;
         })
+      });
+    </script>
+    <script type="text/javascript">
+      $('.product-buy-now').on('click', function(e){
+        var qty_element = $(this).siblings("input[name='quantity']");
+        var product_element = $(this).siblings("input[name='product']");
+        var new_quantity = parseInt(qty_element.val());
+        $.ajax({
+          type: "POST",
+          url: "{{ url_for('nereid.cart.add_to_cart') }}",
+          data: {'quantity': new_quantity, 'product': product_element.val()}
+        })
+        .success(function (result){
+          if (result.message == "OK"){
+            updatedCart();
+          }
+        })
+        .done(function(){
+          $.pnotify({
+            title: 'message',
+            text: 'Product Added to your Cart',
+            history: false,
+            nonblock: true,
+            delay:2000,
+            nonblock_opacity: .4,
+            animation: 'show'
+          });
+        });
       });
     </script>
     <script>

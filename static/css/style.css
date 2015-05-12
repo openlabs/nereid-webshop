@@ -1833,7 +1833,7 @@ h3.product-item-name{
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
 }
-.top-search button{
+.top-search .search-btn{
   background-color: #06A2DC;
   position: absolute;
   right: 5px;
@@ -1850,16 +1850,16 @@ h3.product-item-name{
   height: 36px;
   border: 0;
 }
-.top-search button:before{
+.top-search .search-btn:before{
   color: #fff;
   font-family: "FontAwesome";
   font-size: 14px;
   content: "\f002";
 }
-.top-search button:hover{
+.top-search .search-btn:hover{
   background: #83b7e6;
 }
-.banner-image .top-search button{
+.banner-image .top-search .search-btn{
   border: 0;
 }
 #search_form{
