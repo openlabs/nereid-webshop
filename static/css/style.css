@@ -480,10 +480,10 @@ section.products{
   color: #06A2DC;
   text-decoration: none;
 }
-.menbg li{
+.header-submenu li{
   padding: 5px;
 }
-.menbg li a:hover{
+.header-submenu li a:hover{
   color: #06A2DC;
   text-decoration: none;
 }
