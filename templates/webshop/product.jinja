@@ -472,7 +472,6 @@
       var wishlist_id = $(this).val();
       var product_id = {{ product.id }};
       var data = {'wishlist': wishlist_id, 'product': product_id, 'action': "add"}
-      console.log(data);
       $.ajax({
         type: "POST",
         url: "{{ url_for('wishlist.wishlist.wishlist_product') }}",

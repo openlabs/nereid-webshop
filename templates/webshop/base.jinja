@@ -188,6 +188,10 @@
                 <li class="my-cart">
                   <a href="" class="my-cart-show">{{ _('My Cart') }} <span class="quantity">0</span></a>
                 </li>
+                <li class="hidden cart-message">
+                  <div class="cart-add-msg">
+                  </div>
+                </li>
               </ul>
             </div>
             {% endif %}
@@ -341,6 +345,15 @@
         </div>
       </div>
     </footer>
+    <script type="text/html"  id='cart-message'>
+      <div class="col-sm-5">
+        <img class="img-responsive" src="<%= line.image %>" >
+      </div>
+      <div class="col-sm-7">
+        <p><%= line.display_name %> <br> added to your cart</p>
+      </div>
+    </script>
+    
     <script type="text/html"  id='cart-html-append'>
 
       <a href="{{ url_for('nereid.cart.view_cart') }}" class="my-cart-show">{{ _('My Cart') }} <span class="quantity"><%= parseInt(user_status.cart_size) %></span></a>
@@ -489,7 +502,6 @@
               removeFromCart(delUrl);
               return true;
             }
-
             e.preventDefault();
 
             var alreadySubmitted = false;
@@ -566,16 +578,12 @@
             updatedCart();
           }
         })
-        .done(function(){
-          $.pnotify({
-            title: 'message',
-            text: 'Product Added to your Cart',
-            history: false,
-            nonblock: true,
-            delay:2000,
-            nonblock_opacity: .4,
-            animation: 'show'
-          });
+        .done(function(result){
+          $(".cart-message").removeClass("hidden").show();
+          var template = $("#cart-message").html();
+          console.log(result.line);
+          $(".cart-add-msg").html(_.template(template, {'line': result.line}));
+          $(".cart-message").removeClass("hidden").show().delay(3000).fadeOut();
         });
       });
     </script>

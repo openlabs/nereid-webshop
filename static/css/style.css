@@ -1674,7 +1674,7 @@ border-top: 1px solid rgba(248, 248, 248, 0.2);
   padding: 5px;
 }
 .related-products{
-  padding-top: 5px; 
+  padding: 5px 0 15px 0;
 }
 .product-short-description{
   font-size: 13px;
@@ -1778,7 +1778,7 @@ h3.product-item-name{
   vertical-align: middle;
 }
 .btn-related-item-add-cart{
-  margin: 10px 0 20px 0;
+  margin-top: 10px;
 }
 .order-detail-description .panel-default > .panel-heading{
   background: transparent;
@@ -1873,4 +1873,15 @@ h3.product-item-name{
 }
 #search_form{
   position: relative;
+}
+.cart-add-msg{
+  background: #fff;
+  border: 1px solid #eee;
+  position: absolute;
+  top: auto;
+  right: 15px;
+  width: 242px;
+  margin-top: 17px;
+  z-index: 100;
+  padding: 10px;
 }
