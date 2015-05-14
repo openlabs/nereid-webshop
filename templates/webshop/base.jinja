@@ -466,8 +466,16 @@
         $.each(lines, function(index, line) {
           $(".product-" + line.product.id + "-buy-now-btn")
             .attr('disabled', 'disabled');
+            var isDisabled=$(".product-" + line.product.id + "-buy-now-btn").prop('disabled');
+            if(isDisabled){
+              $('.tooltip-bottom-'+ line.product.id).tooltip({
+                title: "This product is already added to the cart",
+                placement: "bottom"
+              });
+            }
         });
       }
+      
       function updatedCart(){
         $.post("{{ url_for('nereid.website.user_status') }}", function(data){
           var template = $("#cart-html-append").html();
