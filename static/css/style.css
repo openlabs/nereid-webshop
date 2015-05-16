@@ -481,7 +481,9 @@ section.products{
   text-decoration: none;
 }
 .header-submenu li{
-  padding: 5px;
+  padding-left: 15px;
+  padding-bottom: 5px;
+  padding-top: 5px;
 }
 .header-submenu li a:hover{
   color: #06A2DC;
@@ -501,8 +503,8 @@ section.products{
   width: 1140px;
   height: 250px;
   overflow: hidden;
-  border-top: 6px solid #4B6A84;
-  border-bottom: 6px solid #4B6A84;
+  border-top: 6px solid #07A2DC;
+  border-bottom: 6px solid #07A2DC;
   padding: 20px 0;
 }
 .main-navigation li:hover .container{
@@ -1874,7 +1876,11 @@ h3.product-item-name{
 #search_form{
   position: relative;
 }
-.cart-add-msg{
+.header-submenu ul > :first-child{
+  font-size: 17px;
+  font-weight: 600;
+  padding-left: 5px;
+}.cart-add-msg{
   background: #fff;
   border: 1px solid #eee;
   position: absolute;
