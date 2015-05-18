@@ -19,7 +19,7 @@
 
       {% if not current_user.is_anonymous() %}
         {{ account_header(_('My Account / Order #') + sale.reference, 'orders') }}
-        <div class="col-md-10">
+        <div class="col-md-10 no-pad-xs">
       {% else %}
         <h4 class="text-center">{{ _('Order #') + sale.reference }}</h4>
         <br>
@@ -113,10 +113,20 @@
                       <br>
                       Qty: {{ line.quantity|int }} {{ line.unit.name }}
                     </td>
-                    <td class="col-md-6">
+                    <td class="col-md-4">
                       {{ line.amount|currencyformat(sale.currency.code) }}
                     </td>
-                    <td class="action">{% block line_actions %}{% endblock %}</td>
+                    <td class="action">
+                    {% block line_actions scoped %}
+                      {% if line.complaints %}
+                        <i class="fa fa-info"></i>
+                        <a class="text-muted" href="{{ url_for('sale.complaint.render', active_id=line.complaints[0].id) }}">{{ _('View Return') }}</a>
+                      {% elif line.is_returnable_under_any_term %}
+                        <i class="fa fa-truck"></i>
+                        <a class="text-muted" href="{{ url_for('sale.line.return_line', active_id=line.id) }}">{{ _('Return Item') }}</a>
+                      {% endif %}
+                    {% endblock %}
+                    </td>
                   </tr>
                   {% endfor %}
                   {% endblock sale_lines_content %}
