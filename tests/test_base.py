@@ -61,6 +61,7 @@ class BaseTestCase(NereidTestCase):
         self.ProductNodeRelationship = POOL.get(
             'product.product-product.tree_node'
         )
+        self.MenuItem = POOL.get('nereid.cms.menuitem')
         self.templates = {
             'shopping-cart.jinja':
                 'Cart:{{ cart.id }},{{get_cart_size()|round|int}},'
@@ -495,6 +496,10 @@ class BaseTestCase(NereidTestCase):
             'name': 'root',
             'slug': 'root',
         }])
+        self.default_menuitem, = self.MenuItem.create([{
+            'type_': 'view',
+            'title': 'Test Title'
+        }])
         self.NereidWebsite.create([{
             'name': 'localhost',
             'channel': self.channel,
@@ -504,6 +509,7 @@ class BaseTestCase(NereidTestCase):
             'guest_user': self.guest_user,
             'countries': [('add', self.available_countries)],
             'currencies': [('add', [self.usd.id])],
+            'homepage_menu': self.default_menuitem.id,
         }])
 
         # Create an article category
