@@ -59,54 +59,36 @@
 
 <section class="products latest">
   <div class="container">
-    {% set featured_products = request.nereid_website.featured_products_node and request.nereid_website.featured_products_node.get_products(per_page=3) %}
-    {% if featured_products %}
-    <div class="row" id="featured-node">
-      <h3>Featured Products</h3>
-      <br>
-      {% for product in featured_products %}
-        <a href="{{ url_for('product.product.render', uri=product.uri) }}" ga-product-link data-ga-product-list="Featured Products" data-ga-event-label="Product Name" data-ga-product-id="{{ product.id }}" data-ga-product-name="{{ product.name }}" data-ga-product-category="{{ product.category and product.category.name or None }}">
-          <div class="col-md-4 thumb">
-            <img class="img img-responsive margin-auto"
-              src="{{ CDN }}{{ product.default_image.transform_command().thumbnail(400, 400, 'a') }}"
-              alt="{{ product.name }}" title="{{ product.name }}"/>
-            <div class="fig-caption text-center">
-              <h4>{{ product.name }}</h4>
+    {% set homepage_menus = request.nereid_website.homepage_menu and request.nereid_website.homepage_menu.get_menu_item(max_depth=3).children %}
+    {% for child_menu in homepage_menus %}
+      <div class="row section-spaces">
+        <h3 class="text-center mrt-0">{{ child_menu.title }}</h3>
+        <br>
+        <div class="col-md-12 product-data">
+          <div class="client-slider">
+          {% for child in child_menu.children %}
+            <div class="slide">
+              <a href="{{ child.link }}">
+                <img class="img img-responsive margin-auto"
+                src="{{ CDN + url_for('nereid.webshop.send_static_file', filename='images/no-image.jpg') }}"
+                alt="{{ child.title }}" title="{{ child.title }}">
+              </a>
             </div>
+          {% endfor %}
           </div>
-        </a>
-      {% endfor %}
-    </div>
+          <div class="bx-controls-direction">
+            <a class="bx-prev" href="#"></a>
+            <a class="bx-next" href="#"></a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
     <br>
-    {% endif %}
   </div>
 </section>
 <div class="container">
   <hr class="margin-0">
 </div>
-{% if latest_products %}
-<section class="section-spaces">
-  <div class="container">
-    <h3 class="text-center mrt-0">Most Popular Item</h3>
-    <br>
-    <div class="col-md-12 product-data">
-      <div class="client-slider">
-        {% for product in latest_products %}
-        <div class="slide">
-          <a href="{{ url_for('product.product.render', uri=product.uri) }}" ga-product-link data-ga-product-list="Most Popular Item" data-ga-event-label="Product Name" data-ga-product-id="{{ product.id }}" data-ga-product-name="{{ product.name }}" data-ga-product-category="{{ product.category and product.category.name or None }}">
-            <img src="{{ CDN }}{{ product.default_image.transform_command().thumbnail(150, 150, 'a') }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive img-rounded">
-          </a>
-        </div>
-        {% endfor %}
-      </div>
-      <div class="bx-controls-direction">
-        <a class="bx-prev" href="#"></a>
-        <a class="bx-next" href="#"></a>
-      </div>
-    </div>
-  </div>
-</section>
-{% endif %}
 <section>
   <div class="container">
     <div class="col-md-12 shop-assurance">
@@ -170,9 +152,9 @@ $(document).ready(function() {
   });
   
   $('.client-slider').bxSlider({
-    slideWidth: 180,
+    slideWidth: 230,
     minSlides: 2,
-    maxSlides: 5,
+    maxSlides: 4,
     slideMargin: 10,
     infiniteLoop: true,
     pager:false,

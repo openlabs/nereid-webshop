@@ -14,6 +14,8 @@
         <field name="cms_root_menu" />
         <label name="cms_root_footer" />
         <field name="cms_root_footer" />
+        <label name="homepage_menu" />
+        <field name="homepage_menu" />
     </xpath> 
     <xpath
       expr="/form/notebook/page[@id='general']/field[@name='cms_static_folder']"

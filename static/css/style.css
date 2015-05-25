@@ -1308,9 +1308,7 @@ span.text-success, span.text-warning, span.text-danger, span.text-info{
   cursor: pointer;
   color: #C34848;
 }
-#featured-node img{
-  height: 360px;
-}
+
 .reset_password{
   padding-top: 50px;
 }

@@ -118,6 +118,11 @@ class Website:
         select=True,
     )
 
+    homepage_menu = fields.Many2One(
+        'nereid.cms.menuitem', "Homepage Menu", ondelete='RESTRICT',
+        select=True,
+    )
+
     @classmethod
     @route('/sitemap', methods=["GET"])
     def render_sitemap(cls):
