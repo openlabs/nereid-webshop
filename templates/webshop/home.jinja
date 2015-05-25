@@ -60,29 +60,31 @@
 <section class="products latest">
   <div class="container">
     {% set homepage_menus = request.nereid_website.homepage_menu and request.nereid_website.homepage_menu.get_menu_item(max_depth=3).children %}
-    {% for child_menu in homepage_menus %}
-      <div class="row section-spaces">
-        <h3 class="text-center mrt-0">{{ child_menu.title }}</h3>
-        <br>
-        <div class="col-md-12 product-data">
-          <div class="client-slider">
-          {% for child in child_menu.children %}
-            <div class="slide">
-              <a href="{{ child.link }}">
-                <img class="img img-responsive margin-auto"
-                src="{{ CDN + url_for('nereid.webshop.send_static_file', filename='images/no-image.jpg') }}"
-                alt="{{ child.title }}" title="{{ child.title }}">
-              </a>
+    {% if homepage_menus %}
+      {% for child_menu in homepage_menus %}
+        <div class="row section-spaces">
+          <h3 class="text-center mrt-0">{{ child_menu.title }}</h3>
+          <br>
+          <div class="col-md-12 product-data">
+            <div class="client-slider">
+            {% for child in child_menu.children %}
+              <div class="slide">
+                <a href="{{ child.link }}">
+                  <img class="img img-responsive margin-auto"
+                  src="{{ CDN + url_for('nereid.webshop.send_static_file', filename='images/no-image.jpg') }}"
+                  alt="{{ child.title }}" title="{{ child.title }}">
+                </a>
+              </div>
+            {% endfor %}
             </div>
-          {% endfor %}
-          </div>
-          <div class="bx-controls-direction">
-            <a class="bx-prev" href="#"></a>
-            <a class="bx-next" href="#"></a>
+            <div class="bx-controls-direction">
+              <a class="bx-prev" href="#"></a>
+              <a class="bx-next" href="#"></a>
+            </div>
           </div>
         </div>
-      </div>
-    {% endfor %}
+      {% endfor %}
+    {% endif %}
     <br>
   </div>
 </section>
