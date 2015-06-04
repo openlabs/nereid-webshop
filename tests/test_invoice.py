@@ -137,6 +137,7 @@ class TestDownloadInvoice(BaseTestCase):
                 'sale': sale.id,
                 'amount': sale.total_amount,
                 'gateway': gateway,
+                'credit_account': party2.account_receivable.id,
             }])
             self.Sale.confirm([sale])
             with Transaction().set_context(company=self.company.id):
