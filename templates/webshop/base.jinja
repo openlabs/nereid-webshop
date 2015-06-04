@@ -61,6 +61,18 @@
   </head>
   <body>
 
+    {% if GOOGLE_TAG_MANAGER %}
+    <!-- Google Tag Manager -->
+    <noscript><iframe src="//www.googletagmanager.com/ns.html?id={{ GOOGLE_TAG_MANAGER }}"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','{{ GOOGLE_TAG_MANAGER }}');</script>
+    <!-- End Google Tag Manager -->
+    {% endif %}
+
     {% block header %}
     <section class="header-main">
       {% block header_row_1 %}
@@ -635,28 +647,13 @@
           if(typeof ga == 'undefined'){
             return true;
           }
-          e.preventDefault();
-          e.stopPropagation();
-          var url = $(this).attr('href');
-
-          // register safety net timeout:
-          var t = setTimeout(function() {
-            document.location.href = url
-          }, 500);
-
           ga('ec:addProduct', {
             'id': $(this).data('ga-product-id'),
             'name': $(this).data('ga-product-name'),
             'category': $(this).data('ga-product-category')
           });
           ga('ec:setAction', 'click', {list: $(this).data('ga-product-list')});
-          ga('send', 'event', 'Product', 'click', $(this).data('ga-event-label') || '', {
-            'hitCallback': function() {
-              clearTimeout(t);
-              // redirect anyway:
-              document.location.href = url;
-            }});
-        });
+          ga('send', 'event', 'Product', 'click', $(this).data('ga-event-label') || '', {transport: 'beacon'});
       });
 
       //Tracking product add-to-cart.
