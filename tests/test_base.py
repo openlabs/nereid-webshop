@@ -476,10 +476,6 @@ class BaseTestCase(NereidTestCase):
             'shipment_method': 'order',
             'source': 'webshop',
             'create_users': [('add', [USER])],
-            'default_account_expense':
-                self._get_account_by_kind('expense').id,
-            'default_account_revenue':
-                self._get_account_by_kind('revenue').id,
         }])
 
         self.User.set_preferences({'current_channel': self.channel})
