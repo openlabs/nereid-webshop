@@ -537,6 +537,9 @@
                 removeFromCart(delUrl);
             }});
           });
+          $('#cart-subtotal').text(data.status.cart.untaxed_amount);
+          $('#cart-tax').text(data.status.cart.tax_amount);
+          $('#cart-total').text(data.status.cart.total_amount);
         });
       };
       var userDataCallbacks = $.Callbacks("");
@@ -581,7 +584,6 @@
         .done(function(result){
           $(".cart-message").removeClass("hidden").show();
           var template = $("#cart-message").html();
-          console.log(result.line);
           $(".cart-add-msg").html(_.template(template, {'line': result.line}));
           $(".cart-message").removeClass("hidden").show().delay(3000).fadeOut();
         });

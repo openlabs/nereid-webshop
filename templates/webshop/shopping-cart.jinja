@@ -42,7 +42,7 @@
           <div class="row">
             {% block shopping_cart_table scoped %}
             <div class="col-md-12">
-              <table class="table">
+              <table class="table cart-details">
                 <thead>
                   <tr>
                     <th></th>
@@ -104,15 +104,15 @@
                   <table class="table text-right table-borderless">
                     <tr>
                       <td>{{ _('Subtotal') }}</td>
-                      <td>{{ cart.sale.untaxed_amount|currencyformat(currency) }}</td>
+                      <td id="cart-subtotal">{{ cart.sale.untaxed_amount|currencyformat(currency) }}</td>
                     </tr>
                     <tr>
                       <td>{{ _('Estimated Tax') }}</td>
-                      <td>{{ cart.sale.tax_amount|currencyformat(currency) }}</td>
+                      <td id="cart-tax">{{ cart.sale.tax_amount|currencyformat(currency) }}</td>
                     </tr>
                     <tr>
                       <td class="cart-total-sum">{{ _('Grand Total') }}</td>
-                      <td class="cart-total-sum">{{ cart.sale.total_amount|currencyformat(currency) }}</td>
+                      <td class="cart-total-sum" id="cart-total">{{ cart.sale.total_amount|currencyformat(currency) }}</td>
                     </tr>
                   </table>
                 </div>
