@@ -549,6 +549,9 @@
                 removeFromCart(delUrl);
             }});
           });
+          $('#cart-subtotal').text(data.status.cart.untaxed_amount);
+          $('#cart-tax').text(data.status.cart.tax_amount);
+          $('#cart-total').text(data.status.cart.total_amount);
         });
       };
       var userDataCallbacks = $.Callbacks("");
@@ -585,17 +588,27 @@
           url: "{{ url_for('nereid.cart.add_to_cart') }}",
           data: {'quantity': new_quantity, 'product': product_element.val()}
         })
-        .success(function (result){
-          if (result.message == "OK"){
-            updatedCart();
+        .done(function(result){
+          updatedCart();
+          if (result.line){
+            $(".cart-message").removeClass("hidden").show();
+            var template = $("#cart-message").html();
+            $(".cart-add-msg").html(_.template(template, {'line': result.line}));
+            $(".cart-message").removeClass("hidden").show().delay(3000).fadeOut();
           }
         })
-        .done(function(result){
-          $(".cart-message").removeClass("hidden").show();
-          var template = $("#cart-message").html();
-          console.log(result.line);
-          $(".cart-add-msg").html(_.template(template, {'line': result.line}));
-          $(".cart-message").removeClass("hidden").show().delay(3000).fadeOut();
+        .fail(function (result){
+          var obj = JSON.parse(result.responseText);
+          $.pnotify({
+            title: 'Alert',
+            text: obj.message,
+            type: 'error',
+            history: false,
+            nonblock: true,
+            delay:2000,
+            nonblock_opacity: .4,
+            animation: 'show'
+          });
         });
       });
     </script>
