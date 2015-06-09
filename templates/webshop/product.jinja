@@ -227,7 +227,15 @@
   {% endblock product_top %}
 
   <hr/>
-
+  {% block product_long_description %}
+    {% if product.get_long_description() %}
+      <section>
+        <p>{{ product.get_long_description() }}</p>
+      </section>
+      <hr/>
+    {% endif %}
+  {% endblock product_long_description %}
+  
   {% block product_bottom %}
 
   {% block related_products %}
