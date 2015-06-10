@@ -549,9 +549,7 @@
                 removeFromCart(delUrl);
             }});
           });
-          $('#cart-subtotal').text(data.status.cart.untaxed_amount);
-          $('#cart-tax').text(data.status.cart.tax_amount);
-          $('#cart-total').text(data.status.cart.total_amount);
+          $(document).trigger("updatedCart", data);
         });
       };
       var userDataCallbacks = $.Callbacks("");
