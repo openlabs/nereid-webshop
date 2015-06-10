@@ -101,20 +101,22 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="table-responsive">
-                  <table class="table text-right table-borderless">
-                    <tr>
-                      <td>{{ _('Subtotal') }}</td>
-                      <td id="cart-subtotal">{{ cart.sale.untaxed_amount|currencyformat(currency) }}</td>
-                    </tr>
-                    <tr>
-                      <td>{{ _('Estimated Tax') }}</td>
-                      <td id="cart-tax">{{ cart.sale.tax_amount|currencyformat(currency) }}</td>
-                    </tr>
-                    <tr>
-                      <td class="cart-total-sum">{{ _('Grand Total') }}</td>
-                      <td class="cart-total-sum" id="cart-total">{{ cart.sale.total_amount|currencyformat(currency) }}</td>
-                    </tr>
-                  </table>
+                  {% block order_summary_table scoped %}
+                    <table class="table text-right table-borderless">
+                      <tr>
+                        <td>{{ _('Subtotal') }}</td>
+                        <td id="cart-subtotal">{{ cart.sale.untaxed_amount|currencyformat(currency) }}</td>
+                      </tr>
+                      <tr>
+                        <td>{{ _('Estimated Tax') }}</td>
+                        <td id="cart-tax">{{ cart.sale.tax_amount|currencyformat(currency) }}</td>
+                      </tr>
+                      <tr>
+                        <td class="cart-total-sum">{{ _('Grand Total') }}</td>
+                        <td class="cart-total-sum" id="cart-total">{{ cart.sale.total_amount|currencyformat(currency) }}</td>
+                      </tr>
+                    </table>
+                  {% endblock order_summary_table %}
                 </div>
               </div>
               <div class="col-md-12">
