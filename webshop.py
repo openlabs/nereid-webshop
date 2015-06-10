@@ -206,4 +206,6 @@ class MenuItem:
 
         if ('product.tree_node', 'Tree Node') not in res:
             res.append(('product.tree_node', 'Tree Node'))
+        if ('product.product', 'Product') not in res:
+            res.append(('product.product', 'Product'))
         return res

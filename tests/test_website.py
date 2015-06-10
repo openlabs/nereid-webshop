@@ -7,9 +7,10 @@
 '''
 import json
 
-from trytond.tests.test_tryton import USER, DB_NAME, CONTEXT
+from trytond.tests.test_tryton import POOL, USER, DB_NAME, CONTEXT
 from trytond.transaction import Transaction
 from test_base import BaseTestCase
+from decimal import Decimal
 
 
 class TestWebsite(BaseTestCase):
@@ -101,3 +102,32 @@ class TestWebsite(BaseTestCase):
                 data = json.loads(rv.data)
 
                 self.assertEquals(data['results'], [])
+
+    def test0030_menuitem(self):
+        '''
+        Test create menuitem for products
+        '''
+        self.Product = POOL.get('product.product')
+        self.Template = POOL.get('product.template')
+        with Transaction().start(DB_NAME, USER, context=CONTEXT):
+            app = self.get_app()
+            self.setup_defaults()
+            uom, = self.Uom.search([], limit=1)
+
+            template, = self.Template.create([{
+                'name': 'TestProduct',
+                'type': 'goods',
+                'list_price': Decimal('100'),
+                'cost_price': Decimal('100'),
+                'default_uom': uom.id,
+            }])
+            product, = self.Product.create([{
+                'template': template.id,
+                'displayed_on_eshop': True,
+                'uri': 'test-product',
+            }])
+
+            with app.test_request_context('/'):
+                rv = product.get_menu_item(max_depth=10)
+
+            self.assertEqual(rv['title'], product.name)

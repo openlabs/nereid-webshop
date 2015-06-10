@@ -197,3 +197,18 @@ class Product:
                 'product.product.render_gift_card', uri=self.uri, **kwargs
             )
         return super(Product, self).get_absolute_url(**kwargs)
+
+    def get_menu_item(self, max_depth):
+        """
+        Return dictionary with serialized node for menu item
+        {
+            title: <display name>,
+            link: <url>,
+            record: <instance of record> # if type_ is record
+        }
+        """
+        return {
+            'record': self,
+            'title': self.name,
+            'link': self.get_absolute_url(),
+        }
