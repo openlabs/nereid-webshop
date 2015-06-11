@@ -1878,7 +1878,8 @@ h3.product-item-name{
   font-size: 17px;
   font-weight: 600;
   padding-left: 5px;
-}.cart-add-msg{
+}
+.cart-add-msg{
   background: #fff;
   border: 1px solid #eee;
   position: absolute;
@@ -1888,4 +1889,51 @@ h3.product-item-name{
   margin-top: 17px;
   z-index: 100;
   padding: 10px;
+}
+a.nav-expander{
+  background: none repeat scroll 0 0 #000000;
+  color: #FFFFFF;
+  font-size: 15px;
+  height: 40px;
+  padding: .6em .8em 1em;
+  position: absolute;
+  right: 1%;
+  top: 1%;
+  transition: right 0.3s ease-in-out 0s;
+  width: 44px;
+  transition: right 0.3s ease-in-out 0s;
+  -webkit-transition: right 0.3s ease-in-out 0s;
+  -moz-transition: right 0.3s ease-in-out 0s;
+  -o-transition: right 0.3s ease-in-out 0s;
+}
+a.nav-expander:hover{
+  cursor: pointer;
+}
+a.nav-expander.fixed{
+  position: fixed;
+  z-index: 4000;
+  background: #000;
+}
+.visible-xs-block nav{
+  background: #2d2f33;
+  height: 100%;
+  overflow: auto;
+  position: fixed;
+  right: -15em;
+  font-size: 15px;
+  top: 0;
+  width: 15em;
+  z-index: 2000;
+  padding: 10px 0;
+  transition: right 0.3s ease-in-out 0s;
+  -webkit-transition: right 0.3s ease-in-out 0s;
+  -moz-transition: right 0.3s ease-in-out 0s;
+  -o-transition: right 0.3s ease-in-out 0s;
+}
+.nav-expanded nav{
+  right: 0;
+}
+.visible-xs-block nav li a{
+  color: #fff;
+  padding: 20px;
 }
