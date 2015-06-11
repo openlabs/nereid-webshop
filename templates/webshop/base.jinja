@@ -230,7 +230,7 @@
 
       <!--Main Navigation -->
       {% block main_navigation %}
-      <div class="container sticky">
+      <div class="container sticky hidden-xs">
         {% if not checkout_page %}
         <div class="row main-navigation">
           <div class="col-md-12">
@@ -245,6 +245,25 @@
         </div>
         {% endif %}
       </div>
+      {% if not checkout_page %}
+      <div class="visible-xs-block">
+        <nav>
+          <ul class="list-unstyled main-menu">
+            {% from '_helpers.jinja' import render_cms_root_menu %}
+              {% if request.nereid_website.cms_root_menu %}
+                {{ render_cms_root_menu(request.nereid_website.cms_root_menu) }}
+              {% endif %}
+              {# add any other navigational elements like probably an article list or custom link here #}
+            <!--Include your navigation here-->
+          </ul>
+        </nav>
+        <div class="navbar-header pull-right">
+          <a id="nav-expander" class="nav-expander fixed">
+            <i class="fa fa-bars fa-lg white"></i>
+          </a>
+        </div>
+      </div>
+      {% endif %}
       {% endblock main_navigation %}
     </section>
     <div class="container container-breadcrumb hidden-xs">
@@ -484,6 +503,27 @@
       </script>
     {% endblock flash_message_script %}
 
+    <script>
+      $(document).ready(function(){
+       //Navigation Menu Slider
+        $('#nav-expander').on('click',function(e){
+          e.preventDefault();
+          if($(this).children('.fa').hasClass('fa-bars')) {
+            $(this).children('.fa-bars').removeClass('fa-bars');
+            $(this).children('.fa').addClass('fa-close');
+            $('a.nav-expander.fixed').css("background","#898A8E");
+          }
+          else {
+            $(this).children('.fa-close').removeClass('fa-close');
+            $(this).children('.fa').addClass('fa-bars');
+            $('a.nav-expander.fixed').css("background","#000");
+          }
+          $('a.nav-expander.fixed').css({"-webkit-transition":"background-color 500ms linear","-moz-transition":"background-color 500ms linear","-o-transition":"background-color 500ms linear","transition":"background-color 500ms linear"});
+          $('.visible-xs-block').toggleClass('nav-expanded');
+        });
+      });
+    </script>
+
     <script type="text/javascript">
       function disableBuyNow (lines) {
         // Disable buy now button for already bought items from cart lines
@@ -549,9 +589,7 @@
                 removeFromCart(delUrl);
             }});
           });
-          $('#cart-subtotal').text(data.status.cart.untaxed_amount);
-          $('#cart-tax').text(data.status.cart.tax_amount);
-          $('#cart-total').text(data.status.cart.total_amount);
+          $(document).trigger("updatedCart", data);
         });
       };
       var userDataCallbacks = $.Callbacks("");
