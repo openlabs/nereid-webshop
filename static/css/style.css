@@ -1914,7 +1914,7 @@ a.nav-expander.fixed{
   z-index: 4000;
   background: #000;
 }
-.visible-xs-block nav{
+.mobile-view-menu nav{
   background: #2d2f33;
   height: 100%;
   overflow: auto;
@@ -1933,7 +1933,7 @@ a.nav-expander.fixed{
 .nav-expanded nav{
   right: 0;
 }
-.visible-xs-block nav li a{
+.mobile-view-menu nav li a{
   color: #fff;
   padding: 20px;
 }
