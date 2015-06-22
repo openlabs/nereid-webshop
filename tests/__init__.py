@@ -17,6 +17,7 @@ from .test_css import CSSTest
 from .test_templates import TestTemplates
 from .test_gift_card import TestGiftCard
 from .test_website import TestWebsite
+from .test_tree import TestTree
 
 
 def suite():
@@ -31,6 +32,7 @@ def suite():
         unittest.TestLoader().loadTestsFromTestCase(TestTemplates),
         unittest.TestLoader().loadTestsFromTestCase(TestGiftCard),
         unittest.TestLoader().loadTestsFromTestCase(TestWebsite),
+        unittest.TestLoader().loadTestsFromTestCase(TestTree),
     ])
     return test_suite
 
