@@ -1,0 +1,6 @@
+<data>
+    <xpath expr="/form/field[@name='template']" position="after">
+        <label name="product_as_menu_children"/>
+        <field name="product_as_menu_children"/>
+    </xpath>
+</data>

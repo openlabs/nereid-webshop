@@ -30,7 +30,7 @@ def register():
         SaleLine,
         Website,
         ArticleCategory,
-        MenuItem,
         Node,
+        MenuItem,
         module='nereid_webshop', type_='model'
     )

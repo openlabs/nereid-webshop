@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tryton>
+    <data>
+        <record model="ir.ui.view" id="tree_node_form_view">
+            <field name="model">product.tree_node</field>
+            <field name="inherit" ref="nereid_catalog_tree.tree_node_view_form" />
+            <field name="name">tree_node_form</field>
+        </record>
+    </data>
+</tryton>
