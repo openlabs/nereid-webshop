@@ -13,6 +13,7 @@ from invoice import Invoice
 from sale import Sale, SaleLine
 from party import Address
 from shipment import ShipmentOut
+from tree import Node
 
 
 def register():
@@ -29,6 +30,7 @@ def register():
         SaleLine,
         Website,
         ArticleCategory,
+        Node,
         MenuItem,
         module='nereid_webshop', type_='model'
     )
