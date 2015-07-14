@@ -210,5 +210,6 @@ class Product:
         return {
             'record': self,
             'title': self.name,
+            'image': self.default_image,
             'link': self.get_absolute_url(),
         }
