@@ -14,6 +14,7 @@ from sale import Sale, SaleLine
 from party import Address
 from shipment import ShipmentOut
 from tree import Node
+from static_file import NereidStaticFile
 
 
 def register():
@@ -32,5 +33,6 @@ def register():
         ArticleCategory,
         Node,
         MenuItem,
+        NereidStaticFile,
         module='nereid_webshop', type_='model'
     )
