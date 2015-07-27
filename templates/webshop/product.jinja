@@ -153,16 +153,6 @@
               </div>
             </form>
           </div>
-            {% if product.type == 'goods' %}
-            {% set status = product.inventory_status() %}
-              <div class="clearfix"></div>
-              <div style="padding-top:15px;" class="text-center" id="product-inventory">
-                <span class="text-{% if status[0] == 'in_stock' %}info{% else %}danger{% endif %}">
-                  <i class="fa fa-{% if status[0] == 'in_stock' %}info{% else %}warning{% endif %}"></i>
-                  {{ status[1] }}
-                </span>
-              </div>
-            {% endif %}
           {% else %}
           <div style="padding-top:15px;">
             <span class="text-danger" id="product-not-for-sale"><i class="fa fa-warning"></i>This product is not for sale</span>
