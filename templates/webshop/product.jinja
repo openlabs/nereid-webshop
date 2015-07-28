@@ -112,12 +112,12 @@
           <meta itemprop="priceCurrency" content="{{ request.nereid_currency.code }}" />
           {% set sale_price = product.sale_price(1) %}
           {% if sale_price < product.list_price %}
-          <h4 class="product-price heading-500">
+          <h4 class="product-price heading-500 text-center">
             <span class="not">{{ product.list_price|currencyformat(request.nereid_currency.code) }}</span>
             <span itemprop="price">{{ sale_price|currencyformat(request.nereid_currency.code) }}</span>
           </h4>
           {% else %}
-          <h4 class="product-price product-list-price" itemprop="price">{{ sale_price|currencyformat(request.nereid_currency.code) }}</h4>
+          <h4 class="product-price product-list-price text-center" itemprop="price">{{ sale_price|currencyformat(request.nereid_currency.code) }}</h4>
           {% endif %}
           {% if product.template.get_product_variation_data %}
             <div class="row" id="product-varying-attrs"></div>
