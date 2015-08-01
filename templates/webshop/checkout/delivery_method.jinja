@@ -21,8 +21,7 @@
                       <label class="{% if loop.first %}current{% endif %}">
                         <span class="button">
                           <input 
-                            type="radio" name="carrier_json" 
-                            value='{{ write_vals|tojson|safe }}'
+                            type="radio" name="shipping_service_data" value='{{ write_vals }}'
                             {{ 'checked' if loop.first else '' }}
                             />
                         </span>
@@ -69,7 +68,7 @@
   {{ super() }}
   <script>
     $(document).ready(function() {
-      $("input[name='carrier_json']").change(function() {
+      $("input[name='shipping_service_data']").change(function() {
         $('label.current').removeClass('current');
         if ($(this).is(':checked')) {
           $(this).parents('label').addClass('current');
