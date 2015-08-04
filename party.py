@@ -42,7 +42,7 @@ class WebshopAddressForm(AddressForm):
     def get_default_country(self):
         """Get the default country based on geoip data.
         """
-        if not geoip:
+        if not geoip or not request.remote_addr:
             return None
 
         Country = Pool().get('country.country')
