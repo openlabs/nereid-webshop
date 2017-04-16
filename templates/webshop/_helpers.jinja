@@ -38,7 +38,12 @@
 <address>
   {% for line in address.full_address.split('\n') %}
     {% if loop.first %}
-      <strong>{{ line }}</strong><br/>
+      {% if not address.name %}
+        <strong>{{ address.party.name }}</strong><br/>
+        {{ line }}<br/>
+      {% else %}
+        <strong>{{ line }}</strong><br/>
+      {% endif %}
     {% else %}
       {{ line }}<br/>
     {% endif %}
