@@ -27,8 +27,11 @@
     <meta name="description" content="{% block meta_description %}{% endblock %}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=9">
+
+    {% block favicon %}
     <link rel="icon" href="{{ SHOP_FAVICON or url_for('nereid.webshop.send_static_file', filename='images/favicon.ico') }}" type="image/x-icon">
-    <link rel="shortcut icon" href="{{ SHOP_FAVICON or url_for('nereid.webshop.send_static_file', filename='images/favicon.ico') }}" type="image/x-icon">
+    {% endblock favicon %}
+
     {% block link_tags %}
     {# This block adds <link> tags to the head section of the template. #}
     <link href="{{ CDN }}{{ url_for('nereid.webshop.send_static_file', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
